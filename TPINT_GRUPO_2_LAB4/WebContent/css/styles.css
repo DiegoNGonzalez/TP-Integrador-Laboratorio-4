@@ -260,7 +260,7 @@ body {
 }
 
 /* Contenedor para la Edición de Cuenta */
-.edit-account-container {
+.account-container {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
@@ -270,7 +270,7 @@ body {
 }
 
 /* Título */
-.edit-account-container .edit-title {
+.account-container .edit-title {
     text-align: center;
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -278,21 +278,21 @@ body {
 }
 
 /* Estilos de los campos del formulario */
-.edit-account-container .form-group {
+.account-container .form-group {
     margin-bottom: 1.5rem;
 }
 
-.edit-account-container .form-label {
+.account-container .form-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #495057;
 }
 
-.edit-account-container .form-control,
-.edit-account-container .form-select {
+.account-container .form-control,
+.account-container .form-select {
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     font-size: 1rem;
     color: #495057;
     background-color: #fff;
@@ -301,15 +301,15 @@ body {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.edit-account-container .form-control:focus,
-.edit-account-container .form-select:focus {
+.account-container .form-control:focus,
+.account-container .form-select:focus {
     border-color: #80bdff;
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* Botones */
-.edit-account-container .btn-save {
+.account-container .btn-save {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -321,11 +321,11 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.edit-account-container .btn-save:hover {
+.account-container .btn-save:hover {
     background-color: #218838;
 }
 
-.edit-account-container .btn-cancel {
+.account-container .btn-cancel {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -338,6 +338,6 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.edit-account-container .btn-cancel:hover {
+.account-container .btn-cancel:hover {
     background-color: #c82333;
 }

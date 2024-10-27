@@ -8,6 +8,8 @@
 </head>
 <body>
 
+
+
 <!-- Menú de Navegación -->
 <nav class="navbar">
     <div class="navbar-container">
@@ -49,6 +51,7 @@
         <p>Estadísticas y reportes financieros.</p>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -45,7 +45,7 @@
                 <td>123456789</td>
                 <td>0123456789123456789012</td>
                 <td>$15,000.00</td>
-                <td><a href="editarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
+                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
             </tr>
             <tr>
                 <td>María Gómez</td>
@@ -54,7 +54,7 @@
                 <td>987654321</td>
                 <td>2109876543210987654321</td>
                 <td>$5,250.00</td>
-                <td><a href="editarCuenta.jsp?cuentaId=987654321" class="btn-edit">Editar</a></td>
+                <td><a href="EditarCuenta.jsp?cuentaId=987654321" class="btn-edit">Editar</a></td>
             </tr>
             
         </tbody>

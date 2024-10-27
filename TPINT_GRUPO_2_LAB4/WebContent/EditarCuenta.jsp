@@ -34,7 +34,7 @@
                 <option value="1">Juan Pérez</option>
                 <option value="2">María Gómez</option>
                 <option value="3">Pedro Sánchez</option>
-                <!-- Agregar más clientes según sea necesario -->
+                
             </select>
         </div>
 
@@ -51,7 +51,7 @@
                 <option value="ahorro">Ahorro</option>
                 <option value="corriente">Corriente</option>
                 <option value="inversion">Inversión</option>
-                <!-- Otros tipos de cuenta según sea necesario -->
+                
             </select>
         </div>
 

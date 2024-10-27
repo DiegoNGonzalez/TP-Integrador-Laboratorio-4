@@ -34,11 +34,11 @@
 </div>
 
 <div class="dashboard-content">
-    <div class="dashboard-card" onclick="window.location.href='MenuClientes.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='MenuCliente.jsp'">
         <h3>Menú de Clientes</h3>
         <p>Gestión de clientes y perfiles.</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='Cuenta.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='GestionCuentas.jsp'">
         <h3>Cuentas</h3>
         <p>Administración de cuentas bancarias.</p>
     </div>

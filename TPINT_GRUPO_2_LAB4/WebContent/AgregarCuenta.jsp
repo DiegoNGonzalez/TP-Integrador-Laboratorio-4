@@ -8,6 +8,21 @@
 <title>Insert title here</title>
 </head>
 <body>
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            <a href="DashboardAdmin.jsp">Banco XYZ - UTN</a>
+        </div>
+        <div class="navbar-user">
+            <% if (session.getAttribute("usuario") != null) { %>
+                <span>Bienvenido, <%= session.getAttribute("usuario") %></span>
+                <a href="Logout.jsp" class="logout-button">Cerrar Sesión</a>
+            <% } else { %>
+                <span>No hay usuario logueado</span>
+            <% } %>
+        </div>
+    </div>
+</nav>
 <div class="account-container">
     <h2 class="add-title">Agregar Nueva Cuenta</h2>
     <form action="agregarCuenta.jsp" method="post">

@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
 <title>Menu de Clientes</title>
 </head>
 <body>
@@ -32,7 +34,7 @@
 <!-- Tabla de Clientes -->
 <div class="client-management-container">
     <h2>Clientes</h2>
-    <table class="client-table">
+    <table id="clientTable" class="client-table">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -96,6 +98,12 @@
     <br>
     <a href="AgregarCliente.jsp" class="btnAgregarCliente btn-primary">Agregar Nuevo Cliente</a>
 </div>
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#clientTable').DataTable();
+    });
+</script>
 
 </body>
 </html>

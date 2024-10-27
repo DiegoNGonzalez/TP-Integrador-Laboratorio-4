@@ -295,7 +295,7 @@ body {
 }
 
 /* Contenedor para la Edición de Cuenta */
-.account-container {
+.account-container, .client-container {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
@@ -305,7 +305,8 @@ body {
 }
 
 /* Título */
-.account-container .edit-title {
+.account-container .edit-title,
+.client-container .edit-title {
     text-align: center;
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -313,11 +314,13 @@ body {
 }
 
 /* Estilos de los campos del formulario */
-.account-container .form-group {
+.account-container .form-group,
+.client-container .form-group {
     margin-bottom: 1.5rem;
 }
 
-.account-container .form-label {
+.account-container .form-label,
+.client-container .form-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -344,7 +347,8 @@ body {
 }
 
 /* Botones */
-.account-container .btn-save {
+.account-container .btn-save,
+.client-container .btn-save {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -356,11 +360,13 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.account-container .btn-save:hover {
+.account-container .btn-save:hover,
+.client-container .btn-save:hover{
     background-color: #218838;
 }
 
-.account-container .btn-cancel {
+.account-container .btn-cancel,
+.client-container .btn-cancel {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -373,6 +379,7 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.account-container .btn-cancel:hover {
+.account-container .btn-cancel:hover,
+.client-container .btn-cancel:hover {
     background-color: #c82333;
 }

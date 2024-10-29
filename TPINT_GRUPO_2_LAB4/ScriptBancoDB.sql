@@ -8,7 +8,7 @@ contraseña VARCHAR(255) NOT NULL,
 activo BOOLEAN,
 administrador BOOLEAN
 );
--- Tabla Clientes
+-- Tabla Clientess
 CREATE TABLE Clientes (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,

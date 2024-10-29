@@ -383,3 +383,14 @@ body {
 .client-container .btn-cancel:hover {
     background-color: #c82333;
 }
+    .error-box {
+        max-width: 600px;
+        margin: 5rem auto;
+        padding: 1.5rem;
+        background-color: #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #333;
+        font-size: 1rem;
+    }

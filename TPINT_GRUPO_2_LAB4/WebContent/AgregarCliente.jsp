@@ -11,7 +11,7 @@
 <nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-brand">
-            <a href="DashboardAdmin.jsp">Banco XYZ - UTN</a>
+            <a href="DashboardAdmin.jsp">Banco XYZZ - UTN</a>
         </div>
         <div class="navbar-user">
             <% if (session.getAttribute("usuario") != null) { %>

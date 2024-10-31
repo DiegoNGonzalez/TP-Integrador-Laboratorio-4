@@ -381,9 +381,46 @@ body {
 
 .account-container .btn-cancel:hover,
 .client-container .btn-cancel:hover {
+
     background-color: #c82333;
 }
-    .error-box {
+/* Estilo para el botón de rechazar en rojo */
+.btn-rechazar {
+    display: inline-block; /* Para que el enlace se comporte como un botón */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-rechazar:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para el botón de aprobar en verde */
+.btn-aprobar {
+    display: inline-block; /* Para que el enlace se comporte como un botón */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-aprobar:hover {
+    background-color: #218838;
+}
+
+.error-box {
         max-width: 600px;
         margin: 5rem auto;
         padding: 1.5rem;

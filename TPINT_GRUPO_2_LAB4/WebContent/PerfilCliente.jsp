@@ -93,10 +93,12 @@
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="tel" id="telefono" name="telefono" class="form-control" value="1155448877" readonly>
         </div>
-
-        <!-- Botón para volver -->
-        <button type="submit" class="btn-save">Volver</button>
     </form>
+        <!-- Botón para volver -->
+        <form action="DashboardCliente.jsp" method="get">
+            <button type="submit" class="btn-volver">Volver</button>
+        </form>
+
 </div>
 </body>
 </html>

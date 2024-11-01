@@ -43,7 +43,7 @@
         <h3>Gestión de Préstamos</h3>
         <p>Control y seguimiento de préstamos.</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='InformeEstadistico.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='Reporte.jsp'">
         <h3>Informe Estadístico</h3>
         <p>Estadísticas y reportes financieros.</p>
     </div>

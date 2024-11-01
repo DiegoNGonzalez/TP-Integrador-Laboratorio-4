@@ -33,12 +33,12 @@ CREATE TABLE Cuentas (
     id_cliente INT NOT NULL,
     fecha_creacion DATE NOT NULL,
     tipo_cuenta ENUM('ahorro', 'corriente') NOT NULL,
-    numero_cuenta VARCHAR(20) NOT NULL UNIQUE,
+    numero_cuenta VARCHAR(50) NOT NULL UNIQUE,
     CBU VARCHAR(22) NOT NULL UNIQUE,
     saldo DECIMAL(15,2) DEFAULT 10000.0,
     activo BOOLEAN,
     FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    CONSTRAINT chk_saldo CHECK (saldo > 0)
+    CONSTRAINT chk_saldo CHECK (saldo >= 0)
 );
 
 -- Tabla Prestamos
@@ -51,6 +51,7 @@ CREATE TABLE Prestamos (
     plazo_meses INT NOT NULL,
     importe_mensual DECIMAL(15,2) NOT NULL,
     cantidad_cuotas INT NOT NULL,
+    estado ENUM('Pendiente', 'Aprobado', 'Rechazado') NOT NULL, /* Esto con el fin de filtrar */
     FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
     FOREIGN KEY (id_cuenta) REFERENCES Cuentas(id_cuenta)
 );
@@ -65,7 +66,7 @@ CREATE TABLE Cuotas (
     FOREIGN KEY (id_prestamo) REFERENCES Prestamos(id_prestamo)
 );
 
--- Tabla Movimientos
+-- Tabla Movimientos *Transferencia
 CREATE TABLE Movimientos (
     id_movimiento INT PRIMARY KEY AUTO_INCREMENT,
     id_cuenta INT NOT NULL,

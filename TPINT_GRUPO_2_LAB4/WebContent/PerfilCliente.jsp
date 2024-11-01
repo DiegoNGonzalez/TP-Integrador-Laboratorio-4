@@ -49,7 +49,7 @@
         <!-- Sexo -->
         <div class="form-group">
             <label for="sexo" class="form-label">Sexo</label>
-       		<input type="sexo" id="cuil" name=""sexo"" class="form-control" value="Masculino" readonly>
+       		<input type="text" id="cuil" name="sexo" class="form-control" value="Masculino" readonly>
         </div>
 
         <!-- Nacionalidad -->

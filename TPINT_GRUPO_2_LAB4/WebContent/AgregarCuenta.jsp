@@ -66,13 +66,13 @@
         <!-- CBU -->
         <div class="form-group">
             <label for="cbu" class="form-label">CBU</label>
-            <input type="text" id="cbu" name="cbu" class="form-control" placeholder="Ingrese el CBU">
+            <input type="text" id="cbu" name="cbu" class="form-control" placeholder="Ingrese el CBU" readonly>
         </div>
 
         <!-- Saldo -->
         <div class="form-group">
             <label for="saldo" class="form-label">Saldo</label>
-            <input type="number" step="0.01" id="saldo" name="saldo" class="form-control" placeholder="Ingrese el saldo inicial">
+            <input type="number" step="0.01" id="saldo" name="saldo" class="form-control" placeholder="10.000" readonly>
         </div>
 
         <!-- Botón para Guardar la Nueva Cuenta -->

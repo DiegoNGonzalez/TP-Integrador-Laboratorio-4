@@ -31,10 +31,10 @@ body {
 }
 
 .form-control[readonly] {
-    background-color: #e9ecef; /* Color de fondo para campos no editables */
-    color: #495057; /* Color del texto */
-    border: 1px solid #ced4da; /* Borde gris claro */
-    cursor: not-allowed; /* Cambiar el cursor para indicar que no se puede editar */
+    background-color: #e9ecef; 
+    color: #495057; 
+    border: 1px solid #ced4da; 
+    cursor: not-allowed;
 }
 
 .form-control[readonly]:hover {
@@ -190,6 +190,7 @@ body {
 .forgot-password:hover {
     color: #0056b3;
 }
+
 
 /* Logout Container */
 .logout-container {
@@ -559,6 +560,20 @@ body {
     background-color: #0056b3;
 }
 
+.btn-pagar {
+    width: 120px; 
+    padding: 10px; 
+    font-size: 14px;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    background-color: #008CBA; 
+    text-decoration: none;
+    color: white;
+}
+
+
+
 /* FILTROS */
 .filter-container {
     margin: 20px 0;
@@ -597,3 +612,58 @@ body {
 .btn-apply:hover {
     background-color: #0056b3;
 }
+
+
+.disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+
+.client-table td {
+    padding: 0.5rem;
+    text-align: center; 
+}
+
+.btn-detalle, .btn-pagar {
+    margin: 0 10px;
+    padding: 0.4rem 0.8rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.estado {
+    text-align: center;
+}
+ 
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+
+.btn-add-account {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    margin-left: 15px;
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    overflow: hidden; /* Ocultar cualquier desbordamiento */
+    text-overflow: ellipsis; /* Mostrar "..." si el texto se desborda */
+}
+
+.btn-add-account:hover {
+    background-color: #218838;
+}
+ 

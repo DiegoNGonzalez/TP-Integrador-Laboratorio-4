@@ -25,7 +25,7 @@
         <h3>Cuentas</h3>
         <p>Administración de cuentas bancarias.</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='PrestamosPendientes.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='GestionPrestamos.jsp'">
         <h3>Gestión de Préstamos</h3>
         <p>Control y seguimiento de préstamos.</p>
     </div>

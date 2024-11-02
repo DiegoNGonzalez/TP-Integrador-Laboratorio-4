@@ -4,12 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css" href="css/styles.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8"
-	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#prestamos').DataTable();
@@ -23,7 +21,7 @@
 <jsp:include page="nav.jsp" />
 <div class="management-container">
     <h2>Prestamos Pendientes</h2>
-    <table id="prestamos" class="account-table">
+    <table id="prestamos" class="account-table display">
         <thead>
             <tr>
                 <th>Cliente</th>

@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
 <title>Gestión de Prestamos</title>
 </head>
 <body>
@@ -12,8 +14,8 @@
 <%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
 <div class="management-container">
-    <h2>Gestión de Prestamos</h2>
-    <table class="account-table">
+    <h2>Prestamos Pendientes</h2>
+    <table id="prestamos" class="account-table">
         <thead>
             <tr>
                 <th>Cliente</th>
@@ -49,4 +51,10 @@
     </table>
 </div>
 </body>
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#prestamos').DataTable();
+    });
+</script>
 </html>

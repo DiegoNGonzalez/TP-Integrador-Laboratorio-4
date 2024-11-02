@@ -4,6 +4,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#reporte').DataTable();
+	});
+</script>
 <title>Reporte Estadístico de Transacciones</title>
 </head>
 <body>
@@ -38,8 +48,17 @@
             <button type="submit" class="btn-save">Generar Reporte</button>
         </form>
         
+          <div class="filter-container">
+    <button type="submit" class="btn-save">Filtrar</button>
+    <select name="opciones">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+    </select>
+</div>
+        
         <!-- Tabla de resultados -->
-        <table class="account-table">
+        <table id="reporte" class="account-table">
             <thead>
                 <tr>
                     <th>Fecha</th>

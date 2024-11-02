@@ -36,6 +36,19 @@
                     <option value="2">Cuenta corriente - Saldo: $5,250.00</option>
                 </select>
             </div>
+            <!-- Selección de tipo de cuenta destino -->
+        	<div class="form-group">
+    			<label class="form-label">Seleccione tipo de cuenta destino:</label>
+    			<div class="radio-option">
+        			<input type="radio" id="cuentaPropia" name="tipoCuentaDestino" value="propia" required>
+        			<label for="cuentaPropia">Cuenta propia</label>
+    			</div>
+    			<div class="radio-option">
+        			<input type="radio" id="cuentaTerceros" name="tipoCuentaDestino" value="terceros">
+        			<label for="cuentaTerceros">Cuenta de terceros</label>
+    			</div>
+			</div>
+
             
             <!-- Selección de cuenta destino -->
             <div class="form-group">

@@ -28,7 +28,7 @@
         <h3>Mis cuentas</h3>
         <p>Gestiona tus cuentas</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='GestionCuentas.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='MisPrestamos.jsp'">
         <h3>Mis prestamos</h3>
         <p>Gestiona tus prestamos</p>
     </div>

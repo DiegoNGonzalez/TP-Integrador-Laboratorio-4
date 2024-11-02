@@ -449,4 +449,35 @@ body {
     margin-top: 10px;
     margin-bottom: 20px;
 }
-    
+
+/* Radio buttons de página Transferencia */
+.radio-option input[type="radio"] {
+    accent-color: #007bff; /* Color principal para el radio button */
+    transform: scale(1.1); /* Un poco más grande para destacarlo */
+}
+
+.radio-option label {
+    font-weight: 300;
+    margin-left: 8px;
+}
+
+/* Estilos para los estados de los préstamos */
+.estado {
+    font-weight: bold;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+}
+
+.estado-pendiente {
+    background-color: #ffc107; /* Amarillo para pendiente */
+}
+
+.estado-aprobado {
+    background-color: #28a745; /* Verde para aprobado */
+}
+
+.estado-rechazado {
+    background-color: #dc3545; /* Rojo para rechazado */
+}

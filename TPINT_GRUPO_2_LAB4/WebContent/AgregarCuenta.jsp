@@ -8,21 +8,9 @@
 <title>Agregar Cuenta</title>
 </head>
 <body>
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <a href="DashboardAdmin.jsp">Banco XYZ - UTN</a>
-        </div>
-        <div class="navbar-user">
-            <% if (session.getAttribute("usuario") != null) { %>
-                <span>Bienvenido, <%= session.getAttribute("usuario") %></span>
-                <a href="Logout.jsp" class="logout-button">Cerrar Sesión</a>
-            <% } else { %>
-                <span>No hay usuario logueado</span>
-            <% } %>
-        </div>
-    </div>
-</nav>
+<!-- Menú de Navegación -->
+<jsp:include page="nav.jsp" />
+
 <div class="account-container">
     <h2 class="add-title">Agregar Nueva Cuenta</h2>
     <form action="agregarCuenta.jsp" method="post">
@@ -60,26 +48,26 @@
         <!-- Número de Cuenta -->
         <div class="form-group">
             <label for="numeroCuenta" class="form-label">Número de Cuenta</label>
-            <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" placeholder="Ingrese el número de cuenta">
+            <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" value="12345678" readonly>
         </div>
 
         <!-- CBU -->
         <div class="form-group">
             <label for="cbu" class="form-label">CBU</label>
-            <input type="text" id="cbu" name="cbu" class="form-control" placeholder="Ingrese el CBU" readonly>
+            <input type="text" id="cbu" name="cbu" class="form-control" value="123456789" readonly>
         </div>
 
         <!-- Saldo -->
         <div class="form-group">
             <label for="saldo" class="form-label">Saldo</label>
-            <input type="number" step="0.01" id="saldo" name="saldo" class="form-control" placeholder="10.000" readonly>
+            <input type="number" step="0.01" id="saldo" name="saldo" class="form-control" value="10.000" readonly>
         </div>
 
         <!-- Botón para Guardar la Nueva Cuenta -->
-        <button type="submit" class="btn-save">Guardar Cuenta</button>
+        <input type="submit" class="btn-save" value="Guardar Cuenta" onclick="window.location.href='GestionCuentas.jsp'">
 
         <!-- Botón para Cancelar y Volver -->
-        <button type="button" class="btn-cancel" onclick="window.location.href='GestionCuentas.jsp'">Cancelar</button>
+        <input type="button" class="btn-cancel" onclick="window.location.href='GestionCuentas.jsp'" value="Cancelar">
     </form>
 </div>
 </body>

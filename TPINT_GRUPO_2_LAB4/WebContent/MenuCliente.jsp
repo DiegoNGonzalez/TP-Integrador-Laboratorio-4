@@ -92,7 +92,6 @@
                     <a href="AgregarCuenta.jsp" class="btn-edit">Agregar Cuenta</a>
                 </td>
             </tr>
-            <!-- Se pueden agregar más filas según los datos de clientes disponibles -->
         </tbody>
     </table>
     <br>

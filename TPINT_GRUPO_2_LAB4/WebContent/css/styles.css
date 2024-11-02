@@ -226,6 +226,15 @@ body {
     background-color: #f8f9fa;
 }
 
+.account-cliente-principal{
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
 .client-management-container{
     max-width: 1500px;
     margin: 2rem 1rem;
@@ -431,3 +440,13 @@ body {
         color: #333;
         font-size: 1rem;
     }
+    
+/* Contenedor de filtro al margen derecho Reporte.jsp*/
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Espacio entre el botón y el desplegable */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+    

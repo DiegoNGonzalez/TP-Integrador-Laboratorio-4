@@ -14,6 +14,32 @@
 
 <div class="client-management-container">
     <h2>Listado de Préstamos</h2>
+    <div class="filter-container">
+        <div class="filter-option">
+            <input type="checkbox" id="filterByDate" />
+            <label for="filterByDate">Filtrar por rango de fechas</label>
+            <div id="dateFilter" class="filter-inputs" style="display: none;">
+                <label for="startDate">Desde:</label>
+                <input type="date" id="startDate" />
+                <label for="endDate">Hasta:</label>
+                <input type="date" id="endDate" />
+            </div>
+        </div>
+
+        <div class="filter-option">
+            <input type="checkbox" id="filterByAmount" />
+            <label for="filterByAmount">Filtrar por rango de montos</label>
+            <div id="amountFilter" class="filter-inputs" style="display: none;">
+                <label for="minAmount">Mínimo:</label>
+                <input type="number" id="minAmount" placeholder="$0" />
+                <label for="maxAmount">Máximo:</label>
+                <input type="number" id="maxAmount" placeholder="$1,000,000" />
+            </div>
+        </div>
+        
+        <button id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+    </div>
+    
     <table id="misPrestamos" class="client-table">
         <thead>
             <tr>
@@ -65,6 +91,21 @@
 <script>
     $(document).ready(function() {
         $('#misPrestamos').DataTable();
+
+        // Mostrar u ocultar filtros
+        $('#filterByDate').change(function() {
+            $('#dateFilter').toggle(this.checked);
+        });
+
+        $('#filterByAmount').change(function() {
+            $('#amountFilter').toggle(this.checked);
+        });
+
+        // Lógica de aplicar filtros (solo front-end, sin interacción con backend)
+        $('#applyFilters').click(function() {
+            // Aquí puedes añadir la lógica para filtrar los datos en la tabla
+            alert('Filtros aplicados. Esto es solo el front-end.');
+        });
     });
 </script>
 

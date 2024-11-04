@@ -286,7 +286,7 @@ body {
 }
 
 /* Botón de Editar */
-.btn-edit {
+.btn-edit, .btn-detalle, .btn-volver{
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     color: #fff;
@@ -299,7 +299,7 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.btn-edit:hover {
+.btn-edit:hover, .btn-detalle:hover, .btn-volver {
     background-color: #0056b3;
 }
 
@@ -481,3 +481,70 @@ body {
 .estado-rechazado {
     background-color: #dc3545; /* Rojo para rechazado */
 }
+
+.solicitar-prestamo-container {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.btn-solicitar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-solicitar:hover {
+    background-color: #0056b3;
+}
+
+.loan-detail-container {
+    width: 30%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loan-detail-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.loan-detail-container p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.loan-detail-container p strong {
+    color: #333;
+}
+
+.back-button-container {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3;
+}
+

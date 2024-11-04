@@ -24,7 +24,7 @@
 		</div>
 </div>
 <div class="dashboard-content">
-    <div class="dashboard-card" onclick="window.location.href='MenuCliente.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='MisCuentas.jsp'">
         <h3>Mis cuentas</h3>
         <p>Gestiona tus cuentas</p>
     </div>

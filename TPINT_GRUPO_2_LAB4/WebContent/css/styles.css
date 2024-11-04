@@ -548,3 +548,41 @@ body {
     background-color: #0056b3;
 }
 
+/* FILTROS */
+.filter-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.filter-option {
+    margin-bottom: 10px;
+}
+
+.filter-option label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.filter-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.btn-apply {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-apply:hover {
+    background-color: #0056b3;
+}

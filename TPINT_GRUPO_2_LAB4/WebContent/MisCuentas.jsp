@@ -30,7 +30,6 @@
                 <th>Número de Cuenta</th>
                 <th>CBU</th>
                 <th>Saldo</th>
-                <th>Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +40,6 @@
                 <td>123456789</td>
                 <td>1234567890123456789012</td>
                 <td>$10,000</td>
-                <td>
-                    <a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a>
-                </td>
             </tr>
             <tr>
                 <td>María López</td>
@@ -52,9 +48,6 @@
                 <td>987654321</td>
                 <td>2109876543210987654321</td>
                 <td>$10,000</td>
-                <td>
-                    <a href="EditarCuenta.jsp?cuentaId=987654321" class="btn-edit">Editar</a>
-                </td>
             </tr>
         </tbody>
     </table>

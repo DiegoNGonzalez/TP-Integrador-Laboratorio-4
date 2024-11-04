@@ -13,7 +13,7 @@
 <jsp:include page="nav.jsp" />
 <div class="management-container">
     <h2>Gestión de Prestamos</h2>
-    <table class="account-table">
+    <table id="prestamosTable" class="account-table">
         <thead>
             <tr>
                 <th>Cliente</th>
@@ -48,5 +48,11 @@
         </tbody>
     </table>
 </div>
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#prestamosTable').DataTable();
+    });
+</script>
 </body>
 </html>

@@ -43,42 +43,42 @@
     <table id="misPrestamos" class="client-table">
         <thead>
             <tr>
-                <th>Cliente</th>
-                <th>Monto</th>
-                <th>Cuotas</th>
                 <th>Fecha de solicitud</th>
-                <th>Tipo de Cuenta</th>
+                <th>Monto solicitado</th>
+                <th>Monto a abonar</th>
+                <th>Cuotas</th>
                 <th>Estado</th>
-                <th>Acción</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Juan Pérez</td>
-                <td>$10,000</td>
-                <td>12</td>
                 <td>2024-10-10</td>
-                <td>Ahorro</td>
+                <td>$100,000</td>
+                <td>$150,000</td>
+                <td>12</td>
                 <td class="estado estado-pendiente">Pendiente</td>
                 <td><a href="DetallePrestamo.jsp?id=1" class="btn-detalle">Ver Detalle</a></td>
+                <td><a href="" class="btn-pagar disabled">Pagar cuota</a></td>
             </tr>
             <tr>
-                <td>Ana López</td>
-                <td>$5,000</td>
-                <td>6</td>
                 <td>2024-10-12</td>
-                <td>Corriente</td>
+                <td>$500,000</td>
+                <td>$750,000</td>
+                <td>6</td>
                 <td class="estado estado-aprobado">Aprobado</td>
                 <td><a href="DetallePrestamo.jsp?id=2" class="btn-detalle">Ver Detalle</a></td>
+                <td><a href="PagoPrestamo.jsp?id=2" class="btn-pagar">Pagar cuota</a></td>
             </tr>
             <tr>
-                <td>María García</td>
-                <td>$8,500</td>
-                <td>10</td>
                 <td>2024-10-15</td>
-                <td>Corriente</td>
+                <td>$800,500</td>
+                <td>$1,000,000</td>
+                <td>10</td>
                 <td class="estado estado-rechazado">Rechazado</td>
                 <td><a href="DetallePrestamo.jsp?id=3" class="btn-detalle">Ver Detalle</a></td>
+                <td><a href="" class="btn-pagar disabled">Pagar cuota</a></td>
             </tr>
         </tbody>
     </table>

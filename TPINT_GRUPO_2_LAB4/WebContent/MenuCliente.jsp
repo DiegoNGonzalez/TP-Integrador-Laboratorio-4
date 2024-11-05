@@ -55,8 +55,10 @@
             	<td>1234-5678</td>
             	<td>juanp</td>
                 <td>
-                    <a href="EditarCliente.jsp?clienteId=12345678" class="btn-edit">Editar</a>
-                    <a href="AgregarCuenta.jsp" class="btn-edit">Agregar Cuenta</a>
+    <div class="action-buttons">
+        <a href="EditarCliente.jsp?clienteId=12345678" class="btn-edit">Editar</a>
+        <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
+    </div>
                 </td>
             </tr>
             <tr>
@@ -74,8 +76,10 @@
             	<td>5678-1234</td>
             	<td>marial</td>
                 <td>
-                    <a href="EditarCliente.jsp?clienteId=87654321" class="btn-edit">Editar</a>
-                    <a href="AgregarCuenta.jsp" class="btn-edit">Agregar Cuenta</a>
+    <div class="action-buttons">
+        <a href="EditarCliente.jsp?clienteId=12345678" class="btn-edit">Editar</a>
+        <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
+    </div>
                 </td>
             </tr>
         </tbody>

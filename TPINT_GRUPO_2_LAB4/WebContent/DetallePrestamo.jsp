@@ -24,6 +24,7 @@
 
     <div class="back-button-container">
         <a href="MisPrestamos.jsp" class="btn-volver">Volver</a>
+        <a href="PagoPrestamo.jsp" class="btn-volver">Pagar cuota</a>
     </div>
 </div>
 

@@ -45,8 +45,15 @@
             </div>
             
             <!-- Botones de acción -->
-            <button type="submit" class="btn-save">Pagar Cuota</button>
-            <button type="reset" class="btn-cancel">Cancelar</button>
+<div class="back-button-container" style="display: flex; align-items: center; justify-content: center;">
+    <button type="submit" class="btn-save" style="width: auto; padding: 10px 15px; margin-right: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Pagar Cuota
+    </button>
+    <a href="DetallePrestamo.jsp" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+        Volver
+    </a>
+</div>
+
     </div>
 </body>
 </html>

@@ -59,7 +59,9 @@
             
             
             <!-- Botones de acción -->
+                    <form action="ConfirmarTransferencia.jsp" method="get">
             <button type="submit" class="btn-save">Realizar transferencia</button>
+                    </form>
         <form action="DashboardCliente.jsp" method="get">
             <button type="submit" class="btn-cancel">Cancelar</button>
         </form>

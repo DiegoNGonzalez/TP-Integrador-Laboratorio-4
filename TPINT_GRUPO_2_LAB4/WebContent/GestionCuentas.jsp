@@ -12,6 +12,9 @@
 	$(document).ready(function() {
 		$('#gestion-cuentas').DataTable();
 	});
+	$('#filterByAmount').change(function() {
+        $('#amountFilter').toggle(this.checked);
+    });
 </script>
 <title>Gestión de Cuentas</title>
 </head>
@@ -21,6 +24,21 @@
 
 <div class="account-management-container">
     <h2>Gestión de Cuentas</h2>
+    <div class="filter-container">
+
+        <div class="filter-option">
+            <input type="checkbox" id="filterByAmount" />
+            <label for="filterByAmount">Filtrar por rango de Saldo</label>
+            <div id="amountFilter" class="filter-inputs" style="display: none;">
+                <label for="minAmount">Mínimo:</label>
+                <input type="number" id="minAmount" placeholder="$0" />
+                <label for="maxAmount">Máximo:</label>
+                <input type="number" id="maxAmount" placeholder="$1,000,000" />
+            </div>
+        </div>
+        
+        <button id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+    </div>
     <table class="account-table display" id="gestion-cuentas">
         <thead>
             <tr>
@@ -163,6 +181,8 @@
             
         </tbody>
     </table>
+    <br/>
+    <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>
 </div>
 </body>
 </html>

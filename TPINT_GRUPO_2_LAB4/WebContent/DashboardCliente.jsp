@@ -34,9 +34,11 @@
     </div>
     <div class="dashboard-card" onclick="window.location.href='PerfilCliente.jsp'">
         <h3>Mi perfil</h3>
+        <p>Ver mis datos personales</p>
     </div>
     <div class="dashboard-card" onclick="window.location.href='Transferencia.jsp'">
-        <h3>Transferir pesos</h3>
+        <h3>Transferencias</h3>
+        <p>Realizar nueva transferencia</p>
     </div>
 </div>
 </body>

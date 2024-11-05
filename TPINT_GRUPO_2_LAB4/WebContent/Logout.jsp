@@ -8,13 +8,8 @@
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <a href="DashboardAdmin.jsp">Banco XYZ - UTN</a>
-        </div>
-    </div>
-</nav>
+<!-- Menú de Navegación -->
+<jsp:include page="nav.jsp" />
 
 
 <div class="logout-container">

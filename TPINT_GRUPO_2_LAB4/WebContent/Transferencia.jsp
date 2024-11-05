@@ -8,22 +8,8 @@
 <title>Nueva transferencia</title>
 </head>
 <body>
-	<!-- Menú de Navegación -->
-	<nav class="navbar">
-		<div class="navbar-container">
-			<div class="navbar-brand">
-				<a href="DashboardCliente.jsp">Banco XYZ - UTN</a>
-			</div>
-			<div class="navbar-user">
-				<% if (session.getAttribute("usuario") != null) { %>
-				<span>Bienvenido, <%= session.getAttribute("usuario") %></span> <a
-					href="Logout.jsp" class="logout-button">Cerrar Sesión</a>
-				<% } else { %>
-				<span>No hay usuario logueado</span>
-				<% } %>
-			</div>
-		</div>
-	</nav>
+<!-- Menú de Navegación -->
+<jsp:include page="nav.jsp" />
 
     <div class="account-container">
         <h2 class="edit-title">Nueva transferencia</h2>
@@ -58,15 +44,25 @@
                     <option value="2">Cuenta corriente - Saldo: $5,250.00</option>
                 </select>
             </div>
+            
+                        <!--Ingreso de CBU -->
+            
                         <div class="form-group">
-                <label class="form-label" for="monto">Monto ($):</label>
+                <label class="form-label" for="cbu">Ingrese CBU cuenta de terceros:</label>
+                <input type="number" class="form-control" id="cbu" name="cbu" min="1000000000000000000000" step="1" max="9999999999999999999999" pattern="\d{22}" required>
+            </div>
+            
+                        <div class="form-group">
+                <label class="form-label" for="monto">Monto a transferir ($):</label>
                 <input type="number" class="form-control" id="monto" name="monto" min="1" step="0.01" required>
             </div>
             
             
             <!-- Botones de acción -->
             <button type="submit" class="btn-save">Realizar transferencia</button>
-            <button type="reset" class="btn-cancel">Cancelar</button>
+        <form action="DashboardCliente.jsp" method="get">
+            <button type="submit" class="btn-cancel">Cancelar</button>
+        </form>
     </div>
 
 </body>

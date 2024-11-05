@@ -7,21 +7,8 @@
 <title>Gestion de Préstamos</title>
 </head>
 <body>
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <a href="DashboardAdmin.jsp">Banco XYZ - UTN</a>
-        </div>
-        <div class="navbar-user">
-            <% if (session.getAttribute("usuario") != null) { %>
-                <span>Bienvenido, <%= session.getAttribute("usuario") %></span>
-                <a href="Logout.jsp" class="logout-button">Cerrar Sesión</a>
-            <% } else { %>
-                <span>No hay usuario logueado</span>
-            <% } %>
-        </div>
-    </div>
-</nav>
+<!-- Menú de Navegación -->
+<jsp:include page="nav.jsp" />
     <div class="account-container">
         <h2 class="edit-title">Menú de Pago de Préstamos</h2>
         

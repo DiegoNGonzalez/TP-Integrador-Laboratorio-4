@@ -8,22 +8,8 @@
 <title>Cuenta</title>
 </head>
 <body>
-	<!-- Menú de Navegación -->
-	<nav class="navbar">
-		<div class="navbar-container">
-			<div class="navbar-brand">
-				<a href="DashboardCliente.jsp">Banco XYZ - UTN</a>
-			</div>
-			<div class="navbar-user">
-				<% if (session.getAttribute("usuario") != null) { %>
-				<span>Bienvenido, <%= session.getAttribute("usuario") %></span> <a
-					href="Logout.jsp" class="logout-button">Cerrar Sesión</a>
-				<% } else { %>
-				<span>No hay usuario logueado</span>
-				<% } %>
-			</div>
-		</div>
-	</nav>
+<!-- Menú de Navegación -->
+<jsp:include page="nav.jsp" />
 
 	<div class="account-management-container">
 		<h2 class="edit-title">Cuenta corriente 123456789</h2>
@@ -61,7 +47,7 @@
 		</table>
 		<div style="margin-bottom: 20px;"></div>
 		<div>
-			<a href="Transferencia.jsp?clienteId=11111" class="btn-aprobar">Realizar
+			<a href="Transferencia.jsp?cuentaId=11111" class="btn-aprobar">Realizar
 				transferencia</a>
 		</div>
 	</div>

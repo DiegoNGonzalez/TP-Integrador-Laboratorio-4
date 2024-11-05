@@ -30,6 +30,17 @@ body {
     margin-right: 15px;
 }
 
+.form-control[readonly] {
+    background-color: #e9ecef; /* Color de fondo para campos no editables */
+    color: #495057; /* Color del texto */
+    border: 1px solid #ced4da; /* Borde gris claro */
+    cursor: not-allowed; /* Cambiar el cursor para indicar que no se puede editar */
+}
+
+.form-control[readonly]:hover {
+    background-color: #e9ecef; /* Mantener el mismo color en hover */
+}
+
 .logout-button {
     color: white;
     text-decoration: none;

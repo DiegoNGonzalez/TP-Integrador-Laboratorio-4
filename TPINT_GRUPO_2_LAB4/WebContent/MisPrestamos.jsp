@@ -87,7 +87,7 @@
         <a href="SolicitudPrestamo.jsp" class="btn-solicitar">Solicitar Préstamo</a>
     </div>
 </div>
-<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#misPrestamos').DataTable();

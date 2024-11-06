@@ -13,7 +13,7 @@
 <!-- Contenedor del Formulario de Editar Cliente -->
 <div class="client-container">
     <h2 class="edit-title">Editar Cliente</h2>
-    <form action="guardarCliente.jsp" method="post">
+    <form action="EditarCliente.jsp" method="post">
 
         <!-- Nombre -->
         <div class="form-group">

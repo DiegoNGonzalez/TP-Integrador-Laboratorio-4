@@ -34,10 +34,10 @@
 
 		<!-- Botones de acción -->
 		<form action="DashboardCliente.jsp" method="get">
-			<button type="submit" class="btn-save">Confirmar</button>
+			<input type="submit" class="btn-save" value="Confirmar">
 		</form>
 		<form action="Transferencia.jsp" method="get">
-			<button type="submit" class="btn-cancel">Cancelar</button>
+			<input type="submit" class="btn-cancel" value="Cancelar">
 		</form>
 	</div>
 

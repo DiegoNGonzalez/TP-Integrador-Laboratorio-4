@@ -42,7 +42,7 @@
         </div>
         
         <!-- Botón de Enviar -->
-        <button type="submit" class="btn btn-primary">Recuperar Contraseña</button>
+        <input type="submit" class="btn btn-primary" value="Recuperar Contraseña">
     </form>
 </div>
 </body>

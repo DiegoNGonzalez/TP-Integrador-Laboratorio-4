@@ -60,10 +60,10 @@
             
             <!-- Botones de acción -->
                     <form action="ConfirmarTransferencia.jsp" method="get">
-            <button type="submit" class="btn-save">Realizar transferencia</button>
+            <input type="submit" class="btn-save" value="Realizar transferencia">
                     </form>
         <form action="DashboardCliente.jsp" method="get">
-            <button type="submit" class="btn-cancel">Cancelar</button>
+            <input type="submit" class="btn-cancel" value="Cancelar">
         </form>
     </div>
 

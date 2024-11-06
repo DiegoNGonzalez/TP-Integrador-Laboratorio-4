@@ -14,7 +14,7 @@
 
 <div class="login-container">
     <h2 class="login-title">Iniciar Sesión</h2>
-    <form action="login.jsp" method="post">
+    <form action="DashboardAdmin.jsp" method="post">
         <div class="form-group">
             <label for="username" class="form-label">Usuario</label>
             <input type="text" id="username" name="username" class="form-control" required>

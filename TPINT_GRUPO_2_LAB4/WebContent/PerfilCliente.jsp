@@ -96,7 +96,7 @@
     </form>
         <!-- Botón para volver -->
         <form action="DashboardCliente.jsp" method="get">
-            <button type="submit" class="btn-volver">Volver</button>
+            <input type="submit" class="btn-volver" value="Volver">
         </form>
 
 </div>

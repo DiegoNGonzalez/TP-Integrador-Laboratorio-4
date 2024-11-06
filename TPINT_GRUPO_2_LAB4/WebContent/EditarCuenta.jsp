@@ -13,7 +13,7 @@
 
 <div class="account-container">
     <h2 class="edit-title">Editar Cuenta</h2>
-    <form action="guardarCuenta.jsp" method="post">
+    <form action="EditarCuenta.jsp" method="post">
         
         <!-- Cliente Asignado -->
         <div class="form-group">

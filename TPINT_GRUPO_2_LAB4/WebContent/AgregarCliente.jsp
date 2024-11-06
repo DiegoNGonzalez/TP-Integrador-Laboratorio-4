@@ -13,7 +13,7 @@
 <!-- Contenedor del Formulario de Agregar Cliente -->
 <div class="client-container">
     <h2 class="add-title">Agregar Nuevo Cliente</h2>
-    <form action="agregarCliente.jsp" method="post">
+    <form action="AgregarCliente.jsp" method="post">
 
         <!-- Nombre -->
         <div class="form-group">

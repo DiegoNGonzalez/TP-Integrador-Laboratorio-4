@@ -13,7 +13,7 @@
 
 <div class="account-container">
     <h2 class="add-title">Agregar Nueva Cuenta</h2>
-    <form action="agregarCuenta.jsp" method="post">
+    <form action="AgregarCuenta.jsp" method="post">
         
         <!-- Cliente Asignado -->
         <div class="form-group">

@@ -67,8 +67,6 @@
         <!-- Botón Cancelar -->
         <input type="button" class="btn-cancel" onclick="window.location.href='GestionCuentas.jsp'" value="Cancelar">
     </form>
-    <br/>
-    <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>
 </div>
 </body>
 </html>

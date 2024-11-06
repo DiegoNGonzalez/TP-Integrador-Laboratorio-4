@@ -103,10 +103,10 @@
         </div>
 
         <!-- Botón para Guardar Cambios -->
-        <button type="submit" class="btn-save">Guardar Cambios</button>
+        <input type="submit" class="btn-save" value="Guardar cambios">
 
         <!-- Botón para Cancelar -->
-        <button type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'">Cancelar</button>
+        <input type="submit" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
     </form>
 </div>
 </body>

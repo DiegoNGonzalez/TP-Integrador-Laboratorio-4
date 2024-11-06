@@ -39,9 +39,9 @@
             </div>
             
             <!-- Botones de acción -->
-            <button type="submit" class="btn-save">Solicitar Préstamo</button>
+            <input type="submit" class="btn-save" value="Solicitar Préstamo">
         <form action="DashboardCliente.jsp" method="get">
-            <button type="submit" class="btn-cancel">Cancelar</button>
+            <input type="submit" class="btn-cancel" value="Cancelar">
         </form>
     </div>
 </body>

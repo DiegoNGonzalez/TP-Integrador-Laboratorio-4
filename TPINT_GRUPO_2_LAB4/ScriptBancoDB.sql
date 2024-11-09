@@ -36,10 +36,7 @@ CREATE TABLE tiposMovimientos (
     tipoMovimiento varchar(25) UNIQUE
 );
 
-CREATE TABLE estadosPrestamo (
-	idEstadoPrestamo int primary key auto_increment,
-    estadoPrestamo varchar(15) UNIQUE
-);
+
 
 -- inserts
 

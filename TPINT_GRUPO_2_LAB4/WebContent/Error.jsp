@@ -19,13 +19,16 @@
             <p><%= errorMsj %></p>
         </div>
     <%
+        // Elimino el mensaje de error de la sesión después de mostrarlo
         session.removeAttribute("errorMsj");
         } else {
-        errorMsj = "No hay errores.";
-        }
+            errorMsj = "No hay errores.";
     %>
-    	<div class="error-box">
+        <div class="error-box">
             <p><%= errorMsj %></p>
         </div>
+    <%
+        }
+    %>
 </body>
 </html>

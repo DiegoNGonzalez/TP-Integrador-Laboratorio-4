@@ -126,6 +126,9 @@ INSERT INTO estadosPrestamo (estadoPrestamo) VALUES
 ('Autorizado'),
 ('Rechazado');
 
+INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
+('admin', 'admin', 1, 1),
+('cliente', 'cliente', 2, 1);
 
 CREATE TABLE usuarios (
 	idUsuario int primary key auto_increment,

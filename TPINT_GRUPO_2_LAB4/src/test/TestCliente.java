@@ -19,12 +19,12 @@ public class TestCliente {
 
 		// Configurar los valores del cliente (aquí reemplaza con datos de ejemplo)
 		cliente.setUsuario(usuario); // Suponiendo que Usuario tiene un constructor que acepta un ID
-		cliente.setDni("12345678");
-		cliente.setCuil("20-12345678-3");
-		cliente.setNombre("Juan");
-		cliente.setApellido("Pérez");
+		cliente.setDni("12345673");
+		cliente.setCuil("20-12345639-3");
+		cliente.setNombre("Juan23");
+		cliente.setApellido("Pérez23");
 		cliente.setEmail("juan.perez@example.com");
-		cliente.setTelefono("123456789");
+		cliente.setTelefono("123456719");
 		cliente.setSexo('M'); // O 'F', depende del caso
 		cliente.setFechaNacimiento(new Date()); // Fecha actual como ejemplo
 		cliente.setDireccion("Calle Falsa 123");
@@ -68,8 +68,8 @@ public class TestCliente {
 public static void main(String[] args) {
 		TestCliente testCliente=new TestCliente();
 		// Llamar a testAgregar para agregar un cliente
-        //System.out.println("Ejecutando testAgregar...");
-        //testCliente.testAgregar();
+        System.out.println("Ejecutando testAgregar...");
+        testCliente.testAgregar();
 
         // Llamar a testListar para listar todos los clientes
         System.out.println("\nEjecutando testListar...");

@@ -59,14 +59,14 @@ public class ClienteDaoImpl implements ClienteDao{
 	            Cliente cliente = new Cliente();
 	            Usuario usuario= new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
 	            // Asignar valores del ResultSet al objeto Cliente
-	            cliente.setUsuario(usuario); // Asumimos que Cliente tiene un método setUsuario
+	            cliente.setUsuario(usuario); 
 	            cliente.setDni(resultSet.getString("dni"));
 	            cliente.setCuil(resultSet.getString("cuil"));
 	            cliente.setNombre(resultSet.getString("nombre"));
 	            cliente.setApellido(resultSet.getString("apellido"));
 	            cliente.setEmail(resultSet.getString("email"));
 	            cliente.setTelefono(resultSet.getString("telefono"));
-	            cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Asumimos que sexo es un char
+	            cliente.setSexo(resultSet.getString("sexo").charAt(0));
 	            //cliente.setIdNacionalidad(resultSet.getInt("idNacionalidad"));
 	            cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
 	            cliente.setDireccion(resultSet.getString("direccion"));

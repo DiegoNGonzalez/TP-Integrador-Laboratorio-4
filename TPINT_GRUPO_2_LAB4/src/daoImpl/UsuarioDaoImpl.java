@@ -60,41 +60,39 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 	
 	public Usuario obtenerUnUsuario(int id) {
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Usuario usuario = new Usuario();
-		Connection con = null;
-		try{
-			con = DriverManager.getConnection(host + dbName, user, pass);
-			PreparedStatement miSentencia = con.prepareStatement("Select * from usuarios where Id = ?");
-			miSentencia.setInt(1, id);
-			ResultSet resultado = miSentencia.executeQuery();
-			resultado.next();
-			
-			usuario.setId(resultado.getInt(1));
-		    usuario.setNombreUsuario(resultado.getString(2));
-		    usuario.setPassword(resultado.getString(3));
-		    usuario.setActivo(resultado.getBoolean(4));
-		    TipoUsuario tipoUsuario = new TipoUsuario();
-		    tipoUsuario.setId(resultado.getInt(5));
-		    tipoUsuario.setTipoUsuario(resultado.getString(6));
-		    usuario.setTipoUsuario(tipoUsuario);
-		    
-		    con.close();
-		}
-		catch(Exception e)
-		{
-			System.out.println("Conexion fallida");
-		}
-		finally
-		{
-		}
-		return usuario;
-	}
+        String query = "SELECT idUsuario, nombreUsuario, contrasenia, estadoUsuario, tipoUsuario FROM usuarios WHERE idUsuario = ?";
+        Usuario usuario = null;
+
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+
+            // Establecer el parámetro de la consulta
+            statement.setInt(1, id);
+
+            // Ejecutar la consulta
+            try (ResultSet resultSet = statement.executeQuery()) {
+                // Verificar si hay un resultado
+                if (resultSet.next()) {
+                    usuario = new Usuario();
+                    
+                    // Configurar los datos del usuario con los valores de la base de datos
+                    usuario.setId(resultSet.getInt("idUsuario"));
+                    usuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
+                    usuario.setPassword(resultSet.getString("contrasenia"));
+                    usuario.setActivo(resultSet.getBoolean("estadoUsuario"));
+
+                    // Asignar el tipo de usuario
+                    TipoUsuario tipoUsuario = new TipoUsuario();
+                    tipoUsuario.setId(resultSet.getInt("tipoUsuario"));
+                    usuario.setTipoUsuario(tipoUsuario);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Retorna el usuario, será null si no se encontró
+        return usuario;
+    }
 
 }

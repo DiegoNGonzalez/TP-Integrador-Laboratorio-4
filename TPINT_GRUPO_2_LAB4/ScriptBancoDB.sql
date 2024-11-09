@@ -121,7 +121,9 @@ INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
 
-
+INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
+('admin', 'admin', 1, 1),
+('cliente', 'cliente', 2, 1);
 
 
 CREATE TABLE usuarios (

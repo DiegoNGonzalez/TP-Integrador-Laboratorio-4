@@ -19,12 +19,12 @@ public class TestCliente {
 
 		// Configurar los valores del cliente (aquí reemplaza con datos de ejemplo)
 		cliente.setUsuario(usuario); // Suponiendo que Usuario tiene un constructor que acepta un ID
-		cliente.setDni("12345679");
-		cliente.setCuil("20-12345679-3");
-		cliente.setNombre("Juan2");
-		cliente.setApellido("Pérez2");
+		cliente.setDni("12345673");
+		cliente.setCuil("20-12345639-3");
+		cliente.setNombre("Juan23");
+		cliente.setApellido("Pérez23");
 		cliente.setEmail("juan.perez@example.com");
-		cliente.setTelefono("123456739");
+		cliente.setTelefono("123456719");
 		cliente.setSexo('M'); // O 'F', depende del caso
 		cliente.setFechaNacimiento(new Date()); // Fecha actual como ejemplo
 		cliente.setDireccion("Calle Falsa 123");

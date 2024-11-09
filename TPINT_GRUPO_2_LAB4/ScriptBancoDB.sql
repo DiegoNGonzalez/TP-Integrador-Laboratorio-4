@@ -36,10 +36,7 @@ CREATE TABLE tiposMovimientos (
     tipoMovimiento varchar(25) UNIQUE
 );
 
-CREATE TABLE estadosPrestamo (
-	idEstadoPrestamo int primary key auto_increment,
-    estadoPrestamo varchar(15) UNIQUE
-);
+
 
 -- inserts
 
@@ -124,14 +121,8 @@ INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
 
-INSERT INTO estadosPrestamo (estadoPrestamo) VALUES
-('Pendiente'),
-('Autorizado'),
-('Rechazado');
 
-INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
-('admin', 'admin', 1, 1),
-('cliente', 'cliente', 2, 1);
+
 
 CREATE TABLE usuarios (
 	idUsuario int primary key auto_increment,
@@ -203,11 +194,11 @@ CREATE TABLE prestamos (
     mesesPlazo int NOT NULL,
     importeCuota decimal(14, 2) NOT NULL,
     cantidadCuotas int NOT NULL,
-    idEstadoPrestamo int NOT NULL,
+    EstadoPrestamo varchar(50) NOT NULL,
     
     FOREIGN KEY (idCliente) REFERENCES clientes(idCliente),
-    FOREIGN KEY (idCuenta) REFERENCES cuentas(idcuenta),
-    FOREIGN KEY (idEstadoPrestamo) REFERENCES estadosPrestamo(idEstadoPrestamo)
+    FOREIGN KEY (idCuenta) REFERENCES cuentas(idcuenta)
+    
 );
 
 CREATE TABLE cuotas (

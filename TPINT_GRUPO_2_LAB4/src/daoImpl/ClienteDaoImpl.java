@@ -5,9 +5,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import dao.ClienteDao;
 import entidades.Cliente;
+import entidades.Usuario;
 
 public class ClienteDaoImpl implements ClienteDao{
 
@@ -46,8 +48,39 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public ArrayList<Cliente> listarClientes() {
-		// TODO Auto-generated method stub
-		return null;
+	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes";
+	    ArrayList<Cliente> listaClientes = new ArrayList<>();
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query);
+	         ResultSet resultSet = statement.executeQuery()) {
+
+	        while (resultSet.next()) {
+	            Cliente cliente = new Cliente();
+	            Usuario usuario= new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+	            // Asignar valores del ResultSet al objeto Cliente
+	            cliente.setUsuario(usuario); // Asumimos que Cliente tiene un método setUsuario
+	            cliente.setDni(resultSet.getString("dni"));
+	            cliente.setCuil(resultSet.getString("cuil"));
+	            cliente.setNombre(resultSet.getString("nombre"));
+	            cliente.setApellido(resultSet.getString("apellido"));
+	            cliente.setEmail(resultSet.getString("email"));
+	            cliente.setTelefono(resultSet.getString("telefono"));
+	            cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Asumimos que sexo es un char
+	            //cliente.setIdNacionalidad(resultSet.getInt("idNacionalidad"));
+	            cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
+	            cliente.setDireccion(resultSet.getString("direccion"));
+	            //cliente.setIdProvincia(resultSet.getInt("idProvincia"));
+	            //cliente.setIdLocalidad(resultSet.getInt("idLocalidad"));
+
+	            // Agregar el cliente a la lista
+	            listaClientes.add(cliente);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return listaClientes;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ public class Cliente {
 	private Usuario usuario;
 	private int idCliente;
 	private String dni;
+	private String cuil;
 	private String nombre;
 	private String apellido;
 	private String email;
@@ -18,12 +19,13 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(Usuario usuario, int idCliente, String dni, String nombre, String apellido, String email,
+	public Cliente(Usuario usuario, int idCliente, String dni, String cuil, String nombre, String apellido, String email,
 			String telefono, String direccion, Date fechaNacimiento, char sexo) {
 		super();
 		this.usuario = usuario;
 		this.idCliente = idCliente;
 		this.dni = dni;
+		this.cuil=cuil;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
@@ -87,6 +89,21 @@ public class Cliente {
 	}
 	public void setSexo(char sexo) {
 		this.sexo = sexo;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getCuil() {
+		return cuil;
+	}
+
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
 	}
 	@Override
 	public String toString() {

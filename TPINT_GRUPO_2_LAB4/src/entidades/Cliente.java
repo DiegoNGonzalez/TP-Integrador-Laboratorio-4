@@ -3,6 +3,7 @@ package entidades;
 import java.util.Date;
 
 public class Cliente {
+	private Usuario usuario;
 	private int idCliente;
 	private String dni;
 	private String nombre;
@@ -16,8 +17,11 @@ public class Cliente {
 	public  Cliente () {
 		
 	}
-	public Cliente(int idCliente, String dni, String nombre, String apellido, String email, String telefono,
-			String direccion, Date fechaNacimiento, char sexo) {
+	
+	public Cliente(Usuario usuario, int idCliente, String dni, String nombre, String apellido, String email,
+			String telefono, String direccion, Date fechaNacimiento, char sexo) {
+		super();
+		this.usuario = usuario;
 		this.idCliente = idCliente;
 		this.dni = dni;
 		this.nombre = nombre;
@@ -28,6 +32,7 @@ public class Cliente {
 		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
 	}
+
 	//Getters y setters
 	public int getIdCliente() {
 		return idCliente;

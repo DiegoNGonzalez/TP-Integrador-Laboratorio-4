@@ -84,15 +84,86 @@ public class ClienteDaoImpl implements ClienteDao{
 	}
 
 	@Override
-	public void modificarCliente(int idCliente) {
-		// TODO Auto-generated method stub
-		
+	public boolean modificarCliente(Cliente cliente) {
+	    String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idUsuario = ?";
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        // Asignación de parámetros para actualizar los datos
+	        statement.setString(1, cliente.getNombre());
+	        statement.setString(2, cliente.getApellido());
+	        statement.setString(3, cliente.getEmail());
+	        statement.setString(4, cliente.getTelefono());
+	        statement.setString(5, cliente.getDireccion());
+	        statement.setInt(6, cliente.getUsuario().getId());
+	        
+	        // Ejecuta la actualización y verifica si fue exitosa
+	        return statement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 	@Override
 	public boolean bajaCliente(int idCliente) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "UPDATE clientes SET estado = 0 WHERE idUsuario = ?";
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        // Establecer el ID del cliente a inactivar
+	        statement.setInt(1, idCliente);
+	        
+	        // Ejecuta la actualización y verifica si fue exitosa
+	        return statement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+	@Override
+	public Cliente obtenerClientePorId(int idUsuario) {
+	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, fechaNacimiento, direccion "
+	                 + "FROM clientes WHERE idUsuario = ?";
+	    
+	    Cliente cliente = null;
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        // Establecer el parámetro de consulta (ID de usuario)
+	        statement.setInt(1, idUsuario);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            // Si se encuentra el cliente, se crea el objeto Cliente
+	            if (resultSet.next()) {
+	                cliente = new Cliente();
+	                
+	                // Obtener el Usuario relacionado al cliente
+	                Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+	                
+	                // Asignar los valores obtenidos del ResultSet al objeto Cliente
+	                cliente.setUsuario(usuario);
+	                cliente.setDni(resultSet.getString("dni"));
+	                cliente.setCuil(resultSet.getString("cuil"));
+	                cliente.setNombre(resultSet.getString("nombre"));
+	                cliente.setApellido(resultSet.getString("apellido"));
+	                cliente.setEmail(resultSet.getString("email"));
+	                cliente.setTelefono(resultSet.getString("telefono"));
+	                cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
+	                cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
+	                cliente.setDireccion(resultSet.getString("direccion"));
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return cliente;
+	}
+
+	
 
 }

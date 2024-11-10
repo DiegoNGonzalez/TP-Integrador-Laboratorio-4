@@ -34,8 +34,8 @@ public class AuthFilter implements Filter {
 	        return;
 	    }
 
-	    // Verifica el acceso a páginas de administrador
-	    if (uri.contains("Admin") && !"Administrador".equals(userType)) {
+	    /*// Verifica el acceso a páginas de administrador
+	    if ((uri.contains("Admin")|| uri.contains("Menu")|| uri.contains("Editar")) && !"Administrador".equals(userType)) {
 	        res.sendRedirect("Login.jsp");
 	        return;
 	    }
@@ -44,7 +44,7 @@ public class AuthFilter implements Filter {
 	    if (uri.contains("Cliente") && !"Cliente".equals(userType)) {
 	        res.sendRedirect("Login.jsp");
 	        return;
-	    }
+	    }*/
 
 	    // Si está autenticado y autorizado, permite el acceso
 	    chain.doFilter(request, response);

@@ -8,6 +8,7 @@ public interface ClienteDao {
 
 	public boolean agregarCliente(Cliente cliente);
 	public ArrayList<Cliente> listarClientes();
-	public void modificarCliente(int idCliente);
+	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente);
+	public Cliente obtenerClientePorId(int idUsuario);
 }

@@ -36,6 +36,17 @@ CREATE TABLE tiposMovimientos (
     tipoMovimiento varchar(25) UNIQUE
 );
 
+CREATE TABLE usuarios (
+	idUsuario int primary key auto_increment,
+    nombreUsuario varchar(50) UNIQUE NOT NULL,
+    contrasenia varchar(20) NOT NULL,
+    tipoUsuario int NOT NULL,
+    estadoUsuario bit DEFAULT 1, -- 1 es activo, 0 baja lógica
+    
+    FOREIGN KEY (tipoUsuario) REFERENCES tiposUsuarios(idTipoUsuario)
+    
+);
+
 
 
 -- inserts
@@ -126,16 +137,6 @@ INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VA
 ('cliente', 'cliente', 2, 1);
 
 
-CREATE TABLE usuarios (
-	idUsuario int primary key auto_increment,
-    nombreUsuario varchar(50) UNIQUE NOT NULL,
-    contrasenia varchar(20) NOT NULL,
-    tipoUsuario int NOT NULL,
-    estadoUsuario bit DEFAULT 1, -- 1 es activo, 0 baja lógica
-    
-    FOREIGN KEY (tipoUsuario) REFERENCES tiposUsuarios(idTipoUsuario)
-    
-);
 
 CREATE TABLE clientes (
 	idCliente int primary key auto_increment,

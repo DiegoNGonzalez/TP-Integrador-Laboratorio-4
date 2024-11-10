@@ -47,8 +47,8 @@ public class ClienteDaoImpl implements ClienteDao{
 	}
 
 	@Override
-	public ArrayList<Cliente> listarClientes() {
-	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes";
+	public ArrayList<Cliente> listarClientesActivos() {
+	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";
 	    ArrayList<Cliente> listaClientes = new ArrayList<>();
 
 	    try (Connection conexion = Conexion.getConnection();

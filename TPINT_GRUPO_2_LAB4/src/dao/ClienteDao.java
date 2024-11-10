@@ -7,7 +7,7 @@ import entidades.Cliente;
 public interface ClienteDao {
 
 	public boolean agregarCliente(Cliente cliente);
-	public ArrayList<Cliente> listarClientes();
+	public ArrayList<Cliente> listarClientesActivos();
 	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente);
 	public Cliente obtenerClientePorId(int idUsuario);

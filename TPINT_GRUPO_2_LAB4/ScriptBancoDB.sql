@@ -150,7 +150,7 @@ CREATE TABLE clientes (
     direccion varchar(100) NOT NULL,
     idProvincia int NOT NULL,
     idLocalidad int NOT NULL,
-    estado bit not null default 1,
+    estado bit DEFAULT 1,
     
     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
     FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades(idNacionalidad),

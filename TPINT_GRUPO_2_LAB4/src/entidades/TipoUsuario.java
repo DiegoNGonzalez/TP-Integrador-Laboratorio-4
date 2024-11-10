@@ -5,7 +5,6 @@ public class TipoUsuario {
 	private String tipoUsuario;
 	
 	public TipoUsuario(int id, String tipoUsuario) {
-		super();
 		this.id = id;
 		this.tipoUsuario = tipoUsuario;
 	}

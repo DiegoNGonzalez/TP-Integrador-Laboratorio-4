@@ -11,6 +11,7 @@ public class Conexion {
 	private static String user = "root";
 	private static String pass = "root";
 	private static String dbName = "bancodb";
+
 	
 	static {
         try {

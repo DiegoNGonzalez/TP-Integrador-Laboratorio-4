@@ -8,7 +8,6 @@ public class Usuario {
 	private boolean estado;
 	
 	public Usuario(int id, String nombreUsuario, String password, boolean estado, TipoUsuario tipoUsuario) {
-		super();
 		this.id = id;
 		this.nombreUsuario = nombreUsuario;
 		this.password = password;

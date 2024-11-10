@@ -44,7 +44,7 @@ public class TestCliente {
 	public void testListar() {
 		ClienteDaoImpl clienteDAO = new ClienteDaoImpl();
 
-		ArrayList<Cliente> clientes = clienteDAO.listarClientes();
+		ArrayList<Cliente> clientes = clienteDAO.listarClientesActivos();
 
 		if (clientes != null && !clientes.isEmpty()) {
 			System.out.println("Clientes encontrados:");
@@ -134,7 +134,7 @@ public class TestCliente {
 		TestCliente testCliente = new TestCliente();
 		/*// Llamar a testAgregar para agregar un cliente
 		System.out.println("Ejecutando testAgregar...");
-		testCliente.testAgregar();*/
+		testCliente.testAgregar();
 
 		// Llamar a testListar para listar todos los clientes
 		System.out.println("\nEjecutando testListar...");
@@ -145,7 +145,7 @@ public class TestCliente {
 
 		// Llamar a testBaja para dar de baja un cliente
 		System.out.println("\nEjecutando testBaja...");
-		testCliente.testBaja();
+		testCliente.testBaja();*/
 		// Llamar a testListar para listar todos los clientes
 				System.out.println("\nEjecutando testListar...");
 				testCliente.testListar();

@@ -2,13 +2,21 @@ package negocioImpl;
 
 import java.util.ArrayList;
 
-import entidades.Nacionalidad;
+import dao.ProvinciaDao;
+import daoImpl.ProvinciaDaoImpl;
 import entidades.Provincia;
 import negocio.ProvinciaNegocio;
 
 public class ProvinciaNegocioImpl implements ProvinciaNegocio  {
-	public ArrayList<Provincia> listarProvincias(){
-		ArrayList<Provincia> listaProvincias = new ArrayList<>();	
+	private ProvinciaDao provinciaDao;
+	
+	public ProvinciaNegocioImpl() {
+		this.provinciaDao = new ProvinciaDaoImpl();
+	}
+	
+	@Override
+	public ArrayList<Provincia> listarProvincias() {
+		ArrayList<Provincia> listaProvincias = provinciaDao.listarProvincias();
 		return listaProvincias;
 	}
 }

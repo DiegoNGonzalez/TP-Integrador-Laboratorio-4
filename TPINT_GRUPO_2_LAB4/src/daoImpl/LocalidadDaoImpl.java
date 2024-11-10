@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dao.LocalidadDao;
-import entidades.Cliente;
 import entidades.Localidad;
-import entidades.Usuario;
 
 public class LocalidadDaoImpl implements LocalidadDao {
 	

@@ -11,53 +11,41 @@ import entidades.Usuario;
 
 public class UsuarioDaoImpl implements UsuarioDao {
 	
-	private String host = "jdbc:mysql://localhost:3306/bancodb?useSSL=false&serverTimezone=UTC";
-	private String user = "root";
-	private String pass = "root";
-	private String dbName = "bancodb";
-	
-	
 	public Usuario verificarCredenciales(String nombreUsuario, String password) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		Usuario usuario = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			try (Connection con = DriverManager.getConnection(host, user, pass)) {
-				String sql = "SELECT u.idUsuario, u.nombreUsuario, u.contrasenia, u.estadoUsuario, t.idTipoUsuario, t.tipoUsuario " +
-			             "FROM usuarios u " +
-			             "INNER JOIN tiposusuarios t ON u.tipoUsuario = t.idTipoUsuario " +
-			             "WHERE u.nombreUsuario = ? AND u.contrasenia = ?";
+		String sql = "SELECT u.idUsuario, u.nombreUsuario, u.contrasenia, u.estadoUsuario, t.idTipoUsuario, t.tipoUsuario " +
+                     "FROM usuarios u " +
+                     "INNER JOIN tiposusuarios t ON u.tipoUsuario = t.idTipoUsuario " +
+                     "WHERE u.nombreUsuario = ? AND u.contrasenia = ?";
 
-				
-				PreparedStatement stmt = con.prepareStatement(sql);
-				stmt.setString(1, nombreUsuario);
-				stmt.setString(2, password);
-				
-				ResultSet rs = stmt.executeQuery();
-				if (rs.next()) {
-					usuario = new Usuario();
-					usuario.setId(rs.getInt("idUsuario"));
-					usuario.setNombreUsuario(rs.getString("nombreUsuario"));
-					usuario.setPassword(rs.getString("contrasenia"));
-					usuario.setActivo(rs.getBoolean("estadoUsuario"));
-					
-					TipoUsuario tipoUsuario = new TipoUsuario();
-					tipoUsuario.setId(rs.getInt("idTipoUsuario"));
-					tipoUsuario.setTipoUsuario(rs.getString("tipoUsuario"));
-					usuario.setTipoUsuario(tipoUsuario);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("Error al verificar credenciales: " + e.getMessage());
-		}
-		return usuario;
-	}
+        Usuario usuario = null;
+        
+        try (Connection con = Conexion.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            
+            stmt.setString(1, nombreUsuario);
+            stmt.setString(2, password);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setId(rs.getInt("idUsuario"));
+                    usuario.setNombreUsuario(rs.getString("nombreUsuario"));
+                    usuario.setPassword(rs.getString("contrasenia"));
+                    usuario.setActivo(rs.getBoolean("estadoUsuario"));
+
+                    TipoUsuario tipoUsuario = new TipoUsuario();
+                    tipoUsuario.setId(rs.getInt("idTipoUsuario"));
+                    tipoUsuario.setTipoUsuario(rs.getString("tipoUsuario"));
+                    usuario.setTipoUsuario(tipoUsuario);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al verificar credenciales: " + e.getMessage());
+        }
+        
+        return usuario;
+    }
 	
 	public Usuario obtenerUnUsuario(int id) {
         String query = "SELECT idUsuario, nombreUsuario, contrasenia, estadoUsuario, tipoUsuario FROM usuarios WHERE idUsuario = ?";
@@ -94,5 +82,79 @@ public class UsuarioDaoImpl implements UsuarioDao {
         // Retorna el usuario, será null si no se encontró
         return usuario;
     }
+
+	@Override
+	public boolean agregarUsuario(Usuario usuario) {
+        String query = "INSERT INTO usuarios(nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES (?, ?, ?, ?)";
+        
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+             
+            // Establecer los valores de los parámetros
+            statement.setString(1, usuario.getNombreUsuario());
+            statement.setString(2, usuario.getPassword());
+            statement.setInt(3, usuario.getTipoUsuario().getId());
+            statement.setBoolean(4, usuario.isActivo());
+
+            // Ejecutar la inserción y verificar el número de filas afectadas
+            int filasAfectadas = statement.executeUpdate();
+            return filasAfectadas > 0; // si la inserción fue exitosa
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; //si ocurrió algún error
+        }
+    }
+	
+	public Usuario buscarUsuario(String nombreUsuario) {
+	    String query = "SELECT * FROM usuarios WHERE nombreUsuario = ?";
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        statement.setString(1, nombreUsuario);
+	        
+	        // Ejecutar la consulta
+	        ResultSet resultado = statement.executeQuery();
+	        
+	        // Si existe un resultado, crear y devolver el objeto Usuario
+	        if (resultado.next()) {
+	            Usuario usuario = new Usuario();
+	            usuario.setId(resultado.getInt("idUsuario"));
+	            usuario.setNombreUsuario(resultado.getString("nombreUsuario"));
+	            usuario.setPassword(resultado.getString("contrasenia"));
+	            TipoUsuario tipoUsuario = new TipoUsuario();
+	            tipoUsuario.setId(resultado.getInt("tipoUsuarioId"));
+	            tipoUsuario.setTipoUsuario(resultado.getString("tipoUsuarioNombre"));
+	            usuario.setTipoUsuario(tipoUsuario);
+	            usuario.setActivo(resultado.getBoolean("estadoUsuario"));
+	            return usuario;
+	        } else {
+	            return null; // si no se encontró el usuario
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	public boolean eliminarUsuarioLogico(int idUsuario) {
+	    String query = "UPDATE usuarios SET estadoUsuario = false WHERE idUsuario = ?";
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        statement.setInt(1, idUsuario);
+	        
+	        // Elimina el usuario y verifica el número de filas afectadas
+	        int filasAfectadas = statement.executeUpdate();
+	        return filasAfectadas > 0; // si la actualización fue exitosa
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 
 }

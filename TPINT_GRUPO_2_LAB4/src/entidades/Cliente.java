@@ -14,13 +14,15 @@ public class Cliente {
 	private String direccion;
 	private Date fechaNacimiento;
 	private char sexo;
+	private boolean estado;
+	
 	
 	public  Cliente () {
 		
 	}
 	
 	public Cliente(Usuario usuario, int idCliente, String dni, String cuil, String nombre, String apellido, String email,
-			String telefono, String direccion, Date fechaNacimiento, char sexo) {
+			String telefono, String direccion, Date fechaNacimiento, char sexo,boolean estado) {
 		super();
 		this.usuario = usuario;
 		this.idCliente = idCliente;
@@ -33,6 +35,7 @@ public class Cliente {
 		this.direccion = direccion;
 		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
+		this.estado=estado;
 	}
 
 	//Getters y setters
@@ -105,6 +108,14 @@ public class Cliente {
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido

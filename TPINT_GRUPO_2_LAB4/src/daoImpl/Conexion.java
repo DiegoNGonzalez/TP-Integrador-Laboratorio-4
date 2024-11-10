@@ -13,7 +13,15 @@ public class Conexion {
 	private static String dbName = "bancodb";
 
 	
+	static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error al cargar el driver JDBC: " + e.getMessage());
+        }
+    }
+	
 	public static Connection getConnection() throws SQLException{
-		return DriverManager.getConnection(host +dbName,user,pass);
+		return DriverManager.getConnection(host,user,pass);
 	}
 }

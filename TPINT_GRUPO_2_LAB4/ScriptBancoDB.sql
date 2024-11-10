@@ -132,9 +132,7 @@ INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
 
-INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
-('admin', 'admin', 1, 1),
-('cliente', 'cliente', 2, 1);
+
 
 
 
@@ -143,16 +141,17 @@ CREATE TABLE clientes (
     idUsuario int NOT NULL,
     dni varchar(10) UNIQUE NOT NULL,
     cuil varchar(15) UNIQUE NOT NULL,
-    nombre varchar(15) NOT NULL,
-    apellido varchar(25) NOT NULL,
-    email varchar(40) NOT NULL,
+    nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
+    email varchar(100) NOT NULL,
     telefono varchar(15) NOT NULL,
     sexo char(1) NOT NULL,
     idNacionalidad int NOT NULL,
     fechaNacimiento date NOT NULL,
-    direccion varchar(30) NOT NULL,
+    direccion varchar(100) NOT NULL,
     idProvincia int NOT NULL,
     idLocalidad int NOT NULL,
+    estado bit DEFAULT 1,
     
     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
     FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades(idNacionalidad),
@@ -214,3 +213,7 @@ CREATE TABLE cuotas (
     
     FOREIGN KEY (idPrestamo) REFERENCES prestamos(idPrestamo)
 );
+
+INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
+('admin', 'admin', 1, 1),
+('cliente', 'cliente', 2, 1);

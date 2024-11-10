@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dao.NacionalidadDao;
-import entidades.Localidad;
 import entidades.Nacionalidad;
 
 public class NacionalidadDaoImpl implements NacionalidadDao {

@@ -32,4 +32,31 @@ public class ProvinciaDaoImpl implements ProvinciaDao {
 	    
 		return listaProvincias;
 	}
+
+	@Override
+	public Provincia obtenerProvinciaPorId(int id) {
+	    String query = "SELECT idProvincia, provincia FROM provincias WHERE idProvincia = ?";
+	    Provincia provincia = null;
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        // Establecer el parámetro del id
+	        statement.setInt(1, id);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                provincia = new Provincia();
+	                provincia.setId(resultSet.getInt("idProvincia"));
+	                provincia.setProvincia(resultSet.getString("provincia"));
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return provincia;
+	}
+
 }

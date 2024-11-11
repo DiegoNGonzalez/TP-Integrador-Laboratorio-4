@@ -132,7 +132,7 @@ public class TestCliente {
 
 	public static void main(String[] args) {
 		TestCliente testCliente = new TestCliente();
-		/*// Llamar a testAgregar para agregar un cliente
+		// Llamar a testAgregar para agregar un cliente
 		System.out.println("Ejecutando testAgregar...");
 		testCliente.testAgregar();
 
@@ -145,7 +145,7 @@ public class TestCliente {
 
 		// Llamar a testBaja para dar de baja un cliente
 		System.out.println("\nEjecutando testBaja...");
-		testCliente.testBaja();*/
+		testCliente.testBaja();
 		// Llamar a testListar para listar todos los clientes
 				System.out.println("\nEjecutando testListar...");
 				testCliente.testListar();

@@ -6,68 +6,65 @@
   <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>servlet.AuthFilter</filter-class>
-</filter>
-<!-- Rutas protegidas para administrador -->
-<filter-mapping>
+  </filter>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/AgregarCliente.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/AgregarCuenta.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/DashboardAdmin.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/EditarCliente.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/EditarCuenta.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/GestionCuentas.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/Reporte.jsp</url-pattern>
-</filter-mapping>
-
-<!-- Rutas protegidas para cliente -->
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/DashboardCliente.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/ConfirmarTransferencia.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/DetalleCuenta.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/DetallePrestamo.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/MisPrestamos.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/PagoPrestamo.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/SolicitudPrestamo.jsp</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/Transferencia.jsp</url-pattern>
-</filter-mapping>
+  </filter-mapping>
 </web-app>

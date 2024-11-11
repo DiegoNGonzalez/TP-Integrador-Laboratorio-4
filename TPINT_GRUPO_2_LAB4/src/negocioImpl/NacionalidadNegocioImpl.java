@@ -19,4 +19,10 @@ public class NacionalidadNegocioImpl implements NacionalidadNegocio {
 		ArrayList<Nacionalidad> listaNacionalidades = nacionalidadDao.listarNacionalidades();
 		return listaNacionalidades;
 	}
+
+	@Override
+	public Nacionalidad obtenerNacionalidadPorId(int id) {
+		Nacionalidad nacionalidad=nacionalidadDao.obtenerNacionalidadPorId(id);
+		return nacionalidad;
+	}
 }

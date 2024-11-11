@@ -85,7 +85,7 @@
         </tbody>
     </table>
     <br>
-    <a href="AgregarCliente.jsp" class="btnAgregarCliente btn-primary">Agregar Nuevo Cliente</a>
+    <a href="CargarDesplegablesServlet" class="btnAgregarCliente btn-primary">Agregar Nuevo Cliente</a>
 </div>
 <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script>

@@ -81,6 +81,7 @@ public class AgregarClienteServlet extends HttpServlet {
         nuevoCliente.setEmail(email);
         nuevoCliente.setTelefono(telefono);
         nuevoCliente.setEstado(true);
+        
 
         // Crear instancias de las clases de negocio
         UsuarioNegocioImpl usuarioNegocio = new UsuarioNegocioImpl();
@@ -100,27 +101,44 @@ public class AgregarClienteServlet extends HttpServlet {
         nuevoCliente.setLocalidad(localidad);
         nuevoCliente.setProvincia(provincia);
 
-        // Guardar el Usuario y el Cliente
+        /*// Guardar el Usuario y el Cliente
         try {
             // Agregar el usuario utilizando el negocio
             usuarioNegocio.agregarUsuario(nuevoUsuario);
-            try {
-            	// Agregar el cliente utilizando el negocio
-                clienteNegocio.agregarCliente(nuevoCliente);
-
-                // Redirigir a una página de éxito
-                response.sendRedirect("clienteExitoso.jsp");
-			} catch (Exception e) {
-				e.printStackTrace();
-	            // Manejar el error y redirigir a una página de error si es necesario
-	            response.sendRedirect("error.jsp");
-			}
 
             
 
         } catch (Exception e) {
             e.printStackTrace();
             // Manejar el error y redirigir a una página de error si es necesario
+            response.sendRedirect("error.jsp");
+        }
+        try {
+        	// Agregar el cliente utilizando el negocio
+            clienteNegocio.agregarCliente(nuevoCliente);
+
+            // Redirigir a una página de éxito
+            response.sendRedirect("clienteExitoso.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+            // Manejar el error y redirigir a una página de error si es necesario
+            response.sendRedirect("error.jsp");
+		}*/
+        
+        int usuarioId = usuarioNegocio.agregarUsuario2(nuevoUsuario);
+        if (usuarioId != -1) {
+            nuevoUsuario.setId(usuarioId); // Asigna el ID al objeto Usuario
+            nuevoCliente.setUsuario(nuevoUsuario); // Asigna el usuario al cliente
+
+            // Intentar agregar el cliente solo si el usuario se creó con éxito
+            try {
+                clienteNegocio.agregarCliente(nuevoCliente);
+                response.sendRedirect("clienteExitoso.jsp");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendRedirect("error.jsp");
+            }
+        } else {
             response.sendRedirect("error.jsp");
         }
     }

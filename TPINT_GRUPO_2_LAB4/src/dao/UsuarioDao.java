@@ -8,5 +8,5 @@ public interface UsuarioDao {
 	public boolean agregarUsuario(Usuario usuario);
 	public Usuario buscarUsuario (String nombreUsuario);
 	public boolean eliminarUsuarioLogico(int idUsuario);
-	
+	public int agregarUsuario2(Usuario usuario);
 }

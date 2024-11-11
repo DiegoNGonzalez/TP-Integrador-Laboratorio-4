@@ -20,4 +20,10 @@ public class LocalidadNegocioImpl implements LocalidadNegocio {
 		ArrayList<Localidad> listaLocalidades = localidadDao.listarLocalidades();
 		return listaLocalidades;
 	}
+
+	@Override
+	public Localidad obtenerLocalidadPorId(int id) {
+		Localidad localidad= localidadDao.obtenerLocalidadPorId(id);
+		return localidad;
+	}
 }

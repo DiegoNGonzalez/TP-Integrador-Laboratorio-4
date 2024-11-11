@@ -12,12 +12,12 @@ import org.omg.DynamicAny.DynAnyOperations;
 import dao.UsuarioDao;
 import entidades.Usuario;
 
-@WebServlet("/ServletCliente")
-public class ServletCliente extends HttpServlet {
+@WebServlet("/AgregarClienteServlet")
+public class AgregarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public ServletCliente() {
+    public AgregarClienteServlet() {
         super();
         
     }

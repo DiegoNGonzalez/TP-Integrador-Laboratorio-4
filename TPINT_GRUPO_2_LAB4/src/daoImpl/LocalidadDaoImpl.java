@@ -32,4 +32,29 @@ public class LocalidadDaoImpl implements LocalidadDao {
 	    
 		return listaLocalidades;
 	}
+	public Localidad obtenerLocalidadPorId(int id) {
+	    String query = "SELECT idLocalidad, localidad FROM localidades WHERE idLocalidad = ?";
+	    Localidad localidad = null;
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        // Establecer el parámetro del id
+	        statement.setInt(1, id);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                localidad = new Localidad();
+	                localidad.setId(resultSet.getInt("idLocalidad"));
+	                localidad.setLocalidad(resultSet.getString("localidad"));
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return localidad;
+	}
+
 }

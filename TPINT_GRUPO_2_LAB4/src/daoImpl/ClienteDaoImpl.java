@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 
 import dao.ClienteDao;
 import entidades.Cliente;
+import entidades.Localidad;
+import entidades.Nacionalidad;
+import entidades.Provincia;
 import entidades.Usuario;
 
 public class ClienteDaoImpl implements ClienteDao{
@@ -30,11 +33,11 @@ public class ClienteDaoImpl implements ClienteDao{
 	        statement.setString(6, cliente.getEmail());
 	        statement.setString(7, cliente.getTelefono());
 	        statement.setString(8, String.valueOf(cliente.getSexo())); 
-	        statement.setInt(9, 1); 
+	        statement.setInt(9, cliente.getNacionalidad().getId()); 
 	        statement.setDate(10, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
 	        statement.setString(11, cliente.getDireccion());
-	        statement.setInt(12, 1); 
-	        statement.setInt(13, 1); 
+	        statement.setInt(12, cliente.getLocalidad().getId()); 
+	        statement.setInt(13, cliente.getProvincia().getId()); 
 
 	        // Ejecuta la actualización y devuelve si al menos una fila fue afectada
 	        int filas = statement.executeUpdate();
@@ -58,6 +61,9 @@ public class ClienteDaoImpl implements ClienteDao{
 	        while (resultSet.next()) {
 	            Cliente cliente = new Cliente();
 	            Usuario usuario= new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+	            Nacionalidad nacionalidad = new NacionalidadDaoImpl().obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+	            Localidad localidad = new LocalidadDaoImpl().obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+	            Provincia provincia = new ProvinciaDaoImpl().obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
 	            // Asignar valores del ResultSet al objeto Cliente
 	            cliente.setUsuario(usuario); 
 	            cliente.setDni(resultSet.getString("dni"));
@@ -67,11 +73,11 @@ public class ClienteDaoImpl implements ClienteDao{
 	            cliente.setEmail(resultSet.getString("email"));
 	            cliente.setTelefono(resultSet.getString("telefono"));
 	            cliente.setSexo(resultSet.getString("sexo").charAt(0));
-	            //cliente.setIdNacionalidad(resultSet.getInt("idNacionalidad"));
+	            cliente.setNacionalidad(nacionalidad);
 	            cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
 	            cliente.setDireccion(resultSet.getString("direccion"));
-	            //cliente.setIdProvincia(resultSet.getInt("idProvincia"));
-	            //cliente.setIdLocalidad(resultSet.getInt("idLocalidad"));
+	            cliente.setProvincia(provincia);
+	            cliente.setLocalidad(localidad);
 
 	            // Agregar el cliente a la lista
 	            listaClientes.add(cliente);

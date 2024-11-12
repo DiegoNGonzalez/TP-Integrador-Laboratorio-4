@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Prestamo {
@@ -12,13 +13,14 @@ public class Prestamo {
 	private int plazo;
 	private float importeCuota;
 	private int cantCuotas;
+	private ArrayList<Cuota> cuotas;
 	private boolean estado;
 	
 	public Prestamo() {
 	}
 	
 	public Prestamo(int idPrestamo, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
-			float importeCuota, int cantCuotas, boolean estado) {
+			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, boolean estado) {
 		super();
 		this.idPrestamo = idPrestamo;
 		this.cliente = cliente;
@@ -27,6 +29,7 @@ public class Prestamo {
 		this.plazo = plazo;
 		this.importeCuota = importeCuota;
 		this.cantCuotas = cantCuotas;
+		this.cuotas = cuotas;
 		this.estado = estado;
 	}
 	
@@ -72,17 +75,28 @@ public class Prestamo {
 	public void setCantCuotas(int cantCuotas) {
 		this.cantCuotas = cantCuotas;
 	}
+	
+	public ArrayList<Cuota> getCuotas() {
+		return cuotas;
+	}
+
+	public void setCuotas(ArrayList<Cuota> cuotas) {
+		this.cuotas = cuotas;
+	}
+
 	public boolean isEstado() {
 		return estado;
 	}
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
 	@Override
 	public String toString() {
 		return "Prestamo [idPrestamo=" + idPrestamo + ", cliente=" + cliente + ", fechaAltaPrestamo="
 				+ fechaAltaPrestamo + ", importeTotal=" + importeTotal + ", plazo=" + plazo + ", importeCuota="
-				+ importeCuota + ", cantCuotas=" + cantCuotas + ", estado=" + estado + "]";
+				+ importeCuota + ", cantCuotas=" + cantCuotas + ", cuotas=" + cuotas + ", estado=" + estado + "]";
 	}
+	
 	
 }

@@ -17,7 +17,7 @@
 </div>
 
 <div class="dashboard-content">
-    <div class="dashboard-card" onclick="window.location.href='MenuCliente.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='ListarClientesServlet'">
         <h3>Menú de Clientes</h3>
         <p>Gestión de clientes y perfiles.</p>
     </div>

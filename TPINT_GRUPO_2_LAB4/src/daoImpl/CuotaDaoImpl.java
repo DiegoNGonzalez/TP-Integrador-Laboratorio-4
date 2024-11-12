@@ -8,6 +8,7 @@ import java.util.Date;
 
 import dao.CuotaDao;
 import entidades.Cuota;
+import entidades.Prestamo;
 
 public class CuotaDaoImpl implements CuotaDao {
 
@@ -15,6 +16,7 @@ public class CuotaDaoImpl implements CuotaDao {
     public ArrayList<Cuota> listarCuotas() {
         String query = "SELECT idCuota, idPrestamo, numCuota, montoAPagar, fechaPago, estado FROM cuotas";
         ArrayList<Cuota> listaCuotas = new ArrayList<>();
+        PrestamoDaoImpl aux = new PrestamoDaoImpl();
 
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query);
@@ -23,7 +25,11 @@ public class CuotaDaoImpl implements CuotaDao {
             while (resultSet.next()) {
                 Cuota cuota = new Cuota();
                 cuota.setIdCuota(resultSet.getInt("idCuota"));
-                cuota.setIdPrestamo(resultSet.getInt("idPrestamo"));
+                //int idPrestamo = resultSet.getInt("idPrestamo");
+//                Prestamo prestamo = aux.prestamoXId(idPrestamo);
+//                cuota.setPrestamo(prestamo);
+                cuota.setPrestamo(resultSet.getInt("idPrestamo"));
+                
                 cuota.setNumCuota(resultSet.getInt("numCuota"));
                 cuota.setMontoAPagar(resultSet.getFloat("montoAPagar"));
                 cuota.setFechaPago(resultSet.getDate("fechaPago"));
@@ -45,7 +51,7 @@ public class CuotaDaoImpl implements CuotaDao {
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query)) {
 
-            statement.setInt(1, cuota.getIdPrestamo());
+            statement.setInt(1, cuota.getidPrestamo());
             statement.setInt(2, cuota.getNumCuota());
             statement.setFloat(3, cuota.getMontoAPagar());
             statement.setDate(4, (java.sql.Date) new Date(cuota.getFechaPago().getTime()));
@@ -77,6 +83,7 @@ public class CuotaDaoImpl implements CuotaDao {
     public Cuota obtenerCuotaPorId(int idCuota) {
         String query = "SELECT idCuota, idPrestamo, numCuota, montoAPagar, fechaPago, estado FROM cuotas WHERE idCuota = ?";
         Cuota cuota = null;
+        PrestamoDaoImpl aux = new PrestamoDaoImpl();
 
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -87,7 +94,10 @@ public class CuotaDaoImpl implements CuotaDao {
                 if (resultSet.next()) {
                     cuota = new Cuota();
                     cuota.setIdCuota(resultSet.getInt("idCuota"));
-                    cuota.setIdPrestamo(resultSet.getInt("idPrestamo"));
+//                    int idPrestamo = resultSet.getInt("idPrestamo");
+//                    Prestamo prestamo = aux.prestamoXId(idPrestamo);
+//                    cuota.setPrestamo(prestamo);
+                    cuota.setPrestamo(resultSet.getInt("idPrestamo"));
                     cuota.setNumCuota(resultSet.getInt("numCuota"));
                     cuota.setMontoAPagar(resultSet.getFloat("montoAPagar"));
                     cuota.setFechaPago(resultSet.getDate("fechaPago"));

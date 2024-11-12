@@ -5,7 +5,7 @@ import java.util.Date;
 public class Cuota {
 
 	private int idCuota;
-	private int idPrestamo;
+	private int  idPrestamo;
 	private int numCuota;
 	private float montoAPagar;
 	private Date fechaPago;
@@ -30,10 +30,10 @@ public class Cuota {
 	public void setIdCuota(int idCuota) {
 		this.idCuota = idCuota;
 	}
-	public int getIdPrestamo() {
+	public int getidPrestamo() {
 		return idPrestamo;
 	}
-	public void setIdPrestamo(int idPrestamo) {
+	public void setPrestamo(int idPrestamo) {
 		this.idPrestamo = idPrestamo;
 	}
 	public int getNumCuota() {

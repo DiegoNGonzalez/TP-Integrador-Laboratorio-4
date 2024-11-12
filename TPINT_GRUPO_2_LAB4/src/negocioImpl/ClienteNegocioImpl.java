@@ -89,7 +89,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    // Validación de campos vacíos
 	    if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 	        System.out.println("El nombre es obligatorio.");
-	        return false;
+	        return false; 
 	    }
 	    if (cliente.getApellido() == null || cliente.getApellido().trim().isEmpty()) {
 	        System.out.println("El apellido es obligatorio.");

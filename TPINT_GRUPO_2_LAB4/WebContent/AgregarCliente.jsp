@@ -1,3 +1,7 @@
+<%@page import="entidades.Nacionalidad" %>
+<%@page import="entidades.Provincia" %>
+<%@page import="entidades.Localidad" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +17,7 @@
 <!-- Contenedor del Formulario de Agregar Cliente -->
 <div class="client-container">
     <h2 class="add-title">Agregar Nuevo Cliente</h2>
-    <form action="AgregarCliente.jsp" method="post">
+    <form action="AgregarClienteServlet" method="post">
 
         <!-- Nombre -->
         <div class="form-group">
@@ -49,11 +53,22 @@
             </select>
         </div>
 
-        <!-- Nacionalidad -->
         <div class="form-group">
-            <label for="nacionalidad" class="form-label">Nacionalidad</label>
-            <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Ingrese la nacionalidad">
-        </div>
+    <label for="nacionalidad" class="form-label">Nacionalidad</label>
+    <select id="nacionalidad" name="nacionalidad" class="form-control">
+        <option value="">Seleccione la nacionalidad</option>
+        
+        <% 
+            // Obtener la lista de nacionalidades de la solicitud
+            ArrayList<Nacionalidad> listaNacionalidades = (ArrayList<Nacionalidad>) request.getAttribute("listaNacionalidades");
+            for (Nacionalidad nacionalidad : listaNacionalidades) {
+        %>
+            <option value="<%= nacionalidad.getId() %>"><%= nacionalidad.getNacionalidad() %></option>
+        <% 
+            }
+        %>
+    </select>
+</div>
 
         <!-- Fecha de Nacimiento -->
         <div class="form-group">
@@ -70,14 +85,35 @@
         <!-- Localidad -->
         <div class="form-group">
             <label for="localidad" class="form-label">Localidad</label>
-            <input type="text" id="localidad" name="localidad" class="form-control" placeholder="Ingrese la localidad">
+            <select id="localidad" name="localidad" class="form-control">
+                <option value="">Seleccione la localidad</option>
+                <% 
+                    ArrayList<Localidad> listaLocalidades = (ArrayList<Localidad>) request.getAttribute("listaLocalidades");
+                    for (Localidad localidad : listaLocalidades) {
+                %>
+                    <option value="<%= localidad.getId() %>"><%= localidad.getLocalidad() %></option>
+                <% 
+                    }
+                %>
+            </select>
         </div>
 
         <!-- Provincia -->
         <div class="form-group">
             <label for="provincia" class="form-label">Provincia</label>
-            <input type="text" id="provincia" name="provincia" class="form-control" placeholder="Ingrese la provincia">
+            <select id="provincia" name="provincia" class="form-control">
+                <option value="">Seleccione la provincia</option>
+                <% 
+                    ArrayList<Provincia> listaProvincias = (ArrayList<Provincia>) request.getAttribute("listaProvincias");
+                    for (Provincia provincia : listaProvincias) {
+                %>
+                    <option value="<%= provincia.getId() %>"><%= provincia.getProvincia() %></option>
+                <% 
+                    }
+                %>
+            </select>
         </div>
+
 
         <!-- Email -->
         <div class="form-group">

@@ -15,6 +15,9 @@ public class Cliente {
 	private Date fechaNacimiento;
 	private char sexo;
 	private boolean estado;
+	private Nacionalidad nacionalidad;
+	private Localidad localidad;
+	private Provincia provincia;
 	
 	
 	public  Cliente () {
@@ -22,7 +25,7 @@ public class Cliente {
 	}
 	
 	public Cliente(Usuario usuario, int idCliente, String dni, String cuil, String nombre, String apellido, String email,
-			String telefono, String direccion, Date fechaNacimiento, char sexo,boolean estado) {
+			String telefono, String direccion, Date fechaNacimiento, char sexo,boolean estado, Nacionalidad nacionalidad, Localidad localidad, Provincia provincia) {
 		super();
 		this.usuario = usuario;
 		this.idCliente = idCliente;
@@ -36,6 +39,9 @@ public class Cliente {
 		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
 		this.estado=estado;
+		this.nacionalidad= nacionalidad;
+		this.localidad=localidad;
+		this.provincia=provincia;
 	}
 
 	//Getters y setters
@@ -114,6 +120,31 @@ public class Cliente {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+	
+
+	public Nacionalidad getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(Nacionalidad nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public Localidad getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
+	}
+
+	public Provincia getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
 	}
 
 	@Override

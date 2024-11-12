@@ -101,4 +101,26 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 
         return eliminado;
     }
+
+	@Override
+	public int agregarUsuario2(Usuario usuario) {
+		if (usuario == null) {
+            throw new UsuarioNegocioException("El usuario no puede ser nulo.");
+        }
+
+        if (usuario.getNombreUsuario() == null || usuario.getNombreUsuario().trim().isEmpty()) {
+            throw new UsuarioNegocioException("El nombre de usuario no puede estar vacío.");
+        }
+
+        if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+            throw new UsuarioNegocioException("La contraseña no puede estar vacía.");
+        }
+
+        if (usuario.getTipoUsuario() == null) {
+            throw new UsuarioNegocioException("El tipo de usuario es obligatorio.");
+        }
+
+        UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
+        return usuarioDao.agregarUsuario2(usuario);
+	}
 }

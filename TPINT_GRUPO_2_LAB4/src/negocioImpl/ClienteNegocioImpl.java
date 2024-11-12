@@ -26,7 +26,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return false;
 		}
 		
-		boolean resultado= clienteDao.modificarCliente(cliente);
+		boolean resultado= clienteDao.agregarCliente(cliente);
 
 	    // Si todas las validaciones pasan, proceder a agregar el cliente
 	    

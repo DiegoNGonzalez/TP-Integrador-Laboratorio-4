@@ -34,17 +34,27 @@ public class AuthFilter implements Filter {
 	        return;
 	    }
 
-	    /*// Verifica el acceso a páginas de administrador
-	    if ((uri.contains("Admin")|| uri.contains("Menu")|| uri.contains("Editar")) && !"Administrador".equals(userType)) {
-	        res.sendRedirect("Login.jsp");
+	    // Verifica el acceso a páginas de administrador
+	    if ((uri.contains("AgregarCliente.jsp") || uri.contains("AgregarCuenta.jsp") || uri.contains("DashboardAdmin.jsp")
+	    	    || uri.contains("EditarCliente.jsp") || uri.contains("EditarCuenta.jsp") || uri.contains("GestionCuentas.jsp")
+	    	    || uri.contains("GestionPrestamos.jsp") || uri.contains("Reportes.jsp")) 
+	    	    && !"Administrador".equals(userType)) {
+	    	session.setAttribute("errorMsj", "Acceso no autorizado. Solo administradores pueden acceder a esta página.");
+            res.sendRedirect("Error.jsp");
 	        return;
 	    }
 
 	    // Verifica el acceso a páginas de cliente
-	    if (uri.contains("Cliente") && !"Cliente".equals(userType)) {
-	        res.sendRedirect("Login.jsp");
+	    if ((uri.contains("ConfirmarTransferencia.jsp") || uri.contains("DashboardCliente.jsp") 
+	    	    || uri.contains("DetalleCuenta.jsp") || uri.contains("DetallePrestamo.jsp") 
+	    	    || uri.contains("MisCuentas.jsp") || uri.contains("MisPrestamos.jsp") 
+	    	    || uri.contains("PagoPrestamo.jsp") || uri.contains("PerfilCliente.jsp") 
+	    	    || uri.contains("SolicitudPrestamo.jsp") || uri.contains("Transferencia.jsp")) 
+	    	    && !"Cliente".equals(userType)) {
+	    	session.setAttribute("errorMsj", "Acceso no autorizado. Solo clientes pueden acceder a esta página.");
+            res.sendRedirect("Error.jsp");
 	        return;
-	    }*/
+	    }
 
 	    // Si está autenticado y autorizado, permite el acceso
 	    chain.doFilter(request, response);

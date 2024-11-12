@@ -1,0 +1,669 @@
+/* ESTILOS GENERALES */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #3a7bd5;
+    padding: 10px;
+    color: white;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-user span {
+    margin-right: 15px;
+}
+
+.form-control[readonly] {
+    background-color: #e9ecef; 
+    color: #495057; 
+    border: 1px solid #ced4da; 
+    cursor: not-allowed;
+}
+
+.form-control[readonly]:hover {
+    background-color: #e9ecef; /* Mantener el mismo color en hover */
+}
+
+.logout-button {
+    color: white;
+    text-decoration: none;
+}
+
+/* DASHBOARD HEADER */
+.dashboard-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #3a7bd5;
+    color: white;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* DASHBOARD CONTENT */
+.dashboard-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+/* TARJETAS DE ACCESO RÁPIDO */
+.dashboard-card {
+    background-color: white;
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.dashboard-card h3 {
+    margin: 0;
+    color: #3a7bd5;
+}
+
+.dashboard-card p {
+    color: #555;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+/* Login Container */
+.login-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+/* titulo login */
+.login-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+/* Inputs */
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Boton submit */
+.btn-primary {
+    display: inline-block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btnAgregarCliente {
+    display: inline-block;
+    width: auto;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    text-align: left;
+    margin-top: 1rem;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary:disabled {
+    background-color: #007bff;
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Olvidaste tu contraseña Link */
+.forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.forgot-password:hover {
+    color: #0056b3;
+}
+
+
+/* Logout Container */
+.logout-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+/* mensaje logout */
+.logout-message {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Btn logout */
+.btn-secondary {
+    display: inline-block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Contenedor para la Gestión de Cuentas */
+.account-management-container{
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+.account-cliente-principal{
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+.client-management-container{
+    max-width: 1500px;
+    margin: 2rem 1rem;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+} 
+
+/* Estilos de la Tabla */
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.client-table{
+	width: 100%;
+	height: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: #495057;
+}
+
+.account-table th,
+.account-table td{
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.client-table th,
+.client-table td{
+    padding: 0.65rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.account-table th, .client-table th {
+    background-color: #e9ecef;
+    font-weight:400;
+}
+
+.account-table tr:hover, .client-table tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Botón de Editar */
+.btn-edit, .btn-detalle, .btn-volver{
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-edit:hover, .btn-detalle:hover, .btn-volver {
+    background-color: #0056b3;
+}
+
+/* Contenedor para la Edición de Cuenta */
+.account-container, .client-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+/* Título */
+.account-container .edit-title,
+.client-container .edit-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Estilos de los campos del formulario */
+.account-container .form-group,
+.client-container .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.account-container .form-label,
+.client-container .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.account-container .form-control,
+.account-container .form-select {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.account-container .form-control:focus,
+.account-container .form-select:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Botones */
+.account-container .btn-save,
+.client-container .btn-save {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.account-container .btn-save:hover,
+.client-container .btn-save:hover{
+    background-color: #218838;
+}
+
+.account-container .btn-cancel,
+.client-container .btn-cancel {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.account-container .btn-cancel:hover,
+.client-container .btn-cancel:hover {
+
+    background-color: #c82333;
+}
+/* Estilo para el botón de rechazar en rojo */
+.btn-rechazar {
+    display: inline-block; /* Para que el enlace se comporte como un botón */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-rechazar:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para el botón de aprobar en verde */
+.btn-aprobar {
+    display: inline-block; /* Para que el enlace se comporte como un botón */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-aprobar:hover {
+    background-color: #218838;
+}
+
+.error-box {
+        max-width: 600px;
+        margin: 5rem auto;
+        padding: 1.5rem;
+        background-color: #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #333;
+        font-size: 1rem;
+    }
+    
+/* Contenedor de filtro al margen derecho Reporte.jsp*/
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Espacio entre el botón y el desplegable */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Radio buttons de página Transferencia */
+.radio-option input[type="radio"] {
+    accent-color: #007bff; /* Color principal para el radio button */
+    transform: scale(1.1); /* Un poco más grande para destacarlo */
+}
+
+.radio-option label {
+    font-weight: 300;
+    margin-left: 8px;
+}
+
+/* Estilos para los estados de los préstamos */
+.estado {
+    font-weight: bold;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+}
+
+.estado-pendiente {
+    background-color: #ffc107; /* Amarillo para pendiente */
+}
+
+.estado-aprobado {
+    background-color: #28a745; /* Verde para aprobado */
+}
+
+.estado-rechazado {
+    background-color: #dc3545; /* Rojo para rechazado */
+}
+
+.solicitar-prestamo-container {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.btn-solicitar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-solicitar:hover {
+    background-color: #0056b3;
+}
+
+.loan-detail-container {
+    width: 30%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loan-detail-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.loan-detail-container p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.loan-detail-container p strong {
+    color: #333;
+}
+
+.back-button-container {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3;
+}
+
+.btn-pagar {
+    width: 120px; 
+    padding: 10px; 
+    font-size: 14px;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    background-color: #008CBA; 
+    text-decoration: none;
+    color: white;
+}
+
+
+
+/* FILTROS */
+.filter-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.filter-option {
+    margin-bottom: 10px;
+}
+
+.filter-option label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.filter-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.btn-apply {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-apply:hover {
+    background-color: #0056b3;
+}
+
+
+.disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+
+.client-table td {
+    padding: 0.5rem;
+    text-align: center; 
+}
+
+.btn-detalle, .btn-pagar {
+    margin: 0 10px;
+    padding: 0.4rem 0.8rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.estado {
+    text-align: center;
+}
+ 
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+
+.btn-add-account {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    margin-left: 15px;
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    overflow: hidden; /* Ocultar cualquier desbordamiento */
+    text-overflow: ellipsis; /* Mostrar "..." si el texto se desborda */
+}
+
+.btn-add-account:hover {
+    background-color: #218838;
+}
+ 

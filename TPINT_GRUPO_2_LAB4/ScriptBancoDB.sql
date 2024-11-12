@@ -2,8 +2,6 @@ CREATE DATABASE IF NOT EXISTS BancoDB;
 
 USE BancoDB;
 
-
-
 CREATE TABLE provincias (
 	idProvincia int primary key auto_increment,
     provincia varchar(50) unique not null
@@ -16,6 +14,7 @@ CREATE TABLE localidades (
     
     foreign key (idProvincia) references provincias(idProvincia)
 );
+
 CREATE TABLE nacionalidades (
 	idNacionalidad int primary key auto_increment,
     nacionalidad varchar(30) unique not null
@@ -119,7 +118,6 @@ INSERT INTO tiposUsuarios (tipoUsuario) VALUES
 ('Administrador'),
 ('Cliente');
 
-
 INSERT INTO tiposCuentas (tipoCuenta) VALUES
 ('Caja de Ahorro'),
 ('Caja de Ahorro Dolares'),
@@ -131,88 +129,6 @@ INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Pago de Préstamo'),
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
-
-
-
-
-
-CREATE TABLE clientes (
-	idCliente int primary key auto_increment,
-    idUsuario int NOT NULL,
-    dni varchar(10) UNIQUE NOT NULL,
-    cuil varchar(15) UNIQUE NOT NULL,
-    nombre varchar(50) NOT NULL,
-    apellido varchar(50) NOT NULL,
-    email varchar(100) NOT NULL,
-    telefono varchar(15) NOT NULL,
-    sexo char(1) NOT NULL,
-    idNacionalidad int NOT NULL,
-    fechaNacimiento date NOT NULL,
-    direccion varchar(100) NOT NULL,
-    idProvincia int NOT NULL,
-    idLocalidad int NOT NULL,
-    estado bit DEFAULT 1,
-    
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (idNacionalidad) REFERENCES nacionalidades(idNacionalidad),
-    FOREIGN KEY (idProvincia) REFERENCES provincias(idProvincia),
-    FOREIGN KEY (idLocalidad) REFERENCES localidades(idLocalidad)
-);
-
-CREATE TABLE cuentas (
-	idCuenta int primary key auto_increment,
-    idcliente int NOT NULL,
-    idTipoCuenta int NOT NULL,
-    fechaCreacion date NOT NULL,
-    numeroCuenta bigint UNIQUE NOT NULL,
-    cbu varchar(22) UNIQUE NOT NULL,
-    saldo decimal(14, 2) NOT NULL default 10000.0,
-    estadoCuenta bit DEFAULT 1,
-    
-    FOREIGN KEY (idCliente) REFERENCES clientes(idCliente),
-    FOREIGN KEY (idTipoCuenta) REFERENCES tiposCuentas(idTipoCuenta),
-    
-    CONSTRAINT CHK_Saldo_Positivo CHECK(saldo>=0)
-);
-
-CREATE TABLE movimientos (
-	idMovimiento  int primary key auto_increment,
-    idCuenta int NOT NULL,
-    idTipoMovimiento int NOT NULL,
-    fechaMovimiento date NOT NULL,
-    concepto varchar(50) NOT NULL,
-    importeMovimiento decimal(14, 2) NOT NULL,
-	
-    FOREIGN KEY (idCuenta) REFERENCES cuentas(idCuenta),
-    FOREIGN KEY (idTipoMovimiento) REFERENCES tiposMovimientos(idTipoMovimiento)
-);
-
-CREATE TABLE prestamos (
-	idPrestamo int primary key auto_increment,
-    idCliente int NOT NULL,
-    idCuenta int NOT NULL,
-    fechaAltaPrestamo date NOT NULL,
-    importePrestamo decimal(14, 2) NOT NULL,
-    mesesPlazo int NOT NULL,
-    importeCuota decimal(14, 2) NOT NULL,
-    cantidadCuotas int NOT NULL,
-    EstadoPrestamo varchar(50) NOT NULL,
-    
-    FOREIGN KEY (idCliente) REFERENCES clientes(idCliente),
-    FOREIGN KEY (idCuenta) REFERENCES cuentas(idcuenta)
-    
-);
-
-CREATE TABLE cuotas (
-	idCuota int primary key auto_increment,
-    idPrestamo int NOT NULL,
-    numeroCuota int NOT NULL,
-    montoPagado decimal(14, 2) NULL,
-    fechaPago date NULL,
-    estadoPago bit DEFAULT 0, -- 0 sin pagar, 1 ya pagado
-    
-    FOREIGN KEY (idPrestamo) REFERENCES prestamos(idPrestamo)
-);
 
 INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
 ('admin', 'admin', 1, 1),

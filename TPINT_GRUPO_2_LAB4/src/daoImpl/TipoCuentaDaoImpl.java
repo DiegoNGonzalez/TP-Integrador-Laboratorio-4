@@ -1,10 +1,8 @@
 package daoImpl;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import dao.TipoCuentaDao;
 import entidades.TipoCuenta;
 
@@ -28,8 +26,7 @@ public class TipoCuentaDaoImpl implements TipoCuentaDao {
 		        }
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		    }
-	    
+		    }	    
 		return listaTipos;
 	}
 	
@@ -54,7 +51,6 @@ public class TipoCuentaDaoImpl implements TipoCuentaDao {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-
 	    return tipoCuenta;
 	}
 }

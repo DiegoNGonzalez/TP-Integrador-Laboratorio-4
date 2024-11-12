@@ -5,7 +5,6 @@ import entidades.TipoCuenta;
 
 public class Cuenta {
 	private int idCuenta;
-	private Cliente cliente;
 	private TipoCuenta tipoCuenta;
 	private Date fechaCreacion;
 	private long numeroCuenta;
@@ -14,9 +13,8 @@ public class Cuenta {
 	private boolean estadoCuenta;
 	
 	//constructores
-	public Cuenta(int idCuenta, Cliente cliente, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, String cbu, float saldo, boolean estadoCuenta) {
+	public Cuenta(int idCuenta, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, String cbu, float saldo, boolean estadoCuenta) {
 		this.idCuenta = idCuenta;
-		this.cliente = cliente;
 		this.tipoCuenta = tipoCuenta;
 		this.fechaCreacion = fechaCreacion;
 		this.numeroCuenta = numeroCuenta;
@@ -35,12 +33,6 @@ public class Cuenta {
 	}
 	public void setIdCuenta(int idCuenta) {
 		this.idCuenta = idCuenta;
-	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 	public TipoCuenta getTipoCuenta() {
 		return tipoCuenta;

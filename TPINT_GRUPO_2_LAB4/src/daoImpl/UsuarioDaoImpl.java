@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import dao.UsuarioDao;
 import entidades.TipoUsuario;
@@ -154,6 +155,32 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	public int agregarUsuario2(Usuario usuario) {
+	    int generatedId = -1;
+	    String query = "INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES (?, ?, ?, ?);";
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+	        statement.setString(1, usuario.getNombreUsuario());
+	        statement.setString(2, usuario.getPassword());
+	        statement.setInt(3, usuario.getTipoUsuario().getId());
+	        statement.setBoolean(4, usuario.isActivo());
+
+	        int rowsAffected = statement.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            ResultSet generatedKeys = statement.getGeneratedKeys();
+	            if (generatedKeys.next()) {
+	                generatedId = generatedKeys.getInt(1);
+	                usuario.setId(generatedId); // Asigna el ID al objeto usuario
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return generatedId;
 	}
 
 

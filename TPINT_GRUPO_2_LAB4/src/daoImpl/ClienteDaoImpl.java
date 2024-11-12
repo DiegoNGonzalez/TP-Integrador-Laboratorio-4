@@ -18,7 +18,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public boolean agregarCliente(Cliente cliente) {
-	    String query = "INSERT INTO clientes(idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad) "
+	    String query = "INSERT INTO clientes(idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idLocalidad, idProvincia) "
 	                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	    try (Connection conexion = Conexion.getConnection();

@@ -133,7 +133,7 @@ public class AgregarClienteServlet extends HttpServlet {
             // Intentar agregar el cliente solo si el usuario se creó con éxito
             try {
                 clienteNegocio.agregarCliente(nuevoCliente);
-                response.sendRedirect("clienteExitoso.jsp");
+                response.sendRedirect("ListarClientesServlet");
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import dao.ClienteDao;
 import daoImpl.ClienteDaoImpl;
 import entidades.Cliente;
+import entidades.Usuario;
 import negocio.ClienteNegocio;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
@@ -32,7 +33,21 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    
 	    return resultado;
 	}
+	
+	@Override
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) {
+		if (cliente == null || usuario == null) {
+			System.out.println("Error en los datos proporcionados.");
+			
+		}
 
+		if(!verificarCliente(cliente)) {
+			System.out.println("Error en los datos proporcionados.");
+		}
+		//incluirlo en la condicion
+		clienteDao.ejecutarSPCrearUsuario(usuario, cliente);	    
+	}
+	
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
 		// Llamamos al método de la capa de datos para listar los clientes activos

@@ -2,10 +2,14 @@ package daoImpl;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import dao.ClienteDao;
 import entidades.Cliente;
@@ -169,7 +173,37 @@ public class ClienteDaoImpl implements ClienteDao{
 	    
 	    return cliente;
 	}
-
-	
-
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente)
+	{
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente10"
+			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			 
+		 			 
+			 cst.setString(1, cliente.getDni());
+			 cst.setString(2, cliente.getCuil());
+			 cst.setString(3, cliente.getNombre());
+			 cst.setString(4, cliente.getApellido());
+			 cst.setString(5, cliente.getEmail());
+			 cst.setString(6, cliente.getTelefono());
+			 cst.setString(7, String.valueOf(cliente.getSexo())); 
+			 cst.setInt(8, cliente.getNacionalidad().getId());
+			 cst.setDate(9, new java.sql.Date(cliente.getFechaNacimiento().getTime()));	
+			 cst.setString(10, cliente.getDireccion());
+			 cst.setInt(11, cliente.getProvincia().getId());
+			 cst.setInt(12, cliente.getLocalidad().getId());
+			 cst.setString(13, usuario.getNombreUsuario());
+			 cst.setString(14, usuario.getPassword());
+			 cst.setInt(15, usuario.getTipoUsuario().getId());
+			  			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (Exception e) {
+			  e.printStackTrace();
+			  
+		  }	  		  			
+	}
 }

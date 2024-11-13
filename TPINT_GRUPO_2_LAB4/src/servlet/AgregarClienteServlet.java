@@ -101,7 +101,7 @@ public class AgregarClienteServlet extends HttpServlet {
 				response.sendRedirect("ListarClientesServlet");
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("error.jsp");
+				response.sendRedirect("Error.jsp");
 			}
 		}
 	}

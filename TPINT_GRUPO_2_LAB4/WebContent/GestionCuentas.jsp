@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="entidades.Cliente" %>
+<%@page import="entidades.Cuenta" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -41,145 +45,41 @@
     </div>
     <table class="account-table display" id="gestion-cuentas">
         <thead>
-            <tr>
-                <th>Cliente Asignado</th>
-                <th>Fecha de Creación</th>
-                <th>Tipo de Cuenta</th>
-                <th>Número de Cuenta</th>
-                <th>CBU</th>
-                <th>Saldo</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>María Gómez</td>
-                <td>2023-11-05</td>
-                <td>Corriente</td>
-                <td>987654321</td>
-                <td>2109876543210987654321</td>
-                <td>$5,250.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=987654321" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            <tr>
-                <td>Juan Pérez</td>
-                <td>2024-01-15</td>
-                <td>Ahorro</td>
-                <td>123456789</td>
-                <td>0123456789123456789012</td>
-                <td>$15,000.00</td>
-                <td><a href="EditarCuenta.jsp?cuentaId=123456789" class="btn-edit">Editar</a></td>
-            </tr>
-            
-        </tbody>
+        <tr>
+            <th>Cliente</th>
+            <th>Fecha de Creación de la Cuenta</th>
+            <th>Tipo de Cuenta</th>
+            <th>Número de Cuenta</th>
+            <th>CBU</th>
+            <th>Saldo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+            ArrayList<Cliente> clientes = (ArrayList<Cliente>) request.getAttribute("clientes"); 
+            for (Cliente cliente : clientes) { 
+                ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
+                for (int i = 0; i < cuentas.size(); i++) { 
+                    Cuenta cuenta = cuentas.get(i); 
+        %>
+                <tr>
+                    <!-- Muestra el nombre del cliente en una celda solo en la primera cuenta -->
+                    <% if (i == 0) { %>
+                        <td rowspan="<%= cuentas.size() %>"><%= cliente.getNombre() %></td>
+                    <% } %>
+                    <td><%= cuenta.getFechaCreacion().toString() %></td>
+                    <td><%= cuenta.getTipoCuenta()%></td>
+                    <td><%= cuenta.getNumeroCuenta() %></td>
+                    <td><%= cuenta.getCbu() %></td>
+                    <td><%= cuenta.getSaldo() %></td>
+                    <td><a href="EditarCuenta.jsp?cuentaId=<%= cuenta.getNumeroCuenta() %>" class="btn-edit">Editar</a></td>
+                </tr>
+        <% 
+                } 
+            } 
+        %>
+    </tbody>
     </table>
     <br/>
     <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>

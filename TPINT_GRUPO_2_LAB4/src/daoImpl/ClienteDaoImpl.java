@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import dao.ClienteDao;
+import dao.CuentaDao;
 import entidades.Cliente;
+import entidades.Cuenta;
 import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
@@ -184,6 +186,34 @@ public class ClienteDaoImpl implements ClienteDao{
 	    
 	    return cliente;
 	}
+	
+	public ArrayList<Cliente> obtenerTodos() {
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        String query = "SELECT idCliente, nombre, apellido FROM clientes";
+        CuentaDao cuentaDao = new CuentaDaoImpl();
+        
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(resultSet.getInt("idCliente"));
+                cliente.setNombre(resultSet.getString("nombre"));
+                cliente.setApellido(resultSet.getString("apellido"));
+
+                // obtenemos las cuentas asociadas a este cliente
+                ArrayList<Cuenta> cuentas = cuentaDao.obtenerCuentasPorCliente(cliente.getIdCliente());
+                cliente.setCuentas(cuentas);  // asignamos las cuentas al cliente
+
+                listaClientes.add(cliente);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaClientes;
+    }
 
 	
 

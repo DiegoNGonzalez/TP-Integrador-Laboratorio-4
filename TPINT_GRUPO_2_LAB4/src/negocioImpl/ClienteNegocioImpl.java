@@ -3,7 +3,9 @@ package negocioImpl;
 import java.util.ArrayList;
 
 import dao.ClienteDao;
+import dao.CuentaDao;
 import daoImpl.ClienteDaoImpl;
+import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
 import negocio.ClienteNegocio;
 
@@ -168,4 +170,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    // Si todas las validaciones pasan, devolver true
 	    return true;
 	}
-}
+	
+	 public ArrayList<Cliente> obtenerTodosLosClientesConCuentas() {
+	        // Carga cada cliente y sus cuentas desde el dao de cuenta
+		 	CuentaDao cuentaDao = new CuentaDaoImpl();
+		 
+		 	ArrayList<Cliente> clientes = clienteDao.obtenerTodos();
+	        for (Cliente cliente : clientes) {
+	            cliente.setCuentas(cuentaDao.obtenerCuentasPorCliente(cliente.getIdCliente()));
+	        }
+	        return clientes;
+	    }
+	}

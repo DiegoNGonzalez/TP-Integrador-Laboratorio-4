@@ -11,4 +11,6 @@ public interface ClienteDao {
 	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente);
 	public Cliente obtenerClientePorId(int idUsuario);
+	
+	public ArrayList<Cliente> obtenerTodos();
 }

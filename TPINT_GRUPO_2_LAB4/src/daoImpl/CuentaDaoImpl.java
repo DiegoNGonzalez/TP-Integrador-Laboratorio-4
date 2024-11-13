@@ -144,4 +144,41 @@ public class CuentaDaoImpl implements CuentaDao{
 	        return false;
 	    }
 	}
+	
+	
+	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+        String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta "
+                     + "FROM cuentas WHERE idcliente = ? AND estadoCuenta = 1"; 
+
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+            
+            statement.setInt(1, idCliente);
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    Cuenta cuenta = new Cuenta();
+                    cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+                    cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
+                    cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
+                    cuenta.setCbu(resultSet.getString("cbu"));
+                    cuenta.setSaldo(resultSet.getFloat("saldo"));
+                    cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
+                    
+                    
+                    TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
+                    
+                    cuenta.setTipoCuenta(tipoCuenta);
+                    
+                    listaCuentas.add(cuenta);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaCuentas;
+    }
 }
+

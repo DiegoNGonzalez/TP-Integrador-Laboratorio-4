@@ -138,7 +138,11 @@
             <label for="contrasena" class="form-label">Contraseña</label>
             <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Ingrese la contraseña">
         </div>
-
+		<!-- Repetir contraseña -->
+        <div class="form-group">
+            <label for="contrasenaRepetida" class="form-label">Repetir contraseña</label>
+            <input type="password" id="contrasenaRepetida" name="contrasenaRepetida" class="form-control" placeholder="Ingrese la contraseña">
+        </div>
         <!-- Botón para Guardar el Nuevo Cliente -->
         <button type="submit" class="btn-primary">Guardar Cliente</button>
 

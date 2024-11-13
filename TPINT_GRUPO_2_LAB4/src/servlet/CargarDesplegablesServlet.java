@@ -48,8 +48,7 @@ public class CargarDesplegablesServlet extends HttpServlet {
         request.setAttribute("listaProvincias", listaProvincias);
         request.setAttribute("listaLocalidades", listaLocalidades);
         // Redirigir al JSP
-        request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);
-		
+        request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);		
 	}
 
 	/**

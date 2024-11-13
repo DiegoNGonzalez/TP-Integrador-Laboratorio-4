@@ -35,7 +35,7 @@ public class ClienteCuentaServlet extends HttpServlet {
         // Obtiene la lista de clientes (con sus cuentas)
         ArrayList<Cliente> clientes = clienteService.obtenerTodosLosClientesConCuentas();
 
-        // Envia la lista de clientes como atributo al jsp
+        // Envia la lista de clientes como atributo al js
         request.setAttribute("clientes", clientes);
 
         request.getRequestDispatcher("GestionCuentas.jsp").forward(request, response);

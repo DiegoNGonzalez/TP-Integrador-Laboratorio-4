@@ -7,6 +7,8 @@ import dao.CuentaDao;
 import daoImpl.ClienteDaoImpl;
 import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
+import entidades.Usuario;
+
 import exceptions.ClienteNegocioException;
 import negocio.ClienteNegocio;
 
@@ -36,7 +38,21 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    boolean resultado = clienteDao.agregarCliente(cliente);
 	    return resultado;
 	}
+	
+	@Override
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) {
+		if (cliente == null || usuario == null) {
+			System.out.println("Error en los datos proporcionados.");
+			
+		}
 
+		if(!verificarCliente(cliente)) {
+			System.out.println("Error en los datos proporcionados.");
+		}
+		//incluirlo en la condicion
+		clienteDao.ejecutarSPCrearUsuario(usuario, cliente);	    
+	}
+	
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
 		ArrayList<Cliente> clientes = clienteDao.listarClientesActivos();
@@ -70,28 +86,28 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public boolean bajaCliente(int idCliente) {
 		if (idCliente <= 0) {
-			System.out.println("El ID del cliente no es válido.");
+			System.out.println("El ID del cliente no es vÃ¡lido.");
 			return false;
 		}
 
-		// Llamamos al método de la capa de datos para dar de baja el cliente
+		// Llamamos al mÃ©todo de la capa de datos para dar de baja el cliente
 		return clienteDao.bajaCliente(idCliente);
 	}
 
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {
 		if (idCliente <= 0) {
-			System.out.println("El ID de cliente no es válido.");
+			System.out.println("El ID de cliente no es vÃ¡lido.");
 			return null;
 		}
 
-		// Llamamos al método de la capa de datos para obtener el cliente por ID
+		// Llamamos al mÃ©todo de la capa de datos para obtener el cliente por ID
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
 
 	@Override
 	public void verificarCliente(Cliente cliente) {
-	    // Validación de campos vacíos
+	    // ValidaciÃ³n de campos vacÃ­os
 	    if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 	       String mensaje ="El nombre es obligatorio.";
 	        throw new ClienteNegocioException(mensaje);
@@ -121,7 +137,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-	        String mensaje="La dirección es obligatoria.";
+	        String mensaje="La direcciÃ³n es obligatoria.";
 	        throw new ClienteNegocioException(mensaje);
 	    }
 	    /*if (cliente.getLocalidad() == null || cliente.getLocalidad().trim().isEmpty()) {
@@ -137,7 +153,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
-	        String mensaje="El teléfono es obligatorio.";
+	        String mensaje="El telÃ©fono es obligatorio.";
 	        throw new ClienteNegocioException(mensaje);
 	    }
 	    /*if (cliente.getUsuario() == null || cliente.getUsuario().trim().isEmpty()) {
@@ -145,28 +161,29 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	        return false;
 	    }
 	    if (cliente.getContrasena() == null || cliente.getContrasena().trim().isEmpty()) {
-	        System.out.println("La contraseña es obligatoria.");
+	        System.out.println("La contraseÃ±a es obligatoria.");
 	        return false;
 	    }*/
 
-	    // Validación de formato de email
+	    // ValidaciÃ³n de formato de email
 	    String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+
 	    if (!cliente.getEmail().matches(emailPattern)) {
-	        String mensaje="El email ingresado no es válido.";
+	        String mensaje="El email ingresado no es vÃ¡lido.";
 	        throw new ClienteNegocioException(mensaje);
 	    }
 
-	    // Validación de formato de DNI (7 o 8 dígitos)
+	    // ValidaciÃ³n de formato de DNI (7 o 8 dÃ­gitos)
 	    String dniPattern = "^[0-9]{7,8}$";
 	    if (!cliente.getDni().matches(dniPattern)) {
-	        String mensaje="El DNI debe tener entre 7 y 8 dígitos.";
+	        String mensaje="El DNI debe tener entre 7 y 8 dÃ­gitos.";
 	        throw new ClienteNegocioException(mensaje);
 	    }
 
-	    // Validación de formato de CUIL (11 dígitos)
+	    // ValidaciÃ³n de formato de CUIL (11 dÃ­gitos)
 	    String cuilPattern = "^[0-9]{11}$";
 	    if (!cliente.getCuil().matches(cuilPattern)) {
-	        String mensaje="El CUIL debe tener 11 dígitos.";
+	        String mensaje="El CUIL debe tener 11 dÃ­gitos.";
 	        throw new ClienteNegocioException(mensaje);
 	        
 	    }

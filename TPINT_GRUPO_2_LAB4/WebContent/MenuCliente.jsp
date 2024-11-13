@@ -69,7 +69,7 @@
             <td><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
                 <div class="action-buttons">
-                    <a href="EditarCliente.jsp?clienteId=<%= cliente.getDni() %>" class="btn-edit">Editar</a>
+                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getUsuario().getId() %>" class="btn-edit">Editar</a>
                     <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
                 </div>
             </td>

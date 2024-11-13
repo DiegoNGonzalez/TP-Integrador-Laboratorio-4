@@ -57,8 +57,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
-	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";
-	    ArrayList<Cliente> listaClientes = new ArrayList<>();
+		String query = "SELECT idUsuario, idCliente , dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";	    ArrayList<Cliente> listaClientes = new ArrayList<>();
 
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query);
@@ -72,6 +71,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	            Provincia provincia = new ProvinciaDaoImpl().obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
 	            // Asignar valores del ResultSet al objeto Cliente
 	            cliente.setUsuario(usuario); 
+	            cliente.setIdCliente(resultSet.getInt("idCliente"));
 	            cliente.setDni(resultSet.getString("dni"));
 	            cliente.setCuil(resultSet.getString("cuil"));
 	            cliente.setNombre(resultSet.getString("nombre"));
@@ -97,7 +97,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
-	    String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idUsuario = ?";
+		 String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idCliente = ?";
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -108,7 +108,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	        statement.setString(3, cliente.getEmail());
 	        statement.setString(4, cliente.getTelefono());
 	        statement.setString(5, cliente.getDireccion());
-	        statement.setInt(6, cliente.getUsuario().getId());
+	        statement.setInt(6, cliente.getIdCliente());
 	        
 	        // Ejecuta la actualización y verifica si fue exitosa
 	        return statement.executeUpdate() > 0;
@@ -136,28 +136,28 @@ public class ClienteDaoImpl implements ClienteDao{
 	    }
 	}
 	@Override
-	public Cliente obtenerClientePorId(int idUsuario) {
-	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, fechaNacimiento, direccion "
-	                 + "FROM clientes WHERE idUsuario = ?";
-	    
+	public Cliente obtenerClientePorId(int idCliente) {
+	    String query = "SELECT idCliente, idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
+	                 + "FROM clientes WHERE idCliente = ?";
+
 	    Cliente cliente = null;
-	    
+
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
-	        
-	        // Establecer el parámetro de consulta (ID de usuario)
-	        statement.setInt(1, idUsuario);
-	        
+
+	        // Establecer ID de Cliente
+	        statement.setInt(1, idCliente);
+
 	        try (ResultSet resultSet = statement.executeQuery()) {
-	            // Si se encuentra el cliente, se crea el objeto Cliente
+	        	
 	            if (resultSet.next()) {
 	                cliente = new Cliente();
-	                
+
 	                // Obtener el Usuario relacionado al cliente
 	                Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
-	                
-	                // Asignar los valores obtenidos del ResultSet al objeto Cliente
+
 	                cliente.setUsuario(usuario);
+	                cliente.setIdCliente(Integer.parseInt(resultSet.getString("idCliente")));
 	                cliente.setDni(resultSet.getString("dni"));
 	                cliente.setCuil(resultSet.getString("cuil"));
 	                cliente.setNombre(resultSet.getString("nombre"));
@@ -167,14 +167,27 @@ public class ClienteDaoImpl implements ClienteDao{
 	                cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
 	                cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
 	                cliente.setDireccion(resultSet.getString("direccion"));
+
+	                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
+	                LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
+	                ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
+
+	                Nacionalidad nacionalidad = nacionalidadDao.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+	                Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+	                Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
+
+	                cliente.setNacionalidad(nacionalidad);
+	                cliente.setLocalidad(localidad);
+	                cliente.setProvincia(provincia);
 	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    
+
 	    return cliente;
 	}
+
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente)
 	{
 		  try

@@ -35,7 +35,6 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
-		// Llamamos al método de la capa de datos para listar los clientes activos
 		ArrayList<Cliente> clientes = clienteDao.listarClientesActivos();
 
 		if (clientes == null || clientes.isEmpty()) {
@@ -48,17 +47,17 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
-		if (cliente == null || cliente.getUsuario() == null) {
-			System.out.println("El cliente o el usuario no pueden ser nulos.");
+		if (cliente == null) {
+			System.out.println("El cliente no puede ser nulo.");
 			return false;
 		}
 
 		if(!verificarCliente(cliente)) {
+			System.out.println("El cliente no pudo ser verificado.");
 			return false;
 		}
 
 		boolean resultado= clienteDao.modificarCliente(cliente);
-		// Llamamos al método de la capa de datos para modificar el cliente
 		return resultado;
 	}
 

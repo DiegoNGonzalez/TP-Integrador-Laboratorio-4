@@ -34,8 +34,8 @@ public class BuscarClienteServlet extends HttpServlet {
         Cliente cliente = auxClienteNeg.obtenerClientePorId(clienteId);
         if (cliente == null) {
             // Si el cliente no existe redirecciono.
-            request.setAttribute("error", "Cliente no encontrado.");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+			System.out.println("El cliente no existe.");
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         } else {
             request.setAttribute("cliente", cliente);
             request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);

@@ -7,6 +7,7 @@ import dao.CuentaDao;
 import daoImpl.ClienteDaoImpl;
 import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
+import exceptions.ClienteNegocioException;
 import negocio.ClienteNegocio;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
@@ -24,14 +25,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return false;
 		}
 
-		if(!verificarCliente(cliente)) {
-			return false;
-		}
-		
-		boolean resultado= clienteDao.agregarCliente(cliente);
+		try {
+	        verificarCliente(cliente); 
+	    } catch (ClienteNegocioException e) {
+	        System.out.println("Error al verificar el cliente: " + e.getMessage());
+	        return false; 
+	    }
 
-	    // Si todas las validaciones pasan, proceder a agregar el cliente
 	    
+	    boolean resultado = clienteDao.agregarCliente(cliente);
 	    return resultado;
 	}
 
@@ -54,10 +56,12 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return false;
 		}
 
-		if(!verificarCliente(cliente)) {
-			System.out.println("El cliente no pudo ser verificado.");
-			return false;
-		}
+		try {
+	        verificarCliente(cliente);
+	    } catch (ClienteNegocioException e) {
+	        System.out.println("Error al verificar el cliente: " + e.getMessage());
+	        return false;
+	    }
 
 		boolean resultado= clienteDao.modificarCliente(cliente);
 		return resultado;
@@ -86,23 +90,23 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public boolean verificarCliente(Cliente cliente) {
+	public void verificarCliente(Cliente cliente) {
 	    // Validación de campos vacíos
 	    if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
-	        System.out.println("El nombre es obligatorio.");
-	        return false;
+	       String mensaje ="El nombre es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getApellido() == null || cliente.getApellido().trim().isEmpty()) {
-	        System.out.println("El apellido es obligatorio.");
-	        return false;
+	        String mensaje ="El apellido es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getDni() == null || cliente.getDni().trim().isEmpty()) {
-	        System.out.println("El DNI es obligatorio.");
-	        return false;
+	        String mensaje="El DNI es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getCuil() == null || cliente.getCuil().trim().isEmpty()) {
-	        System.out.println("El CUIL es obligatorio.");
-	        return false;
+	        String mensaje="El CUIL es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    /*if (cliente.getSexo() == null || cliente.getSexo().trim().isEmpty()) {
 	        System.out.println("El sexo es obligatorio.");
@@ -113,12 +117,12 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	        return false;
 	    }*/
 	    if (cliente.getFechaNacimiento() == null) {
-	        System.out.println("La fecha de nacimiento es obligatoria.");
-	        return false;
+	        String mensaje="La fecha de nacimiento es obligatoria.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-	        System.out.println("La dirección es obligatoria.");
-	        return false;
+	        String mensaje="La dirección es obligatoria.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    /*if (cliente.getLocalidad() == null || cliente.getLocalidad().trim().isEmpty()) {
 	        System.out.println("La localidad es obligatoria.");
@@ -129,12 +133,12 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	        return false;
 	    }*/
 	    if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
-	        System.out.println("El email es obligatorio.");
-	        return false;
+	        String mensaje="El email es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
-	        System.out.println("El teléfono es obligatorio.");
-	        return false;
+	        String mensaje="El teléfono es obligatorio.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 	    /*if (cliente.getUsuario() == null || cliente.getUsuario().trim().isEmpty()) {
 	        System.out.println("El nombre de usuario es obligatorio.");
@@ -148,26 +152,26 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    // Validación de formato de email
 	    String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 	    if (!cliente.getEmail().matches(emailPattern)) {
-	        System.out.println("El email ingresado no es válido.");
-	        return false;
+	        String mensaje="El email ingresado no es válido.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 
 	    // Validación de formato de DNI (7 o 8 dígitos)
 	    String dniPattern = "^[0-9]{7,8}$";
 	    if (!cliente.getDni().matches(dniPattern)) {
-	        System.out.println("El DNI debe tener entre 7 y 8 dígitos.");
-	        return false;
+	        String mensaje="El DNI debe tener entre 7 y 8 dígitos.";
+	        throw new ClienteNegocioException(mensaje);
 	    }
 
 	    // Validación de formato de CUIL (11 dígitos)
 	    String cuilPattern = "^[0-9]{11}$";
 	    if (!cliente.getCuil().matches(cuilPattern)) {
-	        System.out.println("El CUIL debe tener 11 dígitos.");
-	        return false;
+	        String mensaje="El CUIL debe tener 11 dígitos.";
+	        throw new ClienteNegocioException(mensaje);
+	        
 	    }
 
-	    // Si todas las validaciones pasan, devolver true
-	    return true;
+	    
 	}
 	
 	 public ArrayList<Cliente> obtenerTodosLosClientesConCuentas() {

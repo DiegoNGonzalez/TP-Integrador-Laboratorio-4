@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="entidades.Cliente" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,100 +14,88 @@
 <!-- Contenedor del Formulario de Editar Cliente -->
 <div class="client-container">
     <h2 class="edit-title">Editar Cliente</h2>
-    <form action="EditarCliente.jsp" method="post">
+    <form action="EditarClienteServlet" method="post">
 
-        <!-- Nombre -->
-        <div class="form-group">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" value="Juan" placeholder="Ingrese el nombre del cliente">
-        </div>
+        <% Cliente cliente = (Cliente) request.getAttribute("cliente"); %>
+        
+        <input id="idCliente" name="idCliente" value="<%= cliente.getIdCliente() %>" type="hidden">
 
-        <!-- Apellido -->
-        <div class="form-group">
-            <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" id="apellido" name="apellido" class="form-control" value="Pérez" placeholder="Ingrese el apellido del cliente">
-        </div>
+<div class="form-group">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" id="nombre" name="nombre" class="form-control" value="<%= cliente.getNombre() %>">
+</div>
 
-        <!-- DNI -->
-        <div class="form-group">
-            <label for="dni" class="form-label">DNI</label>
-            <input type="text" id="dni" name="dni" class="form-control" value="12345678" readonly>
-        </div>
+<div class="form-group">
+    <label for="apellido" class="form-label">Apellido</label>
+    <input type="text" id="apellido" name="apellido" class="form-control" value="<%= cliente.getApellido() %>">
+</div>
 
-        <!-- CUIL -->
-        <div class="form-group">
-            <label for="cuil" class="form-label">CUIL</label>
-            <input type="text" id="cuil" name="cuil" class="form-control" value="20-12345678-9" placeholder="Ingrese el CUIL">
-        </div>
+<div class="form-group">
+    <label for="dni" class="form-label">DNI</label>
+    <input type="text" id="dni" name="dni" class="form-control" value="<%= cliente.getDni() %>" readonly>
+</div>
 
-        <!-- Sexo -->
-        <div class="form-group">
-            <label for="sexo" class="form-label">Sexo</label>
-            <select id="sexo" name="sexo" class="form-control">
-                <option value="M" selected>Masculino</option>
-                <option value="F">Femenino</option>
-            </select>
-        </div>
+<div class="form-group">
+    <label for="cuil" class="form-label">CUIL</label>
+    <input type="text" id="cuil" name="cuil" class="form-control" value="<%= cliente.getCuil() %>">
+</div>
 
-        <!-- Nacionalidad -->
-        <div class="form-group">
-            <label for="nacionalidad" class="form-label">Nacionalidad</label>
-            <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" value="Argentina" placeholder="Ingrese la nacionalidad">
-        </div>
+<div class="form-group">
+    <label for="sexo" class="form-label">Sexo</label>
+    <select id="sexo" name="sexo" class="form-control">
+        <option value="M" <%= cliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
+        <option value="F" <%= cliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
+    </select>
+</div>
 
-        <!-- Fecha de Nacimiento -->
-        <div class="form-group">
-            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="1990-01-15">
-        </div>
+<div class="form-group">
+    <label for="nacionalidad" class="form-label">Nacionalidad</label>
+    <select id="nacionalidad" name="nacionalidad" class="form-control">
+        <option value="<%= cliente.getNacionalidad().getId() %>"><%= cliente.getNacionalidad().getNacionalidad() %></option>
+    </select>
+</div>
 
-        <!-- Dirección -->
-        <div class="form-group">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" id="direccion" name="direccion" class="form-control" value="Calle Falsa 123" placeholder="Ingrese la dirección">
-        </div>
+<div class="form-group">
+    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="<%= cliente.getFechaNacimiento() %>">
+</div>
 
-        <!-- Localidad -->
-        <div class="form-group">
-            <label for="localidad" class="form-label">Localidad</label>
-            <input type="text" id="localidad" name="localidad" class="form-control" value="Buenos Aires" placeholder="Ingrese la localidad">
-        </div>
+<div class="form-group">
+    <label for="direccion" class="form-label">Dirección</label>
+    <input type="text" id="direccion" name="direccion" class="form-control" value="<%= cliente.getDireccion() %>">
+</div>
 
-        <!-- Provincia -->
-        <div class="form-group">
-            <label for="provincia" class="form-label">Provincia</label>
-            <input type="text" id="provincia" name="provincia" class="form-control" value="Buenos Aires" placeholder="Ingrese la provincia">
-        </div>
+<div class="form-group">
+    <label for="localidad" class="form-label">Localidad</label>
+    <select id="localidad" name="localidad" class="form-control">
+        <option value="<%= cliente.getLocalidad().getId() %>"><%= cliente.getLocalidad().getLocalidad() %></option>
+    </select>
+</div>
 
-        <!-- Email -->
-        <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="juan.perez@example.com" placeholder="Ingrese el email">
-        </div>
+<div class="form-group">
+    <label for="provincia" class="form-label">Provincia</label>
+    <select id="provincia" name="provincia" class="form-control">
+        <option value="<%= cliente.getProvincia().getId() %>"><%= cliente.getProvincia().getProvincia() %></option>
+    </select>
+</div>
 
-        <!-- Teléfono -->
-        <div class="form-group">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="tel" id="telefono" name="telefono" class="form-control" value="01112345678" placeholder="Ingrese el teléfono">
-        </div>
 
-        <!-- Usuario -->
-        <div class="form-group">
-            <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" id="usuario" name="usuario" class="form-control" value="jperez" readonly>
-        </div>
+<div class="form-group">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" id="email" name="email" class="form-control" value="<%= cliente.getEmail() %>">
+</div>
 
-        <!-- Contraseña -->
-        <div class="form-group">
-            <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control" readonly>
-        </div>
+<div class="form-group">
+    <label for="telefono" class="form-label">Teléfono</label>
+    <input type="tel" id="telefono" name="telefono" class="form-control" value="<%= cliente.getTelefono() %>">
+</div>
+
 
         <!-- Botón para Guardar Cambios -->
         <input type="submit" class="btn-save" value="Guardar cambios">
 
         <!-- Botón para Cancelar -->
-        <input type="submit" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
+        <input type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
     </form>
 </div>
 </body>

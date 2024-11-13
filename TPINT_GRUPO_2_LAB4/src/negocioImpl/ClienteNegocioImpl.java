@@ -3,7 +3,9 @@ package negocioImpl;
 import java.util.ArrayList;
 
 import dao.ClienteDao;
+import dao.CuentaDao;
 import daoImpl.ClienteDaoImpl;
+import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Usuario;
 import negocio.ClienteNegocio;
@@ -50,7 +52,6 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
-		// Llamamos al método de la capa de datos para listar los clientes activos
 		ArrayList<Cliente> clientes = clienteDao.listarClientesActivos();
 
 		if (clientes == null || clientes.isEmpty()) {
@@ -63,17 +64,17 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
-		if (cliente == null || cliente.getUsuario() == null) {
-			System.out.println("El cliente o el usuario no pueden ser nulos.");
+		if (cliente == null) {
+			System.out.println("El cliente no puede ser nulo.");
 			return false;
 		}
 
 		if(!verificarCliente(cliente)) {
+			System.out.println("El cliente no pudo ser verificado.");
 			return false;
 		}
 
 		boolean resultado= clienteDao.modificarCliente(cliente);
-		// Llamamos al método de la capa de datos para modificar el cliente
 		return resultado;
 	}
 
@@ -89,14 +90,14 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public Cliente obtenerClientePorId(int idUsuario) {
-		if (idUsuario <= 0) {
-			System.out.println("El ID de usuario no es válido.");
+	public Cliente obtenerClientePorId(int idCliente) {
+		if (idCliente <= 0) {
+			System.out.println("El ID de cliente no es válido.");
 			return null;
 		}
 
 		// Llamamos al método de la capa de datos para obtener el cliente por ID
-		return clienteDao.obtenerClientePorId(idUsuario);
+		return clienteDao.obtenerClientePorId(idCliente);
 	}
 
 	@Override
@@ -183,4 +184,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	    // Si todas las validaciones pasan, devolver true
 	    return true;
 	}
-}
+	
+	 public ArrayList<Cliente> obtenerTodosLosClientesConCuentas() {
+	        // Carga cada cliente y sus cuentas desde el dao de cuenta
+		 	CuentaDao cuentaDao = new CuentaDaoImpl();
+		 
+		 	ArrayList<Cliente> clientes = clienteDao.obtenerTodos();
+	        for (Cliente cliente : clientes) {
+	            cliente.setCuentas(cuentaDao.obtenerCuentasPorCliente(cliente.getIdCliente()));
+	        }
+	        return clientes;
+	    }
+	}

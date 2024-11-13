@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Cliente {
@@ -18,6 +19,7 @@ public class Cliente {
 	private Nacionalidad nacionalidad;
 	private Localidad localidad;
 	private Provincia provincia;
+	private ArrayList<Cuenta> cuentas;
 	
 	
 	public  Cliente () {
@@ -25,7 +27,7 @@ public class Cliente {
 	}
 	
 	public Cliente(Usuario usuario, int idCliente, String dni, String cuil, String nombre, String apellido, String email,
-			String telefono, String direccion, Date fechaNacimiento, char sexo,boolean estado, Nacionalidad nacionalidad, Localidad localidad, Provincia provincia) {
+			String telefono, String direccion, Date fechaNacimiento, char sexo,boolean estado, Nacionalidad nacionalidad, Localidad localidad, Provincia provincia, ArrayList<Cuenta> cuentas) {
 		super();
 		this.usuario = usuario;
 		this.idCliente = idCliente;
@@ -42,6 +44,7 @@ public class Cliente {
 		this.nacionalidad= nacionalidad;
 		this.localidad=localidad;
 		this.provincia=provincia;
+		this.cuentas=cuentas;
 	}
 
 	//Getters y setters
@@ -145,6 +148,16 @@ public class Cliente {
 
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
+	}
+	
+	
+
+	public ArrayList<Cuenta> getCuentas() {
+		return cuentas;
+	}
+
+	public void setCuentas(ArrayList<Cuenta> cuentas) {
+		this.cuentas = cuentas;
 	}
 
 	@Override

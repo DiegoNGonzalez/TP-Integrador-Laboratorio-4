@@ -15,7 +15,7 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	@Override
 	public Cuenta obtenerCuentaPorId(int idCuenta) {
-	    String query = "SELECT idCuenta, idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, "
+	    String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, "
 	    		+ "estadoCuenta FROM cuentas where idCuenta= ?"; 
 	    
 	    Cuenta cuenta = null;
@@ -31,10 +31,8 @@ public class CuentaDaoImpl implements CuentaDao{
 	                cuenta = new Cuenta();
 	                
 		        	TipoCuenta tipoCuenta= new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
-		        	Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idTipoCuenta"));
 		        		        		        	
 		        	cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
-		        	cuenta.setCliente(cliente);
 		            cuenta.setTipoCuenta(tipoCuenta);
 		            cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
 		            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
@@ -51,7 +49,7 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	@Override
 	public ArrayList<Cuenta> listarCuentas() {
-	    String query = "SELECT idCuenta, idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta FROM cuentas where estado=1";
+	    String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta FROM cuentas where estado=1";
 	    ArrayList<Cuenta> listaCuentas = new ArrayList<>();
 
 	    try (Connection conexion = Conexion.getConnection();
@@ -62,10 +60,8 @@ public class CuentaDaoImpl implements CuentaDao{
 	        	Cuenta cuenta = new Cuenta();
 	        	
 	        	TipoCuenta tipoCuenta= new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
-	        	Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idTipoCuenta"));
 	        		        		        	
 	        	cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
-	        	cuenta.setCliente(cliente);
 	            cuenta.setTipoCuenta(tipoCuenta);
 	            cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
 	            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
@@ -83,7 +79,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	}
 
 	@Override
-	public boolean modificarCuenta(Cuenta cuenta) {
+	public boolean modificarCuenta(Cuenta cuenta, int idCliente) {
 	    String query = "UPDATE cuentas SET idcliente = ?, idTipoCuenta = ?, numeroCuenta = ?,"
 	    		+ " cbu = ?, saldo = ? WHERE idCuenta = ?";
 	    
@@ -91,7 +87,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
 	        // Asignación de parámetros para actualizar los datos
-	        statement.setInt(1, cuenta.getCliente().getIdCliente());
+	        statement.setInt(1, idCliente);
 	        statement.setInt(2, cuenta.getTipoCuenta().getId());
 	        statement.setLong(3, cuenta.getNumeroCuenta());
 	        statement.setString(4, cuenta.getCbu());
@@ -106,7 +102,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	}
 
 	@Override
-	public boolean agregarCuenta(Cuenta cuenta) {
+	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
 	    String query = "INSERT INTO cuentas(idCuenta, idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
 	                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	    
@@ -115,7 +111,7 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	        // Asignación de parámetros
 	        statement.setInt(1, cuenta.getIdCuenta());
-	        statement.setInt(2, cuenta.getCliente().getIdCliente());
+	        statement.setInt(2, idCliente);
 	        statement.setInt(3, cuenta.getTipoCuenta().getId());
 	        statement.setDate(4,new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
 	        statement.setLong(5, cuenta.getNumeroCuenta());
@@ -148,4 +144,41 @@ public class CuentaDaoImpl implements CuentaDao{
 	        return false;
 	    }
 	}
+	
+	
+	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+        String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta "
+                     + "FROM cuentas WHERE idcliente = ? AND estadoCuenta = 1"; 
+
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+            
+            statement.setInt(1, idCliente);
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    Cuenta cuenta = new Cuenta();
+                    cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+                    cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
+                    cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
+                    cuenta.setCbu(resultSet.getString("cbu"));
+                    cuenta.setSaldo(resultSet.getFloat("saldo"));
+                    cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
+                    
+                    
+                    TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
+                    
+                    cuenta.setTipoCuenta(tipoCuenta);
+                    
+                    listaCuentas.add(cuenta);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaCuentas;
+    }
 }
+

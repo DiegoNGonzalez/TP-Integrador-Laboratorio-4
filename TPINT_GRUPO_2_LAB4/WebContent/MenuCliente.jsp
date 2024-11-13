@@ -1,3 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="entidades.Cliente" %>
+<%@ page import="entidades.Nacionalidad" %>
+<%@ page import="entidades.Provincia" %>
+<%@ page import="entidades.Localidad" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -40,48 +46,37 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Juan</td>
-            	<td>Pérez</td>
-            	<td>12345678</td>
-            	<td>20-12345678-9</td>
-            	<td>M</td>
-            	<td>Argentina</td>
-            	<td>1985-07-12</td>
-            	<td>Calle Falsa 123</td>
-            	<td>Buenos Aires</td>
-            	<td>Buenos Aires</td>
-            	<td>juan.perez@example.com</td>
-            	<td>1234-5678</td>
-            	<td>juanp</td>
-                <td>
-    <div class="action-buttons">
-        <a href="EditarCliente.jsp?clienteId=12345678" class="btn-edit">Editar</a>
-        <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
-    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>María</td>
-            	<td>López</td>
-            	<td>87654321</td>
-            	<td>27-87654321-3</td>
-            	<td>F</td>
-            	<td>Argentina</td>
-            	<td>1990-03-25</td>
-            	<td>Avenida Siempre Viva 456</td>
-            	<td>Rosario</td>
-            	<td>Santa Fe</td>
-            	<td>maria.lopez@example.com</td>
-            	<td>5678-1234</td>
-            	<td>marial</td>
-                <td>
-    <div class="action-buttons">
-        <a href="EditarCliente.jsp?clienteId=12345678" class="btn-edit">Editar</a>
-        <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
-    </div>
-                </td>
-            </tr>
+            <% 
+    ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) request.getAttribute("listaClientes"); 
+    Iterator<Cliente> iteradorClientes = listaClientes.iterator();
+    
+    while (iteradorClientes.hasNext()) {
+        Cliente cliente = iteradorClientes.next();
+%>
+        <tr>
+            <td><%= cliente.getNombre() %></td>
+            <td><%= cliente.getApellido() %></td>
+            <td><%= cliente.getDni() %></td>
+            <td><%= cliente.getCuil() %></td>
+            <td><%= cliente.getSexo() %></td>
+            <td><%= cliente.getNacionalidad().getNacionalidad() %></td>
+            <td><%= cliente.getFechaNacimiento() %></td>
+            <td><%= cliente.getDireccion() %></td>
+            <td><%= cliente.getLocalidad().getLocalidad() %></td>
+            <td><%= cliente.getProvincia().getProvincia() %></td>
+            <td><%= cliente.getEmail() %></td>
+            <td><%= cliente.getTelefono() %></td>
+            <td><%= cliente.getUsuario().getNombreUsuario() %></td>
+            <td>
+                <div class="action-buttons">
+                    <a href="EditarCliente.jsp?clienteId=<%= cliente.getDni() %>" class="btn-edit">Editar</a>
+                    <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
+                </div>
+            </td>
+        </tr>
+<% 
+    } 
+%>
         </tbody>
     </table>
     <br>

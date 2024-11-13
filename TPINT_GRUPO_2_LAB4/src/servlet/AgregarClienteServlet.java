@@ -29,16 +29,10 @@ import negocioImpl.UsuarioNegocioImpl;
 @WebServlet("/AgregarClienteServlet")
 public class AgregarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-   
-    public AgregarClienteServlet() {
-        super();
-        
-    }
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AgregarClienteServlet() {
+		super();
+
 	}
 
 	
@@ -113,4 +107,11 @@ public class AgregarClienteServlet extends HttpServlet {
     }		 
 }
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+	}
+
+
+
+}

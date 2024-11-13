@@ -47,7 +47,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		try {
 			verificarCliente(cliente);
 		} catch (ClienteNegocioException e) {
-			System.out.println("Error al verificar el cliente: " + e.getMessage());
+			throw new ClienteNegocioException(e.getMessage());
 
 		}
 		// incluirlo en la condicion

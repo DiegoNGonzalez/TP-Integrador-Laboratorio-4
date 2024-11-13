@@ -13,6 +13,9 @@ import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.Usuario;
+import negocioImpl.LocalidadNegocioImpl;
+import negocioImpl.NacionalidadNegocioImpl;
+import negocioImpl.ProvinciaNegocioImpl;
 
 public class ClienteDaoImpl implements ClienteDao{
 
@@ -131,7 +134,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	}
 	@Override
 	public Cliente obtenerClientePorId(int idUsuario) {
-	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, fechaNacimiento, direccion "
+	    String query = "SELECT idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
 	                 + "FROM clientes WHERE idUsuario = ?";
 	    
 	    Cliente cliente = null;
@@ -161,6 +164,18 @@ public class ClienteDaoImpl implements ClienteDao{
 	                cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
 	                cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
 	                cliente.setDireccion(resultSet.getString("direccion"));
+	                
+	                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
+	                LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
+	                ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
+
+	                Nacionalidad nacionalidad = nacionalidadDao.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+	                Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+	                Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
+
+	                cliente.setNacionalidad(nacionalidad);
+	                cliente.setLocalidad(localidad);
+	                cliente.setProvincia(provincia);
 	            }
 	        }
 	    } catch (Exception e) {

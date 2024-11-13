@@ -13,14 +13,14 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	private CuentaDao cuentaDao;
 	
 	@Override
-    public boolean agregarCuenta(Cuenta cuenta) throws CuentaNegocioException {
+    public boolean agregarCuenta(Cuenta cuenta, int idCliente) throws CuentaNegocioException {
         // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
         if (cuenta == null) {
             throw new CuentaNegocioException("La cuenta no puede ser nula.");
         }
-        if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
+        /*if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
             throw new CuentaNegocioException("El cliente debe ser válido.");
-        }
+        }*/
         if (cuenta.getTipoCuenta() == null || cuenta.getTipoCuenta().getId() <= 0) {
             throw new CuentaNegocioException("El tipo de cuenta debe ser válido.");
         }
@@ -28,7 +28,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
             throw new CuentaNegocioException("El saldo no puede ser negativo.");
         }
 
-        return cuentaDao.agregarCuenta(cuenta);
+        return cuentaDao.agregarCuenta(cuenta, idCliente);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class CuentaNegocioImpl implements CuentaNegocio {
     }
 
     @Override
-    public boolean modificarCuenta(Cuenta cuenta) throws CuentaNegocioException {
+    public boolean modificarCuenta(Cuenta cuenta, int idCliente) throws CuentaNegocioException {
         // Validaciones de datos de la cuenta
         if (cuenta == null || cuenta.getIdCuenta() <= 0) {
             throw new CuentaNegocioException("La cuenta a modificar debe ser válida y tener un ID.");
         }
-        if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
+        /*if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
             throw new CuentaNegocioException("El cliente debe ser válido.");
-        }
+        }*/
         if (cuenta.getTipoCuenta() == null || cuenta.getTipoCuenta().getId() <= 0) {
             throw new CuentaNegocioException("El tipo de cuenta debe ser válido.");
         }
@@ -60,7 +60,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
             throw new CuentaNegocioException("El saldo no puede ser negativo.");
         }
 
-        return cuentaDao.modificarCuenta(cuenta);
+        return cuentaDao.modificarCuenta(cuenta, idCliente);
     }
 
     @Override

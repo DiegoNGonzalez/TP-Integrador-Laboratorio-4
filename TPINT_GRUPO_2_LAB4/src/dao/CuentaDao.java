@@ -8,4 +8,6 @@ public interface CuentaDao {
 	public boolean modificarCuenta(Cuenta cuenta, int idCliente);
 	public boolean bajaCuenta(int idCuenta);
 	public Cuenta obtenerCuentaPorId(int idCuenta);
+	
+	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente);
 }

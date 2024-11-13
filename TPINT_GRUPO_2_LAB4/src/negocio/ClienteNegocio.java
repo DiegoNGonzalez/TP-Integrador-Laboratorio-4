@@ -12,5 +12,6 @@ public interface ClienteNegocio {
 	public boolean bajaCliente(int idCliente);
 	public Cliente obtenerClientePorId(int idUsuario);
 	public boolean verificarCliente(Cliente cliente);
+	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas();
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente);
 }

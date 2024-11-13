@@ -162,6 +162,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	    // Validación de formato de email
 	    String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+
 	    if (!cliente.getEmail().matches(emailPattern)) {
 	        System.out.println("El email ingresado no es válido.");
 	        return false;

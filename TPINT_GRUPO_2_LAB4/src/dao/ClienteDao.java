@@ -13,4 +13,5 @@ public interface ClienteDao {
 	public boolean bajaCliente(int idCliente);
 	public Cliente obtenerClientePorId(int idUsuario);
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente);
+	public ArrayList<Cliente> obtenerTodos();
 }

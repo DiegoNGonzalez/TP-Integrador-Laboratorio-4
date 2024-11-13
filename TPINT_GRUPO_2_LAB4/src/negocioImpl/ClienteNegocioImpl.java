@@ -73,14 +73,14 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public Cliente obtenerClientePorId(int idUsuario) {
-		if (idUsuario <= 0) {
-			System.out.println("El ID de usuario no es válido.");
+	public Cliente obtenerClientePorId(int idCliente) {
+		if (idCliente <= 0) {
+			System.out.println("El ID de cliente no es válido.");
 			return null;
 		}
 
 		// Llamamos al método de la capa de datos para obtener el cliente por ID
-		return clienteDao.obtenerClientePorId(idUsuario);
+		return clienteDao.obtenerClientePorId(idCliente);
 	}
 
 	@Override

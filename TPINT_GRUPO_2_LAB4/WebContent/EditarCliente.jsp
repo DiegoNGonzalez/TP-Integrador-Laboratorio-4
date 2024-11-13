@@ -14,9 +14,11 @@
 <!-- Contenedor del Formulario de Editar Cliente -->
 <div class="client-container">
     <h2 class="edit-title">Editar Cliente</h2>
-    <form action="EditarCliente.jsp" method="post">
+    <form action="EditarClienteServlet" method="post">
 
         <% Cliente cliente = (Cliente) request.getAttribute("cliente"); %>
+        
+        <input id="idCliente" name="idCliente" value="<%= cliente.getIdCliente() %>" type="hidden">
 
 <div class="form-group">
     <label for="nombre" class="form-label">Nombre</label>
@@ -48,7 +50,9 @@
 
 <div class="form-group">
     <label for="nacionalidad" class="form-label">Nacionalidad</label>
-    <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" value="<%= cliente.getNacionalidad().getNacionalidad() %>">
+    <select id="nacionalidad" name="nacionalidad" class="form-control">
+        <option value="<%= cliente.getNacionalidad().getId() %>"><%= cliente.getNacionalidad().getNacionalidad() %></option>
+    </select>
 </div>
 
 <div class="form-group">
@@ -63,13 +67,18 @@
 
 <div class="form-group">
     <label for="localidad" class="form-label">Localidad</label>
-    <input type="text" id="localidad" name="localidad" class="form-control" value="<%= cliente.getLocalidad().getLocalidad() %>">
+    <select id="localidad" name="localidad" class="form-control">
+        <option value="<%= cliente.getLocalidad().getId() %>"><%= cliente.getLocalidad().getLocalidad() %></option>
+    </select>
 </div>
 
 <div class="form-group">
     <label for="provincia" class="form-label">Provincia</label>
-    <input type="text" id="provincia" name="provincia" class="form-control" value="<%= cliente.getProvincia().getProvincia() %>">
+    <select id="provincia" name="provincia" class="form-control">
+        <option value="<%= cliente.getProvincia().getId() %>"><%= cliente.getProvincia().getProvincia() %></option>
+    </select>
 </div>
+
 
 <div class="form-group">
     <label for="email" class="form-label">Email</label>
@@ -81,17 +90,12 @@
     <input type="tel" id="telefono" name="telefono" class="form-control" value="<%= cliente.getTelefono() %>">
 </div>
 
-<div class="form-group">
-    <label for="usuario" class="form-label">Usuario</label>
-    <input type="text" id="usuario" name="usuario" class="form-control" value="<%= cliente.getUsuario().getNombreUsuario() %>" readonly>
-</div>
-
 
         <!-- Botón para Guardar Cambios -->
         <input type="submit" class="btn-save" value="Guardar cambios">
 
         <!-- Botón para Cancelar -->
-        <input type="submit" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
+        <input type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
     </form>
 </div>
 </body>

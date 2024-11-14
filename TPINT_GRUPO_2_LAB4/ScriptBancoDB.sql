@@ -5,39 +5,39 @@ USE BancoDB;
 
 
 CREATE TABLE provincias (
-	idProvincia int primary key auto_increment,
+    idProvincia int primary key auto_increment,
     provincia varchar(50) unique not null
 );
 
 CREATE TABLE localidades (
-	idLocalidad int primary key auto_increment,
+    idLocalidad int primary key auto_increment,
     idProvincia int  not null,
     localidad varchar(50) unique not null,
     
     foreign key (idProvincia) references provincias(idProvincia)
 );
 CREATE TABLE nacionalidades (
-	idNacionalidad int primary key auto_increment,
+    idNacionalidad int primary key auto_increment,
     nacionalidad varchar(30) unique not null
 );
 
 CREATE TABLE tiposUsuarios (
-	idTipoUsuario int primary key auto_increment,
+    idTipoUsuario int primary key auto_increment,
     tipoUsuario varchar(20) UNIQUE
 );
 
 CREATE TABLE tiposCuentas (
-	idTipoCuenta int primary key auto_increment,
+    idTipoCuenta int primary key auto_increment,
     tipoCuenta varchar(25) UNIQUE
 );
 
 CREATE TABLE tiposMovimientos (
-	idTipoMovimiento int primary key auto_increment,
+    idTipoMovimiento int primary key auto_increment,
     tipoMovimiento varchar(25) UNIQUE
 );
 
 CREATE TABLE usuarios (
-	idUsuario int primary key auto_increment,
+    idUsuario int primary key auto_increment,
     nombreUsuario varchar(50) UNIQUE NOT NULL,
     contrasenia varchar(20) NOT NULL,
     tipoUsuario int NOT NULL,
@@ -137,7 +137,7 @@ INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 
 
 CREATE TABLE clientes (
-	idCliente int primary key auto_increment,
+    idCliente int primary key auto_increment,
     idUsuario int NOT NULL,
     dni varchar(10) UNIQUE NOT NULL,
     cuil varchar(15) UNIQUE NOT NULL,
@@ -160,12 +160,12 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE cuentas (
-	idCuenta int primary key auto_increment,
+    idCuenta int primary key auto_increment,
     idcliente int NOT NULL,
     idTipoCuenta int NOT NULL,
     fechaCreacion date NOT NULL,
-    numeroCuenta int UNIQUE NOT NULL,
-    cbu int UNIQUE NOT NULL,
+    numeroCuenta bigint UNIQUE NOT NULL,
+    cbu bigint UNIQUE NOT NULL,
     saldo decimal(14, 2) NOT NULL default 10000.0,
     estadoCuenta bit DEFAULT 1,
     
@@ -175,20 +175,21 @@ CREATE TABLE cuentas (
     CONSTRAINT CHK_Saldo_Positivo CHECK(saldo>=0)
 );
 
+
 CREATE TABLE movimientos (
-	idMovimiento  int primary key auto_increment,
+    idMovimiento  int primary key auto_increment,
     idCuenta int NOT NULL,
     idTipoMovimiento int NOT NULL,
     fechaMovimiento date NOT NULL,
     concepto varchar(50) NOT NULL,
     importeMovimiento decimal(14, 2) NOT NULL,
-	
+    
     FOREIGN KEY (idCuenta) REFERENCES cuentas(idCuenta),
     FOREIGN KEY (idTipoMovimiento) REFERENCES tiposMovimientos(idTipoMovimiento)
 );
 
 CREATE TABLE prestamos (
-	idPrestamo int primary key auto_increment,
+    idPrestamo int primary key auto_increment,
     idCliente int NOT NULL,
     idCuenta int NOT NULL,
     fechaAltaPrestamo date NOT NULL,
@@ -204,7 +205,7 @@ CREATE TABLE prestamos (
 );
 
 CREATE TABLE cuotas (
-	idCuota int primary key auto_increment,
+    idCuota int primary key auto_increment,
     idPrestamo int NOT NULL,
     numeroCuota int NOT NULL,
     montoPagado decimal(14, 2) NULL,
@@ -217,3 +218,9 @@ CREATE TABLE cuotas (
 INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VALUES
 ('admin', 'admin', 1, 1),
 ('cliente', 'cliente', 2, 1);
+
+INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado) VALUES
+(2,37719580,23377195809,'Franco','Cataldo','francocataldo7@gmail.com',47555680,'M',1,'1992-10-12','Libres del Sud 523',1,2,true);
+
+INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
+(1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true);

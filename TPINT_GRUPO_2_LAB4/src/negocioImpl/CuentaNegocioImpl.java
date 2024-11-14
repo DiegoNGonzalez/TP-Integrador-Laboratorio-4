@@ -2,6 +2,7 @@ package negocioImpl;
 import java.util.ArrayList;
 
 import dao.CuentaDao;
+import daoImpl.ClienteDaoImpl;
 import daoImpl.CuentaDaoImpl;
 import entidades.Cliente;
 import entidades.Cuenta;
@@ -11,7 +12,9 @@ import negocio.CuentaNegocio;
 public class CuentaNegocioImpl implements CuentaNegocio {
 	
 	private CuentaDao cuentaDao;
-	
+	public CuentaNegocioImpl() {
+		this.cuentaDao = new CuentaDaoImpl();
+	}
 	@Override
     public boolean agregarCuenta(Cuenta cuenta, int idCliente) throws CuentaNegocioException {
         // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
@@ -64,12 +67,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
     }
 
     @Override
-    public boolean bajaCuenta(int idCuenta) throws CuentaNegocioException {
+    public boolean bajaCuenta(int idCuenta) {
         // validar ID de la cuenta
         if (idCuenta <= 0) {
             throw new CuentaNegocioException("El ID de la cuenta debe ser válido.");
         }
-        
         return cuentaDao.bajaCuenta(idCuenta);
     }
 

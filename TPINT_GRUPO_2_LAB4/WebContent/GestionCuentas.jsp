@@ -52,7 +52,8 @@
             <th>Número de Cuenta</th>
             <th>CBU</th>
             <th>Saldo</th>
-            <th>Acciones</th>
+            <th>Eliminar</th>
+            <th>Editar</th>
         </tr>
     </thead>
     <tbody>
@@ -61,20 +62,22 @@
             for (Cliente cliente : clientes) { 
                 ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
                 for (int i = 0; i < cuentas.size(); i++) { 
-                    Cuenta cuenta = cuentas.get(i); 
+                    Cuenta cuenta = cuentas.get(i);
         %>
-                <tr>
-                    <!-- Muestra el nombre del cliente en una celda solo en la primera cuenta -->
-                    <% if (i == 0) { %>
-                        <td rowspan="<%= cuentas.size() %>"><%= cliente.getNombre() %></td>
-                    <% } %>
+                
+                <tr id="fila-<%= cuenta.getIdCuenta() %>">
+       
+                    <td><%= cliente.getNombre().toString() %></td>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
                     <td><%= cuenta.getTipoCuenta()%></td>
                     <td><%= cuenta.getNumeroCuenta() %></td>
                     <td><%= cuenta.getCbu() %></td>
                     <td><%= cuenta.getSaldo() %></td>
+                    <td>
+        				<a href="#" onclick="eliminarCuenta(<%= cuenta.getIdCuenta() %>); return false;" class="btn-eliminar">Eliminar</a>
+    				</td>
                     <td><a href="EditarCuenta.jsp?cuentaId=<%= cuenta.getNumeroCuenta() %>" class="btn-edit">Editar</a></td>
-                </tr>
+               </tr>
         <% 
                 } 
             } 
@@ -84,5 +87,32 @@
     <br/>
     <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>
 </div>
+<script>
+
+function eliminarCuenta(cuentaId) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta cuenta?")) {
+        fetch('EliminarCuentaServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'cuentaId=' + cuentaId
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result === 'success') {
+                alert("Cuenta eliminada exitosamente.");
+                // Oculta la fila de la tabla
+                document.getElementById("fila-" + cuentaId).style.display = "none";
+            } else {
+                alert("Error al eliminar la cuenta.");
+            }
+        })
+        .catch(error => {
+            alert("Ocurrió un error: " + error);
+        });
+    }
+}
+</script>
 </body>
 </html>

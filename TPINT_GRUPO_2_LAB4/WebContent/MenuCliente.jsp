@@ -97,18 +97,18 @@
         $('#clientTable').DataTable();
     });
 </script>
+
 <script>
     $(document).ready(function() {
         // Verifica si hay un mensaje de toast
         var mensaje = "<%= request.getAttribute("toastMessage") %>";
         var tipo = "<%= request.getAttribute("toastType") %>";
         
-        toastr.options.timeOut = 3000;  
-        toastr.options.positionClass = 'toast-top-right'; /
+        toastr.options.timeOut = 3000;
+        toastr.options.positionClass = 'toast-top-right';
         toastr.options.preventDuplicates = true;
 
         if (mensaje) {
-            
             if (tipo == "success") {
                 toastr.success(mensaje);
             } else if (tipo == "error") {
@@ -117,5 +117,6 @@
         }
     });
 </script>
+
 </body>
 </html>

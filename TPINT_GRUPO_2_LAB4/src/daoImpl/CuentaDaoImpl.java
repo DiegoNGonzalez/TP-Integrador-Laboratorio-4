@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import dao.CuentaDao;
-import entidades.Cliente;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
 
@@ -15,10 +14,8 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	@Override
 	public Cuenta obtenerCuentaPorId(int idCuenta) {
-	    String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, "
-	    		+ "estadoCuenta FROM cuentas where idCuenta= ?"; 
-	    
-	    Cuenta cuenta = null;
+	    String query = "SELECT idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta FROM cuentas where idCuenta= ?";     
+	    Cuenta cuenta = new Cuenta();
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -26,24 +23,24 @@ public class CuentaDaoImpl implements CuentaDao{
 	        statement.setInt(1, idCuenta);
 	        
 	        try (ResultSet resultSet = statement.executeQuery()) {
+
 	            // Si se encuentra la cuenta, se crea el objeto.
-	            if (resultSet.next()) {
-	                cuenta = new Cuenta();
-	                
-		        	TipoCuenta tipoCuenta= new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
-		        		        		        	
-		        	cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+	            if (resultSet.next()) {                
+		        	TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));		        		        		        	
+		        	cuenta.setIdCuenta(idCuenta);
 		            cuenta.setTipoCuenta(tipoCuenta);
 		            cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
 		            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
-		            cuenta.setCbu(resultSet.getString("cbu"));
+		            cuenta.setCbu(resultSet.getLong("cbu"));
 		            cuenta.setSaldo(resultSet.getFloat("saldo"));
 		            cuenta.setEstadoCuenta(resultSet.getBoolean("estado"));
+		            
 	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	    }	    
+	    }	  
+
 	    return cuenta;
 	}
 
@@ -65,7 +62,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	            cuenta.setTipoCuenta(tipoCuenta);
 	            cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
 	            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
-	            cuenta.setCbu(resultSet.getString("cbu"));
+	            cuenta.setCbu(resultSet.getLong("cbu"));
 	            cuenta.setSaldo(resultSet.getFloat("saldo"));
 	            cuenta.setEstadoCuenta(resultSet.getBoolean("estado"));
 	      
@@ -79,19 +76,16 @@ public class CuentaDaoImpl implements CuentaDao{
 	}
 
 	@Override
-	public boolean modificarCuenta(Cuenta cuenta, int idCliente) {
-	    String query = "UPDATE cuentas SET idcliente = ?, idTipoCuenta = ?, numeroCuenta = ?,"
-	    		+ " cbu = ?, saldo = ? WHERE idCuenta = ?";
+	public boolean modificarCuenta(Cuenta cuenta) {
+	    String query = "UPDATE cuentas SET idTipoCuenta = ?, saldo = ? WHERE idCuenta = ?";
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
 	        // Asignación de parámetros para actualizar los datos
-	        statement.setInt(1, idCliente);
-	        statement.setInt(2, cuenta.getTipoCuenta().getId());
-	        statement.setLong(3, cuenta.getNumeroCuenta());
-	        statement.setString(4, cuenta.getCbu());
-	        statement.setFloat(5, cuenta.getSaldo());
+	        statement.setInt(1, cuenta.getTipoCuenta().getId());
+	        statement.setFloat(2, cuenta.getSaldo());
+	        statement.setInt(3, cuenta.getIdCuenta());
 	        
 	        // Ejecuta la actualización y verifica si fue exitosa
 	        return statement.executeUpdate() > 0;
@@ -103,21 +97,20 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	@Override
 	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
-	    String query = "INSERT INTO cuentas(idCuenta, idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
-	                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	    String query = "INSERT INTO cuentas(idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
+	                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
 	        // Asignación de parámetros
-	        statement.setInt(1, cuenta.getIdCuenta());
-	        statement.setInt(2, idCliente);
-	        statement.setInt(3, cuenta.getTipoCuenta().getId());
-	        statement.setDate(4,new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
-	        statement.setLong(5, cuenta.getNumeroCuenta());
-	        statement.setString(6, cuenta.getCbu());
-	        statement.setFloat(7, cuenta.getSaldo()); 
-	        statement.setBoolean(12, cuenta.getEstadoCuenta());
+	        statement.setInt(1, idCliente);
+	        statement.setInt(2, cuenta.getTipoCuenta().getId());
+	        statement.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
+	        statement.setLong(4, cuenta.getNumeroCuenta()); 
+	        statement.setLong(5, cuenta.getCbu()); 
+	        statement.setFloat(6, cuenta.getSaldo()); 
+	        statement.setBoolean(7, cuenta.getEstadoCuenta());
 
 	        // Ejecuta la actualización y devuelve si al menos una fila fue afectada
 	        int filas = statement.executeUpdate();
@@ -131,19 +124,66 @@ public class CuentaDaoImpl implements CuentaDao{
 	
 	@Override
 	public boolean bajaCuenta(int idCuenta) {
-		String query = "UPDATE cuentas SET estado = 0 WHERE idCuenta = ?";
-	    
+		String query = "UPDATE cuentas SET estadoCuenta = 0 WHERE idCuenta = ?";
+		System.out.println("cccccccccc111111111");
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
-
 	        statement.setInt(1, idCuenta);
-
+	        System.out.println("ccccccc333333333");
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
+	    	System.out.println("cccccccc444444444");
 	        e.printStackTrace();
 	        return false;
 	    }
 	}
+	
+	@Override
+	public long obtenerProximoCBU() {
+	    String query = "SELECT MAX(cbu) FROM cuentas";
+	    long proximoCBU = 1111111111111111111L;  
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query);
+	         ResultSet resultSet = statement.executeQuery()) {
+
+	        if (resultSet.next()) {
+	            long maxCBU = resultSet.getLong(1);
+	            if (!resultSet.wasNull()) {
+	                proximoCBU = maxCBU + 1;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return proximoCBU;
+	}
+	
+	
+	@Override
+	public long obtenerProximoNumeroCuenta() {
+	    String query = "SELECT MAX(numeroCuenta) FROM cuentas"; 
+	    long proximoNumeroCuenta = 1111111111111111111L;
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query);
+	         ResultSet resultSet = statement.executeQuery()) {
+
+	        if (resultSet.next()) {
+	            long maxNumeroCuenta = resultSet.getLong(1);
+	            
+	            if (!resultSet.wasNull()) {
+	                proximoNumeroCuenta = maxNumeroCuenta + 1;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return proximoNumeroCuenta; 
+	}
+
+
 	
 	
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
@@ -162,7 +202,7 @@ public class CuentaDaoImpl implements CuentaDao{
                     cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
                     cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
                     cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
-                    cuenta.setCbu(resultSet.getString("cbu"));
+                    cuenta.setCbu(resultSet.getLong("cbu"));
                     cuenta.setSaldo(resultSet.getFloat("saldo"));
                     cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
                     

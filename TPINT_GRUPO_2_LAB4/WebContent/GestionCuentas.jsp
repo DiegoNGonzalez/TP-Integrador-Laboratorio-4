@@ -69,11 +69,14 @@
                         <td rowspan="<%= cuentas.size() %>"><%= cliente.getNombre() %></td>
                     <% } %>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
-                    <td><%= cuenta.getTipoCuenta()%></td>
-                    <td><%= cuenta.getNumeroCuenta() %></td>
-                    <td><%= cuenta.getCbu() %></td>
+                    <td><%= cuenta.getTipoCuenta().getTipo() %></td>
+                       <td><%= cuenta.getNumeroCuenta() %></td>
+                   <td><%= cuenta.getCbu() %></td>  
                     <td><%= cuenta.getSaldo() %></td>
-                    <td><a href="EditarCuenta.jsp?cuentaId=<%= cuenta.getNumeroCuenta() %>" class="btn-edit">Editar</a></td>
+                    <td><a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&clienteId=<%= cliente.getIdCliente() %>&action=editarCuenta" class="btn-edit">Editar</a></td>
+                    <td>
+        				<a href="#" onclick="eliminarCuenta(<%= cuenta.getIdCuenta() %>); return false;" class="btn-eliminar">Eliminar</a>
+    				</td>
                 </tr>
         <% 
                 } 
@@ -84,5 +87,31 @@
     <br/>
     <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>
 </div>
+<script>
+function eliminarCuenta(cuentaId) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta cuenta?")) {
+        fetch('EliminarCuentaServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'cuentaId=' + cuentaId
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result === 'success') {
+                alert("Cuenta eliminada exitosamente.");
+                // Oculta la fila de la tabla
+                document.getElementById("fila-" + cuentaId).style.display = "none";
+            } else {
+                alert("Error al eliminar la cuenta.");
+            }
+        })
+        .catch(error => {
+            alert("Ocurrió un error: " + error);
+        });
+    }
+}
+</script>
 </body>
 </html>

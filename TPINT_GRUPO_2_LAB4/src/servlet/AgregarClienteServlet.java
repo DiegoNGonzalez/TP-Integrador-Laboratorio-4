@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.TipoUsuario;
 import entidades.Usuario;
+import exceptions.ClienteSPException;
 import negocio.ClienteNegocio;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
@@ -59,6 +61,7 @@ public class AgregarClienteServlet extends HttpServlet {
 			// error contrasenas no coinciden
 			System.out.println("contrasenas no coinciden");
 		} else {
+		
 			// Crear el objeto Usuario
 			Usuario nuevoUsuario = new Usuario();
 			TipoUsuario tipoUsuario = new TipoUsuario(2, "Cliente");
@@ -85,6 +88,8 @@ public class AgregarClienteServlet extends HttpServlet {
 			nuevoCliente.setCuil(cuil);
 			nuevoCliente.setSexo(sexo);
 			nuevoCliente.setFechaNacimiento(Date.valueOf(fechaNacimiento));
+
+			//nuevoCliente.setFechaNacimiento(Date.valueOf("11-11-1990"));
 			nuevoCliente.setDireccion(direccion);
 			nuevoCliente.setEmail(email);
 			nuevoCliente.setTelefono(telefono);
@@ -102,6 +107,8 @@ public class AgregarClienteServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				response.sendRedirect("Error.jsp");
+			}finally {
+				
 			}
 		}
 	}

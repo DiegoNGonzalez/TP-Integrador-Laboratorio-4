@@ -40,7 +40,7 @@ public class AgregarClienteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Obtener los datos del formulario
-		/**String nombre = request.getParameter("nombre");
+		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
 		String dni = request.getParameter("dni");
 		String cuil = request.getParameter("cuil");
@@ -60,29 +60,13 @@ public class AgregarClienteServlet extends HttpServlet {
 		if (!(contrasena.equals(contrasenaRepetida))) {
 			// error contrasenas no coinciden
 			System.out.println("contrasenas no coinciden");
-		} else {**/
-		String fechaNacimiento = request.getParameter("fechaNacimiento");
-		String nombre = "Lucas";
-		String apellido = "Apellido";
-		String dni = "20146234";
-		String cuil = "20101462396";
-		String sex = "A";
-		char sexo = sex.charAt(0);
-		String nacionalidadId = "1";
-		//String fechaNacimiento = null;
-		String direccion = "dsdsdsd";
-		String localidadId = "2";
-		String provinciaId = "2";
-		String email = "ewewew@dsds.com";
-		String telefono = "234234234";
-		String usuario = "asdasdasd";
-		String contrasena = "asdasdas";
-		//String contrasenaRepetida = request.getParameter("contrasenaRepetida");
+		} else {
+		
 			// Crear el objeto Usuario
 			Usuario nuevoUsuario = new Usuario();
 			TipoUsuario tipoUsuario = new TipoUsuario(2, "Cliente");
 			nuevoUsuario.setNombreUsuario(usuario);
-			nuevoUsuario.setPassword(null);
+			nuevoUsuario.setPassword(contrasena);
 			nuevoUsuario.setTipoUsuario(tipoUsuario);
 			nuevoUsuario.setActivo(true);
 
@@ -119,17 +103,14 @@ public class AgregarClienteServlet extends HttpServlet {
 
 			try {
 				clienteNegocio.ejecutarSPCrearUsuario(nuevoUsuario, nuevoCliente);
-				System.out.println("a11111aaaaa");
-				
 				response.sendRedirect("ListarClientesServlet");
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("aaaaa222222a");
-				//response.sendRedirect("Error.jsp");
+				response.sendRedirect("Error.jsp");
 			}finally {
 				
 			}
-		//}
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

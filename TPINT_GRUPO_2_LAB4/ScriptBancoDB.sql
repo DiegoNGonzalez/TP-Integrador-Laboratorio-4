@@ -220,7 +220,7 @@ INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VA
 
 DELIMITER //
 
-CREATE PROCEDURE spAgregarCliente10(
+CREATE PROCEDURE spAgregarCliente(
 	-- CLIENTE
     IN dni varchar(10),
     IN cuil varchar(15),
@@ -243,11 +243,15 @@ BEGIN
     DECLARE idUsuario BIGINT DEFAULT 0;
 
     -- Manejador de errores
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        -- Mensaje de error
+       DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		BEGIN
+        -- Deshacer la transacción en caso de error
         ROLLBACK;
-        SELECT 'ERROR' AS Error;
+
+        -- Lanzar una excepción personalizada
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error en la transacción al agregar cliente y usuario.',
+            MYSQL_ERRNO = 1001; -- Puedes usar cualquier código de error personalizado
     END;
 
     -- Inicio de la transacción

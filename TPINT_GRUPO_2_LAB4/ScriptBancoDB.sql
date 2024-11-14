@@ -68,17 +68,17 @@ INSERT INTO provincias ( provincia) VALUES
 ('Catamarca'),
 ('Chaco'),
 ('Chubut'),
-('C√≥rdoba'),
+('CÛrdoba'),
 ('Corrientes'),
-('Entre R√≠os'),
+('Entre RÌos'),
 ('Formosa'),
 ('Jujuy'),
 ('La Pampa'),
 ('La Rioja'),
 ('Mendoza'),
 ('Misiones'),
-('Neuqu√©n'),
-('R√≠o Negro'),
+('NeuquÈn'),
+('RÌo Negro'),
 ('Salta'),
 ('San Juan'),
 ('San Luis'),
@@ -86,33 +86,33 @@ INSERT INTO provincias ( provincia) VALUES
 ('Santa Fe'),
 ('Santiago del Estero'),
 ('Tierra del Fuego'),
-('Tucum√°n');
+('Tucum·n');
 
 INSERT INTO localidades (idProvincia, localidad) VALUES
 (1, 'La Plata'), (1, 'Mar del Plata'),
 (2, 'Capital Federal'),
-(3, 'San Fernando del Valle de Catamarca'), (3, 'Bel√©n'),
+(3, 'San Fernando del Valle de Catamarca'), (3, 'BelÈn'),
 (4, 'Resistencia'), (4, 'Barranqueras'),
 (5, 'Rawson'), (5, 'Trelew'),
-(6, 'C√≥rdoba'), (6, 'Villa Carlos Paz'),
+(6, 'CÛrdoba'), (6, 'Villa Carlos Paz'),
 (7, 'Corrientes'), (7, 'Goya'),
-(8, 'Paran√°'), (8, 'Concordia'),
+(8, 'Paran·°'), (8, 'Concordia'),
 (9, 'Formosa'), (9, 'Clorinda'),
-(10, 'San Salvador de Jujuy'), (10, 'Palpal√°'),
+(10, 'San Salvador de Jujuy'), (10, 'Palpal·°'),
 (11, 'Santa Rosa'), (11, 'General Pico'),
 (12, 'La Rioja'), (12, 'Chilecito'),
 (13, 'Mendoza'), (13, 'San Rafael'),
-(14, 'Posadas'), (14, 'Ober√°'),
-(15, 'Neuqu√©n'), (15, 'San Mart√≠n de los Andes'),
+(14, 'Posadas'), (14, 'Ober·°'),
+(15, 'NeuquÈn'), (15, 'San MartÌn de los Andes'),
 (16, 'Viedma'), (16, 'Bariloche'),
 (17, 'Salta'), (17, 'Cafayate'),
 (18, 'San Juan'), (18, 'Caucete'),
 (19, 'San Luis'), (19, 'Villa Mercedes'),
-(20, 'R√≠o Gallegos'), (20, 'Caleta Olivia'),
+(20, 'RÌo Gallegos'), (20, 'Caleta Olivia'),
 (21, 'Santa Fe'), (21, 'Rosario'),
 (22, 'Santiago del Estero'), (22, 'La Banda'),
-(23, 'Ushuaia'), (23, 'R√≠o Grande'),
-(24, 'San Miguel de Tucum√°n'), (24, 'Concepci√≥n');
+(23, 'Ushuaia'), (23, 'RÌo Grande'),
+(24, 'San Miguel de Tucum·n'), (24, 'ConcepciÛn');
 
 
 INSERT INTO tiposUsuarios (tipoUsuario) VALUES
@@ -122,13 +122,13 @@ INSERT INTO tiposUsuarios (tipoUsuario) VALUES
 
 INSERT INTO tiposCuentas (tipoCuenta) VALUES
 ('Caja de Ahorro'),
-('Caja de Ahorro Dolares'),
+('Caja de Ahorro DÛlares'),
 ('Cuenta Corriente');
 
 INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Alta de Cuenta'),
-('Alta de Pr√©stamo'),
-('Pago de Pr√©stamo'),
+('Alta de PrÈstamo'),
+('Pago de PrÈstamo'),
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
 

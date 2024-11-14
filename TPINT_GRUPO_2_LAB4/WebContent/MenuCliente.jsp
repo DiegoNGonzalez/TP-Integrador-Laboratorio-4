@@ -73,14 +73,11 @@
             <td><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
                 <div class="action-buttons">
-<<<<<<< HEAD
+
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-edit">Editar</a>
                     <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
                     <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-add-account">Eliminar Cliente</a>
-=======
-                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn-edit" >Editar</a>
-                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn-add-account">Agregar Cuenta</a>
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
+
                 </div>
             </td>
         </tr>

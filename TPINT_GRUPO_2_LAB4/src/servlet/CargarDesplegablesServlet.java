@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
+import entidades.TipoCuenta;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
 import negocioImpl.ProvinciaNegocioImpl;
+import negocioImpl.TipoCuentaNegocioImpl;
 
 /**
  * Servlet implementation class CargarDesplegablesServlet
@@ -35,20 +38,48 @@ public class CargarDesplegablesServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+    	String action = request.getParameter("action");
+    	
 		// Crear la instancia de la capa de negocio
         NacionalidadNegocioImpl nacionalidadNegocioImpl= new NacionalidadNegocioImpl();
         ProvinciaNegocioImpl provinciaNegocioImpl=new ProvinciaNegocioImpl();
         LocalidadNegocioImpl localidadNegocioImpl=new LocalidadNegocioImpl();
+        TipoCuentaNegocioImpl tipoCuentaNegocioImpl = new TipoCuentaNegocioImpl();
+        
         // Obtener la lista de nacionalidades usando el método de negocio
         ArrayList<Nacionalidad> listaNacionalidades = nacionalidadNegocioImpl.listarNacionalidades();
         ArrayList<Provincia> listaProvincias = provinciaNegocioImpl.listarProvincias();
         ArrayList<Localidad> listaLocalidades = localidadNegocioImpl.listarLocalidades();
+        ArrayList<TipoCuenta> listaTiposCuenta = tipoCuentaNegocioImpl.listarTiposCuenta();  
+        
         // Establecer la lista como atributo en la solicitud
         request.setAttribute("listaNacionalidades", listaNacionalidades);
         request.setAttribute("listaProvincias", listaProvincias);
         request.setAttribute("listaLocalidades", listaLocalidades);
+        request.setAttribute("listaTiposCuenta", listaTiposCuenta);
+        
         // Redirigir al JSP
-        request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);		
+        if ("editarCliente".equals(action)) {
+        	request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);
+        }
+        else if ("agregarCliente".equals(action)) {
+        	request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);
+        }
+        else if ("agregarCuenta".equals(action)) {
+        	CuentaNegocioImpl cuentaNegocioImpl = new CuentaNegocioImpl();
+        	long cbu = cuentaNegocioImpl.obtenerProximoCBU();
+        	long nroCuenta = cuentaNegocioImpl.obtenerProximoNumeroCuenta();
+        	request.setAttribute("cbu", cbu);
+        	request.setAttribute("nroCuenta", nroCuenta);
+        	request.getRequestDispatcher("AgregarCuenta.jsp").forward(request, response);
+        }
+        else if ("editarCuenta".equals(action)) {
+        	request.getRequestDispatcher("EditarCuenta.jsp").forward(request, response);        	
+        }
+        else {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);        	
+        }
 	}
 
 	/**

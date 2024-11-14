@@ -31,11 +31,12 @@ body {
 }
 
 .form-control[readonly] {
-    background-color: #e9ecef; 
-    color: #495057; 
-    border: 1px solid #ced4da; 
-    cursor: not-allowed;
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    border: 1px solid #ced4da !important;
+    cursor: not-allowed !important;
 }
+
 
 .form-control[readonly]:hover {
     background-color: #e9ecef; /* Mantener el mismo color en hover */

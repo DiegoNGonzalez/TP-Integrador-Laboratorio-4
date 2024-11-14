@@ -31,16 +31,16 @@ public class BajaClienteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String clienteIdParam = request.getParameter("clienteId");
 
-        // Validar que el parámetro no sea nulo ni vacío
+        
         if (clienteIdParam != null && !clienteIdParam.isEmpty()) {
             try {
                 int idCliente = Integer.parseInt(clienteIdParam);
                 ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
 
-                // Llamar al método de negocio para dar de baja al cliente
+                
                 boolean resultado = clienteNegocio.bajaCliente(idCliente);
 
-             // En tu servlet, después de realizar la baja
+             
                 if (resultado) {
                     request.setAttribute("toastMessage", "Cliente eliminado exitosamente.");
                     request.setAttribute("toastType", "success");
@@ -49,14 +49,14 @@ public class BajaClienteServlet extends HttpServlet {
                     request.setAttribute("toastType", "error");
                 }
             } catch (NumberFormatException e) {
-                // Si el parámetro no es un número válido
+                
                 request.setAttribute("mensaje", "ID de cliente no válido.");
             }
         } else {
             request.setAttribute("mensaje", "ID de cliente no proporcionado.");
         }
 
-        // Redirigir a la página principal o recargar el JSP de gestión de clientes
+        
         request.getRequestDispatcher("ListarClientesServlet").forward(request, response);
 	}
 

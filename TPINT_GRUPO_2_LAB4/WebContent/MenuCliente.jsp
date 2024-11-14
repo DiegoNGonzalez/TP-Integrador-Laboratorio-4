@@ -99,12 +99,12 @@
         var mensaje = "<%= request.getAttribute("toastMessage") %>";
         var tipo = "<%= request.getAttribute("toastType") %>";
         
-        toastr.options.timeOut = 3000;  // Duración del toast en milisegundos (3000 ms = 3 segundos)
-        toastr.options.positionClass = 'toast-top-right'; // Posición en la pantalla (esquina superior derecha)
+        toastr.options.timeOut = 3000;  
+        toastr.options.positionClass = 'toast-top-right'; /
         toastr.options.preventDuplicates = true;
 
         if (mensaje) {
-            // Muestra el toast dependiendo del tipo
+            
             if (tipo == "success") {
                 toastr.success(mensaje);
             } else if (tipo == "error") {

@@ -1,8 +1,10 @@
-package dao;
+package negocio;
+
 import java.util.ArrayList;
+
 import entidades.TipoCuenta;
 
-public interface TipoCuentaDao {
+public interface TipoCuentaNegocio {
 	public ArrayList<TipoCuenta> listarTiposCuenta();
 	public TipoCuenta obtenerTipoCuentaPorId(int id);
 }

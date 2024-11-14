@@ -41,7 +41,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws ClienteSPException { 
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException { 
 		if (cliente == null || usuario == null) {
 			System.out.println("Error en los datos proporcionados.");
 		}
@@ -55,10 +55,10 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		try {
 		clienteDao.ejecutarSPCrearUsuario(usuario, cliente);
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
-			ClienteSPException exc1 = new ClienteSPException();
-			throw exc1;
+			//ClienteSPException exc1 = new ClienteSPException();
+			throw e;
 		}finally {
 			
 		}		

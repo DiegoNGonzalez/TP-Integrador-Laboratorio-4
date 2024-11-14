@@ -112,12 +112,12 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return null;
 		}
 
-		// Llamamos al método de la capa de datos para obtener el cliente por ID
+		
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
 
 	@Override
-	public void verificarCliente(Cliente cliente) {
+	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
 		// Validación de campos vacíos
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 			String mensaje = "El nombre es obligatorio.";
@@ -147,7 +147,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			throw new ClienteNegocioException(mensaje);
 		}
 		if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-			String mensaje = "La dirección es obligatoria.";
+			String mensaje = "La direccion es obligatoria.";
 			throw new ClienteNegocioException(mensaje);
 		}
 		/*
@@ -177,21 +177,21 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 
 		if (!cliente.getEmail().matches(emailPattern)) {
-			String mensaje = "El email ingresado no es válido.";
+			String mensaje = "El email ingresado no es valido.";
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validación de formato de DNI (7 o 8 dígitos)
+		// Validación de formato de DNI (7 o 8 digitos)
 		String dniPattern = "^[0-9]{7,8}$";
 		if (!cliente.getDni().matches(dniPattern)) {
-			String mensaje = "El DNI debe tener entre 7 y 8 dígitos.";
+			String mensaje = "El DNI debe tener entre 7 y 8 digitos.";
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validación de formato de CUIL (11 dígitos)
-		String cuilPattern = "^[0-9]{11}$";
+		// Validación de formato de CUIL (11 digitos)
+		String cuilPattern = "^[0-9]{2}-[0-9]{8}-[0-9]{1}$";
 		if (!cliente.getCuil().matches(cuilPattern)) {
-			String mensaje = "El CUIL debe tener 11 dígitos.";
+			String mensaje = "El CUIL debe tener 11 digitos.";
 			throw new ClienteNegocioException(mensaje);
 
 		}

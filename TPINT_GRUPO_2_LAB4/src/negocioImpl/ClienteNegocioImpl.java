@@ -95,15 +95,32 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public boolean bajaCliente(int idCliente) {
-		if (idCliente <= 0) {
-			System.out.println("El ID del cliente no es vÃ¡lido.");
-			return false;
-		}
+	public boolean bajaCliente(int idCliente) throws SQLException {
+	    if (idCliente <= 0) {
+	        System.out.println("El ID del cliente no es válido.");
+	        return false;
+	    }
 
-		// Llamamos al mÃ©todo de la capa de datos para dar de baja el cliente
-		return clienteDao.bajaCliente(idCliente);
+	    try {
+	        // Llamada al método en el DAO que ejecuta el procedimiento almacenado para la baja lógica
+	        boolean resultado = clienteDao.bajaCliente(idCliente);
+	        
+	        if (!resultado) {
+	            System.out.println("No se pudo realizar la baja lógica del cliente.");
+	            return false;
+	        }
+	        
+	        System.out.println("Baja lógica del cliente realizada correctamente.");
+	        return true;
+
+	    } catch (SQLException e) {
+	        // Registro y manejo de la excepción SQL si falla el procedimiento almacenado
+	        System.out.println("Error al realizar la baja lógica del cliente: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {

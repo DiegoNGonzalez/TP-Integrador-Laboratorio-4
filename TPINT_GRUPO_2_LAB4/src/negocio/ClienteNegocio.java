@@ -10,7 +10,7 @@ public interface ClienteNegocio {
 	public boolean agregarCliente(Cliente cliente);
 	public ArrayList<Cliente> listarClientesActivos();
 	public boolean modificarCliente(Cliente cliente);
-	public boolean bajaCliente(int idCliente);
+	public boolean bajaCliente(int idCliente) throws SQLException;
 	public Cliente obtenerClientePorId(int idUsuario);
 	public void verificarCliente(Cliente cliente);
 	

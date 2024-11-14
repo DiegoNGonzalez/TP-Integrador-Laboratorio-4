@@ -120,18 +120,17 @@ public class ClienteDaoImpl implements ClienteDao{
 	}
 
 	@Override
-	public boolean bajaCliente(int idCliente) {
-		String query = "UPDATE clientes SET estado = 0 WHERE idUsuario = ?";
-	    
+	public boolean bajaCliente(int idCliente)throws SQLException	 {
+		String query = "CALL spBajaLogicaCliente(?)";
+
 	    try (Connection conexion = Conexion.getConnection();
-	         PreparedStatement statement = conexion.prepareStatement(query)) {
-	        
-	        // Establecer el ID del cliente a inactivar
-	        statement.setInt(1, idCliente);
-	        
-	        // Ejecuta la actualización y verifica si fue exitosa
-	        return statement.executeUpdate() > 0;
-	    } catch (Exception e) {
+	         CallableStatement cst = conexion.prepareCall(query)) {
+
+	        cst.setInt(1, idCliente);
+	        cst.execute();
+	        return true;
+
+	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return false;
 	    }

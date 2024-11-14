@@ -224,3 +224,57 @@ INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, s
 
 INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
 (1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true);
+
+DELIMITER //
+
+CREATE PROCEDURE spAgregarCliente(
+	-- CLIENTE
+    IN dni varchar(10),
+    IN cuil varchar(15),
+    IN nombre VARCHAR(50),
+    IN apellido VARCHAR(50),
+    IN email varchar(100),
+    IN telefono varchar(15),
+    IN sexo char(1),
+    IN idNacionalidad int,
+    IN fechaNacimiento date,
+    IN direccion varchar(100),
+    IN idProvincia int,
+    IN idLocalidad int,
+    -- USUARIO
+    IN nombreUsuario varchar(50),
+    IN contrasenia varchar(20),
+    IN tipoUsuario int
+)
+BEGIN
+    DECLARE idUsuario BIGINT DEFAULT 0;
+
+    -- Manejador de errores
+       DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		BEGIN
+        -- Deshacer la transacción en caso de error
+        ROLLBACK;
+
+        -- Lanzar una excepción personalizada
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error en la transacción al agregar cliente y usuario.',
+            MYSQL_ERRNO = 1001; -- Puedes usar cualquier código de error personalizado
+    END;
+
+    -- Inicio de la transacción
+    START TRANSACTION;
+
+    -- Generamos el usuario
+    INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario)
+    VALUES (nombreUsuario,contrasenia,tipoUsuario,1);
+    
+    SET idUsuario = LAST_INSERT_ID();
+    
+    INSERT INTO clientes(idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado)
+    VALUES (idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado);
+
+    -- Confirmación de la transacción
+    COMMIT;
+END //
+
+DELIMITER ;

@@ -74,8 +74,9 @@
             <td>
                 <div class="action-buttons">
 
-                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-edit">Editar</a>
-                    <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
+				<div class="action-buttons">
+                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn-edit" >Editar</a>
+                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn-add-account">Agregar Cuenta</a>
                     <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-add-account">Eliminar Cliente</a>
 
                 </div>

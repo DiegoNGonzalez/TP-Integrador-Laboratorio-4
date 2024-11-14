@@ -9,14 +9,14 @@ public class Conexion {
 
 	private static String host = "jdbc:mysql://localhost:3306/bancodb?useSSL=false&serverTimezone=UTC";
 	private static String user = "root";
-	private static String pass = "14710402Lopo";
+	private static String pass = "root";
 	private static String dbName = "bancodb";
 
 	
 	static {
         try {
-          //  Class.forName("com.mysql.jdbc.Driver");
-        	Class.forName("com.mysql.cj.jdbc.Driver"); 
+          Class.forName("com.mysql.jdbc.Driver");
+        	//Class.forName("com.mysql.cj.jdbc.Driver"); 
         } catch (ClassNotFoundException e) {
             System.err.println("Error al cargar el driver JDBC: " + e.getMessage());
         }

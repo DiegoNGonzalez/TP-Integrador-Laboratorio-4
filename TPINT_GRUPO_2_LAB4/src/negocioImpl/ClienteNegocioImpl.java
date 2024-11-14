@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.ClienteDao;
@@ -10,6 +11,7 @@ import entidades.Cliente;
 import entidades.Usuario;
 
 import exceptions.ClienteNegocioException;
+import exceptions.ClienteSPException;
 import negocio.ClienteNegocio;
 
 public class ClienteNegocioImpl implements ClienteNegocio {
@@ -39,10 +41,9 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) {
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws ClienteSPException { 
 		if (cliente == null || usuario == null) {
 			System.out.println("Error en los datos proporcionados.");
-
 		}
 		try {
 			verificarCliente(cliente);
@@ -51,7 +52,16 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 		}
 		// incluirlo en la condicion
+		try {
 		clienteDao.ejecutarSPCrearUsuario(usuario, cliente);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ClienteSPException exc1 = new ClienteSPException();
+			throw exc1;
+		}finally {
+			
+		}		
 	}
 
 	@Override

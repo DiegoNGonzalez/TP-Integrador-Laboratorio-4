@@ -9,7 +9,7 @@ public class Conexion {
 
 	private static String host = "jdbc:mysql://localhost:3306/bancodb?useSSL=false&serverTimezone=UTC";
 	private static String user = "root";
-	private static String pass = "root";
+	private static String pass = "14710402Lopo";
 	private static String dbName = "bancodb";
 
 	

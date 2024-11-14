@@ -2,10 +2,14 @@ package daoImpl;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import dao.ClienteDao;
 import dao.CuentaDao;
@@ -15,9 +19,6 @@ import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.Usuario;
-import negocioImpl.LocalidadNegocioImpl;
-import negocioImpl.NacionalidadNegocioImpl;
-import negocioImpl.ProvinciaNegocioImpl;
 
 public class ClienteDaoImpl implements ClienteDao{
 
@@ -56,8 +57,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public ArrayList<Cliente> listarClientesActivos() {
-	    String query = "SELECT idUsuario, idCliente , dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";
-	    ArrayList<Cliente> listaClientes = new ArrayList<>();
+		String query = "SELECT idUsuario, idCliente , dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";	    ArrayList<Cliente> listaClientes = new ArrayList<>();
 
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query);
@@ -97,7 +97,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
-	    String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idCliente = ?";
+		 String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idCliente = ?";
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -139,23 +139,23 @@ public class ClienteDaoImpl implements ClienteDao{
 	public Cliente obtenerClientePorId(int idCliente) {
 	    String query = "SELECT idCliente, idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
 	                 + "FROM clientes WHERE idCliente = ?";
-	    
+
 	    Cliente cliente = null;
-	    
+
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
-	        
+
 	        // Establecer ID de Cliente
 	        statement.setInt(1, idCliente);
-	        
+
 	        try (ResultSet resultSet = statement.executeQuery()) {
 	        	
 	            if (resultSet.next()) {
 	                cliente = new Cliente();
-	                
+
 	                // Obtener el Usuario relacionado al cliente
 	                Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
-	                
+
 	                cliente.setUsuario(usuario);
 	                cliente.setIdCliente(Integer.parseInt(resultSet.getString("idCliente")));
 	                cliente.setDni(resultSet.getString("dni"));
@@ -167,7 +167,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	                cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
 	                cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
 	                cliente.setDireccion(resultSet.getString("direccion"));
-	                
+
 	                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
 	                LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
 	                ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
@@ -184,10 +184,45 @@ public class ClienteDaoImpl implements ClienteDao{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    
+
 	    return cliente;
 	}
-	
+
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente)
+	{
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente10"
+			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			 
+		 			 
+			 cst.setString(1, cliente.getDni());
+			 cst.setString(2, cliente.getCuil());
+			 cst.setString(3, cliente.getNombre());
+			 cst.setString(4, cliente.getApellido());
+			 cst.setString(5, cliente.getEmail());
+			 cst.setString(6, cliente.getTelefono());
+			 cst.setString(7, String.valueOf(cliente.getSexo())); 
+			 cst.setInt(8, cliente.getNacionalidad().getId());
+			 cst.setDate(9, new java.sql.Date(cliente.getFechaNacimiento().getTime()));	
+			 cst.setString(10, cliente.getDireccion());
+			 cst.setInt(11, cliente.getProvincia().getId());
+			 cst.setInt(12, cliente.getLocalidad().getId());
+			 cst.setString(13, usuario.getNombreUsuario());
+			 cst.setString(14, usuario.getPassword());
+			 cst.setInt(15, usuario.getTipoUsuario().getId());
+			  			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (Exception e) {
+			  e.printStackTrace();
+			  
+		  }	  		  			
+	}
+
+	@Override
 	public ArrayList<Cliente> obtenerTodos() {
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         String query = "SELECT idCliente, nombre, apellido FROM clientes";
@@ -215,7 +250,5 @@ public class ClienteDaoImpl implements ClienteDao{
 
         return listaClientes;
     }
-
-	
 
 }

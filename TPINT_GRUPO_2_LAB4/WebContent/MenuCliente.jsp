@@ -13,6 +13,10 @@
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <title>Menu de Clientes</title>
 </head>
 <body>
@@ -71,6 +75,7 @@
                 <div class="action-buttons">
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-edit">Editar</a>
                     <a href="AgregarCuenta.jsp" class="btn-add-account">Agregar Cuenta</a>
+                    <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-add-account">Eliminar Cliente</a>
                 </div>
             </td>
         </tr>
@@ -88,6 +93,25 @@
         $('#clientTable').DataTable();
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Verifica si hay un mensaje de toast
+        var mensaje = "<%= request.getAttribute("toastMessage") %>";
+        var tipo = "<%= request.getAttribute("toastType") %>";
+        
+        toastr.options.timeOut = 3000;  // Duración del toast en milisegundos (3000 ms = 3 segundos)
+        toastr.options.positionClass = 'toast-top-right'; // Posición en la pantalla (esquina superior derecha)
+        toastr.options.preventDuplicates = true;
 
+        if (mensaje) {
+            // Muestra el toast dependiendo del tipo
+            if (tipo == "success") {
+                toastr.success(mensaje);
+            } else if (tipo == "error") {
+                toastr.error(mensaje);
+            }
+        }
+    });
+</script>
 </body>
 </html>

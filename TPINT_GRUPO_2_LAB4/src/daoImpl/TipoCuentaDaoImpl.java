@@ -9,8 +9,8 @@ import entidades.TipoCuenta;
 public class TipoCuentaDaoImpl implements TipoCuentaDao {
 	
 	@Override
-	public ArrayList<TipoCuenta> listarTipoCuenta(){
-	    String query = "SELECT idTipoCuenta, tipoCuenta FROM cuentas";
+	public ArrayList<TipoCuenta> listarTiposCuenta(){
+	    String query = "SELECT idTipoCuenta, tipoCuenta FROM tiposcuentas";
 		ArrayList<TipoCuenta> listaTipos = new ArrayList<>();	
 		
 	    try (Connection conexion = Conexion.getConnection();
@@ -32,8 +32,8 @@ public class TipoCuentaDaoImpl implements TipoCuentaDao {
 	
 	@Override
 	public TipoCuenta obtenerTipoCuentaPorId(int id) {
-	    String query = "SELECT idTipoCuenta, tipoCuenta FROM cuentas WHERE idTipoCuenta = ?";
-	    TipoCuenta tipoCuenta = null;
+	    String query = "SELECT idTipoCuenta, tipoCuenta FROM tiposcuentas WHERE idTipoCuenta = ?";
+	    TipoCuenta tipoCuenta = new TipoCuenta();
 
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {

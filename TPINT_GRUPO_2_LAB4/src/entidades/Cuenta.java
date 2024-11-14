@@ -1,6 +1,5 @@
 package entidades;
 import java.util.Date;
-import entidades.Cliente;
 import entidades.TipoCuenta;
 
 public class Cuenta {
@@ -8,12 +7,12 @@ public class Cuenta {
 	private TipoCuenta tipoCuenta;
 	private Date fechaCreacion;
 	private long numeroCuenta;
-	private String cbu;
+	private long cbu;
 	private float saldo;
 	private boolean estadoCuenta;
 	
 	//constructores
-	public Cuenta(int idCuenta, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, String cbu, float saldo, boolean estadoCuenta) {
+	public Cuenta(int idCuenta, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, long cbu, float saldo, boolean estadoCuenta) {
 		this.idCuenta = idCuenta;
 		this.tipoCuenta = tipoCuenta;
 		this.fechaCreacion = fechaCreacion;
@@ -52,10 +51,10 @@ public class Cuenta {
 	public void setNumeroCuenta(long numeroCuenta) {
 		this.numeroCuenta = numeroCuenta;
 	}
-	public String getCbu() {
+	public long getCbu() {
 		return cbu;
 	}
-	public void setCbu(String cbu) {
+	public void setCbu(long cbu) {
 		this.cbu = cbu;
 	}
 	public float getSaldo() {

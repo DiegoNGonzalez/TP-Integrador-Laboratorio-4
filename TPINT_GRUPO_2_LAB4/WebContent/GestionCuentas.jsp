@@ -69,11 +69,11 @@
                         <td rowspan="<%= cuentas.size() %>"><%= cliente.getNombre() %></td>
                     <% } %>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
-                    <td><%= cuenta.getTipoCuenta()%></td>
-                    <td><%= cuenta.getNumeroCuenta() %></td>
-                    <td><%= cuenta.getCbu() %></td>
+                    <td><%= cuenta.getTipoCuenta().getTipo() %></td>
+                       <td><%= cuenta.getNumeroCuenta() %></td>
+                   <td><%= cuenta.getCbu() %></td>  
                     <td><%= cuenta.getSaldo() %></td>
-                    <td><a href="EditarCuenta.jsp?cuentaId=<%= cuenta.getNumeroCuenta() %>" class="btn-edit">Editar</a></td>
+                    <td><a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&clienteId=<%= cliente.getIdCliente() %>&action=editarCuenta" class="btn-edit">Editar</a></td>
                 </tr>
         <% 
                 } 

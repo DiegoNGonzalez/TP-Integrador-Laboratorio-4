@@ -164,8 +164,8 @@ CREATE TABLE cuentas (
     idcliente int NOT NULL,
     idTipoCuenta int NOT NULL,
     fechaCreacion date NOT NULL,
-    numeroCuenta bigint UNIQUE NOT NULL,
-    cbu varchar(22) UNIQUE NOT NULL,
+    numeroCuenta int UNIQUE NOT NULL,
+    cbu int UNIQUE NOT NULL,
     saldo decimal(14, 2) NOT NULL default 10000.0,
     estadoCuenta bit DEFAULT 1,
     

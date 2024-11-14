@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="entidades.Cliente"%>
+<%@ page import="entidades.Cuenta"%>
+<%@ page import="entidades.TipoCuenta"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,65 +13,107 @@
 <title>Editar Cuenta</title>
 </head>
 <body>
-<!-- Menú de Navegación -->
-<jsp:include page="nav.jsp" />
+	<!-- Menú de Navegación -->
+	<jsp:include page="nav.jsp" />
 
-<div class="account-container">
-    <h2 class="edit-title">Editar Cuenta</h2>
-    <form action="EditarCuenta.jsp" method="post">
-        
-        <!-- Cliente Asignado -->
-        <div class="form-group">
-            <label for="cliente" class="form-label">Cliente Asignado</label>
-            <select id="cliente" name="cliente" class="form-select">
-                <option value="1">Juan Pérez</option>
-                <option value="2">María Gómez</option>
-                <option value="3">Pedro Sánchez</option>
-                
-            </select>
-        </div>
+	<div class="account-container">
+		<h2 class="add-title">Modificar Cuenta</h2>
+<form action="EditarCuentaServlet" method="post" onsubmit="
+    if(document.getElementById('tipoCuenta').value === '') { 
+        alert('Por favor, seleccione el tipo de cuenta.'); 
+        return false; 
+    } 
+    if(document.getElementById('saldo').value === '' || parseFloat(document.getElementById('saldo').value) <= 0) { 
+        alert('El saldo debe ser mayor a 0 y no puede estar vacío.'); 
+        return false; 
+    }
+">
+			<%
+				Cliente cliente = (Cliente) request.getAttribute("cliente");
+				Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
+			%>
 
-        <!-- Fecha de Creación -->
-        <div class="form-group">
-            <label for="fechaCreacion" class="form-label">Fecha de Creación</label>
-            <input type="date" id="fechaCreacion" name="fechaCreacion" class="form-control" value="2024-01-15">
-        </div>
+        <input id="idCuenta" name="idCuenta" value="<%= cuenta.getIdCuenta() %>" type="hidden">
 
-        <!-- Tipo de Cuenta -->
-        <div class="form-group">
-            <label for="tipoCuenta" class="form-label">Tipo de Cuenta</label>
-            <select id="tipoCuenta" name="tipoCuenta" class="form-select">
-                <option value="ahorro">Ahorro</option>
-                <option value="corriente">Corriente</option>
-                <option value="inversion">Inversión</option>
-                
-            </select>
-        </div>
+			<!-- Cliente Asignado -->
+			<div class="form-group">
+				<label for="nombre" class="form-label">Nombre</label> <input
+					type="text" id="nombre" name="nombre" class="form-control"
+					value="<%=cliente.getNombre()%>" readonly>
+			</div>
 
-        <!-- Número de Cuenta -->
-        <div class="form-group">
-            <label for="numeroCuenta" class="form-label">Número de Cuenta</label>
-            <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" value="123456789" readonly>
-        </div>
+			<div class="form-group">
+				<label for="apellido" class="form-label">Apellido</label> <input
+					type="text" id="apellido" name="apellido" class="form-control"
+					value="<%=cliente.getApellido()%>" readonly>
+			</div>
 
-        <!-- CBU -->
-        <div class="form-group">
-            <label for="cbu" class="form-label">CBU</label>
-            <input type="text" id="cbu" name="cbu" class="form-control" value="0123456789123456789012">
-        </div>
+			<div class="form-group">
+				<label for="dni" class="form-label">DNI</label> <input type="text"
+					id="dni" name="dni" class="form-control"
+					value="<%=cliente.getDni()%>" readonly>
+			</div>
 
-        <!-- Saldo -->
-        <div class="form-group">
-            <label for="saldo" class="form-label">Saldo</label>
-            <input type="number" step="0.01" id="saldo" name="saldo" class="form-control" value="15000.00">
-        </div>
+			<!-- Fecha de Creación -->
+			<div class="form-group">
+				<label for="fechaCreacion" class="form-label">Fecha de
+					Creación</label> <input type="date" id="fechaCreacion" name="fechaCreacion"
+					class="form-control"
+					value="<%= cuenta.getFechaCreacion() %>" readonly>
+			</div>
 
-        <!-- Botón Guardar Cambios -->
-        <input type="submit" class="btn-save" value="Guardar Cambios">
+			<!-- Tipo de Cuenta -->
+			<div class="form-group">
+				<label for="tipoCuenta" class="form-label">Tipo de Cuenta</label> <select
+					id="tipoCuenta" name="tipoCuenta" class="form-control">
+					<option value="">Seleccione el tipo de cuenta</option>
+					<%
+			          int tipoCuentaActualId = cuenta.getTipoCuenta().getId();
 
-        <!-- Botón Cancelar -->
-        <input type="button" class="btn-cancel" onclick="window.location.href='GestionCuentas.jsp'" value="Cancelar">
-    </form>
-</div>
+						ArrayList<TipoCuenta> listaTiposCuenta = (ArrayList<TipoCuenta>) request.getAttribute("listaTiposCuenta");
+
+						for (TipoCuenta tipoCuenta : listaTiposCuenta) {
+			                boolean isSelected = tipoCuenta.getId() == tipoCuentaActualId;
+					%>
+        <option value="<%= tipoCuenta.getId() %>" <%= isSelected ? "selected" : "" %>>
+            <%= tipoCuenta.getTipo() %>
+        </option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+
+			<!-- Número de Cuenta -->
+			<div class="form-group">
+				<label for="numeroCuenta" class="form-label">Número de
+					Cuenta</label> <input type="text" id="numeroCuenta" name="numeroCuenta"
+					class="form-control"
+					value="<%= cuenta.getNumeroCuenta() %>" readonly>
+			</div>
+
+ 			<!-- CBU -->
+ 			<div class="form-group">
+				<label for="cbu" class="form-label">CBU</label> <input type="text"
+					id="cbu" name="cbu" class="form-control"
+					value="<%= cuenta.getCbu() %>" readonly>
+			</div>  
+
+
+			<!-- Saldo -->
+			<div class="form-group">
+				<label for="saldo" class="form-label">Saldo</label> <input
+					type="number" step="0.01" id="saldo" name="saldo"
+					class="form-control" value="<%= cuenta.getSaldo() %>" >
+			</div>
+
+			<!-- Botón para Guardar los cambios -->
+			<input type="submit" class="btn-save" value="Guardar Cambios">
+
+			<!-- Botón para Cancelar y Volver -->
+        <input type="button" class="btn-cancel" onclick="window.location.href='ClienteCuentaServlet'" value="Cancelar">
+		</form>
+	</div>
 </body>
 </html>

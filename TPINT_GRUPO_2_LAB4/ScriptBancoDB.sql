@@ -242,16 +242,14 @@ CREATE PROCEDURE spAgregarCliente(
 BEGIN
     DECLARE idUsuario BIGINT DEFAULT 0;
 
-    -- Manejador de errores
-       DECLARE EXIT HANDLER FOR SQLEXCEPTION
-		BEGIN
-        -- Deshacer la transacción en caso de error
+     -- Manejador de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- En caso de error, revertir la transacción
         ROLLBACK;
 
-        -- Lanzar una excepción personalizada
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error en la transacción al agregar cliente y usuario.',
-            MYSQL_ERRNO = 1001; -- Puedes usar cualquier código de error personalizado
+        -- Re-levantar el error para que sea capturado en Java
+        RESIGNAL;
     END;
 
     -- Inicio de la transacción

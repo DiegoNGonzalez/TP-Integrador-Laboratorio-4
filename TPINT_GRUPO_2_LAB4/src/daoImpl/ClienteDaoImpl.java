@@ -189,12 +189,12 @@ public class ClienteDaoImpl implements ClienteDao{
 	    return cliente;
 	}
 
-	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws ClienteSPException
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException
 	{
 		  try
 		  {
 			 Connection conexion = Conexion.getConnection();
-			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente11"
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente"
 			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");			 
 		 			 
 			 cst.setString(1, cliente.getDni());
@@ -216,10 +216,10 @@ public class ClienteDaoImpl implements ClienteDao{
 			 cst.execute();
 			 conexion.close();
 		  }
-		  catch (Exception e) {
+		  catch (SQLException e) {
 			  e.printStackTrace();	
-			  ClienteSPException exc1 = new ClienteSPException();
-			  throw exc1;
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
 		  }
 		  finally {
 			  

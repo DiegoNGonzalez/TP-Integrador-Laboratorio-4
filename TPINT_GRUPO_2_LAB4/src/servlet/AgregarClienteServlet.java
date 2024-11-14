@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -104,7 +105,7 @@ public class AgregarClienteServlet extends HttpServlet {
 			try {
 				clienteNegocio.ejecutarSPCrearUsuario(nuevoUsuario, nuevoCliente);
 				response.sendRedirect("ListarClientesServlet");
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				response.sendRedirect("Error.jsp");
 			}finally {

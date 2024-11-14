@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Cliente;
@@ -14,5 +15,5 @@ public interface ClienteNegocio {
 	public void verificarCliente(Cliente cliente);
 	
 	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas();
-	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente);
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 }

@@ -19,6 +19,7 @@ import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.Usuario;
+import exceptions.ClienteSPException;
 
 public class ClienteDaoImpl implements ClienteDao{
 
@@ -188,12 +189,14 @@ public class ClienteDaoImpl implements ClienteDao{
 	    return cliente;
 	}
 
-	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente)
+	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws ClienteSPException
 	{
+		System.out.println("dddddddddddddd");
 		  try
 		  {
+			  System.out.println("dddddddd1111111111");
 			 Connection conexion = Conexion.getConnection();
-			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente10"
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente11"
 			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			 
 		 			 
@@ -217,9 +220,14 @@ public class ClienteDaoImpl implements ClienteDao{
 			 conexion.close();
 		  }
 		  catch (Exception e) {
-			  e.printStackTrace();
+			  System.out.println("ddddddd3333333333");
+			  e.printStackTrace();	
+			  ClienteSPException exc1 = new ClienteSPException();
+			  throw exc1;
+		  }
+		  finally {
 			  
-		  }	  		  			
+		  }			
 	}
 
 	@Override

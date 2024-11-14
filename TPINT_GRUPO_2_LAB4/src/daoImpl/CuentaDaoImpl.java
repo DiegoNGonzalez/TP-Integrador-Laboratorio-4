@@ -132,11 +132,14 @@ public class CuentaDaoImpl implements CuentaDao{
 	@Override
 	public boolean bajaCuenta(int idCuenta) {
 		String query = "UPDATE cuentas SET estadoCuenta = 0 WHERE idCuenta = ?";
+		System.out.println("cccccccccc111111111");
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        statement.setInt(1, idCuenta);
+	        System.out.println("ccccccc333333333");
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
+	    	System.out.println("cccccccc444444444");
 	        e.printStackTrace();
 	        return false;
 	    }

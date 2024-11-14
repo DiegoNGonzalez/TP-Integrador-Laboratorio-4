@@ -7,8 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import entidades.Cliente;
+import entidades.Localidad;
+import entidades.Nacionalidad;
+import entidades.Provincia;
+import entidades.TipoCuenta;
 import negocioImpl.ClienteNegocioImpl;
+import negocioImpl.LocalidadNegocioImpl;
+import negocioImpl.NacionalidadNegocioImpl;
+import negocioImpl.ProvinciaNegocioImpl;
+import negocioImpl.TipoCuentaNegocioImpl;
 
 /**
  * Servlet implementation class BuscarClienteServlet
@@ -34,6 +44,19 @@ public class BuscarClienteServlet extends HttpServlet {
     	String action = request.getParameter("action");
         ClienteNegocioImpl auxClienteNeg = new ClienteNegocioImpl();
         Cliente cliente = auxClienteNeg.obtenerClientePorId(clienteId);
+        
+        NacionalidadNegocioImpl nacionalidadNegocioImpl= new NacionalidadNegocioImpl();
+        ProvinciaNegocioImpl provinciaNegocioImpl=new ProvinciaNegocioImpl();
+        LocalidadNegocioImpl localidadNegocioImpl=new LocalidadNegocioImpl();
+        
+        ArrayList<Nacionalidad> listaNacionalidades = nacionalidadNegocioImpl.listarNacionalidades();
+        ArrayList<Provincia> listaProvincias = provinciaNegocioImpl.listarProvincias();
+        ArrayList<Localidad> listaLocalidades = localidadNegocioImpl.listarLocalidades(); 
+        
+        request.setAttribute("listaNacionalidades", listaNacionalidades);
+        request.setAttribute("listaProvincias", listaProvincias);
+        request.setAttribute("listaLocalidades", listaLocalidades);
+        
         if (cliente == null) {
             // Si el cliente no existe redirecciono.
 			System.out.println("El cliente no existe.");

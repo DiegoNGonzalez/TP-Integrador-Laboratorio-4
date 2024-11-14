@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="entidades.Cliente" %>
+<%@ page import="entidades.Nacionalidad" %>
+<%@ page import="entidades.Provincia" %>
+<%@ page import="entidades.Localidad" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +41,7 @@
 
 <div class="form-group">
     <label for="cuil" class="form-label">CUIL</label>
-    <input type="text" id="cuil" name="cuil" class="form-control" value="<%= cliente.getCuil() %>">
+    <input type="text" id="cuil" name="cuil" class="form-control" value="<%= cliente.getCuil() %>" readonly>
 </div>
 
 <div class="form-group">
@@ -51,7 +55,11 @@
 <div class="form-group">
     <label for="nacionalidad" class="form-label">Nacionalidad</label>
     <select id="nacionalidad" name="nacionalidad" class="form-control">
-        <option value="<%= cliente.getNacionalidad().getId() %>"><%= cliente.getNacionalidad().getNacionalidad() %></option>
+        <% for (Nacionalidad nacionalidad : (List<Nacionalidad>) request.getAttribute("listaNacionalidades")) { %>
+            <option value="<%= nacionalidad.getId() %>" <%= nacionalidad.getId() == cliente.getNacionalidad().getId() ? "selected" : "" %>>
+                <%= nacionalidad.getNacionalidad() %>
+            </option>
+        <% } %>
     </select>
 </div>
 
@@ -68,14 +76,22 @@
 <div class="form-group">
     <label for="localidad" class="form-label">Localidad</label>
     <select id="localidad" name="localidad" class="form-control">
-        <option value="<%= cliente.getLocalidad().getId() %>"><%= cliente.getLocalidad().getLocalidad() %></option>
+        <% for (Localidad localidad : (List<Localidad>) request.getAttribute("listaLocalidades")) { %>
+            <option value="<%= localidad.getId() %>" <%= localidad.getId() == cliente.getLocalidad().getId() ? "selected" : "" %>>
+                <%= localidad.getLocalidad() %>
+            </option>
+        <% } %>
     </select>
 </div>
 
 <div class="form-group">
     <label for="provincia" class="form-label">Provincia</label>
     <select id="provincia" name="provincia" class="form-control">
-        <option value="<%= cliente.getProvincia().getId() %>"><%= cliente.getProvincia().getProvincia() %></option>
+        <% for (Provincia provincia : (List<Provincia>) request.getAttribute("listaProvincias")) { %>
+            <option value="<%= provincia.getId() %>" <%= provincia.getId() == cliente.getProvincia().getId() ? "selected" : "" %>>
+                <%= provincia.getProvincia() %>
+            </option>
+        <% } %>
     </select>
 </div>
 
@@ -95,7 +111,7 @@
         <input type="submit" class="btn-save" value="Guardar cambios">
 
         <!-- Botón para Cancelar -->
-        <input type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'" value="Cancelar">
+        <input type="button" class="btn-cancel" onclick="window.location.href='ListarClientesServlet'" value="Cancelar">
     </form>
 </div>
 </body>

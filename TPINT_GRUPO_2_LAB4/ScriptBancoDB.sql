@@ -276,3 +276,38 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE spBajaLogicaCliente(
+    IN p_idCliente INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Rollback en caso de error
+        ROLLBACK;
+    END;
+
+    -- Inicio de la transacción
+    START TRANSACTION;
+
+    -- Baja lógica del cliente
+    UPDATE clientes
+    SET estado = 0
+    WHERE idCliente = p_idCliente;
+
+    -- Baja lógica de las cuentas del cliente
+    UPDATE cuentas
+    SET estadoCuenta = 0
+    WHERE idCliente = p_idCliente;
+
+    -- Baja lógica del usuario relacionado al cliente
+    UPDATE usuarios
+    SET estadoUsuario = 0
+    WHERE idUsuario = (SELECT idUsuario FROM clientes WHERE idCliente = p_idCliente);
+
+    -- Confirmación de la transacción
+    COMMIT;
+END
+
+DELIMITER;

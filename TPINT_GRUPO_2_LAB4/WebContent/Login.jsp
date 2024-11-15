@@ -16,7 +16,7 @@
     <h2 class="login-title">Iniciar Sesión</h2>
     	<form action="LoginServlet" method="post">
     	<div class="form-group">
-        	<label for="username" class="form-label">Usuario</label>
+        	<label for="username" class="form-label">Usuario(logearse con credenciales admin admin)</label>
         	<input type="text" id="username" name="username" class="form-control" required>
     	</div>
     	<div class="form-group">

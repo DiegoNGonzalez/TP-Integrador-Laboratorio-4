@@ -73,7 +73,7 @@
         <!-- Fecha de Nacimiento -->
         <div class="form-group">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" id="fechaNacimiento" required name="fechaNacimiento" class="form-control">
+            <input type="date" id="fechaNacimiento" required name="fechaNacimiento" class="form-control" placeholder="Formato de fecha aaaa-mm-dd">
         </div>
 
         <!-- Dirección -->

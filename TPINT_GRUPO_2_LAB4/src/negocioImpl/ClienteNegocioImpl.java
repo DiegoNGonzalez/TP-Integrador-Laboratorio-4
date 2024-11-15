@@ -135,89 +135,72 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
-		// Validación de campos vacíos
+		// Validación de campos vacíos y de formato de nombre y apellido
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
-			String mensaje = "El nombre es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("El nombre es obligatorio.");
 		}
+		// Validación de que el nombre solo contenga letras
+		if (!cliente.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+			throw new ClienteNegocioException("El nombre solo puede contener letras.");
+		}
+
 		if (cliente.getApellido() == null || cliente.getApellido().trim().isEmpty()) {
-			String mensaje = "El apellido es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("El apellido es obligatorio.");
 		}
+		// Validación de que el apellido solo contenga letras
+		if (!cliente.getApellido().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+			throw new ClienteNegocioException("El apellido solo puede contener letras.");
+		}
+
 		if (cliente.getDni() == null || cliente.getDni().trim().isEmpty()) {
-			String mensaje = "El DNI es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("El DNI es obligatorio.");
 		}
+		// Validación de formato de DNI (solo números y 7 u 8 dígitos)
+		if (!cliente.getDni().matches("^[0-9]{7,8}$")) {
+			throw new ClienteNegocioException("El DNI debe tener entre 7 y 8 dígitos.");
+		}
+
 		if (cliente.getCuil() == null || cliente.getCuil().trim().isEmpty()) {
-			String mensaje = "El CUIL es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("El CUIL es obligatorio.");
 		}
-		/*
-		 * if (cliente.getSexo() == null || cliente.getSexo().trim().isEmpty()) {
-		 * System.out.println("El sexo es obligatorio."); return false; } if
-		 * (cliente.getNacionalidad() == null ||
-		 * cliente.getNacionalidad().trim().isEmpty()) {
-		 * System.out.println("La nacionalidad es obligatoria."); return false; }
-		 */
+		// Validación de formato de CUIL (solo números y formato XX-XXXXXXXX-X)
+		if (!cliente.getCuil().matches("^[0-9]{2}-[0-9]{8}-[0-9]{1}$")) {
+			throw new ClienteNegocioException("El CUIL debe tener 11 dígitos en el formato XX-XXXXXXXX-X.");
+		}
+
 		if (cliente.getFechaNacimiento() == null) {
-			String mensaje = "La fecha de nacimiento es obligatoria.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("La fecha de nacimiento es obligatoria.");
 		}
+
 		if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-			String mensaje = "La direccion es obligatoria.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("La dirección es obligatoria.");
 		}
-		/*
-		 * if (cliente.getLocalidad() == null ||
-		 * cliente.getLocalidad().trim().isEmpty()) {
-		 * System.out.println("La localidad es obligatoria."); return false; } if
-		 * (cliente.getProvincia() == null || cliente.getProvincia().trim().isEmpty()) {
-		 * System.out.println("La provincia es obligatoria."); return false; }
-		 */
+
 		if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
-			String mensaje = "El email es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
+			throw new ClienteNegocioException("El email es obligatorio.");
 		}
-		if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
-			String mensaje = "El telÃ©fono es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
-		}
-		
-		 if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
-			String mensaje = "El nombre de usuario es obligatorio.";
-			throw new ClienteNegocioException(mensaje);
-		}
-		 if (cliente.getUsuario().getPassword() == null ||
-		 cliente.getUsuario().getPassword().trim().isEmpty()) {
-			String mensaje = "La contraseña es obligatoria.";
-			throw new ClienteNegocioException(mensaje);
-		}
-		
-
 		// Validación de formato de email
-		String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-
-		if (!cliente.getEmail().matches(emailPattern)) {
-			String mensaje = "El email ingresado no es valido.";
-			throw new ClienteNegocioException(mensaje);
+		if (!cliente.getEmail().matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+			throw new ClienteNegocioException("El email ingresado no es válido.");
 		}
 
-		// Validación de formato de DNI (7 o 8 digitos)
-		String dniPattern = "^[0-9]{7,8}$";
-		if (!cliente.getDni().matches(dniPattern)) {
-			String mensaje = "El DNI debe tener entre 7 y 8 digitos.";
-			throw new ClienteNegocioException(mensaje);
+		if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
+			throw new ClienteNegocioException("El teléfono es obligatorio.");
+		}
+		// Validación de que el teléfono solo contenga números
+		if (!cliente.getTelefono().matches("^[0-9]+$")) {
+			throw new ClienteNegocioException("El teléfono solo puede contener números.");
 		}
 
-		// Validación de formato de CUIL (11 digitos)
-		String cuilPattern = "^[0-9]{2}-[0-9]{8}-[0-9]{1}$";
-		if (!cliente.getCuil().matches(cuilPattern)) {
-			String mensaje = "El CUIL debe tener 11 digitos.";
-			throw new ClienteNegocioException(mensaje);
-
+		if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
+			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
 		}
 
+		if (cliente.getUsuario().getPassword() == null || cliente.getUsuario().getPassword().trim().isEmpty()) {
+			throw new ClienteNegocioException("La contraseña es obligatoria.");
+		}
 	}
+
 
 	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas() {
 		// Carga cada cliente y sus cuentas desde el dao de cuenta

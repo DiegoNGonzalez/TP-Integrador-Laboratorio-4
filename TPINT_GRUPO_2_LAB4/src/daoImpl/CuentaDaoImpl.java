@@ -33,7 +33,7 @@ public class CuentaDaoImpl implements CuentaDao{
 		            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
 		            cuenta.setCbu(resultSet.getLong("cbu"));
 		            cuenta.setSaldo(resultSet.getFloat("saldo"));
-		            cuenta.setEstadoCuenta(resultSet.getBoolean("estado"));
+		            cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
 		            
 	            }
 	        }

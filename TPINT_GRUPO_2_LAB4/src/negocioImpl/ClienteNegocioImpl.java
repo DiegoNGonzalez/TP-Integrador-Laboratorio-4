@@ -135,7 +135,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
-		// Validaci贸n de campos vac铆os
+		// Validaci髇 de campos vac韔s
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 			String mensaje = "El nombre es obligatorio.";
 			throw new ClienteNegocioException(mensaje);
@@ -182,15 +182,19 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			String mensaje = "El tel茅fono es obligatorio.";
 			throw new ClienteNegocioException(mensaje);
 		}
-		/*
-		 * if (cliente.getUsuario() == null || cliente.getUsuario().trim().isEmpty()) {
-		 * System.out.println("El nombre de usuario es obligatorio."); return false; }
-		 * if (cliente.getContrasena() == null ||
-		 * cliente.getContrasena().trim().isEmpty()) {
-		 * System.out.println("La contrase帽a es obligatoria."); return false; }
-		 */
+		
+		 if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
+			String mensaje = "El nombre de usuario es obligatorio.";
+			throw new ClienteNegocioException(mensaje);
+		}
+		 if (cliente.getUsuario().getPassword() == null ||
+		 cliente.getUsuario().getPassword().trim().isEmpty()) {
+			String mensaje = "La contrase馻 es obligatoria.";
+			throw new ClienteNegocioException(mensaje);
+		}
+		
 
-		// Validaci贸n de formato de email
+		// Validaci髇 de formato de email
 		String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 
 		if (!cliente.getEmail().matches(emailPattern)) {
@@ -198,14 +202,14 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validaci贸n de formato de DNI (7 o 8 digitos)
+		// Validaci髇 de formato de DNI (7 o 8 digitos)
 		String dniPattern = "^[0-9]{7,8}$";
 		if (!cliente.getDni().matches(dniPattern)) {
 			String mensaje = "El DNI debe tener entre 7 y 8 digitos.";
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validaci贸n de formato de CUIL (11 digitos)
+		// Validaci髇 de formato de CUIL (11 digitos)
 		String cuilPattern = "^[0-9]{2}-[0-9]{8}-[0-9]{1}$";
 		if (!cliente.getCuil().matches(cuilPattern)) {
 			String mensaje = "El CUIL debe tener 11 digitos.";

@@ -22,25 +22,25 @@
         <!-- Nombre -->
         <div class="form-group">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del cliente">
+            <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ingrese el nombre del cliente">
         </div>
 
         <!-- Apellido -->
         <div class="form-group">
             <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido del cliente">
+            <input type="text" id="apellido" name="apellido" class="form-control" required placeholder="Ingrese el apellido del cliente">
         </div>
 
         <!-- DNI -->
         <div class="form-group">
             <label for="dni" class="form-label">DNI</label>
-            <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI">
+            <input type="text" id="dni" name="dni" class="form-control" required placeholder="Ingrese el DNI">
         </div>
 
         <!-- CUIL -->
         <div class="form-group">
             <label for="cuil" class="form-label">CUIL</label>
-            <input type="text" id="cuil" name="cuil" class="form-control" placeholder="Ingrese el CUIL">
+            <input type="text" id="cuil" name="cuil" class="form-control" required placeholder="Formato XX-XXXXXXXX-X">
         </div>
 
         <!-- Sexo -->
@@ -73,13 +73,13 @@
         <!-- Fecha de Nacimiento -->
         <div class="form-group">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control">
+            <input type="date" id="fechaNacimiento" required name="fechaNacimiento" class="form-control">
         </div>
 
         <!-- Dirección -->
         <div class="form-group">
             <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección">
+            <input type="text" id="direccion" required name="direccion" class="form-control" placeholder="Ingrese la dirección">
         </div>
 
         <!-- Localidad -->
@@ -118,30 +118,30 @@
         <!-- Email -->
         <div class="form-group">
             <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Ingrese el email">
+            <input type="email" id="email" name="email" required class="form-control" placeholder="Ingrese el email">
         </div>
 
         <!-- Teléfono -->
         <div class="form-group">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el teléfono">
+            <input type="tel" id="telefono" name="telefono" required class="form-control" placeholder="Ingrese el teléfono">
         </div>
 
         <!-- Usuario -->
         <div class="form-group">
             <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Ingrese el nombre de usuario">
+            <input type="text" id="usuario" name="usuario" required class="form-control" placeholder="Ingrese el nombre de usuario">
         </div>
 
         <!-- Contraseña -->
         <div class="form-group">
             <label for="contrasena" class="form-label">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Ingrese la contraseña">
+            <input type="password" id="contrasena" required name="contrasena" class="form-control" placeholder="Ingrese la contraseña">
         </div>
 		<!-- Repetir contraseña -->
         <div class="form-group">
             <label for="contrasenaRepetida" class="form-label">Repetir contraseña</label>
-            <input type="password" id="contrasenaRepetida" name="contrasenaRepetida" class="form-control" placeholder="Ingrese la contraseña">
+            <input type="password" id="contrasenaRepetida" required name="contrasenaRepetida" class="form-control" placeholder="Ingrese la contraseña">
         </div>
 
         
@@ -149,7 +149,7 @@
         <button type="submit" class="btn-primary">Guardar Cliente</button>
 
         <!-- Botón para Cancelar y Volver -->
-        <button type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'">Cancelar</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='ListarClientesServlet'">Cancelar</button>
     </form>
 </div>
 

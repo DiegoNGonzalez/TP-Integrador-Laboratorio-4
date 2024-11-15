@@ -53,6 +53,7 @@
             <th>CBU</th>
             <th>Saldo</th>
             <th>Acciones</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

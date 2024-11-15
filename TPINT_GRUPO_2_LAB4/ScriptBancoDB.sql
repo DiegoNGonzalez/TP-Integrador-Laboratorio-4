@@ -308,6 +308,6 @@ BEGIN
 
     -- Confirmación de la transacción
     COMMIT;
-END
+END //
 
-DELIMITER;
+DELIMITER ;

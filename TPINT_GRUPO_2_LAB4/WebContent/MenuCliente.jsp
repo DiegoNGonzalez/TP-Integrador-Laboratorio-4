@@ -13,6 +13,10 @@
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <title>Menu de Clientes</title>
 </head>
 <body>
@@ -69,8 +73,12 @@
             <td><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
                 <div class="action-buttons">
+
+				<div class="action-buttons">
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn-edit" >Editar</a>
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn-add-account">Agregar Cuenta</a>
+                    <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-add-account">Eliminar Cliente</a>
+
                 </div>
             </td>
         </tr>
@@ -87,6 +95,26 @@
 <script>
     $(document).ready(function() {
         $('#clientTable').DataTable();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Verifica si hay un mensaje de toast
+        var mensaje = "<%= request.getAttribute("toastMessage") %>";
+        var tipo = "<%= request.getAttribute("toastType") %>";
+        
+        toastr.options.timeOut = 3000;
+        toastr.options.positionClass = 'toast-top-right';
+        toastr.options.preventDuplicates = true;
+
+        if (mensaje) {
+            if (tipo == "success") {
+                toastr.success(mensaje);
+            } else if (tipo == "error") {
+                toastr.error(mensaje);
+            }
+        }
     });
 </script>
 

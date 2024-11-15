@@ -17,7 +17,7 @@
 <!-- Contenedor del Formulario de Agregar Cliente -->
 <div class="client-container">
     <h2 class="add-title">Agregar Nuevo Cliente</h2>
-    <form action="AgregarClienteServlet" method="post">
+    <form action="AgregarClienteServlet" method="post" >
 
         <!-- Nombre -->
         <div class="form-group">
@@ -143,6 +143,8 @@
             <label for="contrasenaRepetida" class="form-label">Repetir contraseña</label>
             <input type="password" id="contrasenaRepetida" name="contrasenaRepetida" class="form-control" placeholder="Ingrese la contraseña">
         </div>
+
+        
         <!-- Botón para Guardar el Nuevo Cliente -->
         <button type="submit" class="btn-primary">Guardar Cliente</button>
 
@@ -150,5 +152,6 @@
         <button type="button" class="btn-cancel" onclick="window.location.href='MenuCliente.jsp'">Cancelar</button>
     </form>
 </div>
+
 </body>
 </html>

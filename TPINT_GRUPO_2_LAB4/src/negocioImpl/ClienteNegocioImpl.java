@@ -95,15 +95,32 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public boolean bajaCliente(int idCliente) {
-		if (idCliente <= 0) {
-			System.out.println("El ID del cliente no es v谩lido.");
-			return false;
-		}
+	public boolean bajaCliente(int idCliente) throws SQLException {
+	    if (idCliente <= 0) {
+	        System.out.println("El ID del cliente no es v醠ido.");
+	        return false;
+	    }
 
-		// Llamamos al m茅todo de la capa de datos para dar de baja el cliente
-		return clienteDao.bajaCliente(idCliente);
+	    try {
+	        // Llamada al m閠odo en el DAO que ejecuta el procedimiento almacenado para la baja l骻ica
+	        boolean resultado = clienteDao.bajaCliente(idCliente);
+	        
+	        if (!resultado) {
+	            System.out.println("No se pudo realizar la baja l骻ica del cliente.");
+	            return false;
+	        }
+	        
+	        System.out.println("Baja l骻ica del cliente realizada correctamente.");
+	        return true;
+
+	    } catch (SQLException e) {
+	        // Registro y manejo de la excepci髇 SQL si falla el procedimiento almacenado
+	        System.out.println("Error al realizar la baja l骻ica del cliente: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {
@@ -112,12 +129,12 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return null;
 		}
 
-		// Llamamos al m茅todo de la capa de datos para obtener el cliente por ID
+		
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
 
 	@Override
-	public void verificarCliente(Cliente cliente) {
+	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
 		// Validaci贸n de campos vac铆os
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 			String mensaje = "El nombre es obligatorio.";
@@ -147,7 +164,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			throw new ClienteNegocioException(mensaje);
 		}
 		if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-			String mensaje = "La direcci贸n es obligatoria.";
+			String mensaje = "La direccion es obligatoria.";
 			throw new ClienteNegocioException(mensaje);
 		}
 		/*
@@ -177,21 +194,21 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 
 		if (!cliente.getEmail().matches(emailPattern)) {
-			String mensaje = "El email ingresado no es v谩lido.";
+			String mensaje = "El email ingresado no es valido.";
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validaci贸n de formato de DNI (7 o 8 d铆gitos)
+		// Validaci贸n de formato de DNI (7 o 8 digitos)
 		String dniPattern = "^[0-9]{7,8}$";
 		if (!cliente.getDni().matches(dniPattern)) {
-			String mensaje = "El DNI debe tener entre 7 y 8 d铆gitos.";
+			String mensaje = "El DNI debe tener entre 7 y 8 digitos.";
 			throw new ClienteNegocioException(mensaje);
 		}
 
-		// Validaci贸n de formato de CUIL (11 d铆gitos)
-		String cuilPattern = "^[0-9]{11}$";
+		// Validaci贸n de formato de CUIL (11 digitos)
+		String cuilPattern = "^[0-9]{2}-[0-9]{8}-[0-9]{1}$";
 		if (!cliente.getCuil().matches(cuilPattern)) {
-			String mensaje = "El CUIL debe tener 11 d铆gitos.";
+			String mensaje = "El CUIL debe tener 11 digitos.";
 			throw new ClienteNegocioException(mensaje);
 
 		}

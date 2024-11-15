@@ -68,17 +68,17 @@ INSERT INTO provincias ( provincia) VALUES
 ('Catamarca'),
 ('Chaco'),
 ('Chubut'),
-('CÃ³rdoba'),
+('Córdoba'),
 ('Corrientes'),
-('Entre RÃ­os'),
+('Entre Ríos'),
 ('Formosa'),
 ('Jujuy'),
 ('La Pampa'),
 ('La Rioja'),
 ('Mendoza'),
 ('Misiones'),
-('NeuquÃ©n'),
-('RÃ­o Negro'),
+('Neuquén'),
+('Río Negro'),
 ('Salta'),
 ('San Juan'),
 ('San Luis'),
@@ -86,33 +86,33 @@ INSERT INTO provincias ( provincia) VALUES
 ('Santa Fe'),
 ('Santiago del Estero'),
 ('Tierra del Fuego'),
-('TucumÃ¡n');
+('Tucumán');
 
 INSERT INTO localidades (idProvincia, localidad) VALUES
 (1, 'La Plata'), (1, 'Mar del Plata'),
 (2, 'Capital Federal'),
-(3, 'San Fernando del Valle de Catamarca'), (3, 'BelÃ©n'),
+(3, 'San Fernando del Valle de Catamarca'), (3, 'Belén'),
 (4, 'Resistencia'), (4, 'Barranqueras'),
 (5, 'Rawson'), (5, 'Trelew'),
-(6, 'CÃ³rdoba'), (6, 'Villa Carlos Paz'),
+(6, 'Córdoba'), (6, 'Villa Carlos Paz'),
 (7, 'Corrientes'), (7, 'Goya'),
-(8, 'ParanÃ¡'), (8, 'Concordia'),
+(8, 'Paraná¡'), (8, 'Concordia'),
 (9, 'Formosa'), (9, 'Clorinda'),
-(10, 'San Salvador de Jujuy'), (10, 'PalpalÃ¡'),
+(10, 'San Salvador de Jujuy'), (10, 'Palpalá¡'),
 (11, 'Santa Rosa'), (11, 'General Pico'),
 (12, 'La Rioja'), (12, 'Chilecito'),
 (13, 'Mendoza'), (13, 'San Rafael'),
-(14, 'Posadas'), (14, 'OberÃ¡'),
-(15, 'NeuquÃ©n'), (15, 'San MartÃ­n de los Andes'),
+(14, 'Posadas'), (14, 'Oberá¡'),
+(15, 'Neuquén'), (15, 'San Martín de los Andes'),
 (16, 'Viedma'), (16, 'Bariloche'),
 (17, 'Salta'), (17, 'Cafayate'),
 (18, 'San Juan'), (18, 'Caucete'),
 (19, 'San Luis'), (19, 'Villa Mercedes'),
-(20, 'RÃ­o Gallegos'), (20, 'Caleta Olivia'),
+(20, 'Río Gallegos'), (20, 'Caleta Olivia'),
 (21, 'Santa Fe'), (21, 'Rosario'),
 (22, 'Santiago del Estero'), (22, 'La Banda'),
-(23, 'Ushuaia'), (23, 'RÃ­o Grande'),
-(24, 'San Miguel de TucumÃ¡n'), (24, 'ConcepciÃ³n');
+(23, 'Ushuaia'), (23, 'Río Grande'),
+(24, 'San Miguel de Tucumán'), (24, 'Concepción');
 
 
 INSERT INTO tiposUsuarios (tipoUsuario) VALUES
@@ -122,13 +122,13 @@ INSERT INTO tiposUsuarios (tipoUsuario) VALUES
 
 INSERT INTO tiposCuentas (tipoCuenta) VALUES
 ('Caja de Ahorro'),
-('Caja de Ahorro Dolares'),
+('Caja de Ahorro Dólares'),
 ('Cuenta Corriente');
 
 INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
 ('Alta de Cuenta'),
-('Alta de PrÃ©stamo'),
-('Pago de PrÃ©stamo'),
+('Alta de Préstamo'),
+('Pago de Préstamo'),
 ('Transferencia Acreditada'),
 ('Transferencia Debitada');
 
@@ -270,6 +270,41 @@ BEGIN
     
     INSERT INTO clientes(idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado)
     VALUES (idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado);
+
+    -- Confirmación de la transacción
+    COMMIT;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE spBajaLogicaCliente(
+    IN p_idCliente INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Rollback en caso de error
+        ROLLBACK;
+    END;
+
+    -- Inicio de la transacción
+    START TRANSACTION;
+
+    -- Baja lógica del cliente
+    UPDATE clientes
+    SET estado = 0
+    WHERE idCliente = p_idCliente;
+
+    -- Baja lógica de las cuentas del cliente
+    UPDATE cuentas
+    SET estadoCuenta = 0
+    WHERE idCliente = p_idCliente;
+
+    -- Baja lógica del usuario relacionado al cliente
+    UPDATE usuarios
+    SET estadoUsuario = 0
+    WHERE idUsuario = (SELECT idUsuario FROM clientes WHERE idCliente = p_idCliente);
 
     -- Confirmación de la transacción
     COMMIT;

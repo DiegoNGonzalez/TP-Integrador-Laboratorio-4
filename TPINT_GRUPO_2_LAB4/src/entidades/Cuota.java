@@ -1,27 +1,26 @@
 package entidades;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Cuota {
 
 	private int idCuota;
-	private int  idPrestamo;
 	private int numCuota;
-	private float montoAPagar;
+	private BigDecimal montoAPagar;
 	private Date fechaPago;
-	private boolean estado;
+	private boolean estadoPago;
 	
 	public Cuota() {
 	}
 	
-	public Cuota(int idCuota, int idPrestamo, int numCuota, float montoAPagar, Date fechaPago, boolean estado) {
+	public Cuota(int idCuota, int numCuota, BigDecimal montoAPagar, Date fechaPago, boolean estado) {
 		super();
 		this.idCuota = idCuota;
-		this.idPrestamo = idPrestamo;
 		this.numCuota = numCuota;
 		this.montoAPagar = montoAPagar;
 		this.fechaPago = fechaPago;
-		this.estado = estado;
+		this.estadoPago = estado;
 	}
 	
 	public int getIdCuota() {
@@ -30,22 +29,17 @@ public class Cuota {
 	public void setIdCuota(int idCuota) {
 		this.idCuota = idCuota;
 	}
-	public int getidPrestamo() {
-		return idPrestamo;
-	}
-	public void setPrestamo(int idPrestamo) {
-		this.idPrestamo = idPrestamo;
-	}
+	
 	public int getNumCuota() {
 		return numCuota;
 	}
 	public void setNumCuota(int numCuota) {
 		this.numCuota = numCuota;
 	}
-	public float getMontoAPagar() {
+	public BigDecimal getMontoAPagar() {
 		return montoAPagar;
 	}
-	public void setMontoAPagar(float montoAPagar) {
+	public void setMontoAPagar(BigDecimal montoAPagar) {
 		this.montoAPagar = montoAPagar;
 	}
 	public Date getFechaPago() {
@@ -55,16 +49,16 @@ public class Cuota {
 		this.fechaPago = fechaPago;
 	}
 	public boolean isEstado() {
-		return estado;
+		return estadoPago;
 	}
 	public void setEstado(boolean estado) {
-		this.estado = estado;
+		this.estadoPago = estado;
 	}
 	
 	@Override
 	public String toString() {
-		return "Cuota [idCuota=" + idCuota + ", idPrestamo=" + idPrestamo + ", numCuota=" + numCuota + ", montoAPagar="
-				+ montoAPagar + ", fechaPago=" + fechaPago + ", estado=" + estado + "]";
+		return "Cuota [idCuota=" + idCuota + ", idPrestamo=" + numCuota + ", montoAPagar="
+				+ montoAPagar + ", fechaPago=" + fechaPago + ", estado=" + estadoPago + "]";
 	}
 	
 	

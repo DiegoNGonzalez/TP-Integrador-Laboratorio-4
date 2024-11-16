@@ -16,8 +16,8 @@ public class CuotaNegocioImpl implements CuotaNegocio{
 	}
 
 	@Override
-	public boolean agregarCuota(Cuota cuota) {
-		if(auxCuota.agregarCuota(cuota)) {
+	public boolean agregarCuota(Cuota cuota, int idPrestamo) {
+		if(auxCuota.agregarCuota(cuota, idPrestamo)) {
 			return true;
 		} else {
 			return false;

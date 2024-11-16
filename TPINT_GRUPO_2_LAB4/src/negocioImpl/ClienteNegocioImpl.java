@@ -125,7 +125,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {
 		if (idCliente <= 0) {
-			System.out.println("El ID de cliente no es válido.");
+			System.out.println("El ID de cliente no es valido.");
 			return null;
 		}
 

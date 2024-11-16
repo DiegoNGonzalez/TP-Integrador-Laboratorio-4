@@ -105,4 +105,23 @@ public class CuotaDaoImpl implements CuotaDao {
 
         return cuota;
     }
+
+	@Override
+	public boolean registrarPago(int idCuota) {
+		String query = "UPDATE cuotas SET estadoPago = true WHERE idCuota= ?";
+		try (Connection conexion = Conexion.getConnection();
+				PreparedStatement statement = conexion.prepareStatement(query)) {
+
+			statement.setInt(2, idCuota);
+
+			int filasAfectadas = statement.executeUpdate();
+
+			if (filasAfectadas > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

@@ -38,4 +38,9 @@ public class CuotaNegocioImpl implements CuotaNegocio{
 		return auxCuota.obtenerCuotaPorId(idCuota);
 	}
 
+	@Override
+	public boolean registrarPago(int idCuota) {
+		return auxCuota.registrarPago(idCuota);
+	}
+
 }

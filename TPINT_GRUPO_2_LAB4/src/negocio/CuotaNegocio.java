@@ -9,4 +9,11 @@ public interface CuotaNegocio {
     boolean agregarCuota(Cuota cuota, int idPrestamo);
     boolean bajarCuota(int idCuota);
     Cuota obtenerCuotaPorId(int idCuota);
+    
+    public boolean registrarPago(int idCuota);
+    
+    /*
+    public ArrayList<Cuota> filtrarCuotas(Date fechaInicio, Date fechaFin, BigDecimal montoMinimo, BigDecimal montoMaximo);
+    public boolean pagarCuota(int idCuota, int idCuentaDebito);
+    */
 }

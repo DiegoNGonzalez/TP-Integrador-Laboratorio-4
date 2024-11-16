@@ -125,7 +125,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {
 		if (idCliente <= 0) {
-			System.out.println("El ID de cliente no es vÃ¡lido.");
+			System.out.println("El ID de cliente no es valido.");
 			return null;
 		}
 
@@ -192,13 +192,13 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			throw new ClienteNegocioException("El teléfono solo puede contener números.");
 		}
 
-		if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
-			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
-		}
-
-		if (cliente.getUsuario().getPassword() == null || cliente.getUsuario().getPassword().trim().isEmpty()) {
-			throw new ClienteNegocioException("La contraseña es obligatoria.");
-		}
+//		if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
+//			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
+//		}
+//
+//		if (cliente.getUsuario().getPassword() == null || cliente.getUsuario().getPassword().trim().isEmpty()) {
+//			throw new ClienteNegocioException("La contraseña es obligatoria.");
+//		}
 	}
 
 

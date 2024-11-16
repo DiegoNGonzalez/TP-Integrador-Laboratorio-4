@@ -210,7 +210,8 @@ public class ClienteDaoImpl implements ClienteDao{
 			 cst.setInt(12, cliente.getLocalidad().getId());
 			 cst.setString(13, usuario.getNombreUsuario());
 			 cst.setString(14, usuario.getPassword());
-			 cst.setInt(15, usuario.getTipoUsuario().getId());
+			 //cst.setInt(15, usuario.getTipoUsuario().getId());
+			 cst.setInt(15, 1);
 			  			 
 			 cst.execute();
 			 conexion.close();

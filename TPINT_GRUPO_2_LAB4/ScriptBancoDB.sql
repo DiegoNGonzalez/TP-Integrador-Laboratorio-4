@@ -311,3 +311,90 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE spRegistrarTransferencia(
+    IN cbuDestino bigint,
+    IN cbuOrigen bigint,
+    IN importe DECIMAL(14, 2),
+    IN concepto VARCHAR(50)
+)
+BEGIN
+    
+    DECLARE saldo DECIMAL(14, 2);
+    
+    -- manejo de errores
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+	BEGIN
+        -- Revertir la transacción en caso de error
+        ROLLBACK;
+
+        -- Re-levantar el error para que sea capturado en la aplicación
+        RESIGNAL;
+    END;
+
+    -- transacción
+    START TRANSACTION;
+
+    -- Verificamos que cbuOrigen y cbuDestino no sean iguales
+    IF cbuOrigen = cbuDestino THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cuenta de origen y la cuenta de destino no pueden ser iguales';
+    END IF;
+    
+    -- Verificamos que tenga saldo suficiente y exista la cuenta
+	IF EXISTS (SELECT 1 FROM cuentas WHERE cbu = cbuOrigen AND estadoCuenta = 1) THEN
+		SELECT saldo INTO saldo FROM cuentas WHERE cbu = cbuOrigen;
+	ELSE
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO EXISTE LA CUENTA ORIGEN';
+	END IF;
+
+
+	-- Verificamos si posee saldo suficiente para la transferencia.
+	IF saldo - importe < 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO SE PUEDE REALIZAR LA TRANSFERENCIA, SALDO INSUFICIENTE';
+	END IF;
+
+	IF NOT EXISTS (SELECT 1 FROM cuentas WHERE cbu = cbuDestino AND estadoCuenta = 1) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO EXISTE LA CUENTA DESTINO';
+	END IF;
+
+	-- Registramos el movimiento cbuOrigen
+    INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
+    VALUES(cbuOrigen, 5, NOW(), concepto, importe);
+     
+     -- Verificamos si se insertó alguna fila
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta origen';
+	END IF;
+     
+	-- Registramos el movimiento cbuDestino
+    INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
+    VALUES(cbuDestino, 4, NOW(), concepto, importe);
+
+	-- Verificamos si se insertó alguna fila
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta destino';
+	END IF;
+
+	-- actualizacion saldo en cuenta origen. resta.
+    UPDATE cuentas SET saldo = saldo - importe WHERE cbu = cbuOrigen;
+    
+    -- Verificamos si se actualizó saldo en origen
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta origen para actualizar';
+	END IF;
+    
+    
+    -- actualizacion saldo en cuenta destino. suma.
+    UPDATE cuentas SET saldo = saldo + importe WHERE cbu = cbuDestino;
+    
+	-- Verificamos si se actualizó saldo en destino
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta destino para actualizar';
+	END IF;
+
+    COMMIT;
+END$$
+
+DELIMITER ;

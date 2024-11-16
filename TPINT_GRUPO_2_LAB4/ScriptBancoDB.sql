@@ -98,7 +98,7 @@ INSERT INTO localidades (idProvincia, localidad) VALUES
 (7, 'Corrientes'), (7, 'Goya'),
 (8, 'Paraná¡'), (8, 'Concordia'),
 (9, 'Formosa'), (9, 'Clorinda'),
-(10, 'San Salvador de Jujuy'), (10, 'Palpalá¡'),
+(10, 'San Salvador de Jujuy'), (10, 'Palpalá'),
 (11, 'Santa Rosa'), (11, 'General Pico'),
 (12, 'La Rioja'), (12, 'Chilecito'),
 (13, 'Mendoza'), (13, 'San Rafael'),
@@ -230,17 +230,17 @@ INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VA
 ('facundo.gimenez', 'facundo1234', 2, 1);
 
 INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado) VALUES
-(2,37719580,23377195809,'Franco','Cataldo','francocataldo7@gmail.com',47555680,'M',1,'1992-10-12','Libres del Sud 523',1,2,true),
-(3, 32589746, 20325897469, 'Ana', 'Martínez', 'ana.martinez@gmail.com', 1154327890, 'F', 2, '1988-04-15', 'Calle Siempre Viva 123', 2, 3, true),
-(4, 40325987, 27403259876, 'Carlos', 'Pérez', 'carlos.perez@gmail.com', 1123456789, 'M', 1, '1995-08-21', 'Av. Principal 456', 3, 4, true),
-(5, 38451236, 27384512369, 'Lucía', 'Gómez', 'lucia.gomez@gmail.com', 1145678901, 'F', 1, '1990-12-30', 'Diagonal Norte 789', 4, 5, true),
-(6, 29674583, 20296745836, 'Miguel', 'Rodríguez', 'miguel.rodriguez@gmail.com', 1156789012, 'M', 3, '1982-07-10', 'Calle Central 234', 5, 6, true),
-(7, 34526789, 20345267899, 'Sofía', 'Hernández', 'sofia.hernandez@gmail.com', 1134567890, 'F', 2, '1985-09-17', 'Pasaje Sur 567', 1, 2, true),
-(8, 41234567, 27412345676, 'Diego', 'López', 'diego.lopez@gmail.com', 1156789123, 'M', 3, '1997-05-25', 'Av. Libertador 789', 2, 3, true),
-(9, 35678912, 20356789124, 'María', 'Fernández', 'maria.fernandez@gmail.com', 1167890123, 'F', 1, '1991-11-09', 'Calle Oeste 123', 3, 4, true),
-(10, 29876543, 20298765436, 'Jorge', 'Ruiz', 'jorge.ruiz@gmail.com', 1143210987, 'M', 2, '1980-03-14', 'Pasaje Norte 456', 4, 5, true),
-(11, 40789012, 27407890125, 'Laura', 'Álvarez', 'laura.alvarez@gmail.com', 1123459087, 'F', 3, '1994-06-28', 'Diagonal Sur 789', 5, 6, true),
-(12, 36985214, 27369852147, 'Facundo', 'Giménez', 'facundo.gimenez@gmail.com', 1134210987, 'M', 1, '1992-02-18', 'Calle Este 345', 1, 2, true);
+(2,37719580,'23-37719580-9','Franco','Cataldo','francocataldo7@gmail.com',47555680,'M',1,'1992-10-12','Libres del Sud 523',1,2,true),
+(3, 32589746, '20-32589746-9', 'Ana', 'Martínez', 'ana.martinez@gmail.com', 1154327890, 'F', 2, '1988-04-15', 'Calle Siempre Viva 123', 2, 3, true),
+(4, 40325987, '27-40325987-6', 'Carlos', 'Pérez', 'carlos.perez@gmail.com', 1123456789, 'M', 1, '1995-08-21', 'Av. Principal 456', 3, 4, true),
+(5, 38451236, '27-38451236-9', 'Lucía', 'Gómez', 'lucia.gomez@gmail.com', 1145678901, 'F', 1, '1990-12-30', 'Diagonal Norte 789', 4, 5, true),
+(6, 29674583, '20-29674583-6', 'Miguel', 'Rodríguez', 'miguel.rodriguez@gmail.com', 1156789012, 'M', 3, '1982-07-10', 'Calle Central 234', 5, 6, true),
+(7, 34526789, '20-34526789-9', 'Sofía', 'Hernández', 'sofia.hernandez@gmail.com', 1134567890, 'F', 2, '1985-09-17', 'Pasaje Sur 567', 1, 2, true),
+(8, 41234567, '27-41234567-6', 'Diego', 'López', 'diego.lopez@gmail.com', 1156789123, 'M', 3, '1997-05-25', 'Av. Libertador 789', 2, 3, true),
+(9, 35678912, '20-35678912-4', 'María', 'Fernández', 'maria.fernandez@gmail.com', 1167890123, 'F', 1, '1991-11-09', 'Calle Oeste 123', 3, 4, true),
+(10, 29876543, '20-29876543-6', 'Jorge', 'Ruiz', 'jorge.ruiz@gmail.com', 1143210987, 'M', 2, '1980-03-14', 'Pasaje Norte 456', 4, 5, true),
+(11, 40789012, '27-40789012-5', 'Laura', 'Álvarez', 'laura.alvarez@gmail.com', 1123459087, 'F', 3, '1994-06-28', 'Diagonal Sur 789', 5, 6, true),
+(12, 36985214, '27-36985214-7', 'Facundo', 'Giménez', 'facundo.gimenez@gmail.com', 1134210987, 'M', 1, '1992-02-18', 'Calle Este 345', 1, 2, true);
 
 INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
 (1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true),

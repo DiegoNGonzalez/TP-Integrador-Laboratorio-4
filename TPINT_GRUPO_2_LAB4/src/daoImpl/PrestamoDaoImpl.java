@@ -46,7 +46,59 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	    return listaPrestamos;
 	}
 
+	@Override
+	public ArrayList<Prestamo> listarPrestamosXEstado(String estado) {
+	    String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo FROM prestamos WHERE EstadoPrestamo = ?";
+	    ArrayList<Prestamo> listaPrestamos = new ArrayList<>();
 
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        statement.setString(1, estado);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Prestamo prestamo = new Prestamo();
+	                
+	                Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
+	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+
+	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
+	                prestamo.setCliente(cliente);
+	                prestamo.setCuenta(cuenta);
+	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));  // Usar getTimestamp si necesitamos la hora
+	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
+	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
+	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
+	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
+	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
+
+	                listaPrestamos.add(prestamo);
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return listaPrestamos;
+	}
+
+
+    public ArrayList<Prestamo> listarPrestamosPendientes() {
+        return listarPrestamosXEstado("Pendiente");
+    }
+
+
+    public ArrayList<Prestamo> listarPrestamosAprobados() {
+        return listarPrestamosXEstado("Activo");
+    }
+
+
+    public ArrayList<Prestamo> listarPrestamosRechazados() {
+        return listarPrestamosXEstado("Rechazado");
+    }
+	
 	@Override
 	public boolean agregarPrestamo(Prestamo prestamo) {
 	    String query = "INSERT INTO prestamos(idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo) "

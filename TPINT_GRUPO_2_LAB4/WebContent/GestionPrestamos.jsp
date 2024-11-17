@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="daoImpl.PrestamoDaoImpl" %>
+<%@ page import="entidades.Prestamo" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +29,6 @@
 <title>Gestión de Prestamos</title>
 </head>
 <body>
-
 <%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
 <div class="management-container">
@@ -58,40 +60,32 @@
         
         <button id="applyFiltersPendientes" class="btn-apply">Aplicar Filtros</button>
     </div>
-    <table id="prestamosPendientes" class="account-table display">
-        <thead>
+<table id="prestamosPendientes" class="account-table display">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Monto</th>
+            <th>Cuotas</th>
+            <th>Fecha de solicitud</th>
+            <th>Aprobar</th>
+            <th>Rechazar</th>               
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+        ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
+        for (Prestamo prestamo : prestamosPendientes) { %>
             <tr>
-                <th>Cliente</th>
-                <th>Monto</th>
-                <th>Cuotas</th>
-                <th>Fecha de solicitud</th>
-                <th>Tipo de Cuenta</th> 
-                <th>Aprobar</th>
-                <th>Rechazar</th>               
+                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= prestamo.getImporteTotal() %></td>
+                <td><%= prestamo.getCantCuotas() %></td>
+                <td><%= prestamo.getFechaAltaPrestamo() %></td>
+                <td><a href="AprobarPrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-aprobar">Aprobar</a></td>
+                <td><a href="RechazarPrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-rechazar">Rechazar</a></td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Carlos Gonzalez</td>
-                <td>$ 1.000.000,02.-</td>
-                <td>6</td>
-                <td>2024-10-30</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-aprobar">Aprobar</a></td>
-                <td><a href="RechazarPrestamo.jsp?prestamoId=123456789" class="btn-rechazar">Rechazar</a></td>
-            </tr>
-            <tr>
-                <td>Carla Rodriguez</td>
-                <td>$ 890.000,00.-</td>
-                <td>24</td>
-                <td>2024-10-22</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-aprobar">Aprobar</a></td>
-                <td><a href="RechazarPrestamo.jsp?prestamoId=123456789" class="btn-rechazar">Rechazar</a></td>
-            </tr>
-            
-        </tbody>
-    </table>
+        <% } %>
+    </tbody>
+</table>
     <br>
     <h2>Prestamos aprobados</h2>
     <div class="filter-container">
@@ -119,37 +113,30 @@
         
         <button id="applyFiltersAprobados" class="btn-apply">Aplicar Filtros</button>
     </div>
-    <table id="prestamosAprobados" class="account-table display">
-        <thead>
+<table id="prestamosAprobados" class="account-table display">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Monto</th>
+            <th>Cuotas</th>
+            <th>Fecha de solicitud</th>
+            <th>Detalle</th>             
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+        ArrayList<Prestamo> prestamosAprobados = (ArrayList<Prestamo>) request.getAttribute("prestamosAprobados");
+        for (Prestamo prestamo : prestamosAprobados) { %>
             <tr>
-                <th>Cliente</th>
-                <th>Monto</th>
-                <th>Cuotas</th>
-                <th>Fecha de solicitud</th>
-                <th>Tipo de Cuenta</th> 
-                <th>Detalle</th>             
+                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= prestamo.getImporteTotal() %></td>
+                <td><%= prestamo.getCantCuotas() %></td>
+                <td><%= prestamo.getFechaAltaPrestamo() %></td>
+                <td><a href="DetallePrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-detalle">Detalle</a></td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Carlos Gonzalez</td>
-                <td>$ 1.000.000,02.-</td>
-                <td>6</td>
-                <td>2024-10-30</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-Detalle">Detalle</a></td>
-            </tr>
-            <tr>
-                <td>Carla Rodriguez</td>
-                <td>$ 890.000,00.-</td>
-                <td>24</td>
-                <td>2024-10-22</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-Detalle">Detalle</a></td>
-            </tr>
-            
-        </tbody>
-    </table>
+        <% } %>
+    </tbody>
+</table>
     <br>
      <h2>Prestamos rechazados</h2>
      
@@ -179,36 +166,34 @@
         <button id="applyFiltersRechazados" class="btn-apply">Aplicar Filtros</button>
     </div>
     <table id="prestamosRechazados" class="account-table display">
-        <thead>
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Monto</th>
+            <th>Cuotas</th>
+            <th>Fecha de solicitud</th>
+            <th>Detalle</th>             
+        </tr>
+    </thead>
+    <tbody>
+        <% 
+        ArrayList<Prestamo> prestamosRechazados = (ArrayList<Prestamo>) request.getAttribute("prestamosRechazados");
+        for (Prestamo prestamo : prestamosRechazados) { %>
             <tr>
-                <th>Cliente</th>
-                <th>Monto</th>
-                <th>Cuotas</th>
-                <th>Fecha de solicitud</th>
-                <th>Tipo de Cuenta</th> 
-                <th>Detalle</th>             
+                <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= prestamo.getImporteTotal() %></td>
+                <td><%= prestamo.getCantCuotas() %></td>
+                <td><%= prestamo.getFechaAltaPrestamo() %></td>
+                <td><a href="DetallePrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-detalle">Detalle</a></td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Carlos Gonzalez</td>
-                <td>$ 1.000.000,02.-</td>
-                <td>6</td>
-                <td>2024-10-30</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-Detalle">Detalle</a></td>
-            </tr>
-            <tr>
-                <td>Carla Rodriguez</td>
-                <td>$ 890.000,00.-</td>
-                <td>24</td>
-                <td>2024-10-22</td>
-                <td>Corriente</td>
-                <td><a href="AprobarPrestamo.jsp?prestamoId=123456789" class="btn-Detalle">Detalle</a></td>
-            </tr>
-            
-        </tbody>
-    </table>
+        <% } %>
+    </tbody>
+</table>
+<%
+System.out.println("Prestamos Pendientes: " + prestamosPendientes.size());
+System.out.println("Prestamos Aprobados: " + prestamosAprobados.size());
+System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
+%>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {

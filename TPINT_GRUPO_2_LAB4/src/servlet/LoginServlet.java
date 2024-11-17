@@ -28,16 +28,20 @@ public class LoginServlet extends HttpServlet {
 	    	ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 	    
 	        try {
-	            // Verificamos las credenciales a trav閟 de la capa de negocio
-	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);
-	
+	            // Verificamos las credenciales a trav茅s de la capa de negocio
+	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);	                       
+	            
 	            if (usuario != null && usuario.isActivo()) {
+	            	ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
+	            	//busca dos veces al usuario, modificar dsp. dejar solo cliente en session que contiene a usuario? tb se podria poner en el if de abajo.
+	            	Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
 	                HttpSession session = request.getSession();
 	                session.setAttribute("userType", usuario.getTipoUsuario().getTipoUsuario());
 	                session.setAttribute("usuario", usuario.getNombreUsuario());
-	                System.out.println("Sesi髇 configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
+	                session.setAttribute("cliente", cliente);
+	                System.out.println("Sesi贸n configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
 	
-	                // Redirigir seg鷑 el tipo de usuario
+	                // Redirigir seg煤n el tipo de usuario
 	                if ("Administrador".equals(usuario.getTipoUsuario().getTipoUsuario())) {
 	                    response.sendRedirect("DashboardAdmin.jsp");
 	                } else if ("Cliente".equals(usuario.getTipoUsuario().getTipoUsuario())) {
@@ -50,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 	                throw new UsuarioNegocioException("Usuario inactivo o credenciales incorrectas.");
 	            }
 	        } catch (UsuarioNegocioException e) {
-	            // Manejo de la excepci髇 de negocio
+	            // Manejo de la excepci贸n de negocio
 	            request.getSession().setAttribute("errorMsj", e.getMessage());
 	            response.sendRedirect("Error.jsp");
 	        }
@@ -59,16 +63,16 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter("action");
         if ("logout".equals(action)) {
-            // Invalidar la sesi髇 si la acci髇 es logout
+            // Invalidar la sesi贸n si la acci贸n es logout
             HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
-                System.out.println("Sesi髇 invalidada");
+                System.out.println("Sesi贸n invalidada");
             }
-            // Redirigir al login despu閟 de cerrar sesi髇
+            // Redirigir al login despu茅s de cerrar sesi贸n
             response.sendRedirect("Login.jsp");
         } else {
-            // Redirigir al login si no se especifica la acci髇
+            // Redirigir al login si no se especifica la acci贸n
             response.sendRedirect("Login.jsp");
         }
     }

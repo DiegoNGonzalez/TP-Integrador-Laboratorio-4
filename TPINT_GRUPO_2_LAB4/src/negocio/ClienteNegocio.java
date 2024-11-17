@@ -17,4 +17,5 @@ public interface ClienteNegocio {
 	
 	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas();
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
+	public Cliente obtenerClientePorIdUsuario(int id);
 }

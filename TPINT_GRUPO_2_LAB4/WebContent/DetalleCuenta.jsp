@@ -34,7 +34,6 @@
 					<td>Alta de cuenta</td>
 					<td>Apertura de cuenta 123456789</td>
 					<td>$10,000.00</td>
-
 				</tr>
 				<tr>
 					<td>15/11/2024</td>
@@ -42,7 +41,6 @@
 					<td>Extracción de dinero en cajero</td>
 					<td>- $4,750.00</td>
 				</tr>
-
 			</tbody>
 		</table>
 		<div style="margin-bottom: 20px;"></div>
@@ -51,6 +49,5 @@
 				transferencia</a>
 		</div>
 	</div>
-
 </body>
 </html>

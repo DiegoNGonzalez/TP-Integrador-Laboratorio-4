@@ -133,6 +133,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
 	
+
 	public Cliente obtenerClientePorIdUsuario(int idUsuario) {
 		if (idUsuario <= 0) {
 			System.out.println("El ID del usuario no es valido.");

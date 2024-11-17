@@ -1,3 +1,7 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="entidades.Cliente" %>
+<%@ page import="entidades.Cuenta" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="entidades.Cliente" %>
@@ -15,20 +19,35 @@
 <% 
     Cliente cliente = (Cliente) session.getAttribute("Cliente");
     if (cliente != null) {
-        String nombreCliente = cliente.getNombre(); // Obtén el nombre del cliente
+        String nombreCliente = cliente.getNombre(); // ObtÃ©n el nombre del cliente
 %>
 <div class="dashboard-header">
     <h2>Bienvenido, <%= nombreCliente %></h2>
 </div>
+
 <% } %>
+
+<% 
+    ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
+    Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
+    
+    while (iteradorCuentas.hasNext()) {
+        Cuenta cuenta = iteradorCuentas.next();
+%>
+
 <div class="account-cliente-principal">
-		<h2 class="edit-title">Cuenta corriente 123456789</h2>
-		<h3>CBU: 00000000000</h3>
-		<h3>Saldo: $5,250.00</h3>
+		<h2 class="edit-title"><%= cuenta.getTipoCuenta().getTipo() %> $ <%= cuenta.getSaldo() %> .-</h2>
+		<h3>CBU: <%= cuenta.getCbu() %></h3>
+		<h3>Saldo: $ <%= cuenta.getSaldo() %></h3>
 		<div>
 			<a href="DetalleCuenta.jsp" class="btn-aprobar">Ver detalle</a>
 		</div>
 </div>
+       
+<% 
+    } 
+%>
+
 <div class="dashboard-content">
     <div class="dashboard-card" onclick="window.location.href='MisCuentas.jsp'">
         <h3>Mis cuentas</h3>

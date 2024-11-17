@@ -97,25 +97,25 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public boolean bajaCliente(int idCliente) throws SQLException {
 	    if (idCliente <= 0) {
-	        System.out.println("El ID del cliente no es válido.");
+	        System.out.println("El ID del cliente no es vï¿½lido.");
 	        return false;
 	    }
 
 	    try {
-	        // Llamada al método en el DAO que ejecuta el procedimiento almacenado para la baja lógica
+	        // Llamada al mï¿½todo en el DAO que ejecuta el procedimiento almacenado para la baja lï¿½gica
 	        boolean resultado = clienteDao.bajaCliente(idCliente);
 	        
 	        if (!resultado) {
-	            System.out.println("No se pudo realizar la baja lógica del cliente.");
+	            System.out.println("No se pudo realizar la baja lï¿½gica del cliente.");
 	            return false;
 	        }
 	        
-	        System.out.println("Baja lógica del cliente realizada correctamente.");
+	        System.out.println("Baja lÃ³gica del cliente realizada correctamente.");
 	        return true;
 
 	    } catch (SQLException e) {
-	        // Registro y manejo de la excepción SQL si falla el procedimiento almacenado
-	        System.out.println("Error al realizar la baja lógica del cliente: " + e.getMessage());
+	        // Registro y manejo de la excepciï¿½n SQL si falla el procedimiento almacenado
+	        System.out.println("Error al realizar la baja lï¿½gica del cliente: " + e.getMessage());
 	        e.printStackTrace();
 	        return false;
 	    }
@@ -125,7 +125,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	@Override
 	public Cliente obtenerClientePorId(int idCliente) {
 		if (idCliente <= 0) {
-			System.out.println("El ID de cliente no es vÃ¡lido.");
+			System.out.println("El ID de cliente no es valido.");
 			return null;
 		}
 
@@ -144,69 +144,70 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
-		// Validación de campos vacíos y de formato de nombre y apellido
+		// ValidaciÃ³n de campos vacÃ­os y de formato de nombre y apellido
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
-			throw new ClienteNegocioException("El nombre es obligatorio.");
+		    throw new ClienteNegocioException("El nombre es obligatorio.");
 		}
-		// Validación de que el nombre solo contenga letras
-		if (!cliente.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-			throw new ClienteNegocioException("El nombre solo puede contener letras.");
+		// ValidaciÃ³n de que el nombre solo contenga letras, incluyendo letras con acentos y la Ã±
+		if (!cliente.getNombre().matches("^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘\\s]+$")) {
+		    throw new ClienteNegocioException("El nombre solo puede contener letras.");
 		}
 
 		if (cliente.getApellido() == null || cliente.getApellido().trim().isEmpty()) {
-			throw new ClienteNegocioException("El apellido es obligatorio.");
+		    throw new ClienteNegocioException("El apellido es obligatorio.");
 		}
-		// Validación de que el apellido solo contenga letras
-		if (!cliente.getApellido().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-			throw new ClienteNegocioException("El apellido solo puede contener letras.");
+		// ValidaciÃ³n de que el apellido solo contenga letras, incluyendo letras con acentos y la Ã±
+		if (!cliente.getApellido().matches("^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘\\s]+$")) {
+		    throw new ClienteNegocioException("El apellido solo puede contener letras.");
 		}
 
 		if (cliente.getDni() == null || cliente.getDni().trim().isEmpty()) {
-			throw new ClienteNegocioException("El DNI es obligatorio.");
+		    throw new ClienteNegocioException("El DNI es obligatorio.");
 		}
-		// Validación de formato de DNI (solo números y 7 u 8 dígitos)
+		// ValidaciÃ³n de formato de DNI (solo nÃºmeros y 7 u 8 dÃ­gitos)
 		if (!cliente.getDni().matches("^[0-9]{7,8}$")) {
-			throw new ClienteNegocioException("El DNI debe tener entre 7 y 8 dígitos.");
+		    throw new ClienteNegocioException("El DNI debe tener entre 7 y 8 dÃ­gitos.");
 		}
 
 		if (cliente.getCuil() == null || cliente.getCuil().trim().isEmpty()) {
-			throw new ClienteNegocioException("El CUIL es obligatorio.");
+		    throw new ClienteNegocioException("El CUIL es obligatorio.");
 		}
-		// Validación de formato de CUIL (solo números y formato XX-XXXXXXXX-X)
+		// ValidaciÃ³n de formato de CUIL (solo nÃºmeros y formato XX-XXXXXXXX-X)
 		if (!cliente.getCuil().matches("^[0-9]{2}-[0-9]{8}-[0-9]{1}$")) {
-			throw new ClienteNegocioException("El CUIL debe tener 11 dígitos en el formato XX-XXXXXXXX-X.");
+		    throw new ClienteNegocioException("El CUIL debe tener 11 dÃ­gitos en el formato XX-XXXXXXXX-X.");
 		}
 
 		if (cliente.getFechaNacimiento() == null) {
-			throw new ClienteNegocioException("La fecha de nacimiento es obligatoria.");
+		    throw new ClienteNegocioException("La fecha de nacimiento es obligatoria.");
 		}
 
 		if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-			throw new ClienteNegocioException("La dirección es obligatoria.");
+		    throw new ClienteNegocioException("La direcciÃ³n es obligatoria.");
 		}
 
 		if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
-			throw new ClienteNegocioException("El email es obligatorio.");
+		    throw new ClienteNegocioException("El email es obligatorio.");
 		}
-		// Validación de formato de email
+		// ValidaciÃ³n de formato de email
 		if (!cliente.getEmail().matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-			throw new ClienteNegocioException("El email ingresado no es válido.");
+		    throw new ClienteNegocioException("El email ingresado no es vÃ¡lido.");
 		}
 
 		if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
-			throw new ClienteNegocioException("El teléfono es obligatorio.");
+		    throw new ClienteNegocioException("El telÃ©fono es obligatorio.");
 		}
-		// Validación de que el teléfono solo contenga números
+		// ValidaciÃ³n de que el telÃ©fono solo contenga nÃºmeros
 		if (!cliente.getTelefono().matches("^[0-9]+$")) {
-			throw new ClienteNegocioException("El teléfono solo puede contener números.");
+		    throw new ClienteNegocioException("El telÃ©fono solo puede contener nÃºmeros.");
 		}
+
 
 //		if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
 //			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
 //		}
 //
 //		if (cliente.getUsuario().getPassword() == null || cliente.getUsuario().getPassword().trim().isEmpty()) {
-//			throw new ClienteNegocioException("La contraseña es obligatoria.");
+//			throw new ClienteNegocioException("La contraseï¿½a es obligatoria.");
 //		}
 	}
 

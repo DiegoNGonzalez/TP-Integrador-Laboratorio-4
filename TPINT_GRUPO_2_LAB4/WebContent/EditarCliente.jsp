@@ -65,7 +65,7 @@
 
 <div class="form-group">
     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="<%= cliente.getFechaNacimiento() %>">
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="<%= cliente.getFechaNacimiento() %>" readonly>
 </div>
 
 <div class="form-group">

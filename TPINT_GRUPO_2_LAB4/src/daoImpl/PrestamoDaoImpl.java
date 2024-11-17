@@ -223,6 +223,36 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	    return listaPrestamos;
 	}
 
+	@Override
+	public boolean darDeAltaPrestamo(Prestamo prestamo) {
+	    String query = "UPDATE prestamos SET EstadoPrestamo = ? WHERE idPrestamo = ?";
+	    try (Connection conexion = Conexion.getConnection();
+		         PreparedStatement statement = conexion.prepareStatement(query)) {
+	    	statement.setString(1, prestamo.getEstado());
+	    	statement.setInt(2, prestamo.getIdPrestamo());
+	        return statement.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	@Override
+	public int ultimoID() {
+		String query = "SELECT MAX(id_prestamo) AS ultimo_id FROM prestamos";
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query);
+	         ResultSet resultSet = statement.executeQuery()) {
+
+	        if (resultSet.next()) {
+	            return resultSet.getInt("ultimo_id");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return -1; // Retornar -1 si no se encuentra un ID valido.
+	}
+
 
 
 }

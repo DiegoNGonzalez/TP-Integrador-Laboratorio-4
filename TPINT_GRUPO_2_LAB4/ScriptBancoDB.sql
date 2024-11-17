@@ -208,7 +208,7 @@ CREATE TABLE cuotas (
     idCuota int primary key auto_increment,
     idPrestamo int NOT NULL,
     numeroCuota int NOT NULL,
-    montoPagado decimal(14, 2) NULL,
+    montoAPagar decimal(14, 2) NULL,
     fechaPago date NULL,
     estadoPago bit DEFAULT 0, -- 0 sin pagar, 1 ya pagado
     

@@ -44,7 +44,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public boolean agregarCuota(Cuota cuota, int idPrestamo) {
-        String query = "INSERT INTO cuotas(idPrestamo, numCuota, montoAPagar, fechaPago, estado) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO cuotas(idPrestamo, numeroCuota, montoAPagar, fechaPago, estadoPago) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -52,7 +52,7 @@ public class CuotaDaoImpl implements CuotaDao {
             statement.setInt(1, idPrestamo);
             statement.setInt(2, cuota.getNumCuota());
             statement.setBigDecimal(3, cuota.getMontoAPagar());
-            statement.setDate(4, (java.sql.Date) new Date(cuota.getFechaPago().getTime()));
+            statement.setDate(4, new java.sql.Date(cuota.getFechaPago().getTime()));
             statement.setBoolean(5, cuota.isEstado());
 
             return statement.executeUpdate() > 0;

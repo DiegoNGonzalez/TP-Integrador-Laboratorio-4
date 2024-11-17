@@ -19,6 +19,8 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 		return auxPrestamo.listarPrestamos();
 	}
 
+	
+	
 	@Override
 	public boolean agregarPrestamo(Prestamo prestamo) {
 		if(auxPrestamo.agregarPrestamo(prestamo)) {
@@ -45,6 +47,26 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 	@Override
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) {
 		return auxPrestamo.listarPrestamosXCliente(idCliente);
+	}
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosXEstado(String estado) {
+		return auxPrestamo.listarPrestamosXEstado(estado);
+	}
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosPendientes() {
+		return auxPrestamo.listarPrestamosPendientes();
+	}
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosAprobados() {
+		return auxPrestamo.listarPrestamosAprobados();
+	}
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosRechazados() {
+		return auxPrestamo.listarPrestamosRechazados();
 	}
 
 }

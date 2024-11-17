@@ -13,7 +13,7 @@
 <jsp:include page="nav.jsp" />
     <div class="account-container">
         <h2 class="edit-title">Solicitud de Préstamo</h2>
-        
+        <form action="SolicitarPrestamoServlet" method="post">
             <!-- Importe del préstamo solicitado -->
             <div class="form-group">
                 <label class="form-label" for="importe">Importe del Préstamo ($):</label>
@@ -50,8 +50,8 @@
             </div>
             
             <!-- Botones de acción -->
-            <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=1">Alta Préstamo</a>
             <input type="submit" class="btn-save" value="Solicitar Préstamo">
+            </form>
         <form action="DashboardCliente.jsp" method="get">
             <input type="submit" class="btn-cancel" value="Cancelar">
         </form>

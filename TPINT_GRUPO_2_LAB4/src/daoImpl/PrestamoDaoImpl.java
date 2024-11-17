@@ -33,7 +33,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	            prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	            prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	            prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	            prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	            prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
 	            prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	            prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 
@@ -56,13 +56,13 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
 	        statement.setInt(1, prestamo.getCliente().getIdCliente());
-	        //statement.setInt(2, prestamo.getCuenta().getIdCuenta());
+	        statement.setInt(2, prestamo.getCuenta().getIdCuenta());
 	        statement.setDate(3, new java.sql.Date(prestamo.getFechaAltaPrestamo().getTime()));
 	        statement.setFloat(4, prestamo.getImporteTotal());
 	        statement.setInt(5, prestamo.getPlazo());
-	        statement.setFloat(6, prestamo.getImporteCuota());
+	        statement.setBigDecimal(6, prestamo.getImporteCuota());
 	        statement.setInt(7, prestamo.getCantCuotas());
-	        statement.setInt(8, 1);
+	        statement.setString(8, prestamo.getEstado());
 
 	        int filas = statement.executeUpdate();
 	        return filas > 0;
@@ -117,7 +117,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 	            }
@@ -133,7 +133,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) {
 	    String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo " +
-	                   "FROM prestamos WHERE EstadoPrestamo = 'Activo' AND idCliente = ?";
+	                   "FROM prestamos WHERE idCliente = ?";
 	    ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
 
 	    try (Connection conexion = Conexion.getConnection();
@@ -153,7 +153,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 

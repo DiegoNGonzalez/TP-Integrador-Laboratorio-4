@@ -1,4 +1,5 @@
 package dao;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import entidades.Cuenta;
 
@@ -11,4 +12,5 @@ public interface CuentaDao {
 	public long obtenerProximoCBU();	
 	public long obtenerProximoNumeroCuenta();	
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente);
+	public boolean ingresos(int idCuenta, BigDecimal montoACargar);
 }

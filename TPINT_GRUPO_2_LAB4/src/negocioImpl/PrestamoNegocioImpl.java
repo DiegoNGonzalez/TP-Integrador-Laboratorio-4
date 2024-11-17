@@ -69,4 +69,14 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 		return auxPrestamo.listarPrestamosRechazados();
 	}
 
+	@Override
+	public boolean darDeAltaPrestamo(Prestamo prestamo) {
+		return auxPrestamo.darDeAltaPrestamo(prestamo);
+	}
+
+	@Override
+	public int ultimoID() {
+		return auxPrestamo.ultimoID();
+	}
+
 }

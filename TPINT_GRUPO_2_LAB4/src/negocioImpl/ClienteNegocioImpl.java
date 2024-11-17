@@ -132,6 +132,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
+	
+	@Override
+	public Cliente obtenerClientePorIdUsuario(int id) {
+		if (id <= 0) {
+			System.out.println("El id no es valido.");
+			return null;
+		}		
+		return clienteDao.obtenerClientePorIdUsuario(id);
+	}
 
 	@Override
 	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {

@@ -37,7 +37,6 @@ public class ClienteCuentaServlet extends HttpServlet {
 
         // Envia la lista de clientes como atributo al js
         request.setAttribute("clientes", clientes);
-
         request.getRequestDispatcher("GestionCuentas.jsp").forward(request, response);
     }
 

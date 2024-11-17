@@ -182,9 +182,6 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	    return proximoNumeroCuenta; 
 	}
-
-
-	
 	
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
         ArrayList<Cuenta> listaCuentas = new ArrayList<>();
@@ -217,7 +214,6 @@ public class CuentaDaoImpl implements CuentaDao{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return listaCuentas;
     }
 }

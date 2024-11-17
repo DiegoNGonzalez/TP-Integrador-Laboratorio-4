@@ -187,13 +187,75 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	    return cliente;
 	}
+	
+	@Override
+	public Cliente obtenerClientePorIdUsuario(int id) {
+	    String query = "SELECT idCliente, idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
+	                 + "FROM clientes WHERE idUsuario = ? and estado = 1";
+
+	    Cliente cliente = null;
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        // Establecer ID de Cliente
+	        statement.setInt(1, id);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	        	
+	            if (resultSet.next()) {
+	                cliente = new Cliente();
+	                
+	                CuentaDaoImpl negocioCuenta = new CuentaDaoImpl();
+	                // Obtener el Usuario relacionado al cliente
+	                Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+
+	                
+	                cliente.setUsuario(usuario);
+	                cliente.setIdCliente(Integer.parseInt(resultSet.getString("idCliente")));
+	                cliente.setDni(resultSet.getString("dni"));
+	                cliente.setCuil(resultSet.getString("cuil"));
+	                cliente.setNombre(resultSet.getString("nombre"));
+	                cliente.setApellido(resultSet.getString("apellido"));
+	                cliente.setEmail(resultSet.getString("email"));
+	                cliente.setTelefono(resultSet.getString("telefono"));
+	                cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
+	                cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
+	                cliente.setDireccion(resultSet.getString("direccion"));
+	                // ver que devuelve sino tiene, como queda?
+	                cliente.setCuentas(negocioCuenta.obtenerCuentasPorCliente(Integer.parseInt(resultSet.getString("idCliente"))));
+	                
+	                
+	                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
+	                LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
+	                ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
+
+	                Nacionalidad nacionalidad = nacionalidadDao.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+	                Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+	                Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
+
+	                
+	                
+	                
+	                
+	                cliente.setNacionalidad(nacionalidad);
+	                cliente.setLocalidad(localidad);
+	                cliente.setProvincia(provincia);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return cliente;
+	}
 
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException
 	{
 		  try
 		  {
 			 Connection conexion = Conexion.getConnection();
-			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente"
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente20"
 			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");			 
 		 			 
 			 cst.setString(1, cliente.getDni());

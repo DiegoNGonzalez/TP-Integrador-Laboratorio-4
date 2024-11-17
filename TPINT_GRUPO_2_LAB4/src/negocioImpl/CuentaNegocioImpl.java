@@ -105,4 +105,14 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		
         return cuenta;
     }
+
+	@Override
+	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
+		
+        if (idCliente <= 0) {
+            throw new CuentaNegocioException("El ID del cliente debe ser valido.");
+        }
+        
+        return cuentaDao.obtenerCuentasPorCliente(idCliente);
+	}
 }

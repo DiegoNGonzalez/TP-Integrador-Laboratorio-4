@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidades.Cuenta;
 import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
@@ -46,6 +47,7 @@ public class CargarDesplegablesServlet extends HttpServlet {
         ProvinciaNegocioImpl provinciaNegocioImpl=new ProvinciaNegocioImpl();
         LocalidadNegocioImpl localidadNegocioImpl=new LocalidadNegocioImpl();
         TipoCuentaNegocioImpl tipoCuentaNegocioImpl = new TipoCuentaNegocioImpl();
+        CuentaNegocioImpl cuentaNegocioImpl = new CuentaNegocioImpl();
         
         // Obtener la lista de nacionalidades usando el método de negocio
         ArrayList<Nacionalidad> listaNacionalidades = nacionalidadNegocioImpl.listarNacionalidades();
@@ -60,14 +62,26 @@ public class CargarDesplegablesServlet extends HttpServlet {
         request.setAttribute("listaTiposCuenta", listaTiposCuenta);
         
         // Redirigir al JSP
-        if ("editarCliente".equals(action)) {
+        if ("cargarCuentasCliente".equals(action)) {
+            // Obtén el ID del cliente desde la sesión
+            int idCliente = (int) request.getSession().getAttribute("idCliente");
+
+            // Consulta las cuentas del cliente
+            ArrayList<Cuenta> listaCuentas = cuentaNegocioImpl.obtenerCuentasPorCliente(idCliente);
+
+            // Establece las cuentas como atributo
+            request.setAttribute("listaCuentas", listaCuentas);
+
+            // Redirige al JSP donde mostrarás las cuentas
+            request.getRequestDispatcher("altaPrestamo.jsp").forward(request, response);
+        }
+        else if ("editarCliente".equals(action)) {
         	request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);
         }
         else if ("agregarCliente".equals(action)) {
         	request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);
         }
         else if ("agregarCuenta".equals(action)) {
-        	CuentaNegocioImpl cuentaNegocioImpl = new CuentaNegocioImpl();
         	long cbu = cuentaNegocioImpl.obtenerProximoCBU();
         	long nroCuenta = cuentaNegocioImpl.obtenerProximoNumeroCuenta();
         	request.setAttribute("cbu", cbu);

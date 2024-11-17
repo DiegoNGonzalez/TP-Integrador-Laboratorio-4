@@ -14,9 +14,11 @@ import entidades.Cuota;
 import entidades.Movimiento;
 import entidades.Prestamo;
 import entidades.TipoMovimiento;
+import negocio.CuentaNegocio;
 import negocio.CuotaNegocio;
 import negocio.MovimientoNegocio;
 import negocio.PrestamoNegocio;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.CuotaNegocioImpl;
 import negocioImpl.MovimientoNegocioImpl;
 import negocioImpl.PrestamoNegocioImpl;
@@ -76,6 +78,12 @@ public class AprobarPrestamoServlet extends HttpServlet {
             movimiento.setFechaMovimiento(new java.sql.Date(System.currentTimeMillis()));
             movimiento.setConcepto("Préstamo aprobado");
             movimientoNegocio.agregarMovimiento(movimiento, prestamo.getCuenta().getIdCuenta());
+            
+            // Cargar el saldo a la cuenta destino
+            CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+            BigDecimal importe = BigDecimal.valueOf(prestamo.getImporteTotal());
+            cuentaNegocio.ingresos(prestamo.getCuenta().getIdCuenta(), importe);
+            
         }
 
         response.sendRedirect("GestionPrestamosServlet"); // Redirigir a la página de gestión

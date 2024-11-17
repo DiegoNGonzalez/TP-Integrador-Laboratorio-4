@@ -1,4 +1,5 @@
 package negocioImpl;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import dao.CuentaDao;
@@ -114,5 +115,10 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         }
         
         return cuentaDao.obtenerCuentasPorCliente(idCliente);
+	}
+
+	@Override
+	public boolean ingresos(int idCuenta, BigDecimal montoACargar) {
+		return cuentaDao.ingresos(idCuenta, montoACargar);
 	}
 }

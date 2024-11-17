@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import entidades.Cliente;
 import entidades.Usuario;
 import exceptions.UsuarioNegocioException;
 import negocio.UsuarioNegocio;
+import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.UsuarioNegocioImpl;
 
 @WebServlet("/LoginServlet")
@@ -24,19 +27,26 @@ public class LoginServlet extends HttpServlet {
 	    
 	        try {
 	            // Verificamos las credenciales a través de la capa de negocio
-	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);
-	
+	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);	                       
+	            
 	            if (usuario != null && usuario.isActivo()) {
+	            	ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
+	            	//busca dos veces al usuario, modificar dsp. dejar solo cliente en session que contiene a usuario? tb se podria poner en el if de abajo.
+	            	Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
 	                HttpSession session = request.getSession();
 	                session.setAttribute("userType", usuario.getTipoUsuario().getTipoUsuario());
 	                session.setAttribute("usuario", usuario.getNombreUsuario());
+	                session.setAttribute("cliente", cliente);
 	                System.out.println("Sesión configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
 	
 	                // Redirigir según el tipo de usuario
 	                if ("Administrador".equals(usuario.getTipoUsuario().getTipoUsuario())) {
 	                    response.sendRedirect("DashboardAdmin.jsp");
 	                } else if ("Cliente".equals(usuario.getTipoUsuario().getTipoUsuario())) {
-	                    response.sendRedirect("DashboardCliente.jsp");
+	                	request.setAttribute("cliente", cliente);
+	                    request.getRequestDispatcher("DashboardCliente.jsp").forward(request, response);
+	                	//response.sendRedirect("DashboardCliente?cliente=" + cliente);
+	                    //response.sendRedirect("DashboardCliente.jsp");
 	                }
 	            } else {
 	                // Usuario no activo o no encontrado

@@ -1,5 +1,6 @@
 package daoImpl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -216,5 +217,23 @@ public class CuentaDaoImpl implements CuentaDao{
         }
         return listaCuentas;
     }
+
+	@Override
+	public boolean ingresos(int idCuenta, BigDecimal montoIngreso) {
+	    // Consulta SQL para actualizar el saldo
+	    String query = "UPDATE cuentas SET saldo = saldo + ? WHERE idCuenta = ?";
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        statement.setBigDecimal(1, montoIngreso); 
+	        statement.setInt(2, idCuenta);
+	        return statement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 }
 

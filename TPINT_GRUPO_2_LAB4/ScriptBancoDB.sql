@@ -339,8 +339,8 @@ INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, 
 INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
 VALUES
 (2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Activo'),
-(3, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Pendiente'),
-(4, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Rechazado');
+(3, 4, '2024-11-10', 10000.00, 6, 500.00, 6, 'Pendiente'),
+(4, 5, '2024-11-10', 3000.00, 6, 500.00, 6, 'Rechazado');
 
 DELIMITER //
 

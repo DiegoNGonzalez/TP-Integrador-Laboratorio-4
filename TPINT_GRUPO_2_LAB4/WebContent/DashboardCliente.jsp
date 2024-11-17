@@ -33,6 +33,7 @@
 		<h3>Saldo: $ <%= cuenta.getSaldo() %></h3>
 		<div>
 			<a href="DetalleCuenta.jsp" class="btn-aprobar">Ver detalle</a>
+			<a href="DetalleCuentaServlet?cuenta=<%= cuenta %>" class="btn-edit" >Editar</a>
 		</div>
 </div>
        

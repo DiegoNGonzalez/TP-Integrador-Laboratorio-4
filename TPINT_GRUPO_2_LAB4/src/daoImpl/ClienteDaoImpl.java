@@ -209,7 +209,6 @@ public class ClienteDaoImpl implements ClienteDao{
 	                CuentaDaoImpl negocioCuenta = new CuentaDaoImpl();
 	                // Obtener el Usuario relacionado al cliente
 	                Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
-
 	                
 	                cliente.setUsuario(usuario);
 	                cliente.setIdCliente(Integer.parseInt(resultSet.getString("idCliente")));
@@ -224,8 +223,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	                cliente.setDireccion(resultSet.getString("direccion"));
 	                // ver que devuelve sino tiene, como queda?
 	                cliente.setCuentas(negocioCuenta.obtenerCuentasPorCliente(Integer.parseInt(resultSet.getString("idCliente"))));
-	                
-	                
+	                	                
 	                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
 	                LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
 	                ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
@@ -234,10 +232,6 @@ public class ClienteDaoImpl implements ClienteDao{
 	                Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
 	                Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
 
-	                
-	                
-	                
-	                
 	                cliente.setNacionalidad(nacionalidad);
 	                cliente.setLocalidad(localidad);
 	                cliente.setProvincia(provincia);

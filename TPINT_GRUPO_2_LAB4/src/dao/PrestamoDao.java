@@ -15,4 +15,6 @@ public interface PrestamoDao {
 	public ArrayList<Prestamo> listarPrestamosPendientes();
 	public ArrayList<Prestamo> listarPrestamosAprobados();
 	public ArrayList<Prestamo> listarPrestamosRechazados();
+	public boolean darDeAltaPrestamo(Prestamo prestamo);
+	public int ultimoID();
 }

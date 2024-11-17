@@ -1,11 +1,13 @@
 package daoImpl;
 
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import dao.CuentaDao;
 import entidades.Cuenta;
@@ -96,7 +98,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    }
 	}
 
-	@Override
+	/*@Override
 	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
 	    String query = "INSERT INTO cuentas(idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
 	                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -121,6 +123,36 @@ public class CuentaDaoImpl implements CuentaDao{
 	        e.printStackTrace();
 	        return false;
 	    }
+	}*/
+	
+
+	@Override
+	public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
+		
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCuenta"
+			 		+ "(?, ?, ?, ?, ?, ?)");			 
+		 			 
+			 cst.setInt(1, idCliente);
+			 cst.setInt(2, cuenta.getTipoCuenta().getId());
+			 cst.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime()));
+			 cst.setLong(4, cuenta.getNumeroCuenta());
+			 cst.setLong(5, cuenta.getCbu());
+			 cst.setFloat(6, cuenta.getSaldo());
+			  			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();	
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
+		  }
+		  finally {
+			  
+		  }		
 	}
 	
 	@Override

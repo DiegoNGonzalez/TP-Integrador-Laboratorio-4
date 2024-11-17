@@ -32,7 +32,6 @@ public class LoginServlet extends HttpServlet {
 	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);	                       
 	            
 	            if (usuario != null && usuario.isActivo()) {
-	            	ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
 	            	//busca dos veces al usuario, modificar dsp. dejar solo cliente en session que contiene a usuario? tb se podria poner en el if de abajo.
 	            	Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
 	                HttpSession session = request.getSession();

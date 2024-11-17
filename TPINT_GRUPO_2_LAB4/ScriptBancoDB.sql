@@ -245,6 +245,7 @@ INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, s
 INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
 (1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true),
 (2, 2, '2024-11-15', 223456789, 1122334455, 20000.0, true),
+(2, 1, '2024-11-15', 223456788, 1122334456, 20000.0, true),
 (3, 1, '2024-11-14', 323456789, 2233445566, 15000.0, true),
 (4, 2, '2024-11-13', 423456789, 3344556677, 18000.0, true),
 (5, 1, '2024-11-12', 523456789, 4455667788, 12000.0, true),

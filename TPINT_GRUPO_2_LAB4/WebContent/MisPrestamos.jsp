@@ -84,7 +84,7 @@
     </table>
   
     <div class="solicitar-prestamo-container">
-        <a href="SolicitudPrestamo.jsp" class="btn-solicitar">Solicitar Préstamo</a>
+    <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=2" class="btn-solicitar">Solicitar Prestamo</a>
     </div>
 </div>
 

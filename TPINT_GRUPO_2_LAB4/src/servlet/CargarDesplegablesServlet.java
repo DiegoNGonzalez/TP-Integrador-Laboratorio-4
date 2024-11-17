@@ -63,17 +63,15 @@ public class CargarDesplegablesServlet extends HttpServlet {
         
         // Redirigir al JSP
         if ("cargarCuentasCliente".equals(action)) {
-            // Obtén el ID del cliente desde la sesión
-            int idCliente = (int) request.getSession().getAttribute("idCliente");
+        	
+            String idClienteParam = request.getParameter("idCliente");
+            int idCliente = Integer.parseInt(idClienteParam);
 
-            // Consulta las cuentas del cliente
             ArrayList<Cuenta> listaCuentas = cuentaNegocioImpl.obtenerCuentasPorCliente(idCliente);
 
-            // Establece las cuentas como atributo
             request.setAttribute("listaCuentas", listaCuentas);
 
-            // Redirige al JSP donde mostrarás las cuentas
-            request.getRequestDispatcher("altaPrestamo.jsp").forward(request, response);
+            request.getRequestDispatcher("SolicitudPrestamo.jsp").forward(request, response);
         }
         else if ("editarCliente".equals(action)) {
         	request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);

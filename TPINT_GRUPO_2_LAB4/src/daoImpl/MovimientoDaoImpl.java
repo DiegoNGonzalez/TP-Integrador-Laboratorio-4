@@ -19,7 +19,7 @@ public class MovimientoDaoImpl implements MovimientoDao {
 				PreparedStatement statement = conexion.prepareStatement(query)) {
 
 			statement.setInt(1, idCuenta);
-			statement.setInt(2, movimiento.getTipoMovimiento().getIdMovimiento());
+			statement.setInt(2, movimiento.getTipoMovimiento().getIdTipoMovimiento());
 			statement.setDate(3, new java.sql.Date(movimiento.getFechaMovimiento().getTime()));
 			statement.setString(4, movimiento.getConcepto());
 			statement.setFloat(5, movimiento.getImporteMovimiento());

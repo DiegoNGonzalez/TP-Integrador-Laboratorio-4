@@ -3,10 +3,12 @@ package daoImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.PrestamoDao;
 import entidades.Cliente;
+import entidades.Cuenta;
 import entidades.Prestamo;
 
 public class PrestamoDaoImpl implements PrestamoDao{
@@ -23,17 +25,17 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	        while (resultSet.next()) {
 	            Prestamo prestamo = new Prestamo();
 	            Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
-	            //Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+	            Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	            prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
 	            prestamo.setCliente(cliente);
-	            //prestamo.setCuenta(cuenta);
+	            prestamo.setCuenta(cuenta);
 	            prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	            prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	            prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
 	            prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	            prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
-	            prestamo.setEstado(resultSet.getBoolean("EstadoPrestamo"));
+	            prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 
 	            listaPrestamos.add(prestamo);
 	        }
@@ -107,17 +109,17 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo = new Prestamo();
 	                
 	                Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
-	                //Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
 	                prestamo.setCliente(cliente);
-	                //prestamo.setCuenta(cuenta);
+	                prestamo.setCuenta(cuenta);
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
 	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
-	                prestamo.setEstado(resultSet.getBoolean("EstadoPrestamo"));
+	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 	            }
 	        }
 	    } catch (Exception e) {
@@ -126,6 +128,49 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	    
 	    return prestamo;
 	}
+
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) {
+	    String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo " +
+	                   "FROM prestamos WHERE EstadoPrestamo = 'Activo' AND idCliente = ?";
+	    ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        statement.setInt(1, idCliente);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Prestamo prestamo = new Prestamo();
+	                Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
+	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+
+	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
+	                prestamo.setCliente(cliente);
+	                prestamo.setCuenta(cuenta);
+	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
+	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
+	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
+	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
+
+	                listaPrestamos.add(prestamo);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("Error de SQL: " + e.getMessage());
+	        e.printStackTrace(); // Proporciona más detalles sobre el error
+	    } catch (Exception e) {
+	        System.err.println("Error inesperado: " + e.getMessage());
+	        e.printStackTrace(); // Maneja otros tipos de errores
+	    }
+
+	    return listaPrestamos;
+	}
+
 
 
 }

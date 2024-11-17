@@ -336,6 +336,11 @@ INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, 
 (11, 2, '2024-11-16', 'Préstamo otorgado', 20000.00),
 (11, 3, '2024-11-17', 'Pago parcial de préstamo', -8000.00);
 
+INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
+VALUES
+(2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Activo'),
+(2, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Activo');
+
 DELIMITER //
 
 CREATE PROCEDURE spAgregarCliente(

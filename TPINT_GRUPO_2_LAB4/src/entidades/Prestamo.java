@@ -14,13 +14,13 @@ public class Prestamo {
 	private float importeCuota;
 	private int cantCuotas;
 	private ArrayList<Cuota> cuotas;
-	private boolean estado;
+	private String estado;
 	
 	public Prestamo() {
 	}
 	
 	public Prestamo(int idPrestamo, Cuenta cuenta, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
-			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, boolean estado) {
+			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, String estado) {
 		super();
 		this.idPrestamo = idPrestamo;
 		this.cuenta = cuenta;
@@ -94,10 +94,10 @@ public class Prestamo {
 		this.cuenta = cuenta;
 	}
 
-	public boolean isEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

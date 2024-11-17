@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="entidades.Cliente" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,9 @@
 <body>
 <jsp:include page="nav.jsp" />
 
+<% 
+    Cliente cliente = (Cliente) session.getAttribute("Cliente");
+%>
 <div class="client-management-container">
     <h2>Listado de Préstamos</h2>
     <div class="filter-container">
@@ -84,7 +88,8 @@
     </table>
   
     <div class="solicitar-prestamo-container">
-    <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=2" class="btn-solicitar">Solicitar Prestamo</a>
+    <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=<%= cliente.getIdCliente() %>" class="btn-solicitar">Solicitar Préstamo</a>
+
     </div>
 </div>
 

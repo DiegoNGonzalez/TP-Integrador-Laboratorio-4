@@ -7,9 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import entidades.Cliente;
 import entidades.Usuario;
 import exceptions.UsuarioNegocioException;
+import negocio.ClienteNegocio;
 import negocio.UsuarioNegocio;
+import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.UsuarioNegocioImpl;
 
 @WebServlet("/LoginServlet")
@@ -21,6 +25,7 @@ public class LoginServlet extends HttpServlet {
 	    	String password = request.getParameter("password");
 	
 	    	UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
+	    	ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 	    
 	        try {
 	            // Verificamos las credenciales a través de la capa de negocio
@@ -36,6 +41,8 @@ public class LoginServlet extends HttpServlet {
 	                if ("Administrador".equals(usuario.getTipoUsuario().getTipoUsuario())) {
 	                    response.sendRedirect("DashboardAdmin.jsp");
 	                } else if ("Cliente".equals(usuario.getTipoUsuario().getTipoUsuario())) {
+	                	Cliente aux = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
+	                	session.setAttribute("Cliente", aux);
 	                    response.sendRedirect("DashboardCliente.jsp");
 	                }
 	            } else {

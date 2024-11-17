@@ -89,9 +89,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 
     @Override
     public Cuenta obtenerCuentaPorId(int idCuenta) throws CuentaNegocioException {
-    	
-    	//Borrar
-		System.out.println("Mensaje de prueba: Ingrese a método ObtenerCuentaPorId");
 		
         // validar ID de la cuenta
         if (idCuenta <= 0) {
@@ -99,9 +96,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         }
         
         Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuenta);
-
-    	//Borrar
-		System.out.println("Cuenta.toString: " + cuenta.toString());
 		
         return cuenta;
     }

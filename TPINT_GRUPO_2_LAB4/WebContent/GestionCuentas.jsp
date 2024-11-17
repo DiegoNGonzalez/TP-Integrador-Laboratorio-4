@@ -64,11 +64,15 @@
                 for (int i = 0; i < cuentas.size(); i++) { 
                     Cuenta cuenta = cuentas.get(i);
         %>
+<<<<<<< HEAD
                 
+=======
+>>>>>>> bc867e049e2af28ca7e62f2b7967d9ddc82f8fad
                 <tr id="fila-<%= cuenta.getIdCuenta() %>">
        
                     <td><%= cliente.getNombre().toString() %></td>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
+<<<<<<< HEAD
                     <td><%= cuenta.getTipoCuenta().getTipo() %></td>
                     <td><%= cuenta.getNumeroCuenta() %></td>
                     <td><%= cuenta.getCbu() %></td>
@@ -78,6 +82,18 @@
     				</td>
                     <td><a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&clienteId=<%= cliente.getIdCliente() %>&action=editarCuenta" class="btn-edit">Editar</a></td>
                </tr>
+=======
+                    <td><%= cuenta.getTipoCuenta()%></td>
+                    <td><%= cuenta.getNumeroCuenta() %></td>
+                    <td><%= cuenta.getCbu() %></td>
+                    <td><%= cuenta.getSaldo() %></td>
+                   <td><a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&clienteId=<%= cliente.getIdCliente() %>&action=editarCuenta" class="btn-edit">Editar</a></td>
+                    <td>
+        				<a href="#" onclick="eliminarCuenta(<%= cuenta.getIdCuenta() %>); return false;" class="btn-eliminar">Eliminar</a>
+    				</td>
+               </tr>
+                 
+>>>>>>> bc867e049e2af28ca7e62f2b7967d9ddc82f8fad
         <% 
                 } 
             } 

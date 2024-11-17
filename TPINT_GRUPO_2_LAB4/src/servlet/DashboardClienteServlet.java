@@ -24,12 +24,7 @@ public class DashboardClienteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Cliente cliente = request.getParameter("cliente");
-		ClienteNegocioImpl negocio = new ClienteNegocioImpl();
-		Cliente cliente = negocio.bu
-        request.setAttribute("cliente", cliente);
 
-        request.getRequestDispatcher("GestionCuentas.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

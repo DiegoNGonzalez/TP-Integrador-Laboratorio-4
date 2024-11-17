@@ -44,6 +44,11 @@ public class ListarPrestamosServlet extends HttpServlet {
             ArrayList<Prestamo> prestamos = prestamoNegocio.listarPrestamosXCliente(cliente.getIdCliente());
 
             request.setAttribute("prestamos", prestamos);
+            
+            String mensaje = request.getParameter("mensaje");
+            if (mensaje != null && mensaje.equals("prestamo_pendiente")) {
+                request.setAttribute("mensaje", "Préstamo solitado correctamente.");
+            }
 
             request.getRequestDispatcher("MisPrestamos.jsp").forward(request, response);
         	}

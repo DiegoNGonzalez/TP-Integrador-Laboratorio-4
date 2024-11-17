@@ -18,7 +18,16 @@
 <% 
     Cliente cliente = (Cliente) session.getAttribute("Cliente");
     ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) request.getAttribute("prestamos");
+    String mensajePrestamoPendiente = (String) request.getAttribute("mensaje");
+    if (mensajePrestamoPendiente != null) { 
 %>
+<script>
+    alert("<%= mensajePrestamoPendiente %>");
+</script>
+<% 
+    }  
+%>
+
 
 <div class="client-management-container">
     <h2>Listado de Préstamos</h2>

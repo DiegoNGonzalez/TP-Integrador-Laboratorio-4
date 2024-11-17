@@ -33,16 +33,17 @@ public class LoginServlet extends HttpServlet {
 	            
 	            if (usuario != null && usuario.isActivo()) {
 	            	//busca dos veces al usuario, modificar dsp. dejar solo cliente en session que contiene a usuario? tb se podria poner en el if de abajo.
-	            	Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
+	            	//Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
 	                HttpSession session = request.getSession();
 	                session.setAttribute("userType", usuario.getTipoUsuario().getTipoUsuario());
 	                session.setAttribute("usuario", usuario.getNombreUsuario());
-	                session.setAttribute("cliente", cliente);
+	                //session.setAttribute("cliente", cliente);
 	                System.out.println("Sesión configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
 	
 	                // Redirigir según el tipo de usuario
 	                if ("Administrador".equals(usuario.getTipoUsuario().getTipoUsuario())) {
-	                    response.sendRedirect("DashboardAdmin.jsp");
+	                    // sólo redirige ya que no necesitamos más datos del admin
+	                	response.sendRedirect("DashboardAdmin.jsp");
 	                } else if ("Cliente".equals(usuario.getTipoUsuario().getTipoUsuario())) {
 	                	Cliente aux = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
 	                	session.setAttribute("Cliente", aux);

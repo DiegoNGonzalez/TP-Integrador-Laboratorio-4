@@ -6,7 +6,7 @@ import java.util.Date;
 public class Prestamo {
 
 	private int idPrestamo;
-	//private Cuenta cuenta;
+	private Cuenta cuenta;
 	private Cliente cliente;
 	private Date fechaAltaPrestamo;
 	private float importeTotal;
@@ -14,15 +14,16 @@ public class Prestamo {
 	private float importeCuota;
 	private int cantCuotas;
 	private ArrayList<Cuota> cuotas;
-	private boolean estado;
+	private String estado;
 	
 	public Prestamo() {
 	}
 	
-	public Prestamo(int idPrestamo, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
-			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, boolean estado) {
+	public Prestamo(int idPrestamo, Cuenta cuenta, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
+			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, String estado) {
 		super();
 		this.idPrestamo = idPrestamo;
+		this.cuenta = cuenta;
 		this.cliente = cliente;
 		this.fechaAltaPrestamo = fechaAltaPrestamo;
 		this.importeTotal = importeTotal;
@@ -51,6 +52,7 @@ public class Prestamo {
 	public void setFechaAltaPrestamo(Date fechaAltaPrestamo) {
 		this.fechaAltaPrestamo = fechaAltaPrestamo;
 	}
+	
 	public float getImporteTotal() {
 		return importeTotal;
 	}
@@ -84,10 +86,18 @@ public class Prestamo {
 		this.cuotas = cuotas;
 	}
 
-	public boolean isEstado() {
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

@@ -245,6 +245,7 @@ INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, s
 INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
 (1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true),
 (2, 2, '2024-11-15', 223456789, 1122334455, 20000.0, true),
+(2, 1, '2024-11-15', 223456788, 1122334456, 20000.0, true),
 (3, 1, '2024-11-14', 323456789, 2233445566, 15000.0, true),
 (4, 2, '2024-11-13', 423456789, 3344556677, 18000.0, true),
 (5, 1, '2024-11-12', 523456789, 4455667788, 12000.0, true),
@@ -334,6 +335,11 @@ INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, 
 (11, 5, '2024-11-15', 'Transferencia enviada', -4000.00),
 (11, 2, '2024-11-16', 'Préstamo otorgado', 20000.00),
 (11, 3, '2024-11-17', 'Pago parcial de préstamo', -8000.00);
+
+INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
+VALUES
+(2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Activo'),
+(2, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Activo');
 
 DELIMITER //
 

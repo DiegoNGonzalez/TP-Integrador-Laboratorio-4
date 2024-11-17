@@ -8,6 +8,7 @@ public interface PrestamoNegocio {
 
 	public ArrayList<Prestamo> listarPrestamos();
 	public boolean agregarPrestamo(Prestamo prestamo);
+	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente);
 	public boolean bajarPrestamo(int id);
 	public Prestamo prestamoXId(int id);
 }

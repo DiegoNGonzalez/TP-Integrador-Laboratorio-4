@@ -11,5 +11,6 @@ public interface CuentaNegocio {
 	public Cuenta obtenerCuentaPorId(int idCuenta);
 	public long obtenerProximoCBU();
 	public long obtenerProximoNumeroCuenta();
+	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente);
 }
 

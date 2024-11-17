@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import entidades.Cliente;
 import entidades.Usuario;
 import exceptions.UsuarioNegocioException;
+import negocio.ClienteNegocio;
 import negocio.UsuarioNegocio;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.UsuarioNegocioImpl;
@@ -24,9 +25,10 @@ public class LoginServlet extends HttpServlet {
 	    	String password = request.getParameter("password");
 	
 	    	UsuarioNegocio usuarioNegocio = new UsuarioNegocioImpl();
+	    	ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 	    
 	        try {
-	            // Verificamos las credenciales a trav閟 de la capa de negocio
+	            // Verificamos las credenciales a trav茅s de la capa de negocio
 	            Usuario usuario = usuarioNegocio.verificarCredenciales(username, password);	                       
 	            
 	            if (usuario != null && usuario.isActivo()) {
@@ -37,23 +39,22 @@ public class LoginServlet extends HttpServlet {
 	                session.setAttribute("userType", usuario.getTipoUsuario().getTipoUsuario());
 	                session.setAttribute("usuario", usuario.getNombreUsuario());
 	                session.setAttribute("cliente", cliente);
-	                System.out.println("Sesi髇 configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
+	                System.out.println("Sesi贸n configurada con userType: " + usuario.getTipoUsuario().getTipoUsuario());
 	
-	                // Redirigir seg鷑 el tipo de usuario
+	                // Redirigir seg煤n el tipo de usuario
 	                if ("Administrador".equals(usuario.getTipoUsuario().getTipoUsuario())) {
 	                    response.sendRedirect("DashboardAdmin.jsp");
 	                } else if ("Cliente".equals(usuario.getTipoUsuario().getTipoUsuario())) {
-	                	request.setAttribute("cliente", cliente);
-	                    request.getRequestDispatcher("DashboardCliente.jsp").forward(request, response);
-	                	//response.sendRedirect("DashboardCliente?cliente=" + cliente);
-	                    //response.sendRedirect("DashboardCliente.jsp");
+	                	Cliente aux = clienteNegocio.obtenerClientePorIdUsuario(usuario.getId());
+	                	session.setAttribute("Cliente", aux);
+	                    response.sendRedirect("DashboardCliente.jsp");
 	                }
 	            } else {
 	                // Usuario no activo o no encontrado
 	                throw new UsuarioNegocioException("Usuario inactivo o credenciales incorrectas.");
 	            }
 	        } catch (UsuarioNegocioException e) {
-	            // Manejo de la excepci髇 de negocio
+	            // Manejo de la excepci贸n de negocio
 	            request.getSession().setAttribute("errorMsj", e.getMessage());
 	            response.sendRedirect("Error.jsp");
 	        }
@@ -62,16 +63,16 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter("action");
         if ("logout".equals(action)) {
-            // Invalidar la sesi髇 si la acci髇 es logout
+            // Invalidar la sesi贸n si la acci贸n es logout
             HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
-                System.out.println("Sesi髇 invalidada");
+                System.out.println("Sesi贸n invalidada");
             }
-            // Redirigir al login despu閟 de cerrar sesi髇
+            // Redirigir al login despu茅s de cerrar sesi贸n
             response.sendRedirect("Login.jsp");
         } else {
-            // Redirigir al login si no se especifica la acci髇
+            // Redirigir al login si no se especifica la acci贸n
             response.sendRedirect("Login.jsp");
         }
     }

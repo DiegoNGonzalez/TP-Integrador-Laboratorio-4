@@ -8,8 +8,12 @@ import negocio.PrestamoNegocio;
 
 public class PrestamoNegocioImpl implements PrestamoNegocio{
 
-	PrestamoDaoImpl auxPrestamo;
-	
+    private PrestamoDaoImpl auxPrestamo;
+
+    public PrestamoNegocioImpl() {
+        auxPrestamo = new PrestamoDaoImpl();
+    }
+    
 	@Override
 	public ArrayList<Prestamo> listarPrestamos() {
 		return auxPrestamo.listarPrestamos();
@@ -36,6 +40,11 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 	@Override
 	public Prestamo prestamoXId(int id) {
 		return auxPrestamo.prestamoXId(id);
+	}
+
+	@Override
+	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) {
+		return auxPrestamo.listarPrestamosXCliente(idCliente);
 	}
 
 }

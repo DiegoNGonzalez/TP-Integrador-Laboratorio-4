@@ -4,6 +4,7 @@
 <%@ page import="entidades.Cuenta" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="entidades.Cliente" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,11 +16,18 @@
 
 <jsp:include page="nav.jsp" />
 <!-- Contenido del Dashboard -->
+<% 
+    Cliente cliente = (Cliente) session.getAttribute("Cliente");
+    if (cliente != null) {
+        String nombreCliente = cliente.getNombre(); // ObtÃ©n el nombre del cliente
+%>
 <div class="dashboard-header">
-    <h2>Bienvenido, Juan Pérez</h2>
+    <h2>Bienvenido, <%= nombreCliente %></h2>
 </div>
-<!-- chequear que no sea null -->
-<% Cliente cliente = (Cliente) request.getAttribute("cliente");  
+
+<% } %>
+
+<% 
     ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
     Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
     
@@ -46,7 +54,7 @@
         <h3>Mis cuentas</h3>
         <p>Gestiona tus cuentas</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='MisPrestamos.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='ListarPrestamosServlet'">
         <h3>Mis prestamos</h3>
         <p>Gestiona tus prestamos</p>
     </div>

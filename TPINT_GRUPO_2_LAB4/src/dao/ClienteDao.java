@@ -12,8 +12,8 @@ public interface ClienteDao  {
 	public ArrayList<Cliente> listarClientesActivos();
 	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente) throws SQLException;
-	public Cliente obtenerClientePorId(int idUsuario);
+	public Cliente obtenerClientePorId(int idCliente);
+	public Cliente obtenerClientePorIdUsuario(int idUsuario);
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 	public ArrayList<Cliente> obtenerTodos();
-	public Cliente obtenerClientePorIdUsuario(int id);
 }

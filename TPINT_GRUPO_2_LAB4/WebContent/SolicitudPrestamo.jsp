@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entidades.Cuenta" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
 <jsp:include page="nav.jsp" />
     <div class="account-container">
         <h2 class="edit-title">Solicitud de Préstamo</h2>
-        
+        <form action="SolicitarPrestamoServlet" method="post">
             <!-- Importe del préstamo solicitado -->
             <div class="form-group">
                 <label class="form-label" for="importe">Importe del Préstamo ($):</label>
@@ -32,14 +34,24 @@
             <!-- Selección de cuenta para depósito -->
             <div class="form-group">
                 <label class="form-label" for="cuentaDestino">Cuenta para Depósito:</label>
-                <select class="form-control" id="cuentaDestino" name="cuentaDestino" required>
-                    <option value="123456789">Cuenta Ahorro - 123456789</option>
-                    <option value="987654321">Cuenta Corriente - 987654321</option>
-                </select>
+      <select class="form-control" id="cuentaDestino" name="cuentaDestino" required>
+        <%
+            ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+            if (listaCuentas != null && !listaCuentas.isEmpty()) {
+                for (Cuenta cuenta : listaCuentas) {
+        %>
+        <option value="<%= cuenta.getIdCuenta() %>">Cuenta - <%= cuenta.getNumeroCuenta() %></option>
+        <%      }
+            } else {
+        %>
+        <option value="">No hay cuentas disponibles</option>
+        <% } %>
+    </select>
             </div>
             
             <!-- Botones de acción -->
             <input type="submit" class="btn-save" value="Solicitar Préstamo">
+            </form>
         <form action="DashboardCliente.jsp" method="get">
             <input type="submit" class="btn-cancel" value="Cancelar">
         </form>

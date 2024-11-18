@@ -1,9 +1,7 @@
 package negocio;
 
 import java.sql.SQLException;
-=======
 import java.math.BigDecimal;
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 import java.util.ArrayList;
 
 import entidades.Cuenta;

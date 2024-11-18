@@ -1,8 +1,11 @@
 package dao;
+
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import entidades.Cuenta;
+
+
 
 public interface CuentaDao {
 	public boolean  agregarCuenta(Cuenta cuenta, int idCliente);

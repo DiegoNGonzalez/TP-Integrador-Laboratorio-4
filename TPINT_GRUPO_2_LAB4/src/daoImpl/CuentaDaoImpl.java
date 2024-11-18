@@ -1,16 +1,14 @@
 package daoImpl;
 
-import java.sql.CallableStatement;
-=======
-import java.math.BigDecimal;
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
 import java.util.ArrayList;
-
+import java.sql.CallableStatement;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import dao.CuentaDao;
 import entidades.Cliente;
 import entidades.Cuenta;

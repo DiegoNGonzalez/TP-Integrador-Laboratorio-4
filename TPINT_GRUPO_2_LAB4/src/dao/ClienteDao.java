@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import entidades.Cliente;
 import entidades.Usuario;
@@ -16,4 +17,6 @@ public interface ClienteDao  {
 	public Cliente obtenerClientePorIdUsuario(int idUsuario);
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 	public ArrayList<Cliente> obtenerTodos();
+	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta);
+	public boolean actualizarContrasenia(int idUsuario,String contrasenia);
 }

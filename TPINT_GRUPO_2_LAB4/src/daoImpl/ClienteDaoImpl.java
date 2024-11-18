@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.util.ArrayList;
-
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.CallableStatement;
@@ -307,6 +307,66 @@ public class ClienteDaoImpl implements ClienteDao{
    }
 
    return cliente;
+	}
+
+	@Override
+	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta) {
+		String query="select u.idUsuario, u.nombreUsuario from usuarios u inner join clientes c on u.idUsuario= c.idUsuario inner join cuentas cta on c.idCliente=cta.idcliente where dni=? and c.email=? and "+ (pregunta.equals("cbu")?"cta.cbu=?":"cta.numeroCuenta=")+";";
+		String nombreUsuario;
+		String contrasenia="recuperar123";
+		int idUsuario;
+		boolean recuperar=false;
+		ArrayList<String> datos=null;
+		try (Connection conexion = Conexion.getConnection();
+		        PreparedStatement statement = conexion.prepareStatement(query)) {
+			statement.setString(1, dni);
+			statement.setString(2, email);
+			statement.setLong(3, respuesta);
+			
+			try(ResultSet resultSet=statement.executeQuery()) {
+				if(resultSet.next()) {
+					nombreUsuario=resultSet.getNString("nombreUsuario");
+					idUsuario=resultSet.getInt("idUsuario");
+					recuperar=actualizarContrasenia(idUsuario, contrasenia);
+					if(recuperar) {
+						datos= new ArrayList<String>();
+						datos.add(nombreUsuario);
+						datos.add(contrasenia);
+					}
+					
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datos;
+		
+	}
+
+	@Override
+	public boolean actualizarContrasenia(int idUsuario,String contrasenia) {
+		boolean actualizada=false;
+		String query="update usuarios set contrasenia=? where idUsuario=?";
+		
+		try (Connection conexion = Conexion.getConnection();
+		        PreparedStatement statement = conexion.prepareStatement(query)){
+			statement.setString(1, contrasenia);
+			statement.setInt(2, idUsuario);
+			
+			int filasAfectadas=statement.executeUpdate();
+			if (filasAfectadas > 0) {
+                actualizada = true;  // Contraseña actualizada correctamente
+            }
+
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return actualizada;
 	}
 
 }

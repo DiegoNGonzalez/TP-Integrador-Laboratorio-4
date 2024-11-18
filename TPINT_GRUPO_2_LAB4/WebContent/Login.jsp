@@ -24,8 +24,8 @@
         	<input type="password" id="password" name="password" class="form-control" required>
     	</div>
     	<input type="submit" class="btn-primary" value="Ingresar">
-    	<a href="RecuperarContrasenia.jsp" class="forgot-password">¿Olvidaste tu contraseña?</a>
 		</form>
+    	<a href="RecuperarContrasenia.jsp" class="forgot-password">¿Olvidaste tu contraseña?</a>
 </div>
 
 

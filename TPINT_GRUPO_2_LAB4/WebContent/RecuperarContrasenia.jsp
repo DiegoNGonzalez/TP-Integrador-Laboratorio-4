@@ -12,7 +12,7 @@
 
 <div class="login-container">
     <h2>Recuperar Contraseña</h2>
-    <form action="RecuperarContrasena" method="post">
+    <form action="RecuperarContraseniaServlet" method="post">
         <!-- DNI -->
         <div class="form-group">
             <label for="dni">DNI:</label>
@@ -30,8 +30,7 @@
             <label for="pregunta">Seleccione una pregunta de seguridad:</label>
             <select id="pregunta" name="pregunta" class="form-control" required>
                 <option value="cbu">¿Cuál es su CBU?</option>
-                <option value="numero_cuenta">¿Cuál es su número de cuenta?</option>
-                <option value="saldo">¿Cuál era su saldo al cierre del último mes?</option>
+                <option value="numeroCuenta">¿Cuál es su número de cuenta?</option>
             </select>
         </div>
         

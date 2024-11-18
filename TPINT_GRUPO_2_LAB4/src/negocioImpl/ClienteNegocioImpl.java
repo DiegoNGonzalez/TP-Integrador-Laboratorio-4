@@ -223,4 +223,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		return clientes;
 	}
+
+	@Override
+	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta) {
+		ArrayList<String> datos= clienteDao.recuperarContrasenia(dni, email, pregunta, respuesta);
+		if (datos == null || datos.isEmpty()) {
+			System.out.println("No se pudieron corroborar los datos.");
+			return new ArrayList<>();
+		}
+
+		return datos;
+	}
 }

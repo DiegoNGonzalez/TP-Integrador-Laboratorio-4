@@ -1,4 +1,6 @@
 package negocio;
+
+import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public interface CuentaNegocio {
 	public long obtenerProximoCBU();
 	public long obtenerProximoNumeroCuenta();
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente);
+	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException;
 	public boolean ingresos(int idCuenta, BigDecimal montoACargar);
 }
 

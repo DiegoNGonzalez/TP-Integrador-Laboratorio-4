@@ -187,6 +187,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	    return cliente;
 	}
+			
 
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException
 	{

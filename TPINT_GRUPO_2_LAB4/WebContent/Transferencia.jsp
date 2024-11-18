@@ -30,7 +30,6 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
 			    <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
 			    <select class="form-control" id="cbuOrigen" name="cbuOrigen" required>
 			        <option value="">Seleccione cuenta...</option>
-			        
 			        <% 
 			            for (Cuenta cuenta : listaCuentas) {
 			        %>
@@ -54,7 +53,6 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
     			</div>
 			</div>
 
-	           
 	           <!-- Selección de cuenta destino -->
 	           <div id="destinoCuentaPropia" class="form-group">
 			    <label class="form-label" for="cbuDestinoPropio">Seleccione cuenta destino:</label>

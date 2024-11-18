@@ -46,7 +46,7 @@ public class AuthFilter implements Filter {
 
 	    // Verifica el acceso a páginas de cliente
 	    if ((uri.contains("ConfirmarTransferencia.jsp") || uri.contains("DashboardCliente.jsp") 
-	    	    || uri.contains("DetalleCuenta.jsp") || uri.contains("DetallePrestamo.jsp") 
+	    	    || uri.contains("DetalleCuenta.jsp") 
 	    	    || uri.contains("MisCuentas.jsp") || uri.contains("MisPrestamos.jsp") 
 	    	    || uri.contains("PagoPrestamo.jsp") || uri.contains("PerfilCliente.jsp") 
 	    	    || uri.contains("SolicitudPrestamo.jsp") || uri.contains("Transferencia.jsp")) 

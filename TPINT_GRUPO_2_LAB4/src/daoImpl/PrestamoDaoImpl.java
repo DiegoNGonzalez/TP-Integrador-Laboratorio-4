@@ -128,7 +128,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 
 	@Override
 	public boolean bajarPrestamo(int idPrestamo) {
-	    String query = "UPDATE prestamos SET EstadoPrestamo = 0 WHERE idPrestamo = ?";
+	    String query = "UPDATE prestamos SET EstadoPrestamo = 'Rechazado' WHERE idPrestamo = ?";
 	    
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {

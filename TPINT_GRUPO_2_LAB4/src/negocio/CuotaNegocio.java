@@ -11,6 +11,7 @@ public interface CuotaNegocio {
     Cuota obtenerCuotaPorId(int idCuota);
     
     public boolean registrarPago(int idCuota);
+    public ArrayList<Cuota> listarCuotasPendientesPorPrestamo(int idPrestamo);
     
     /*
     public ArrayList<Cuota> filtrarCuotas(Date fechaInicio, Date fechaFin, BigDecimal montoMinimo, BigDecimal montoMaximo);

@@ -49,12 +49,12 @@ public class AprobarPrestamoServlet extends HttpServlet {
         try {
         if (prestamo != null) {
         	
-            prestamo.setEstado("Activo"); // Cambia el estado del préstamo
+            prestamo.setEstado("Activo"); // Cambia el estado del prï¿½stamo
             prestamoNegocio.darDeAltaPrestamo(prestamo);
 
             // Generar cuotas
             CuotaNegocio cuotaNegocio = new CuotaNegocioImpl();
-            BigDecimal montoPorCuota = prestamo.getImporteCuota();
+            Float montoPorCuota = prestamo.getImporteCuota();
             Calendar calendar = Calendar.getInstance();
             for (int i = 1; i <= prestamo.getCantCuotas(); i++) {
             	calendar.add(Calendar.MONTH, 1);
@@ -76,17 +76,17 @@ public class AprobarPrestamoServlet extends HttpServlet {
             movimiento.setTipoMovimiento(tipomovimiento);
             movimiento.setImporteMovimiento(prestamo.getImporteTotal());
             movimiento.setFechaMovimiento(new java.sql.Date(System.currentTimeMillis()));
-            movimiento.setConcepto("Préstamo aprobado");
+            movimiento.setConcepto("Prï¿½stamo aprobado");
             movimientoNegocio.agregarMovimiento(movimiento, prestamo.getCuenta().getIdCuenta());
             
             // Cargar el saldo a la cuenta destino
             CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
-            BigDecimal importe = BigDecimal.valueOf(prestamo.getImporteTotal());
+            Float importe = Float.valueOf(prestamo.getImporteTotal());
             cuentaNegocio.ingresos(prestamo.getCuenta().getIdCuenta(), importe);
             
         }
 
-        response.sendRedirect("GestionPrestamosServlet"); // Redirigir a la página de gestión
+        response.sendRedirect("GestionPrestamosServlet"); // Redirigir a la pï¿½gina de gestiï¿½n
     } catch (Exception e) {
     	e.printStackTrace();
 

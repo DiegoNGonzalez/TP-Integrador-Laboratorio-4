@@ -47,4 +47,9 @@ public class CuotaNegocioImpl implements CuotaNegocio{
 		return auxCuota.registrarPago(idCuota);
 	}
 
+	@Override
+	public ArrayList<Cuota> listarCuotasPendientesPorPrestamo(int idPrestamo) {
+		return auxCuota.listarCuotasPendientesPorPrestamo(idPrestamo);
+	}
+
 }

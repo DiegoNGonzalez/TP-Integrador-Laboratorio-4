@@ -59,7 +59,8 @@ public class SolicitarPrestamoServlet extends HttpServlet {
 	        nuevoPrestamo.setImporteTotal(importe);
 	        nuevoPrestamo.setCantCuotas(cuotas);
 	        nuevoPrestamo.setPlazo(cuotas);
-	        BigDecimal importeCuota = BigDecimal.valueOf(importe).divide(BigDecimal.valueOf(cuotas), 2, RoundingMode.HALF_UP);
+	        //float importeCuota = Float.valueOf(importe).divide(Float.valueOf(cuotas), 2, RoundingMode.HALF_UP);
+	        float importeCuota = Math.round((importe / cuotas) * 100.0) / 100.0f;
 	        nuevoPrestamo.setImporteCuota(importeCuota);
 	        nuevoPrestamo.setCuenta(new CuentaNegocioImpl().obtenerCuentaPorId(cuentaDestinoId));
 	        nuevoPrestamo.setFechaAltaPrestamo(new Date(System.currentTimeMillis()));
@@ -78,7 +79,7 @@ public class SolicitarPrestamoServlet extends HttpServlet {
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        request.setAttribute("errorMsj", "Error al procesar el préstamo. Verifique los datos.");
+	        request.setAttribute("errorMsj", "Error al procesar el prï¿½stamo. Verifique los datos.");
 	        request.getRequestDispatcher("Error.jsp").forward(request, response);
 	    }
 	}

@@ -98,9 +98,9 @@
                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>
                                 <td>
                     <% if (prestamo.getEstado().equals("Activo")) { %>
-                        <a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-pagar">
-                            Pagar cuota
-                        </a>
+                        <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-pagar">
+    					Pagar cuota
+						</a>
                     <% } %>
                 </td>
             </tr>

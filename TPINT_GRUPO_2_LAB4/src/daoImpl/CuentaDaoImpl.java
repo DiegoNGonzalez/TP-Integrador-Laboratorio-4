@@ -83,12 +83,12 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
-	        // Asignación de parámetros para actualizar los datos
+	        // Asignaciï¿½n de parï¿½metros para actualizar los datos
 	        statement.setInt(1, cuenta.getTipoCuenta().getId());
 	        statement.setFloat(2, cuenta.getSaldo());
 	        statement.setInt(3, cuenta.getIdCuenta());
 	        
-	        // Ejecuta la actualización y verifica si fue exitosa
+	        // Ejecuta la actualizaciï¿½n y verifica si fue exitosa
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -104,7 +104,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        // Asignación de parámetros
+	        // Asignaciï¿½n de parï¿½metros
 	        statement.setInt(1, idCliente);
 	        statement.setInt(2, cuenta.getTipoCuenta().getId());
 	        statement.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
@@ -113,7 +113,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	        statement.setFloat(6, cuenta.getSaldo()); 
 	        statement.setBoolean(7, cuenta.getEstadoCuenta());
 
-	        // Ejecuta la actualización y devuelve si al menos una fila fue afectada
+	        // Ejecuta la actualizaciï¿½n y devuelve si al menos una fila fue afectada
 	        int filas = statement.executeUpdate();
 	        return filas > 0;
 
@@ -219,14 +219,14 @@ public class CuentaDaoImpl implements CuentaDao{
     }
 
 	@Override
-	public boolean ingresos(int idCuenta, BigDecimal montoIngreso) {
+	public boolean ingresos(int idCuenta, Float montoIngreso) {
 	    // Consulta SQL para actualizar el saldo
 	    String query = "UPDATE cuentas SET saldo = saldo + ? WHERE idCuenta = ?";
 
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        statement.setBigDecimal(1, montoIngreso); 
+	        statement.setFloat(1, montoIngreso); 
 	        statement.setInt(2, idCuenta);
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {

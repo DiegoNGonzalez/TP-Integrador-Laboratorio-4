@@ -112,7 +112,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
-	public boolean ingresos(int idCuenta, BigDecimal montoACargar) {
+	public boolean ingresos(int idCuenta, Float montoACargar) {
 		return cuentaDao.ingresos(idCuenta, montoACargar);
 	}
 }

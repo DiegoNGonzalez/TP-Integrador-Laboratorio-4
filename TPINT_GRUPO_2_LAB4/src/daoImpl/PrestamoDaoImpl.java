@@ -33,7 +33,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	            prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	            prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	            prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	            prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
+	            prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	            prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	            prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 
@@ -69,7 +69,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));  // Usar getTimestamp si necesitamos la hora
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 
@@ -112,7 +112,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	        statement.setDate(3, new java.sql.Date(prestamo.getFechaAltaPrestamo().getTime()));
 	        statement.setFloat(4, prestamo.getImporteTotal());
 	        statement.setInt(5, prestamo.getPlazo());
-	        statement.setBigDecimal(6, prestamo.getImporteCuota());
+	        statement.setFloat(6, prestamo.getImporteCuota());
 	        statement.setInt(7, prestamo.getCantCuotas());
 	        statement.setString(8, prestamo.getEstado());
 
@@ -169,7 +169,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 	            }
@@ -205,7 +205,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
-	                prestamo.setImporteCuota(resultSet.getBigDecimal("importeCuota"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
 	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
 	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
 
@@ -214,7 +214,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	        }
 	    } catch (SQLException e) {
 	        System.err.println("Error de SQL: " + e.getMessage());
-	        e.printStackTrace(); // Proporciona más detalles sobre el error
+	        e.printStackTrace(); // Proporciona mï¿½s detalles sobre el error
 	    } catch (Exception e) {
 	        System.err.println("Error inesperado: " + e.getMessage());
 	        e.printStackTrace(); // Maneja otros tipos de errores

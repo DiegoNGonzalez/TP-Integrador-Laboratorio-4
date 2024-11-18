@@ -1,15 +1,21 @@
 package daoImpl;
 
+import java.sql.CallableStatement;
+=======
 import java.math.BigDecimal;
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import dao.CuentaDao;
+import entidades.Cliente;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
+import entidades.Usuario;
 
 public class CuentaDaoImpl implements CuentaDao{
 
@@ -218,6 +224,33 @@ public class CuentaDaoImpl implements CuentaDao{
         return listaCuentas;
     }
 
+	
+	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException
+	{
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spRealizarTransferencia"
+			 		+ "(?,?,?,?)");			 
+		 			 				 
+			 cst.setLong(1, cbuDestino);
+			 cst.setLong(2, cbuOrigen);
+			 cst.setFloat(3, monto);
+			 cst.setString(4, concepto);
+			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();	
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
+		  }
+		  finally {
+			  
+		  }			
+	}
+
 	@Override
 	public boolean ingresos(int idCuenta, BigDecimal montoIngreso) {
 	    // Consulta SQL para actualizar el saldo
@@ -234,6 +267,5 @@ public class CuentaDaoImpl implements CuentaDao{
 	        return false;
 	    }
 	}
-
 }
 

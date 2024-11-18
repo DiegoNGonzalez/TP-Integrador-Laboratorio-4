@@ -433,27 +433,29 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE spRegistrarTransferencia(
+CREATE PROCEDURE spRealizarTransferencia(
     IN cbuDestino bigint,
     IN cbuOrigen bigint,
     IN importe DECIMAL(14, 2),
     IN concepto VARCHAR(50)
 )
 BEGIN
-    
-    DECLARE saldo DECIMAL(14, 2);
-    
+    DECLARE saldoOrigen DECIMAL(14, 2);
+    DECLARE saldoDestiantario DECIMAL(14, 2);
+	DECLARE idCuentaOrigen INT;
+	DECLARE idCuentaDestino INT;
+	DECLARE mensaje VARCHAR(255);
     -- manejo de errores
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	BEGIN
-        -- Revertir la transacción en caso de error
+        -- Revertir la transacciÃ³n en caso de error
         ROLLBACK;
 
-        -- Re-levantar el error para que sea capturado en la aplicación
+        -- Re-levantar el error para que sea capturado en la aplicaciÃ³n
         RESIGNAL;
     END;
 
-    -- transacción
+    -- transaccion
     START TRANSACTION;
 
     -- Verificamos que cbuOrigen y cbuDestino no sean iguales
@@ -462,15 +464,18 @@ BEGIN
     END IF;
     
     -- Verificamos que tenga saldo suficiente y exista la cuenta
-	IF EXISTS (SELECT 1 FROM cuentas WHERE cbu = cbuOrigen AND estadoCuenta = 1) THEN
-		SELECT saldo INTO saldo FROM cuentas WHERE cbu = cbuOrigen;
+	IF EXISTS (SELECT * FROM cuentas WHERE cbu = cbuOrigen AND estadoCuenta = 1) THEN
+		SELECT saldo INTO saldoOrigen FROM cuentas WHERE cbu = cbuOrigen;
 	ELSE
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO EXISTE LA CUENTA ORIGEN';
 	END IF;
-
-
+    
+	IF saldoOrigen IS NULL THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO SE PUEDE REALIZAR LA TRANSFERENCIA, SALDO INSUFICIENTE';
+	END IF;
+	
 	-- Verificamos si posee saldo suficiente para la transferencia.
-	IF saldo - importe < 0 THEN
+	IF saldoOrigen - importe < 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO SE PUEDE REALIZAR LA TRANSFERENCIA, SALDO INSUFICIENTE';
 	END IF;
 
@@ -479,38 +484,47 @@ BEGIN
 	END IF;
 
 	-- Registramos el movimiento cbuOrigen
+    SELECT idCuenta INTO idCuentaOrigen 
+	FROM cuentas 
+	WHERE cbu = cbuOrigen;
+    
     INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
-    VALUES(cbuOrigen, 5, NOW(), concepto, importe);
+    VALUES(idCuentaOrigen, 5, NOW(), concepto, importe);
      
-     -- Verificamos si se insertó alguna fila
+     -- Verificamos si se inserta alguna fila
 	IF ROW_COUNT() = 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta origen';
 	END IF;
      
 	-- Registramos el movimiento cbuDestino
+	SELECT idCuenta, saldo 
+	INTO idCuentaDestino, saldoDestiantario
+	FROM cuentas 
+	WHERE cbu = cbuDestino;
+    
     INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
-    VALUES(cbuDestino, 4, NOW(), concepto, importe);
+    VALUES(idCuentaDestino, 4, NOW(), concepto, importe);
 
-	-- Verificamos si se insertó alguna fila
+	-- Verificamos si se inserta alguna fila
 	IF ROW_COUNT() = 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta destino';
 	END IF;
 
 	-- actualizacion saldo en cuenta origen. resta.
-    UPDATE cuentas SET saldo = saldo - importe WHERE cbu = cbuOrigen;
+    UPDATE cuentas SET saldo = saldoOrigen - importe WHERE idCuenta = idCuentaOrigen;
     
-    -- Verificamos si se actualizó saldo en origen
+    -- Verificamos si se actualiza saldo en origen
 	IF ROW_COUNT() = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta origen para actualizar';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontrÃ³ la cuenta origen para actualizar';
 	END IF;
     
     
     -- actualizacion saldo en cuenta destino. suma.
-    UPDATE cuentas SET saldo = saldo + importe WHERE cbu = cbuDestino;
+    UPDATE cuentas SET saldo = saldoDestiantario + importe WHERE idCuenta = idCuentaDestino;
     
-	-- Verificamos si se actualizó saldo en destino
+	-- Verificamos si se actualiza saldo en destino
 	IF ROW_COUNT() = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta destino para actualizar';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontrÃ³ la cuenta destino para actualizar';
 	END IF;
 
     COMMIT;

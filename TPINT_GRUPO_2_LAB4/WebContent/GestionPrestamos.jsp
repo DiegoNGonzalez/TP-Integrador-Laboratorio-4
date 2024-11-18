@@ -132,7 +132,7 @@
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
-                <td><a href="DetallePrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-detalle">Detalle</a></td>
+                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
             </tr>
         <% } %>
     </tbody>
@@ -184,7 +184,7 @@
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
-                <td><a href="DetallePrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-detalle">Detalle</a></td>
+                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
             </tr>
         <% } %>
     </tbody>

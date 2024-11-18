@@ -36,11 +36,12 @@
 %>
 
 <div class="account-cliente-principal">
+		<h2 class="edit-title"><%= cuenta.getIdCuenta() %> .-</h2>
 		<h2 class="edit-title"><%= cuenta.getTipoCuenta().getTipo() %> $ <%= cuenta.getSaldo() %> .-</h2>
 		<h3>CBU: <%= cuenta.getCbu() %></h3>
 		<h3>Saldo: $ <%= cuenta.getSaldo() %></h3>
 		<div>
-			<a href="DetalleCuenta.jsp" class="btn-aprobar">Ver detalle</a>
+			<a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" class="btn-aprobar">Ver detalle</a>
 		</div>
 </div>
        
@@ -49,10 +50,10 @@
 %>
 
 <div class="dashboard-content">
-    <div class="dashboard-card" onclick="window.location.href='MisCuentas.jsp'">
+ <!--    <div class="dashboard-card" onclick="window.location.href='MisCuentas.jsp'">
         <h3>Mis cuentas</h3>
         <p>Gestiona tus cuentas</p>
-    </div>
+    </div> -->
     <div class="dashboard-card" onclick="window.location.href='ListarPrestamosServlet'">
         <h3>Mis prestamos</h3>
         <p>Gestiona tus prestamos</p>

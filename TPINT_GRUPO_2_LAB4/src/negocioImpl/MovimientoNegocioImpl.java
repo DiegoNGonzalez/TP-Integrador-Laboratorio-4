@@ -58,10 +58,10 @@ public class MovimientoNegocioImpl implements MovimientoNegocio {
 		}
 		ArrayList<Movimiento> movimientos = movimientoDao.obtenerMovimientosPorCuenta(idCuenta);
 
-		if (movimientos == null || movimientos.isEmpty()) {
+		/*if (movimientos == null || movimientos.isEmpty()) {
 			System.out.println("No hay movimientos .");
 			return null;
-		}
+		}*/
 		return movimientos;
 	}
 

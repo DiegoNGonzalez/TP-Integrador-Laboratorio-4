@@ -1,20 +1,20 @@
 package entidades;
 
-import java.math.BigDecimal;
+
 import java.util.Date;
 
 public class Cuota {
 
 	private int idCuota;
 	private int numCuota;
-	private BigDecimal montoAPagar;
+	private float montoAPagar;
 	private Date fechaPago;
 	private boolean estadoPago;
 	
 	public Cuota() {
 	}
 	
-	public Cuota(int idCuota, int numCuota, BigDecimal montoAPagar, Date fechaPago, boolean estado) {
+	public Cuota(int idCuota, int numCuota, float montoAPagar, Date fechaPago, boolean estado) {
 		super();
 		this.idCuota = idCuota;
 		this.numCuota = numCuota;
@@ -36,10 +36,10 @@ public class Cuota {
 	public void setNumCuota(int numCuota) {
 		this.numCuota = numCuota;
 	}
-	public BigDecimal getMontoAPagar() {
+	public float getMontoAPagar() {
 		return montoAPagar;
 	}
-	public void setMontoAPagar(BigDecimal montoAPagar) {
+	public void setMontoAPagar(float montoAPagar) {
 		this.montoAPagar = montoAPagar;
 	}
 	public Date getFechaPago() {

@@ -12,7 +12,7 @@ public class Prestamo {
 	private Date fechaAltaPrestamo;
 	private float importeTotal;
 	private int plazo;
-	private BigDecimal importeCuota;
+	private float importeCuota;
 	private int cantCuotas;
 	private ArrayList<Cuota> cuotas;
 	private String estado;
@@ -21,7 +21,7 @@ public class Prestamo {
 	}
 	
 	public Prestamo(int idPrestamo, Cuenta cuenta, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
-			BigDecimal importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, String estado) {
+			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, String estado) {
 		super();
 		this.idPrestamo = idPrestamo;
 		this.cuenta = cuenta;
@@ -66,10 +66,10 @@ public class Prestamo {
 	public void setPlazo(int plazo) {
 		this.plazo = plazo;
 	}
-	public BigDecimal getImporteCuota() {
+	public float getImporteCuota() {
 		return importeCuota;
 	}
-	public void setImporteCuota(BigDecimal importeCuota2) {
+	public void setImporteCuota(float importeCuota2) {
 		this.importeCuota = importeCuota2;
 	}
 	public int getCantCuotas() {

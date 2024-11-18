@@ -1,9 +1,13 @@
 package negocioImpl;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.CuentaDao;
 import daoImpl.CuentaDaoImpl;
+import entidades.Cliente;
 import entidades.Cuenta;
+import entidades.Usuario;
+import exceptions.ClienteNegocioException;
 import exceptions.CuentaNegocioException;
 import negocio.CuentaNegocio;
 
@@ -114,5 +118,21 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         }
         
         return cuentaDao.obtenerCuentasPorCliente(idCliente);
+	}
+	@Override
+	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException { 
+		System.out.print("qqqqqqqq");
+		try {
+			System.out.print("qqqq1111");
+			cuentaDao.ejecutarSPTransferencia(cbuOrigen, cbuDestino, monto, concepto);
+			}
+			catch (SQLException e) {
+				System.out.print("qqqqq2222");
+				e.printStackTrace();
+				//ClienteSPException exc1 = new ClienteSPException();
+				throw e;
+			}finally {
+				
+			}		
 	}
 }

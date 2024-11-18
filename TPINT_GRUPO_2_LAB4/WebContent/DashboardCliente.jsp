@@ -62,7 +62,7 @@
         <h3>Mi perfil</h3>
         <p>Ver mis datos personales</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='Transferencia.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='TransferenciasServlet?idUsuario=<%=cliente.getUsuario().getId() %>'">
         <h3>Transferencias</h3>
         <p>Realizar nueva transferencia</p>
     </div>

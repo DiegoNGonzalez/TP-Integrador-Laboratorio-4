@@ -14,7 +14,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public ArrayList<Cuota> listarCuotas() {
-        String query = "SELECT idCuota, idPrestamo, numCuota, montoAPagar, fechaPago, estado FROM cuotas";
+        String query = "SELECT idCuota, idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago FROM cuotas";
         ArrayList<Cuota> listaCuotas = new ArrayList<>();
 
         try (Connection conexion = Conexion.getConnection();
@@ -28,10 +28,10 @@ public class CuotaDaoImpl implements CuotaDao {
 //                Prestamo prestamo = aux.prestamoXId(idPrestamo);
 //                cuota.setPrestamo(prestamo);
                 
-                cuota.setNumCuota(resultSet.getInt("numCuota"));
-                cuota.setMontoAPagar(resultSet.getBigDecimal("montoAPagar"));
+                cuota.setNumCuota(resultSet.getInt("numeroCuota"));
+                cuota.setMontoAPagar(resultSet.getFloat("montoPagado"));
                 cuota.setFechaPago(resultSet.getDate("fechaPago"));
-                cuota.setEstado(resultSet.getBoolean("estado"));
+                cuota.setEstado(resultSet.getBoolean("estadoPago"));
 
                 listaCuotas.add(cuota);
             }
@@ -44,14 +44,14 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public boolean agregarCuota(Cuota cuota, int idPrestamo) {
-        String query = "INSERT INTO cuotas(idPrestamo, numeroCuota, montoAPagar, fechaPago, estadoPago) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO cuotas(idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setInt(1, idPrestamo);
             statement.setInt(2, cuota.getNumCuota());
-            statement.setBigDecimal(3, cuota.getMontoAPagar());
+            statement.setFloat(3, cuota.getMontoAPagar());
             statement.setDate(4, new java.sql.Date(cuota.getFechaPago().getTime()));
             statement.setBoolean(5, cuota.isEstado());
 
@@ -64,7 +64,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public boolean bajarCuota(int idCuota) {
-        String query = "UPDATE cuotas SET estado = false WHERE idCuota = ?";
+        String query = "UPDATE cuotas SET estadoPago = false WHERE idCuota = ?";
 
         try (Connection conexion = Conexion.getConnection();
              PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -79,7 +79,7 @@ public class CuotaDaoImpl implements CuotaDao {
 
     @Override
     public Cuota obtenerCuotaPorId(int idCuota) {
-        String query = "SELECT idCuota, idPrestamo, numCuota, montoAPagar, fechaPago, estado FROM cuotas WHERE idCuota = ?";
+        String query = "SELECT idCuota, idPrestamo, numeroCuota, montoPagado, fechaPago, estado FROM cuotas WHERE idCuota = ?";
         Cuota cuota = null;
         PrestamoDaoImpl aux = new PrestamoDaoImpl();
 
@@ -93,10 +93,10 @@ public class CuotaDaoImpl implements CuotaDao {
                     cuota = new Cuota();
                     cuota.setIdCuota(resultSet.getInt("idCuota"));
 
-                    cuota.setNumCuota(resultSet.getInt("numCuota"));
-                    cuota.setMontoAPagar(resultSet.getBigDecimal("montoAPagar"));
+                    cuota.setNumCuota(resultSet.getInt("numeroCuota"));
+                    cuota.setMontoAPagar(resultSet.getFloat("montoPagado"));
                     cuota.setFechaPago(resultSet.getDate("fechaPago"));
-                    cuota.setEstado(resultSet.getBoolean("estado"));
+                    cuota.setEstado(resultSet.getBoolean("estadoPago"));
                 }
             }
         } catch (Exception e) {
@@ -124,4 +124,32 @@ public class CuotaDaoImpl implements CuotaDao {
 		}
 		return false;
 	}
+	
+	public ArrayList<Cuota> listarCuotasPendientesPorPrestamo(int idPrestamo) {
+	    String query = "SELECT idCuota, idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago FROM cuotas WHERE idPrestamo = ? AND estadoPago = false";
+	    ArrayList<Cuota> listaCuotasPendientes = new ArrayList<>();
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        statement.setInt(1, idPrestamo);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Cuota cuota = new Cuota();
+	                cuota.setIdCuota(resultSet.getInt("idCuota"));
+	                cuota.setNumCuota(resultSet.getInt("numeroCuota"));
+	                cuota.setMontoAPagar(resultSet.getFloat("montoPagado"));
+	                cuota.setFechaPago(resultSet.getDate("fechaPago"));
+	                cuota.setEstado(resultSet.getBoolean("estadoPago"));
+
+	                listaCuotasPendientes.add(cuota);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return listaCuotasPendientes;
+	}
+
 }

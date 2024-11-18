@@ -208,7 +208,7 @@ CREATE TABLE cuotas (
     idCuota int primary key auto_increment,
     idPrestamo int NOT NULL,
     numeroCuota int NOT NULL,
-    montoAPagar decimal(14, 2) NULL,
+    montoPagado decimal(14, 2) NULL,
     fechaPago date NULL,
     estadoPago bit DEFAULT 0, -- 0 sin pagar, 1 ya pagado
     
@@ -338,11 +338,9 @@ INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, 
 
 INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
 VALUES
-(2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Pendiente'),
-(2, 3, '2024-11-16', 6000.00, 12, 550.00, 12, 'Pendiente'),
-(2, 3, '2024-11-16', 7000.00, 12, 650.00, 12, 'Pendiente'),
-(3, 4, '2024-11-10', 10000.00, 6, 2000.00, 6, 'Pendiente'),
-(4, 5, '2024-11-10', 3000.00, 6, 500.00, 6, 'Pendiente');
+(2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Activo'),
+(3, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Pendiente'),
+(4, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Rechazado');
 
 DELIMITER //
 
@@ -433,27 +431,29 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE spRegistrarTransferencia(
+CREATE PROCEDURE spRealizarTransferencia(
     IN cbuDestino bigint,
     IN cbuOrigen bigint,
     IN importe DECIMAL(14, 2),
     IN concepto VARCHAR(50)
 )
 BEGIN
-    
-    DECLARE saldo DECIMAL(14, 2);
-    
+    DECLARE saldoOrigen DECIMAL(14, 2);
+    DECLARE saldoDestiantario DECIMAL(14, 2);
+	DECLARE idCuentaOrigen INT;
+	DECLARE idCuentaDestino INT;
+	DECLARE mensaje VARCHAR(255);
     -- manejo de errores
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	BEGIN
-        -- Revertir la transacción en caso de error
+        -- Revertir la transacciÃ³n en caso de error
         ROLLBACK;
 
-        -- Re-levantar el error para que sea capturado en la aplicación
+        -- Re-levantar el error para que sea capturado en la aplicaciÃ³n
         RESIGNAL;
     END;
 
-    -- transacción
+    -- transaccion
     START TRANSACTION;
 
     -- Verificamos que cbuOrigen y cbuDestino no sean iguales
@@ -462,15 +462,18 @@ BEGIN
     END IF;
     
     -- Verificamos que tenga saldo suficiente y exista la cuenta
-	IF EXISTS (SELECT 1 FROM cuentas WHERE cbu = cbuOrigen AND estadoCuenta = 1) THEN
-		SELECT saldo INTO saldo FROM cuentas WHERE cbu = cbuOrigen;
+	IF EXISTS (SELECT * FROM cuentas WHERE cbu = cbuOrigen AND estadoCuenta = 1) THEN
+		SELECT saldo INTO saldoOrigen FROM cuentas WHERE cbu = cbuOrigen;
 	ELSE
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO EXISTE LA CUENTA ORIGEN';
 	END IF;
-
-
+    
+	IF saldoOrigen IS NULL THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO SE PUEDE REALIZAR LA TRANSFERENCIA, SALDO INSUFICIENTE';
+	END IF;
+	
 	-- Verificamos si posee saldo suficiente para la transferencia.
-	IF saldo - importe < 0 THEN
+	IF saldoOrigen - importe < 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'NO SE PUEDE REALIZAR LA TRANSFERENCIA, SALDO INSUFICIENTE';
 	END IF;
 
@@ -479,41 +482,130 @@ BEGIN
 	END IF;
 
 	-- Registramos el movimiento cbuOrigen
+    SELECT idCuenta INTO idCuentaOrigen 
+	FROM cuentas 
+	WHERE cbu = cbuOrigen;
+    
     INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
-    VALUES(cbuOrigen, 5, NOW(), concepto, importe);
+    VALUES(idCuentaOrigen, 5, NOW(), concepto, importe);
      
-     -- Verificamos si se insertó alguna fila
+     -- Verificamos si se inserta alguna fila
 	IF ROW_COUNT() = 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta origen';
 	END IF;
      
 	-- Registramos el movimiento cbuDestino
+	SELECT idCuenta, saldo 
+	INTO idCuentaDestino, saldoDestiantario
+	FROM cuentas 
+	WHERE cbu = cbuDestino;
+    
     INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
-    VALUES(cbuDestino, 4, NOW(), concepto, importe);
+    VALUES(idCuentaDestino, 4, NOW(), concepto, importe);
 
-	-- Verificamos si se insertó alguna fila
+	-- Verificamos si se inserta alguna fila
 	IF ROW_COUNT() = 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta destino';
 	END IF;
 
 	-- actualizacion saldo en cuenta origen. resta.
-    UPDATE cuentas SET saldo = saldo - importe WHERE cbu = cbuOrigen;
+    UPDATE cuentas SET saldo = saldoOrigen - importe WHERE idCuenta = idCuentaOrigen;
     
-    -- Verificamos si se actualizó saldo en origen
+    -- Verificamos si se actualiza saldo en origen
 	IF ROW_COUNT() = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta origen para actualizar';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontrÃ³ la cuenta origen para actualizar';
 	END IF;
     
     
     -- actualizacion saldo en cuenta destino. suma.
-    UPDATE cuentas SET saldo = saldo + importe WHERE cbu = cbuDestino;
+    UPDATE cuentas SET saldo = saldoDestiantario + importe WHERE idCuenta = idCuentaDestino;
     
-	-- Verificamos si se actualizó saldo en destino
+	-- Verificamos si se actualiza saldo en destino
 	IF ROW_COUNT() = 0 THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontró la cuenta destino para actualizar';
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se encontrÃ³ la cuenta destino para actualizar';
 	END IF;
 
     COMMIT;
 END$$
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE spAgregarCuenta(
+    IN sp_idcliente int,
+	IN sp_idTipoCuenta int,
+	IN sp_fechaCreacion date,
+	IN sp_numeroCuenta bigint,
+	IN sp_cbu bigint,
+	IN sp_saldo float
+)
+BEGIN
+    DECLARE idCuenta INT DEFAULT 0;
+
+     -- Manejador de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- En caso de error, revertir la transacción
+        ROLLBACK;
+
+        -- Re-levantar el error para que sea capturado en Java
+        RESIGNAL;
+    END;
+
+    -- Inicio de la transacción
+    START TRANSACTION;
+    
+	-- Verificamos que el cliente existe
+    IF NOT EXISTS (SELECT 1 FROM clientes WHERE idCliente = sp_idCliente) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El cliente especificado no existe';
+    END IF;
+
+    -- Verificamos que el tipo de cuenta existe
+    IF NOT EXISTS (SELECT 1 FROM tiposcuentas WHERE idTipoCuenta = sp_idTipoCuenta) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El tipo de cuenta especificado no existe';
+    END IF;
+
+    -- Verificamos que numeroCuenta y cbu sean únicos
+    IF EXISTS (SELECT 1 FROM cuentas WHERE numeroCuenta = sp_numeroCuenta) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El número de cuenta ya está en uso';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM cuentas WHERE cbu = sp_cbu) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El CBU ya está en uso';
+    END IF;
+    
+	-- Verificamos que el saldo no sea negativo o 0.
+	IF sp_saldo <= 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'EL SALDO DEBE SER MAYOR A 0';
+	END IF;
+    
+    -- Generamos la cuenta
+    INSERT INTO cuentas (idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta)
+    VALUES (sp_idcliente, sp_idTipoCuenta, sp_fechaCreacion, sp_numeroCuenta, sp_cbu, sp_saldo, 1);
+    
+	-- Verificamos si se registró la cuenta
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar la nueva cuenta';
+	END IF;
+    
+    SET idCuenta = LAST_INSERT_ID();
+    
+	-- Registramos el movimiento de alta
+    INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
+    VALUES(idCuenta, 1, NOW(), 'Apertura de cuenta', sp_saldo);
+    
+	-- Verificamos si se registró el movimiento
+	IF ROW_COUNT() = 0 THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento';
+	END IF;
+    
+    -- Confirmación de la transacción
+    COMMIT;
+END //
 
 DELIMITER ;

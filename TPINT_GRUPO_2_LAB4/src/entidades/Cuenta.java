@@ -1,4 +1,5 @@
 package entidades;
+import java.util.ArrayList;
 import java.util.Date;
 import entidades.TipoCuenta;
 
@@ -9,16 +10,18 @@ public class Cuenta {
 	private long numeroCuenta;
 	private long cbu;
 	private float saldo;
+	private ArrayList<Movimiento> movimientos;
 	private boolean estadoCuenta;
 	
 	//constructores
-	public Cuenta(int idCuenta, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, long cbu, float saldo, boolean estadoCuenta) {
+	public Cuenta(int idCuenta, TipoCuenta tipoCuenta, Date fechaCreacion, long numeroCuenta, long cbu, float saldo, ArrayList<Movimiento> movimientos, boolean estadoCuenta) {
 		this.idCuenta = idCuenta;
 		this.tipoCuenta = tipoCuenta;
 		this.fechaCreacion = fechaCreacion;
 		this.numeroCuenta = numeroCuenta;
 		this.cbu = cbu;
 		this.saldo = saldo;
+		this.movimientos = movimientos;
 		this.estadoCuenta = estadoCuenta;
 	}
 	
@@ -63,10 +66,28 @@ public class Cuenta {
 	public void setSaldo(float saldo) {
 		this.saldo = saldo;
 	}
+	
+	public ArrayList<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+	public void setMovimientos(ArrayList<Movimiento> movimientos) {
+		this.movimientos = movimientos;
+	}
+
 	public boolean getEstadoCuenta() {
 		return estadoCuenta;
 	}
 	public void setEstadoCuenta(boolean estadoCuenta) {
 		this.estadoCuenta = estadoCuenta;
 	}
+
+	@Override
+	public String toString() {
+		return "Cuenta [idCuenta=" + idCuenta + ", tipoCuenta=" + tipoCuenta + ", fechaCreacion=" + fechaCreacion
+				+ ", numeroCuenta=" + numeroCuenta + ", cbu=" + cbu + ", saldo=" + saldo + ", movimientos="
+				+ movimientos + ", estadoCuenta=" + estadoCuenta + "]";
+	}
+	
+	
 }

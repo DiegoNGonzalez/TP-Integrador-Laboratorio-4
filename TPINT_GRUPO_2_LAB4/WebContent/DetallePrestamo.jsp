@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="entidades.Prestamo" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,24 +10,39 @@
 </head>
 <body>
 <jsp:include page="nav.jsp" />
+<%
+    Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
+    String origen = request.getParameter("origen");
+%>
+
 
 <div class="loan-detail-container">
     <h2>Detalle del Préstamo</h2>
     
-    <!-- Información del préstamo -->
-    <p><strong>Cliente:</strong> Juan Pérez</p>
-    <p><strong>Monto del Préstamo:</strong> $10,000</p>
-    <p><strong>Cuotas Totales:</strong> 12</p>
-    <p><strong>Cuotas Pagadas:</strong> 8</p>
-    <p><strong>Cuotas Faltantes:</strong> 4</p>
-    <p><strong>Monto Adeudado:</strong> $3,000</p>
-    <p><strong>Monto Final:</strong> $10,800</p>
-
-    <div class="back-button-container">
-        <a href="MisPrestamos.jsp" class="btn-volver">Volver</a>
-        <a href="PagoPrestamo.jsp" class="btn-volver">Pagar cuota</a>
-    </div>
+    <% if (prestamo != null) { %>
+        <p><strong>Cliente:</strong> <%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></p>
+        <p><strong>Monto del Préstamo:</strong> $<%= prestamo.getImporteTotal() %></p>
+        <p><strong>Cuotas Totales:</strong> <%= prestamo.getCantCuotas() %></p>
+        <%--<p><strong>Cuotas Pagadas:</strong> <%= prestamo.getCuotasPagadas() %></p>
+        <p><strong>Cuotas Faltantes:</strong> <%= prestamo.getCantCuotas() - prestamo.getCuotasPagadas() %></p>
+        <p><strong>Monto Adeudado:</strong> $<%= prestamo.getMontoAdeudado() %></p>
+        <p><strong>Monto Final:</strong> $<%= prestamo.getMontoFinal() %></p>--%>
+<% }%>
+        <div class="back-button-container">
+        <% if ("Gestionprestamos".equals(origen)) { %>
+            <a href="GestionPrestamosServlet" class="btn-volver">Volver a Gestión de Préstamos</a>
+        <% } else { %>
+            <a href="ListarPrestamosServlet" class="btn-volver">Volver a Listado de Préstamos</a>
+               <% if (prestamo.getEstado().equals("Activo")) { %>
+                  <a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-volver">
+                  Pagar cuota
+                  </a>
+               <% } %>
+        <% } %>
+		</div>
 </div>
+
+
 
 
 </body>

@@ -8,7 +8,11 @@ import negocio.CuotaNegocio;
 
 public class CuotaNegocioImpl implements CuotaNegocio{
 
-	CuotaDaoImpl auxCuota;
+	private CuotaDaoImpl auxCuota;
+	
+	public CuotaNegocioImpl() {
+		auxCuota = new CuotaDaoImpl();
+	}
 	
 	@Override
 	public ArrayList<Cuota> listarCuotas() {

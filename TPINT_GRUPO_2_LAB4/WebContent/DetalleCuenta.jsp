@@ -1,3 +1,7 @@
+<%@ page import="entidades.Cliente"%>
+<%@ page import="entidades.Movimiento"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidades.Cuenta"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,13 +12,31 @@
 <title>Cuenta</title>
 </head>
 <body>
-<!-- Menú de Navegación -->
-<jsp:include page="nav.jsp" />
+	<!-- Menú de Navegación -->
+	<jsp:include page="nav.jsp" />
+
+	<%
+				Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
+	
+		if (cuenta == null) {
+	%>
+	<h2>Error: No se encontró la cuenta</h2>
+	<%
+		} else {
+	%>
 
 	<div class="account-management-container">
-		<h2 class="edit-title">Cuenta corriente 123456789</h2>
-		<h3>CBU: 00000000000</h3>
-		<h3>Saldo: $5,250.00</h3>
+		<h2 class="edit-title">
+			<%=cuenta.getTipoCuenta().getTipo()%>
+			-
+			<%=cuenta.getNumeroCuenta()%></h2>
+		<h3>
+			CBU:
+			<%=cuenta.getCbu()%></h3>
+		<h3>
+			Saldo:
+			<%=cuenta.getSaldo()%>0
+		</h3>
 
 		<div style="margin-bottom: 20px;"></div>
 
@@ -24,30 +46,46 @@
 				<tr>
 					<th>Fecha</th>
 					<th>Tipo</th>
-					<th>Detalle</th>
+					<th>Concepto</th>
 					<th>Importe</th>
 				</tr>
 			</thead>
 			<tbody>
+				<% 
+			  
+			ArrayList<Movimiento> listaMovimientos = cuenta.getMovimientos();
+			
+			if (listaMovimientos != null && !listaMovimientos.isEmpty()) {
+                for (Movimiento movimiento : listaMovimientos) {
+        %>
 				<tr>
-					<td>01/09/2024</td>
-					<td>Alta de cuenta</td>
-					<td>Apertura de cuenta 123456789</td>
-					<td>$10,000.00</td>
+					<td><%= movimiento.getFechaMovimiento() %></td>
+					<td><%= movimiento.getTipoMovimiento().getTipoMovimiento() %></td>
+					<td><%= movimiento.getConcepto() %></td>
+					<td><%= movimiento.getImporteMovimiento() %></td>
 				</tr>
+				<% 
+                }
+            } else {
+        %>
 				<tr>
-					<td>15/11/2024</td>
-					<td>Transferencia</td>
-					<td>Extracción de dinero en cajero</td>
-					<td>- $4,750.00</td>
+					<td colspan="4">No hay movimientos para mostrar</td>
 				</tr>
+				<% 
+            }
+        %>
 			</tbody>
 		</table>
 		<div style="margin-bottom: 20px;"></div>
+
+		<!-- Modificar cuando esté la lógica de transferencias -->
 		<div>
 			<a href="Transferencia.jsp?cuentaId=11111" class="btn-aprobar">Realizar
 				transferencia</a>
 		</div>
 	</div>
+	<%
+		}
+	%>
 </body>
 </html>

@@ -688,4 +688,31 @@ body {
 .btn-eliminar:hover {
     background-color: #c82333;
 }
+
+/* Estado aprobado (verde) */
+.estado-aprobado {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Estado pendiente (amarillo) */
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Estado rechazado (rojo) */
+.estado-rechazado {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
  

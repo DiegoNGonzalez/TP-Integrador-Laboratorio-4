@@ -1,6 +1,9 @@
 package daoImpl;
 
 import java.sql.CallableStatement;
+=======
+import java.math.BigDecimal;
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -220,6 +223,7 @@ public class CuentaDaoImpl implements CuentaDao{
         }
         return listaCuentas;
     }
+
 	
 	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException
 	{
@@ -245,6 +249,23 @@ public class CuentaDaoImpl implements CuentaDao{
 		  finally {
 			  
 		  }			
+	}
+
+	@Override
+	public boolean ingresos(int idCuenta, BigDecimal montoIngreso) {
+	    // Consulta SQL para actualizar el saldo
+	    String query = "UPDATE cuentas SET saldo = saldo + ? WHERE idCuenta = ?";
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        statement.setBigDecimal(1, montoIngreso); 
+	        statement.setInt(2, idCuenta);
+	        return statement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 }
 

@@ -1,5 +1,9 @@
 package negocioImpl;
+
 import java.sql.SQLException;
+=======
+import java.math.BigDecimal;
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 import java.util.ArrayList;
 
 import dao.CuentaDao;
@@ -93,9 +97,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 
     @Override
     public Cuenta obtenerCuentaPorId(int idCuenta) throws CuentaNegocioException {
-    	
-    	//Borrar
-		System.out.println("Mensaje de prueba: Ingrese a método ObtenerCuentaPorId");
 		
         // validar ID de la cuenta
         if (idCuenta <= 0) {
@@ -103,9 +104,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         }
         
         Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuenta);
-
-    	//Borrar
-		System.out.println("Cuenta.toString: " + cuenta.toString());
 		
         return cuenta;
     }
@@ -119,6 +117,7 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         
         return cuentaDao.obtenerCuentasPorCliente(idCliente);
 	}
+
 	@Override
 	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException { 
 		System.out.print("qqqqqqqq");
@@ -134,5 +133,10 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 			}finally {
 				
 			}		
+	}
+	
+	@Override
+	public boolean ingresos(int idCuenta, BigDecimal montoACargar) {
+		return cuentaDao.ingresos(idCuenta, montoACargar);
 	}
 }

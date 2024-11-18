@@ -1,19 +1,15 @@
 package daoImpl;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.sql.CallableStatement;
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dao.CuentaDao;
-import entidades.Cliente;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
-import entidades.Usuario;
 
 public class CuentaDaoImpl implements CuentaDao{
 
@@ -87,12 +83,12 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
-	        // Asignaci髇 de par醡etros para actualizar los datos
+	        // Asignaci贸n de par谩metros para actualizar los datos
 	        statement.setInt(1, cuenta.getTipoCuenta().getId());
 	        statement.setFloat(2, cuenta.getSaldo());
 	        statement.setInt(3, cuenta.getIdCuenta());
 	        
-	        // Ejecuta la actualizaci髇 y verifica si fue exitosa
+	        // Ejecuta la actualizaci贸n y verifica si fue exitosa
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -100,7 +96,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    }
 	}
 
-	@Override
+	/*@Override
 	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
 	    String query = "INSERT INTO cuentas(idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
 	                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -108,7 +104,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        // Asignaci髇 de par醡etros
+	        // Asignaci贸n de par谩metros
 	        statement.setInt(1, idCliente);
 	        statement.setInt(2, cuenta.getTipoCuenta().getId());
 	        statement.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
@@ -117,7 +113,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	        statement.setFloat(6, cuenta.getSaldo()); 
 	        statement.setBoolean(7, cuenta.getEstadoCuenta());
 
-	        // Ejecuta la actualizaci髇 y devuelve si al menos una fila fue afectada
+	        // Ejecuta la actualizaci贸n y devuelve si al menos una fila fue afectada
 	        int filas = statement.executeUpdate();
 	        return filas > 0;
 
@@ -125,6 +121,36 @@ public class CuentaDaoImpl implements CuentaDao{
 	        e.printStackTrace();
 	        return false;
 	    }
+	}*/
+	
+
+	@Override
+	public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
+		
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCuenta"
+			 		+ "(?, ?, ?, ?, ?, ?)");			 
+		 			 
+			 cst.setInt(1, idCliente);
+			 cst.setInt(2, cuenta.getTipoCuenta().getId());
+			 cst.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime()));
+			 cst.setLong(4, cuenta.getNumeroCuenta());
+			 cst.setLong(5, cuenta.getCbu());
+			 cst.setFloat(6, cuenta.getSaldo());
+			  			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();	
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
+		  }
+		  finally {
+			  
+		  }		
 	}
 	
 	@Override

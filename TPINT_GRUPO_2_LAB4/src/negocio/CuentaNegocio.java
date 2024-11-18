@@ -2,12 +2,14 @@ package negocio;
 
 import java.sql.SQLException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Cuenta;
 
 public interface CuentaNegocio {
-	public boolean agregarCuenta(Cuenta cuenta, int idCliente);
+	//public boolean agregarCuenta(Cuenta cuenta, int idCliente);
+	public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException;
 	public ArrayList<Cuenta> listarCuentas();
 	public boolean modificarCuenta(Cuenta cuenta);
 	public boolean bajaCuenta(int idCuenta);

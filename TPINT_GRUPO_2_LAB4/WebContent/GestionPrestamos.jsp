@@ -81,7 +81,7 @@
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
                 <td><a href="AprobarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-aprobar">Aprobar</a></td>
-                <td><a href="RechazarPrestamo.jsp?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-rechazar">Rechazar</a></td>
+                <td><a href="RechazarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-rechazar">Rechazar</a></td>
             </tr>
         <% } %>
     </tbody>

@@ -87,16 +87,22 @@
                 <td>$<%= prestamo.getImporteTotal() %></td>
                 <td>$<%= prestamo.getImporteTotal() * 1.5 %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
-<td class="estado <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : "estado-rechazado" %>">
-        <%= 
+<td class="estado 
+    <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 
+        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : "estado-rechazado" %>">
+    <%= 
         prestamo.getEstado().equals("Activo") ? "Aprobado" : 
         prestamo.getEstado().equals("Pendiente") ? "Pendiente" : "Rechazado" 
     %>
 </td>
                 <td><a href="DetallePrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-detalle">Ver Detalle</a></td>
-                <td><a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-pagar">
-                    Pagar cuota
-                </a></td>
+                                <td>
+                    <% if (prestamo.getEstado().equals("Activo")) { %>
+                        <a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-pagar">
+                            Pagar cuota
+                        </a>
+                    <% } %>
+                </td>
             </tr>
         <% } %>
     <% } else { %>

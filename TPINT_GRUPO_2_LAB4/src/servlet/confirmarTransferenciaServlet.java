@@ -24,24 +24,18 @@ public class confirmarTransferenciaServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print("AAA11111111111AAAA");
 		System.out.print(request.getParameter("cbuOrigen").toString());
 		long cbuDestino;
 		long cbuOrigen = Long.parseLong(request.getParameter("cbuOrigen").toString());
-		String concepto = request.getParameter("concepto");
-		
-		float monto = Float.parseFloat(request.getParameter("monto").toString());		
-		
+		String concepto = request.getParameter("concepto");		
+		float monto = Float.parseFloat(request.getParameter("monto").toString());				
 		if(request.getParameter("realizarTransferencia")!=null) {
 			String destino = request.getParameter("tipoCuentaDestino");
 			if(destino.equals("propia")) {
-				System.out.print("BB222222222BB");
 				cbuDestino = Long.parseLong(request.getParameter("cbuDestinoPropio"));
 			}else {
-				System.out.print("333333333");
 				cbuDestino = Long.parseLong(request.getParameter("cbuTercero"));
-			}		
-			
+			}					
 			//validar antes de continuar
 			request.setAttribute("cbuOrigen", cbuOrigen);	
 			request.setAttribute("cbuDestino", cbuDestino);
@@ -60,12 +54,10 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 	        	System.out.print("ACAAAAAAA");
 	            response.sendRedirect("DashboardCliente.jsp");
 	        } catch (ClienteNegocioException e) {
-	        	System.out.print("ACAAAAAAA22222222222222");
 	            // Si ocurre un CuentaNegocioException, capturamos el mensaje y lo pasamos al JSP
 	        	request.getSession().setAttribute("errorMsj", e.getMessage());
 	            response.sendRedirect("Error.jsp");  // Redirigir a Error.jsp
 	        } catch (SQLException e) {
-	        	System.out.print("ACAAAAAAA3333333333");
 	            e.printStackTrace();
 	            // En caso de una excepción de SQL, redirigimos a Error.jsp con un mensaje general
 	            request.getSession().setAttribute("errorMsj", "Ocurrió un error en la base de datos.");

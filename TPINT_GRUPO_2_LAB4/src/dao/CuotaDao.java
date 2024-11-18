@@ -13,6 +13,7 @@ public interface CuotaDao {
     
     public boolean registrarPago(int idCuota);
     public ArrayList<Cuota> listarCuotasPendientesPorPrestamo(int idPrestamo);
+    public ArrayList<Cuota> listarCuotasPorPrestamo(int idPrestamo);
     
     /*
     // Para los filtros

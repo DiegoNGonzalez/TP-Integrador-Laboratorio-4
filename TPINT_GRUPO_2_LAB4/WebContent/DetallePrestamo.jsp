@@ -23,11 +23,11 @@
         <p><strong>Cliente:</strong> <%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></p>
         <p><strong>Monto del Préstamo:</strong> $<%= prestamo.getImporteTotal() %></p>
         <p><strong>Cuotas Totales:</strong> <%= prestamo.getCantCuotas() %></p>
-        <%--<p><strong>Cuotas Pagadas:</strong> <%= prestamo.getCuotasPagadas() %></p>
-        <p><strong>Cuotas Faltantes:</strong> <%= prestamo.getCantCuotas() - prestamo.getCuotasPagadas() %></p>
-        <p><strong>Monto Adeudado:</strong> $<%= prestamo.getMontoAdeudado() %></p>
-        <p><strong>Monto Final:</strong> $<%= prestamo.getMontoFinal() %></p>--%>
-<% }%>
+        <p><strong>Cuotas Pagadas:</strong> <%= request.getAttribute("cuotasPagadas") %></p>
+        <p><strong>Cuotas Faltantes:</strong> <%= request.getAttribute("cuotasPendientes") %></p>
+        <p><strong>Monto Adeudado:</strong> $<%= request.getAttribute("montoAdeudado") %></p>
+        <p><strong>Monto Final:</strong> $<%= request.getAttribute("montoFinal") %></p>
+	<% }%>
         <div class="back-button-container">
         <% if ("Gestionprestamos".equals(origen)) { %>
             <a href="GestionPrestamosServlet" class="btn-volver">Volver a Gestión de Préstamos</a>

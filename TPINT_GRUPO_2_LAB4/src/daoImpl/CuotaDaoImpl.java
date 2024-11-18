@@ -151,5 +151,32 @@ public class CuotaDaoImpl implements CuotaDao {
 
 	    return listaCuotasPendientes;
 	}
+	
+	public ArrayList<Cuota> listarCuotasPorPrestamo(int idPrestamo) {
+	    String query = "SELECT idCuota, idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago FROM cuotas WHERE idPrestamo = ? ";
+	    ArrayList<Cuota> listaCuotasPendientes = new ArrayList<>();
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        statement.setInt(1, idPrestamo);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Cuota cuota = new Cuota();
+	                cuota.setIdCuota(resultSet.getInt("idCuota"));
+	                cuota.setNumCuota(resultSet.getInt("numeroCuota"));
+	                cuota.setMontoAPagar(resultSet.getFloat("montoPagado"));
+	                cuota.setFechaPago(resultSet.getDate("fechaPago"));
+	                cuota.setEstado(resultSet.getBoolean("estadoPago"));
+
+	                listaCuotasPendientes.add(cuota);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return listaCuotasPendientes;
+	}
 
 }

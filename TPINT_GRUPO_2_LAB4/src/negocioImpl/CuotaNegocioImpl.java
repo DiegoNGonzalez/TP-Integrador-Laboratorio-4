@@ -51,5 +51,10 @@ public class CuotaNegocioImpl implements CuotaNegocio{
 	public ArrayList<Cuota> listarCuotasPendientesPorPrestamo(int idPrestamo) {
 		return auxCuota.listarCuotasPendientesPorPrestamo(idPrestamo);
 	}
+	
+	@Override
+	public ArrayList<Cuota> listarCuotasPorPrestamo(int idPrestamo) {
+		return auxCuota.listarCuotasPorPrestamo(idPrestamo);
+	}
 
 }

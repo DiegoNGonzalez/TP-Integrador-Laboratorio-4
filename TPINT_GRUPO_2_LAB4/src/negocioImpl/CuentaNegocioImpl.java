@@ -1,10 +1,15 @@
 package negocioImpl;
-import java.math.BigDecimal;
+
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import dao.CuentaDao;
 import daoImpl.CuentaDaoImpl;
+import entidades.Cliente;
 import entidades.Cuenta;
+import entidades.Usuario;
+import exceptions.ClienteNegocioException;
 import exceptions.CuentaNegocioException;
 import negocio.CuentaNegocio;
 
@@ -16,8 +21,27 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		this.cuentaDao = new CuentaDaoImpl();
 	}
 	
-	@Override
+	/*@Override
     public boolean agregarCuenta(Cuenta cuenta, int idCliente) throws CuentaNegocioException {
+        // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
+        if (cuenta == null) {
+            throw new CuentaNegocioException("La cuenta no puede ser nula.");
+        }
+        /*if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
+            throw new CuentaNegocioException("El cliente debe ser válido.");
+        }*/
+	/*if (cuenta.getTipoCuenta() == null || cuenta.getTipoCuenta().getId() <= 0) {
+            throw new CuentaNegocioException("El tipo de cuenta debe ser válido.");
+        }
+        if (cuenta.getSaldo() < 0) {
+            throw new CuentaNegocioException("El saldo no puede ser negativo.");
+        }
+
+        return cuentaDao.agregarCuenta(cuenta, idCliente);
+        }*/
+	
+	@Override
+    public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
         // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
         if (cuenta == null) {
             throw new CuentaNegocioException("La cuenta no puede ser nula.");
@@ -31,8 +55,16 @@ public class CuentaNegocioImpl implements CuentaNegocio {
         if (cuenta.getSaldo() < 0) {
             throw new CuentaNegocioException("El saldo no puede ser negativo.");
         }
-
-        return cuentaDao.agregarCuenta(cuenta, idCliente);
+		try {
+	       cuentaDao.agregarCuenta(cuenta, idCliente);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			//ClienteSPException exc1 = new ClienteSPException();
+			throw e;
+		}finally {
+			
+		}
     }
 
     @Override
@@ -112,7 +144,25 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
+	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException { 
+		System.out.print("qqqqqqqq");
+		try {
+			System.out.print("qqqq1111");
+			cuentaDao.ejecutarSPTransferencia(cbuOrigen, cbuDestino, monto, concepto);
+			}
+			catch (SQLException e) {
+				System.out.print("qqqqq2222");
+				e.printStackTrace();
+				//ClienteSPException exc1 = new ClienteSPException();
+				throw e;
+			}finally {
+				
+			}		
+	}
+	
+	@Override
 	public boolean ingresos(int idCuenta, Float montoACargar) {
+
 		return cuentaDao.ingresos(idCuenta, montoACargar);
 	}
 }

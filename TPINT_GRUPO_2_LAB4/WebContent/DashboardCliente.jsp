@@ -41,7 +41,11 @@
 		<h3>CBU: <%= cuenta.getCbu() %></h3>
 		<h3>Saldo: $ <%= cuenta.getSaldo() %></h3>
 		<div>
+			<!-- aca hay un boton de mas  -->
+			<a href="DetalleCuenta.jsp" class="btn-aprobar">Ver detalle</a>
+			<a href="DetalleCuentaServlet?cuenta=<%= cuenta %>" class="btn-edit" >Editar</a>
 			<a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" class="btn-aprobar">Ver detalle</a>
+
 		</div>
 </div>
        
@@ -62,7 +66,7 @@
         <h3>Mi perfil</h3>
         <p>Ver mis datos personales</p>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='Transferencia.jsp'">
+    <div class="dashboard-card" onclick="window.location.href='TransferenciasServlet?idUsuario=<%=cliente.getUsuario().getId() %>'">
         <h3>Transferencias</h3>
         <p>Realizar nueva transferencia</p>
     </div>

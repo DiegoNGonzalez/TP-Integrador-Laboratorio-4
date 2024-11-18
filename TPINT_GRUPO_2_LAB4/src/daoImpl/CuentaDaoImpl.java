@@ -1,12 +1,12 @@
 package daoImpl;
 
-import java.math.BigDecimal;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import dao.CuentaDao;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
@@ -83,12 +83,13 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
-	        // Asignaci�n de par�metros para actualizar los datos
+
 	        statement.setInt(1, cuenta.getTipoCuenta().getId());
 	        statement.setFloat(2, cuenta.getSaldo());
 	        statement.setInt(3, cuenta.getIdCuenta());
 	        
-	        // Ejecuta la actualizaci�n y verifica si fue exitosa
+
+
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -96,7 +97,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    }
 	}
 
-	@Override
+	/*@Override
 	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
 	    String query = "INSERT INTO cuentas(idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
 	                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -104,7 +105,11 @@ public class CuentaDaoImpl implements CuentaDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
+<<<<<<< HEAD
 	        // Asignaci�n de par�metros
+=======
+	        // Asignación de parámetros
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 	        statement.setInt(1, idCliente);
 	        statement.setInt(2, cuenta.getTipoCuenta().getId());
 	        statement.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
@@ -113,7 +118,11 @@ public class CuentaDaoImpl implements CuentaDao{
 	        statement.setFloat(6, cuenta.getSaldo()); 
 	        statement.setBoolean(7, cuenta.getEstadoCuenta());
 
+<<<<<<< HEAD
 	        // Ejecuta la actualizaci�n y devuelve si al menos una fila fue afectada
+=======
+	        // Ejecuta la actualización y devuelve si al menos una fila fue afectada
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
 	        int filas = statement.executeUpdate();
 	        return filas > 0;
 
@@ -121,6 +130,36 @@ public class CuentaDaoImpl implements CuentaDao{
 	        e.printStackTrace();
 	        return false;
 	    }
+	}*/
+	
+
+	@Override
+	public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
+		
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCuenta"
+			 		+ "(?, ?, ?, ?, ?, ?)");			 
+		 			 
+			 cst.setInt(1, idCliente);
+			 cst.setInt(2, cuenta.getTipoCuenta().getId());
+			 cst.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime()));
+			 cst.setLong(4, cuenta.getNumeroCuenta());
+			 cst.setLong(5, cuenta.getCbu());
+			 cst.setFloat(6, cuenta.getSaldo());
+			  			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();	
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
+		  }
+		  finally {
+			  
+		  }		
 	}
 	
 	@Override
@@ -218,6 +257,33 @@ public class CuentaDaoImpl implements CuentaDao{
         return listaCuentas;
     }
 
+	
+	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException
+	{
+		  try
+		  {
+			 Connection conexion = Conexion.getConnection();
+			 CallableStatement cst = conexion.prepareCall("CALL spRealizarTransferencia"
+			 		+ "(?,?,?,?)");			 
+		 			 				 
+			 cst.setLong(1, cbuDestino);
+			 cst.setLong(2, cbuOrigen);
+			 cst.setFloat(3, monto);
+			 cst.setString(4, concepto);
+			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();	
+			  //ClienteSPException exc1 = new ClienteSPException();
+			  throw e;
+		  }
+		  finally {
+			  
+		  }			
+	}
+
 	@Override
 	public boolean ingresos(int idCuenta, Float montoIngreso) {
 	    // Consulta SQL para actualizar el saldo
@@ -234,6 +300,5 @@ public class CuentaDaoImpl implements CuentaDao{
 	        return false;
 	    }
 	}
-
 }
 

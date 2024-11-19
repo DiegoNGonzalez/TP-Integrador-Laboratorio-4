@@ -85,7 +85,7 @@
                     %>
                 </td>
                 <td>$<%= prestamo.getImporteTotal() %></td>
-                <td>$<%= prestamo.getImporteTotal() * 1.5 %></td>
+                <td>$<%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
 <td class="estado 
     <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 

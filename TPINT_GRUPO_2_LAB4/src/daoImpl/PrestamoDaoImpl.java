@@ -1,5 +1,6 @@
 package daoImpl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -236,7 +237,31 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	        return false;
 	    }
 	}
-
+	
+	@Override
+	public void SP_AprobarPrestamo(Prestamo prestamo) throws SQLException {
+		try {
+			Connection conexion = Conexion.getConnection();
+			CallableStatement cst = conexion.prepareCall("CALL spAprobarPrestamo"
+			 		+ "(?,?,?,?,?)");			 
+		 			 				 
+			 cst.setInt(1, prestamo.getCuenta().getIdCuenta());
+			 cst.setInt(2, prestamo.getIdPrestamo());
+			 cst.setFloat(3, prestamo.getImporteTotal());
+			 cst.setFloat(4,prestamo.getImporteCuota());
+			 cst.setInt(5, prestamo.getCantCuotas());
+			 
+			 cst.execute();
+			 conexion.close();
+		  }
+		  catch (SQLException e) {
+			  e.printStackTrace();
+			  throw e;
+		  }
+		  finally {			  
+		  }
+	}
+	
 	@Override
 	public int ultimoID() {
 		String query = "SELECT MAX(id_prestamo) AS ultimo_id FROM prestamos";

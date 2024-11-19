@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import daoImpl.PrestamoDaoImpl;
@@ -74,6 +75,19 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 		return auxPrestamo.darDeAltaPrestamo(prestamo);
 	}
 
+	@Override
+	public void SP_AprobarPrestamo(Prestamo prestamo) throws SQLException {
+		try {
+			auxPrestamo.SP_AprobarPrestamo(prestamo);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+		}		
+	}
+	
+	
 	@Override
 	public int ultimoID() {
 		return auxPrestamo.ultimoID();

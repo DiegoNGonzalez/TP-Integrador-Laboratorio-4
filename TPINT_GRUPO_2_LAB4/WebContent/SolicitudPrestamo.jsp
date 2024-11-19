@@ -17,7 +17,10 @@
             <!-- Importe del préstamo solicitado -->
             <div class="form-group">
                 <label class="form-label" for="importe">Importe del Préstamo ($):</label>
-                <input type="number" class="form-control" id="importe" name="importe" min="1" step="0.01" required>
+                <input type="number" class="form-control" id="importe" name="importe" min="10000" max="10000000" step="0.01" required>
+                <small style="font-size: 0.9em; color: gray; display: block;">
+        			Podés solicitar desde $10.000 hasta $10.000.000.
+    			</small>
             </div>
             
             <!-- Selección de cantidad de cuotas -->
@@ -33,7 +36,7 @@
 
             <!-- Selección de cuenta para depósito -->
             <div class="form-group">
-                <label class="form-label" for="cuentaDestino">Cuenta para Depósito:</label>
+                <label class="form-label" for="cuentaDestino">Cuenta a Acreditar:</label>
       <select class="form-control" id="cuentaDestino" name="cuentaDestino" required>
         <%
             ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");

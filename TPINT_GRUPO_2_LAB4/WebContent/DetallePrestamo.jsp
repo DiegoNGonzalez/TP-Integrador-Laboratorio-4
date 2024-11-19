@@ -34,7 +34,7 @@
         <% } else { %>
             <a href="ListarPrestamosServlet" class="btn-volver">Volver a Listado de Préstamos</a>
                <% if (prestamo.getEstado().equals("Activo")) { %>
-                  <a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-volver">
+                  <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-volver">
                   Pagar cuota
                   </a>
                <% } %>

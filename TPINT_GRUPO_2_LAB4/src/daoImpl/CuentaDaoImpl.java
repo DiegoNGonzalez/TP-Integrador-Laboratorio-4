@@ -4,10 +4,12 @@ package daoImpl;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dao.CuentaDao;
+import entidades.Cliente;
 import entidades.Cuenta;
 import entidades.TipoCuenta;
 
@@ -299,6 +301,118 @@ public class CuentaDaoImpl implements CuentaDao{
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	@Override
+	public ArrayList<Cliente> filtrarCuentas(
+	    Date fechaInicio, 
+	    Date fechaFin, 
+	    Float montoMinimo, 
+	    Float montoMaximo
+	) {
+	    ArrayList<Cliente> clientesFiltrados = new ArrayList<>();
+	    String query = "SELECT DISTINCT c.idCliente, c.nombre FROM clientes c " +
+	                   "INNER JOIN cuentas cu ON c.idCliente = cu.idcliente " +
+	                   "WHERE 1=1 ";
+
+	    ArrayList<Object> parametros = new ArrayList<>();
+
+	    // Filtro por fecha
+	    if (fechaInicio != null && fechaFin != null) {
+	        query += " AND cu.fechaCreacion BETWEEN ? AND ? ";
+	        parametros.add(fechaInicio);
+	        parametros.add(fechaFin);
+	    }
+
+	    // Filtro por saldo
+	    if (montoMinimo != null && montoMaximo != null) {
+	        query += " AND cu.saldo BETWEEN ? AND ? ";
+	        parametros.add(montoMinimo);
+	        parametros.add(montoMaximo);
+	    }
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        // Establecer parámetros
+	        for (int i = 0; i < parametros.size(); i++) {
+	            statement.setObject(i + 1, parametros.get(i));
+	        }
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Cliente cliente = new Cliente();
+	                cliente.setIdCliente(resultSet.getInt("idCliente"));
+	                cliente.setNombre(resultSet.getString("nombre"));
+	                
+	                // Obtener cuentas del cliente con los filtros aplicados
+	                cliente.setCuentas(obtenerCuentasFiltradas(cliente.getIdCliente(), fechaInicio, fechaFin, montoMinimo, montoMaximo));
+	                
+	                clientesFiltrados.add(cliente);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return clientesFiltrados;
+	}
+
+	private ArrayList<Cuenta> obtenerCuentasFiltradas(
+	    int idCliente, 
+	    Date fechaInicio, 
+	    Date fechaFin, 
+	    Float montoMinimo, 
+	    Float montoMaximo
+	) {
+	    ArrayList<Cuenta> cuentasFiltradas = new ArrayList<>();
+	    String query = "SELECT * FROM cuentas WHERE idcliente = ? AND estadoCuenta = 1 ";
+
+	    ArrayList<Object> parametros = new ArrayList<>();
+	    parametros.add(idCliente);
+
+	    // Filtro por fecha
+	    if (fechaInicio != null && fechaFin != null) {
+	        query += " AND fechaCreacion BETWEEN ? AND ? ";
+	        parametros.add(fechaInicio);
+	        parametros.add(fechaFin);
+	    }
+
+	    // Filtro por saldo
+	    if (montoMinimo != null && montoMaximo != null) {
+	        query += " AND saldo BETWEEN ? AND ? ";
+	        parametros.add(montoMinimo);
+	        parametros.add(montoMaximo);
+	    }
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        // Establecer parámetros
+	        for (int i = 0; i < parametros.size(); i++) {
+	            statement.setObject(i + 1, parametros.get(i));
+	        }
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Cuenta cuenta = new Cuenta();
+	                cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+	                cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
+	                cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
+	                cuenta.setCbu(resultSet.getLong("cbu"));
+	                cuenta.setSaldo(resultSet.getFloat("saldo"));
+	                
+	                TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
+	                cuenta.setTipoCuenta(tipoCuenta);
+	                
+	                cuentasFiltradas.add(cuenta);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return cuentasFiltradas;
 	}
 }
 

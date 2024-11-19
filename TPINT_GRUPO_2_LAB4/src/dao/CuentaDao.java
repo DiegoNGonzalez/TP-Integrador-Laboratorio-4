@@ -4,6 +4,9 @@ import java.sql.SQLException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+
+import entidades.Cliente;
 import entidades.Cuenta;
 
 
@@ -22,5 +25,7 @@ public interface CuentaDao {
 	public boolean ingresos(int idCuenta, Float montoACargar);
 
 	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException;
+	
+	ArrayList<Cliente> filtrarCuentas(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo);
 
 }

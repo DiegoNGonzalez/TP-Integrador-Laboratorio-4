@@ -609,3 +609,87 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE spAprobarPrestamo(
+    IN idCuentaDestino int,
+    IN idPrestamoSolicitado int,
+    IN importeTotal DECIMAL(14, 2),
+    IN importeCuota DECIMAL(14, 2),
+    IN cantCuotas int
+)
+BEGIN
+	DECLARE i INT DEFAULT 1; -- Contador para el bucle
+	DECLARE fechaCuota DATE;
+
+    -- manejo de errores
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+	BEGIN
+        -- Revertir la transaccion en caso de error
+        ROLLBACK;
+
+        -- Re-levantar el error para que sea capturado en la aplicaciÃ³n
+        RESIGNAL;
+    END;
+
+    -- transaccion
+    START TRANSACTION;
+		SET fechaCuota = curdate();
+		-- Verificamos que exista la cuenta
+		IF NOT EXISTS (SELECT * FROM cuentas WHERE idCuenta = idCuentaDestino AND estadoCuenta = 1) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No existe la cuenta';
+		END IF;
+        
+        -- Verificamos que exista el prestamo
+		IF NOT EXISTS (SELECT * FROM prestamos WHERE idPrestamo = idPrestamoSolicitado) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No existe el prestamo';
+		END IF;
+                
+	    -- actualizar estado prestamo a Activo
+        UPDATE prestamos SET EstadoPrestamo = 'Activo' WHERE idPrestamo = idPrestamoSolicitado;
+    
+		-- verificamos si se actualiza estado
+		IF ROW_COUNT() = 0 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo actualizar el estado del prestamo';
+		END IF;
+        
+        
+         -- actualizacion saldo en cuenta destino. suma.
+		UPDATE cuentas SET saldo = saldo + importeTotal WHERE idCuenta = idCuentaDestino;
+		
+		-- Verificamos si se actualiza saldo en destino
+		IF ROW_COUNT() = 0 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo actualizar el saldo en cuenta';
+		END IF;
+
+		-- agregar movimiento	
+		INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento)
+		VALUES(idCuentaDestino, 2, CURDATE(), 'Prestamo aprobado', importeTotal);
+		 
+		-- Verificamos si se inserta alguna fila
+		IF ROW_COUNT() = 0 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se pudo registrar el movimiento en la cuenta origen';
+		END IF;
+           
+		-- generar cuotas
+        -- Bucle para insertar las cuotas
+		WHILE i <= cantCuotas DO
+			SET fechaCuota = DATE_ADD(fechaCuota, INTERVAL 1 MONTH); -- Incrementar un mes por cada cuota
+			
+            INSERT INTO cuotas (idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago)
+			VALUES (idPrestamoSolicitado, i, importeCuota, fechaCuota, 0);
+			
+            SET i = i + 1;
+            
+			-- Verificamos si se inserta alguna fila
+			IF ROW_COUNT() = 0 THEN
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se generaron las cuotas correctamente';
+			END IF;
+            
+		END WHILE;
+        
+    COMMIT;
+END$$
+
+DELIMITER ;

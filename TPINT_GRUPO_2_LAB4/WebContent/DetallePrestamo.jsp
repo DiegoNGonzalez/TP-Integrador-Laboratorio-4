@@ -13,6 +13,8 @@
 <%
     Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
     String origen = request.getParameter("origen");
+    float montoAbonado = (float)request.getAttribute("montoAdeudado");
+    montoAbonado = prestamo.getImporteTotal() -  montoAbonado;
 %>
 
 
@@ -21,12 +23,12 @@
     
     <% if (prestamo != null) { %>
         <p><strong>Cliente:</strong> <%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></p>
-        <p><strong>Monto del Préstamo:</strong> $<%= prestamo.getImporteTotal() %></p>
-        <p><strong>Cuotas Totales:</strong> <%= prestamo.getCantCuotas() %></p>
-        <p><strong>Cuotas Pagadas:</strong> <%= request.getAttribute("cuotasPagadas") %></p>
+        <p><strong>Cuotas:</strong> <%= prestamo.getCantCuotas() %></p>
+        <p><strong>Cuotas Pagas:</strong> <%= request.getAttribute("cuotasPagadas") %></p>
         <p><strong>Cuotas Faltantes:</strong> <%= request.getAttribute("cuotasPendientes") %></p>
+        <p><strong>Monto Solicitado:</strong> $<%= prestamo.getImporteTotal() %></p>
+        <p><strong>Monto Abonado:</strong> $<%= montoAbonado %></p>
         <p><strong>Monto Adeudado:</strong> $<%= request.getAttribute("montoAdeudado") %></p>
-        <p><strong>Monto Final:</strong> $<%= request.getAttribute("montoFinal") %></p>
 	<% }%>
         <div class="back-button-container">
         <% if ("Gestionprestamos".equals(origen)) { %>
@@ -34,7 +36,7 @@
         <% } else { %>
             <a href="ListarPrestamosServlet" class="btn-volver">Volver a Listado de Préstamos</a>
                <% if (prestamo.getEstado().equals("Activo")) { %>
-                  <a href="PagoPrestamo.jsp?id=<%= prestamo.getIdPrestamo() %>" class="btn-volver">
+                  <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-volver">
                   Pagar cuota
                   </a>
                <% } %>

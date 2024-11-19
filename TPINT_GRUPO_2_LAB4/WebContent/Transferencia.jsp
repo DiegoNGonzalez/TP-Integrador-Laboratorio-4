@@ -25,6 +25,7 @@
     boolean tieneMasDeUnaCuenta = (listaCuentas != null && listaCuentas.size() > 1);
 %>
 
+<<<<<<< HEAD
 <div class="account-container">
     <h2 class="edit-title">Nueva transferencia</h2>
     <form action="confirmarTransferenciaServlet" method="post">
@@ -38,6 +39,30 @@
                 %>
                     <option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
                         <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
+=======
+    <div class="account-container">
+        <h2 class="edit-title">Nueva transferencia</h2>
+        <form action="confirmarTransferenciaServlet" method="post" >
+            <!-- Selección de cuenta origen -->
+          	<div class="form-group">
+			    <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
+<select name="cbuOrigen" id="cbuOrigen" class="form-control">
+    <%
+        if (cuentaSeleccionada != null) {
+            // Si hay una cuenta seleccionada, mostrarla como única opción y deshabilitar el desplegable
+    %>
+            <option value="<%= cuentaSeleccionada.getCbu() %>" selected>
+                <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
+            </option>
+    <%  
+        } else {
+            // Si no hay cuenta seleccionada, mostrar todas las cuentas disponibles
+            if (listaCuentas != null && !listaCuentas.isEmpty()) {
+                for (Cuenta cuenta : listaCuentas) {
+    %>
+                    <option value="<%= cuenta.getCbu() %>">
+                        <%= cuenta.getNumeroCuenta() %> - <%= cuenta.getTipoCuenta().getTipo() %>
+>>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4
                     </option>
                 <%  
                     } else if (listaCuentas != null && !listaCuentas.isEmpty()) {

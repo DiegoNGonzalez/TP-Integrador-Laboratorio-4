@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Prestamo;
@@ -16,5 +17,6 @@ public interface PrestamoNegocio {
 	public ArrayList<Prestamo> listarPrestamosAprobados();
 	public ArrayList<Prestamo> listarPrestamosRechazados();
 	public boolean darDeAltaPrestamo(Prestamo prestamo);
+	public void SP_AprobarPrestamo(Prestamo prestamo) throws SQLException;
 	public int ultimoID();
 }

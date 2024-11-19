@@ -11,9 +11,7 @@
 <% Long cbuOrigen = Long.parseLong(request.getAttribute("cbuOrigen").toString());
 Long cbuDestino = Long.parseLong(request.getAttribute("cbuDestino").toString());
 Float monto = Float.parseFloat(request.getAttribute("monto").toString());
-String concepto = request.getAttribute("concepto").toString();
-
-%>
+String concepto = request.getAttribute("concepto").toString(); %>
 
 	<%-- Incluir el menú de navegación desde nav.jsp --%>
 	<jsp:include page="nav.jsp" />

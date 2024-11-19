@@ -18,6 +18,7 @@ public interface CuentaDao {
 	public long obtenerProximoCBU();	
 	public long obtenerProximoNumeroCuenta();	
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente);
+	public ArrayList<Cuenta> obtenerCuentasPorClientePrestamo(int idCliente, String estado);
 
 	public boolean ingresos(int idCuenta, Float montoACargar);
 

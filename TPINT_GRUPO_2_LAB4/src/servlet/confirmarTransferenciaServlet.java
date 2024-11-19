@@ -24,7 +24,6 @@ public class confirmarTransferenciaServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print(request.getParameter("cbuOrigen").toString());
 		long cbuDestino;
 		long cbuOrigen = Long.parseLong(request.getParameter("cbuOrigen").toString());
 		String concepto = request.getParameter("concepto");		
@@ -51,7 +50,6 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 
 	        try {
 	        	cuentaNegocio.ejecutarSPTransferencia(cbuOrigen, cbuDestino, monto, concepto);
-	        	System.out.print("ACAAAAAAA");
 	            response.sendRedirect("DashboardCliente.jsp");
 	        } catch (ClienteNegocioException e) {
 	            // Si ocurre un CuentaNegocioException, capturamos el mensaje y lo pasamos al JSP

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="entidades.Prestamo" %>
+     <%@ page import="entidades.Cliente" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <body>
 <jsp:include page="nav.jsp" />
 <%
+	Cliente cliente = (Cliente) session.getAttribute("Cliente");
     Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
     String origen = request.getParameter("origen");
 %>
@@ -20,7 +22,7 @@
     <h2>Detalle del Préstamo</h2>
     
     <% if (prestamo != null) { %>
-        <p><strong>Cliente:</strong> <%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></p>
+        <p><strong>Cliente:</strong> <%= cliente.getNombre() + ", " + cliente.getApellido() %></p>
         <p><strong>Monto del Préstamo:</strong> $<%= prestamo.getImporteTotal() %></p>
         <p><strong>Cuotas Totales:</strong> <%= prestamo.getCantCuotas() %></p>
         <p><strong>Cuotas Pagadas:</strong> <%= request.getAttribute("cuotasPagadas") %></p>

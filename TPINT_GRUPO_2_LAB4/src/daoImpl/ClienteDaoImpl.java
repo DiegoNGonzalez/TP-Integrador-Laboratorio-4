@@ -95,7 +95,54 @@ public class ClienteDaoImpl implements ClienteDao{
 	    
 	    return listaClientes;
 	}
+	
+	@Override
+	public ArrayList<Cliente> listarClientesPrestamos(String estado) {
+		String query = "SELECT idUsuario, idCliente , dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, "
+				+ "fechaNacimiento, direccion, idProvincia, idLocalidad FROM clientes where estado=1";	    
+		
+		ArrayList<Cliente> listaClientes = new ArrayList<>();
 
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query);
+	         ResultSet resultSet = statement.executeQuery()) {
+
+	        while (resultSet.next()) {
+	            Cliente cliente = new Cliente();
+	           
+	            Usuario usuario= new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+	            Nacionalidad nacionalidad = new NacionalidadDaoImpl().obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+	            Localidad localidad = new LocalidadDaoImpl().obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+	            Provincia provincia = new ProvinciaDaoImpl().obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
+	           
+	            // Asignar valores del ResultSet al objeto Cliente
+	            cliente.setUsuario(usuario); 
+	            cliente.setIdCliente(resultSet.getInt("idCliente"));
+	            cliente.setDni(resultSet.getString("dni"));
+	            cliente.setCuil(resultSet.getString("cuil"));
+	            cliente.setNombre(resultSet.getString("nombre"));
+	            cliente.setApellido(resultSet.getString("apellido"));
+	            cliente.setEmail(resultSet.getString("email"));
+	            cliente.setTelefono(resultSet.getString("telefono"));
+	            cliente.setSexo(resultSet.getString("sexo").charAt(0));
+	            cliente.setNacionalidad(nacionalidad);
+	            cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
+	            cliente.setDireccion(resultSet.getString("direccion"));
+	            cliente.setProvincia(provincia);
+	            cliente.setLocalidad(localidad);
+
+	            CuentaDaoImpl negocioCuenta = new CuentaDaoImpl();
+	            ArrayList<Cuenta> cuentas = negocioCuenta.obtenerCuentasPorClientePrestamo((Integer.parseInt(resultSet.getString("idCliente"))),estado); 
+	            if (cuentas == null || cuentas.isEmpty() || cuentas.size()>0)
+	            	cliente.setCuentas(cuentas);
+	            	listaClientes.add(cliente);
+	            }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return listaClientes;
+	}
+	
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
 		 String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? WHERE idCliente = ?";
@@ -258,6 +305,64 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public Cliente obtenerClientePorIdUsuario(int idUsuario) {
+		String query = "SELECT idCliente, idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
+                + "FROM clientes WHERE idUsuario = ? and estado = 1";
+
+   Cliente cliente = null;
+
+   try (Connection conexion = Conexion.getConnection();
+        PreparedStatement statement = conexion.prepareStatement(query)) {
+
+       statement.setInt(1, idUsuario);
+
+       try (ResultSet resultSet = statement.executeQuery()) {
+       	
+           if (resultSet.next()) {
+               cliente = new Cliente();
+
+               
+               // Obtener el Usuario relacionado al cliente
+               Usuario usuario = new UsuarioDaoImpl().obtenerUnUsuario(resultSet.getInt("idUsuario"));
+               //buscar prestamos
+
+               cliente.setUsuario(usuario);
+               cliente.setIdCliente(Integer.parseInt(resultSet.getString("idCliente")));
+               cliente.setDni(resultSet.getString("dni"));
+               cliente.setCuil(resultSet.getString("cuil"));
+               cliente.setNombre(resultSet.getString("nombre"));
+               cliente.setApellido(resultSet.getString("apellido"));
+               cliente.setEmail(resultSet.getString("email"));
+               cliente.setTelefono(resultSet.getString("telefono"));
+               cliente.setSexo(resultSet.getString("sexo").charAt(0)); // Convertir a 'M' o 'F'
+               cliente.setFechaNacimiento(resultSet.getDate("fechaNacimiento"));
+               cliente.setDireccion(resultSet.getString("direccion"));
+               // cuentas
+               CuentaDaoImpl negocioCuenta = new CuentaDaoImpl();
+               cliente.setCuentas(negocioCuenta.obtenerCuentasPorCliente(Integer.parseInt(resultSet.getString("idCliente"))));
+               
+               //descolgables
+               NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();
+               LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
+               ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
+
+               Nacionalidad nacionalidad = nacionalidadDao.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+               Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
+               Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
+
+               cliente.setNacionalidad(nacionalidad);
+               cliente.setLocalidad(localidad);
+               cliente.setProvincia(provincia);
+           }
+       }
+   } catch (Exception e) {
+       e.printStackTrace();
+   }
+
+   return cliente;
+	}
+
+	@Override
+	public Cliente obtenerClientePorIdUsuarioPre(int idUsuario) {
 		String query = "SELECT idCliente, idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad "
                 + "FROM clientes WHERE idUsuario = ? and estado = 1";
 

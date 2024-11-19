@@ -28,8 +28,8 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	            Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	            prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
-	            prestamo.setCliente(cliente);
-	            prestamo.setCuenta(cuenta);
+	         //   prestamo.setCliente(cliente);
+	          //  prestamo.setCuenta(cuenta);
 	            prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	            prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	            prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
@@ -64,8 +64,8 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
-	                prestamo.setCliente(cliente);
-	                prestamo.setCuenta(cuenta);
+	               // prestamo.setCliente(cliente);
+	                //prestamo.setCuenta(cuenta);
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));  // Usar getTimestamp si necesitamos la hora
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
@@ -107,8 +107,8 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        statement.setInt(1, prestamo.getCliente().getIdCliente());
-	        statement.setInt(2, prestamo.getCuenta().getIdCuenta());
+	        //statement.setInt(1, prestamo.getCliente().getIdCliente());
+	        //statement.setInt(2, prestamo.getCuenta().getIdCuenta());
 	        statement.setDate(3, new java.sql.Date(prestamo.getFechaAltaPrestamo().getTime()));
 	        statement.setFloat(4, prestamo.getImporteTotal());
 	        statement.setInt(5, prestamo.getPlazo());
@@ -160,12 +160,12 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	            if (resultSet.next()) {
 	                prestamo = new Prestamo();
 	                
-	                Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
-	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+	                //Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
+	                //Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
-	                prestamo.setCliente(cliente);
-	                prestamo.setCuenta(cuenta);
+	                prestamo.setIdCliente(resultSet.getInt("idCliente"));
+	                prestamo.setIdCuenta(resultSet.getInt("idCuenta"));
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
@@ -196,12 +196,54 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	        try (ResultSet resultSet = statement.executeQuery()) {
 	            while (resultSet.next()) {
 	                Prestamo prestamo = new Prestamo();
-	                Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
-	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+	                //Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
+	                //Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
 
 	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
-	                prestamo.setCliente(cliente);
-	                prestamo.setCuenta(cuenta);
+	                prestamo.setIdCliente(resultSet.getInt("idCliente"));
+	                prestamo.setIdCuenta(resultSet.getInt("idCuenta"));
+	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
+	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
+	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
+	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
+
+	                listaPrestamos.add(prestamo);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("Error de SQL: " + e.getMessage());
+	        e.printStackTrace(); // Proporciona m�s detalles sobre el error
+	    } catch (Exception e) {
+	        System.err.println("Error inesperado: " + e.getMessage());
+	        e.printStackTrace(); // Maneja otros tipos de errores
+	    }
+
+	    return listaPrestamos;
+	}
+	
+	@Override
+	public ArrayList<Prestamo> listarPrestamosXClienteEstado(int idCliente, String estado) {
+	    String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo " +
+	                   "FROM prestamos WHERE idCliente = ? and EstadoPrestamo = ?";
+	    ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        statement.setInt(1, idCliente);
+	        statement.setString(2, estado);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Prestamo prestamo = new Prestamo();
+	                //Cliente cliente = new ClienteDaoImpl().obtenerClientePorId(resultSet.getInt("idCliente"));
+	                //Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+
+	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
+	                prestamo.setIdCliente(resultSet.getInt("idCliente"));
+	                prestamo.setIdCuenta(resultSet.getInt("idCuenta"));
 	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
 	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));

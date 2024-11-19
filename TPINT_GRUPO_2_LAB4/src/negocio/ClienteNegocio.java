@@ -12,10 +12,12 @@ public interface ClienteNegocio {
 	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente) throws SQLException;
 	public Cliente obtenerClientePorId(int idCliente);
+	public Cliente obtenerClientePorIdUsuarioPre(int idUsuario);//si queda ok el otro con prestamos borrar este
 	public Cliente obtenerClientePorIdUsuario(int idUsuario);
 	public void verificarCliente(Cliente cliente);
 	
 	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas();
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta);
+	public ArrayList<Cliente> listarClientesPrestamos(String estado);
 }

@@ -50,6 +50,11 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 	}
 
 	@Override
+	public ArrayList<Prestamo> listarPrestamosXClienteEstado(int idCliente,String estado) {
+		return auxPrestamo.listarPrestamosXClienteEstado(idCliente, estado);
+	}
+	
+	@Override
 	public ArrayList<Prestamo> listarPrestamosXEstado(String estado) {
 		return auxPrestamo.listarPrestamosXEstado(estado);
 	}

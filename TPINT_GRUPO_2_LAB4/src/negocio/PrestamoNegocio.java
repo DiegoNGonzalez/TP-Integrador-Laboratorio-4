@@ -17,4 +17,5 @@ public interface PrestamoNegocio {
 	public ArrayList<Prestamo> listarPrestamosRechazados();
 	public boolean darDeAltaPrestamo(Prestamo prestamo);
 	public int ultimoID();
+	public ArrayList<Prestamo> listarPrestamosXClienteEstado(int idCliente,String estado);
 }

@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import dao.CuentaDao;
 import entidades.Cuenta;
+import entidades.Prestamo;
 import entidades.TipoCuenta;
+import negocioImpl.PrestamoNegocioImpl;
 
 public class CuentaDaoImpl implements CuentaDao{
 
@@ -241,11 +243,12 @@ public class CuentaDaoImpl implements CuentaDao{
                     cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
                     cuenta.setCbu(resultSet.getLong("cbu"));
                     cuenta.setSaldo(resultSet.getFloat("saldo"));
-                    cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
+                    cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));                    
                     
+                    PrestamoNegocioImpl negocioPrestamo = new PrestamoNegocioImpl();
+                    cuenta.setPrestamos(negocioPrestamo.listarPrestamosXCliente(idCliente));
                     
                     TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
-                    
                     cuenta.setTipoCuenta(tipoCuenta);
                     
                     listaCuentas.add(cuenta);
@@ -257,6 +260,42 @@ public class CuentaDaoImpl implements CuentaDao{
         return listaCuentas;
     }
 
+	public ArrayList<Cuenta> obtenerCuentasPorClientePrestamo(int idCliente, String estado) {
+        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+        String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta "
+                     + "FROM cuentas WHERE idcliente = ? AND estadoCuenta = 1"; 
+
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+            
+            statement.setInt(1, idCliente);
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    Cuenta cuenta = new Cuenta();
+                    cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+                    cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
+                    cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));
+                    cuenta.setCbu(resultSet.getLong("cbu"));
+                    cuenta.setSaldo(resultSet.getFloat("saldo"));
+                    cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));                    
+                    
+                    TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));
+                    cuenta.setTipoCuenta(tipoCuenta);
+                    
+                    PrestamoNegocioImpl negocioPrestamo = new PrestamoNegocioImpl();
+                    ArrayList<Prestamo> prestamos = negocioPrestamo.listarPrestamosXClienteEstado(idCliente, estado);
+                    if (prestamos == null || prestamos.isEmpty() || prestamos.size()>0) {
+                    	cuenta.setPrestamos(prestamos);
+                    	listaCuentas.add(cuenta);
+                    }    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaCuentas;
+    }
 	
 	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException
 	{

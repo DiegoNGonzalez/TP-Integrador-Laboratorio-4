@@ -1,14 +1,12 @@
 package entidades;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Prestamo {
-
 	private int idPrestamo;
-	private Cuenta cuenta;
-	private Cliente cliente;
+	private int idCuenta;
+	private int idCliente;
 	private Date fechaAltaPrestamo;
 	private float importeTotal;
 	private int plazo;
@@ -20,12 +18,12 @@ public class Prestamo {
 	public Prestamo() {
 	}
 	
-	public Prestamo(int idPrestamo, Cuenta cuenta, Cliente cliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
+	public Prestamo(int idPrestamo, int idCuenta, int idCliente, Date fechaAltaPrestamo, float importeTotal, int plazo,
 			float importeCuota, int cantCuotas, ArrayList<Cuota> cuotas, String estado) {
 		super();
 		this.idPrestamo = idPrestamo;
-		this.cuenta = cuenta;
-		this.cliente = cliente;
+		this.idCuenta = idCuenta;
+		this.idCliente = idCliente;
 		this.fechaAltaPrestamo = fechaAltaPrestamo;
 		this.importeTotal = importeTotal;
 		this.plazo = plazo;
@@ -41,12 +39,22 @@ public class Prestamo {
 	public void setIdPrestamo(int idPrestamo) {
 		this.idPrestamo = idPrestamo;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	
+	public int getIdCuenta() {
+		return idCuenta;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+
+	public void setIdCuenta(int idCuenta) {
+		this.idCuenta = idCuenta;
 	}
+	
+	public int getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+	
 	public Date getFechaAltaPrestamo() {
 		return fechaAltaPrestamo;
 	}
@@ -60,18 +68,22 @@ public class Prestamo {
 	public void setImporteTotal(float importeTotal) {
 		this.importeTotal = importeTotal;
 	}
+	
 	public int getPlazo() {
 		return plazo;
 	}
+	
 	public void setPlazo(int plazo) {
 		this.plazo = plazo;
 	}
+	
 	public float getImporteCuota() {
 		return importeCuota;
 	}
 	public void setImporteCuota(float importeCuota2) {
 		this.importeCuota = importeCuota2;
 	}
+	
 	public int getCantCuotas() {
 		return cantCuotas;
 	}
@@ -87,14 +99,6 @@ public class Prestamo {
 		this.cuotas = cuotas;
 	}
 
-	public Cuenta getCuenta() {
-		return cuenta;
-	}
-
-	public void setCuenta(Cuenta cuenta) {
-		this.cuenta = cuenta;
-	}
-
 	public String getEstado() {
 		return estado;
 	}
@@ -104,10 +108,8 @@ public class Prestamo {
 
 	@Override
 	public String toString() {
-		return "Prestamo [idPrestamo=" + idPrestamo + ", cliente=" + cliente + ", fechaAltaPrestamo="
+		return "Prestamo [idPrestamo=" + idPrestamo + ", idCliente=" + idCliente + ", fechaAltaPrestamo="
 				+ fechaAltaPrestamo + ", importeTotal=" + importeTotal + ", plazo=" + plazo + ", importeCuota="
 				+ importeCuota + ", cantCuotas=" + cantCuotas + ", cuotas=" + cuotas + ", estado=" + estado + "]";
 	}
-	
-	
 }

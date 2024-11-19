@@ -52,7 +52,6 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
         			<label for="cuentaTerceros">Cuenta de terceros</label>
     			</div>
 			</div>
-
 	           <!-- Selección de cuenta destino -->
 	           <div id="destinoCuentaPropia" class="form-group">
 			    <label class="form-label" for="cbuDestinoPropio">Seleccione cuenta destino:</label>

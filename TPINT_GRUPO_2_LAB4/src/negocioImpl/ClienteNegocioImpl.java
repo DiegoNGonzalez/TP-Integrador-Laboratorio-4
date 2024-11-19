@@ -72,7 +72,17 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			System.out.println("No hay clientes activos.");
 			return new ArrayList<>();
 		}
+		return clientes;
+	}
+	
+	@Override
+	public ArrayList<Cliente> listarClientesPrestamos(String estado) {
+		ArrayList<Cliente> clientes = clienteDao.listarClientesPrestamos(estado);
 
+		if (clientes == null || clientes.isEmpty()) {
+			System.out.println("No hay clientes con prestamos " + estado);
+			return new ArrayList<>();
+		}
 		return clientes;
 	}
 
@@ -133,8 +143,18 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		return clienteDao.obtenerClientePorId(idCliente);
 	}
 	
-
+	@Override
 	public Cliente obtenerClientePorIdUsuario(int idUsuario) {
+		if (idUsuario <= 0) {
+			System.out.println("El ID del usuario no es valido.");
+			return null;
+		}
+
+		return clienteDao.obtenerClientePorIdUsuario(idUsuario);
+	}
+	
+	@Override
+	public Cliente obtenerClientePorIdUsuarioPre(int idUsuario) {
 		if (idUsuario <= 0) {
 			System.out.println("El ID del usuario no es valido.");
 			return null;

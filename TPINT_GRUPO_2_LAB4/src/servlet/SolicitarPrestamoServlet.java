@@ -62,12 +62,12 @@ public class SolicitarPrestamoServlet extends HttpServlet {
 	        //float importeCuota = Float.valueOf(importe).divide(Float.valueOf(cuotas), 2, RoundingMode.HALF_UP);
 	        float importeCuota = Math.round((importe / cuotas) * 100.0) / 100.0f;
 	        nuevoPrestamo.setImporteCuota(importeCuota);
-	        nuevoPrestamo.setCuenta(new CuentaNegocioImpl().obtenerCuentaPorId(cuentaDestinoId));
+	        nuevoPrestamo.setIdCuenta(cuentaDestinoId);
 	        nuevoPrestamo.setFechaAltaPrestamo(new Date(System.currentTimeMillis()));
 	        nuevoPrestamo.setEstado("Pendiente");
 
 	        Cliente cliente = (Cliente) request.getSession().getAttribute("Cliente");
-	        nuevoPrestamo.setCliente(cliente);
+	        nuevoPrestamo.setIdCliente(cliente.getIdCliente());
 
 	        boolean exito = new PrestamoNegocioImpl().agregarPrestamo(nuevoPrestamo);
 
@@ -83,6 +83,5 @@ public class SolicitarPrestamoServlet extends HttpServlet {
 	        request.getRequestDispatcher("Error.jsp").forward(request, response);
 	    }
 	}
-
-	}
+}
 

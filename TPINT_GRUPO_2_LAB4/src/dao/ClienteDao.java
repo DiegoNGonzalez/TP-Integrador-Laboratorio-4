@@ -11,9 +11,11 @@ public interface ClienteDao  {
 
 	public boolean agregarCliente(Cliente cliente);
 	public ArrayList<Cliente> listarClientesActivos();
+	public ArrayList<Cliente> listarClientesPrestamos(String estado);
 	public boolean modificarCliente(Cliente cliente);
 	public boolean bajaCliente(int idCliente) throws SQLException;
 	public Cliente obtenerClientePorId(int idCliente);
+	public Cliente obtenerClientePorIdUsuarioPre(int idUsuario);
 	public Cliente obtenerClientePorIdUsuario(int idUsuario);
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 	public ArrayList<Cliente> obtenerTodos();

@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     <%@ page import="daoImpl.PrestamoDaoImpl" %>
 <%@ page import="entidades.Prestamo" %>
+<%@ page import="entidades.Cliente" %>
+<%@ page import="entidades.Cuenta" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
@@ -73,17 +75,27 @@
     </thead>
     <tbody>
         <% 
-        ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
-        for (Prestamo prestamo : prestamosPendientes) { %>
+		ArrayList<Cliente> prestamosPendientes = (ArrayList<Cliente>) request.getAttribute("prestamosPendientes");
+       
+        for (Cliente cliente : prestamosPendientes) {
+        	ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
+	        for (int i = 0; i < cuentas.size(); i++) { 
+	            Cuenta cuenta = cuentas.get(i);
+	            ArrayList<Prestamo> prestamos = cuenta.getPrestamos();
+	    		for(int j = 0; j < prestamos.size(); j++){
+	    			Prestamo prestamo = prestamos.get(j);
+         %>
             <tr>
-                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                 <td><%= cliente.getNombre() + ", "+ cliente.getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
                 <td><a href="AprobarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-aprobar">Aprobar</a></td>
                 <td><a href="RechazarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-rechazar">Rechazar</a></td>
             </tr>
-        <% } %>
+        <% }
+        }
+        } %>
     </tbody>
 </table>
     <br>
@@ -124,17 +136,27 @@
         </tr>
     </thead>
     <tbody>
-        <% 
-        ArrayList<Prestamo> prestamosAprobados = (ArrayList<Prestamo>) request.getAttribute("prestamosAprobados");
-        for (Prestamo prestamo : prestamosAprobados) { %>
+       <% 
+		ArrayList<Cliente> prestamosAprobados = (ArrayList<Cliente>) request.getAttribute("prestamosAprobados");
+       
+        for (Cliente cliente : prestamosPendientes) {
+        	ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
+	        for (int i = 0; i < cuentas.size(); i++) { 
+	            Cuenta cuenta = cuentas.get(i);
+	            ArrayList<Prestamo> prestamos = cuenta.getPrestamos();
+	    		for(int j = 0; j < prestamos.size(); j++){
+	    			Prestamo prestamo = prestamos.get(j);
+         %>
             <tr>
-                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= cliente.getNombre() + ", "+ cliente.getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
                 <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
             </tr>
-        <% } %>
+        <% }
+        }
+        } %>
     </tbody>
 </table>
     <br>
@@ -176,17 +198,27 @@
         </tr>
     </thead>
     <tbody>
-        <% 
-        ArrayList<Prestamo> prestamosRechazados = (ArrayList<Prestamo>) request.getAttribute("prestamosRechazados");
-        for (Prestamo prestamo : prestamosRechazados) { %>
+       <% 
+		ArrayList<Cliente> prestamosRechazados = (ArrayList<Cliente>) request.getAttribute("prestamosRechazados");
+       
+        for (Cliente cliente : prestamosPendientes) {
+        	ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
+	        for (int i = 0; i < cuentas.size(); i++) { 
+	            Cuenta cuenta = cuentas.get(i);
+	            ArrayList<Prestamo> prestamos = cuenta.getPrestamos();
+	    		for(int j = 0; j < prestamos.size(); j++){
+	    			Prestamo prestamo = prestamos.get(j);
+         %>
             <tr>
-                <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= cliente.getNombre() + ", "+ cliente.getApellido()%></td> <!-- Asumiendo que el cliente tiene un método getNombre() -->
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
                 <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
             </tr>
-        <% } %>
+        <% }
+        }
+        } %>
     </tbody>
 </table>
 <%

@@ -19,7 +19,7 @@
 <% 
     Cliente cliente = (Cliente) session.getAttribute("Cliente");
     if (cliente != null) {
-        String nombreCliente = cliente.getNombre(); // Obtén el nombre del cliente
+        String nombreCliente = cliente.getNombre();
 %>
 <div class="dashboard-header">
     <h2>Bienvenido, <%= nombreCliente %></h2>
@@ -58,7 +58,7 @@
         <h3>Mis cuentas</h3>
         <p>Gestiona tus cuentas</p>
     </div> -->
-    <div class="dashboard-card" onclick="window.location.href='ListarPrestamosServlet'">
+    <div class="dashboard-card" onclick="window.location.href='PrestamosServlet?idUsuario=<%=cliente.getUsuario().getId() %>&action=listarMisPrestamos'">
         <h3>Mis prestamos</h3>
         <p>Gestiona tus prestamos</p>
     </div>

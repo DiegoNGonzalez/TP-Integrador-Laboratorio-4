@@ -16,24 +16,15 @@ import entidades.Prestamo;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.CuotaNegocioImpl;
 
-/**
- * Servlet implementation class BuscarCuotasServlet
- */
 @WebServlet("/BuscarCuotasServlet")
 public class BuscarCuotasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public BuscarCuotasServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int prestamoId = Integer.parseInt(request.getParameter("prestamoId"));
 		Cliente cliente = (Cliente) request.getSession().getAttribute("Cliente"); // Guarda el cliente de la session
@@ -56,16 +47,11 @@ public class BuscarCuotasServlet extends HttpServlet {
         }
         request.setAttribute("listaCuentas", listaCuentas);
 		
-		
         request.getRequestDispatcher("PagoPrestamo.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

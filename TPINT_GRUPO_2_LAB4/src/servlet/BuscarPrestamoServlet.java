@@ -16,24 +16,15 @@ import negocio.PrestamoNegocio;
 import negocioImpl.CuotaNegocioImpl;
 import negocioImpl.PrestamoNegocioImpl;
 
-/**
- * Servlet implementation class BuscarPrestamoServlet
- */
 @WebServlet("/BuscarPrestamoServlet")
 public class BuscarPrestamoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public BuscarPrestamoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int prestamoId = Integer.parseInt(request.getParameter("prestamoId"));
 		PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
@@ -64,12 +55,8 @@ public class BuscarPrestamoServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

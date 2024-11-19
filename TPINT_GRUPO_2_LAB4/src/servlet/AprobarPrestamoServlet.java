@@ -77,13 +77,12 @@ public class AprobarPrestamoServlet extends HttpServlet {
             movimiento.setImporteMovimiento(prestamo.getImporteTotal());
             movimiento.setFechaMovimiento(new java.sql.Date(System.currentTimeMillis()));
             movimiento.setConcepto("Pr�stamo aprobado");
-            movimientoNegocio.agregarMovimiento(movimiento, prestamo.getCuenta().getIdCuenta());
+            movimientoNegocio.agregarMovimiento(movimiento, prestamo.getIdCuenta());
             
             // Cargar el saldo a la cuenta destino
             CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
             Float importe = Float.valueOf(prestamo.getImporteTotal());
-            cuentaNegocio.ingresos(prestamo.getCuenta().getIdCuenta(), importe);
-            
+            cuentaNegocio.ingresos(prestamo.getIdCuenta(), importe);
         }
 
         response.sendRedirect("GestionPrestamosServlet"); // Redirigir a la p�gina de gesti�n

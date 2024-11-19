@@ -3,6 +3,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="entidades.Prestamo" %>
 <%@ page import="entidades.Cliente" %>
+<%@ page import="entidades.Cuenta" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +18,8 @@
 <jsp:include page="nav.jsp" />
 
 <% 
-    Cliente cliente = (Cliente) session.getAttribute("Cliente");
-    ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) request.getAttribute("prestamos");
+ 	// validar que no sea null
+    Cliente cliente = (Cliente) request.getAttribute("cliente");
     String mensajePrestamoPendiente = (String) request.getAttribute("mensaje");
     if (mensajePrestamoPendiente != null) { 
 %>
@@ -27,7 +29,6 @@
 <% 
     }  
 %>
-
 
 <div class="client-management-container">
     <h2>Listado de Préstamos</h2>
@@ -70,46 +71,49 @@
             </tr>
         </thead>
         <tbody>
-    <% if (prestamos != null && !prestamos.isEmpty()) { %>
-        <% for (Prestamo prestamo : prestamos) { %>
-            <tr>
-                <td>
-                    <% 
-                        if (prestamo.getFechaAltaPrestamo() != null) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                            String fechaFormateada = sdf.format(prestamo.getFechaAltaPrestamo());
-                            out.print(fechaFormateada); // Mostrar fecha formateada
-                        } else {
-                            out.print("No disponible"); // Mostrar si la fecha es null
-                        }
-                    %>
-                </td>
-                <td>$<%= prestamo.getImporteTotal() %></td>
-                <td>$<%= prestamo.getImporteTotal() * 1.5 %></td>
-                <td><%= prestamo.getCantCuotas() %></td>
-<td class="estado 
-    <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : "estado-rechazado" %>">
-    <%= 
-        prestamo.getEstado().equals("Activo") ? "Aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : "Rechazado" 
-    %>
-</td>
-               <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>
-                                <td>
-                    <% if (prestamo.getEstado().equals("Activo")) { %>
-                        <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-pagar">
-    					Pagar cuota
-						</a>
-                    <% } %>
-                </td>
+    	<% 
+	    	//volver a hacer leyenda sino tiene prestamos. ver como.
+	        ArrayList<Cuenta> cuentas = cliente.getCuentas(); 
+	        for (int i = 0; i < cuentas.size(); i++) { 
+	            Cuenta cuenta = cuentas.get(i);
+	            ArrayList<Prestamo> prestamos = cuenta.getPrestamos();
+	    		for(int j = 0; j < prestamos.size(); j++){
+	    			Prestamo prestamo = prestamos.get(j);
+           %>    
+    		<tr>
+	                <td>
+	                 <% 
+	                    if (prestamo.getFechaAltaPrestamo() != null) {
+	                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	                        String fechaFormateada = sdf.format(prestamo.getFechaAltaPrestamo());
+	                        out.print(fechaFormateada); // Mostrar fecha formateada
+	                    } else {
+	                        out.print("No disponible"); // Mostrar si la fecha es null
+	                    }
+	                 %>
+	                </td>
+	                <td>$<%= prestamo.getImporteTotal() %></td>
+	                <td>$<%= prestamo.getImporteTotal() %></td>
+	                <td><%= prestamo.getCantCuotas() %></td>
+					<td class="estado 
+				    <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 
+				        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : "estado-rechazado" %>">
+				    <%= 
+				        prestamo.getEstado().equals("Activo") ? "Aprobado" : 
+				        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : "Rechazado" 
+				    %>
+					</td>
+	               <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>
+	                                <td>
+	                    <% if (prestamo.getEstado().equals("Activo")) { %>
+	                        <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-pagar">
+	    					Pagar cuota
+							</a>
+	                    <% } %>
+	                </td>
             </tr>
-        <% } %>
-    <% } else { %>
-        <tr>
-            <td colspan="7">No se encontraron préstamos</td>
-        </tr>
-    <% } %>
+        <% } 
+        } %>
 </tbody>
 
     </table>

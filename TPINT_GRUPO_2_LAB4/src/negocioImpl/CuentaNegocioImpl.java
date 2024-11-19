@@ -3,6 +3,7 @@ package negocioImpl;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import dao.CuentaDao;
 import daoImpl.CuentaDaoImpl;
@@ -144,11 +145,11 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
-	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException { 
+	public void ejecutarSPTransferencia(long cbuDestino, long cbuOrigen, float monto, String concepto) throws SQLException { 
 		System.out.print("qqqqqqqq");
 		try {
 			System.out.print("qqqq1111");
-			cuentaDao.ejecutarSPTransferencia(cbuOrigen, cbuDestino, monto, concepto);
+			cuentaDao.ejecutarSPTransferencia(cbuDestino, cbuOrigen, monto, concepto);
 			}
 			catch (SQLException e) {
 				System.out.print("qqqqq2222");
@@ -164,5 +165,15 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	public boolean ingresos(int idCuenta, Float montoACargar) {
 
 		return cuentaDao.ingresos(idCuenta, montoACargar);
+	}
+	
+	@Override
+	public ArrayList<Cliente> filtrarCuentas(
+	    Date fechaInicio, 
+	    Date fechaFin, 
+	    Float montoMinimo, 
+	    Float montoMaximo
+	) {
+	    return cuentaDao.filtrarCuentas(fechaInicio, fechaFin, montoMinimo, montoMaximo);
 	}
 }

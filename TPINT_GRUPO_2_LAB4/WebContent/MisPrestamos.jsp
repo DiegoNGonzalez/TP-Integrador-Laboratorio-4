@@ -31,32 +31,35 @@
 
 <div class="client-management-container">
     <h2>Listado de Préstamos</h2>
+    <form id="filterForm" action="FiltrosServlet" method="GET">
+    <input type="hidden" name="action" value="filtrarMisPrestamos">
     <div class="filter-container">
         <div class="filter-option">
-            <input type="checkbox" id="filterByDate" />
+            <input type="checkbox" id="filterByDatePrestamos" name="filterByDate" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
             <div id="dateFilter" class="filter-inputs" style="display: none;">
                 <label for="startDate">Desde:</label>
-                <input type="date" id="startDate" />
+                <input type="date" id="startDate" name="startDate" />
                 <label for="endDate">Hasta:</label>
-                <input type="date" id="endDate" />
+                <input type="date" id="endDate" name="endDate" />
             </div>
         </div>
 
         <div class="filter-option">
-            <input type="checkbox" id="filterByAmount" />
+            <input type="checkbox" id="filterByAmountPrestamos" name="filterByAmount" />
             <label for="filterByAmount">Filtrar por rango de montos</label>
             <div id="amountFilter" class="filter-inputs" style="display: none;">
                 <label for="minAmount">Mínimo:</label>
-                <input type="number" id="minAmount" placeholder="$0" />
+                <input type="number" id="minAmount" name="minAmount" placeholder="$0" />
                 <label for="maxAmount">Máximo:</label>
-                <input type="number" id="maxAmount" placeholder="$1,000,000" />
+                <input type="number" id="maxAmount" name="maxAmount" placeholder="$1,000,000" />
             </div>
         </div>
         
-        <button id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+        <button type="submit" id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+        <button type="button" id="clearFilters" class="btn-clean">Limpiar Filtros</button>
     </div>
-    
+    </form>
     <table id="misPrestamos" class="client-table">
         <thead>
             <tr>
@@ -118,25 +121,43 @@
         <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=<%= cliente.getIdCliente() %>" class="btn-solicitar">Solicitar Préstamo</a>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Mostrar u ocultar filtros según los checkboxes
+    $('#filterByDatePrestamos').change(function() {
+        $('#dateFilter').toggle(this.checked);
+    });
 
-<script>
-    $(document).ready(function() {
-        $('#misPrestamos').DataTable();
+    $('#filterByAmountPrestamos').change(function() {
+        $('#amountFilter').toggle(this.checked);
+    });
 
-        // Mostrar u ocultar filtros
-        $('#filterByDate').change(function() {
-            $('#dateFilter').toggle(this.checked);
+    // Para el botón de limpiar filtros
+    $('#clearFilters').click(function() {
+        // Redirigir a la misma página para limpiar los filtros
+        window.location.href = 'ListarPrestamosServlet'
+    });
+});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#prestamosRechazados').DataTable();
+		 // Mostrar u ocultar filtros
+        $('#filterByDateRechazados').change(function() {
+            $('#dateFilterRechazados').toggle(this.checked);
         });
 
-        $('#filterByAmount').change(function() {
-            $('#amountFilter').toggle(this.checked);
+        $('#filterByAmountRechazados').change(function() {
+            $('#amountFilterRechazados').toggle(this.checked);
         });
 
         // Lógica de aplicar filtros (solo front-end, sin interacción con backend)
-        $('#applyFilters').click(function() {
+        $('#applyFiltersRechazados').click(function() {
+            // Aquí puedes añadir la lógica para filtrar los datos en la tabla
             alert('Filtros aplicados. Esto es solo el front-end.');
         });
-    });
+	});
 </script>
 
 </body>

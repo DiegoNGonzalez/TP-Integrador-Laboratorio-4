@@ -28,21 +28,35 @@
 
 <div class="account-management-container">
     <h2>Gestión de Cuentas</h2>
+    
+    <form id="filterForm" action="FiltrosServlet" method="GET">
+    <input type="hidden" name="action" value="filtrarCuentas">
     <div class="filter-container">
-
         <div class="filter-option">
-            <input type="checkbox" id="filterByAmount" />
+            <input type="checkbox" id="filterByDateCuentas" name="filterByDate" />
+            <label for="filterByDate">Filtrar por rango de fechas</label>
+            <div id="dateFilterPendientes" class="filter-inputs" style="display: none;">
+                <label for="startDate">Desde:</label>
+                <input type="date" id="startDate" name="startDate" />
+                <label for="endDate">Hasta:</label>
+                <input type="date" id="endDate" name="endDate" />
+            </div>
+        </div>
+        <div class="filter-option">
+            <input type="checkbox" id="filterByAmount" name="filterByAmount" />
             <label for="filterByAmount">Filtrar por rango de Saldo</label>
             <div id="amountFilter" class="filter-inputs" style="display: none;">
                 <label for="minAmount">Mínimo:</label>
-                <input type="number" id="minAmount" placeholder="$0" />
+                <input type="number" id="minAmount" name="minAmount" placeholder="$0" />
                 <label for="maxAmount">Máximo:</label>
-                <input type="number" id="maxAmount" placeholder="$1,000,000" />
+                <input type="number" id="maxAmount" name="maxAmount" placeholder="$1,000,000" />
             </div>
         </div>
         
-        <button id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+        <button type="submit" id="applyFilters" class="btn-apply">Aplicar Filtros</button>
+        <button type="button" id="clearFilters" class="btn-clean">Limpiar Filtros</button>
     </div>
+</form>
     <table class="account-table display" id="gestion-cuentas">
         <thead>
         <tr>
@@ -87,6 +101,27 @@
     <br/>
     <a href="DashboardAdmin.jsp" class=" btn-volver">Volver</a>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#prestamosRechazados').DataTable();
+		 // Mostrar u ocultar filtros
+        $('#filterByDateCuentas').change(function() {
+            $('#dateFilterPendientes').toggle(this.checked);
+        });
+
+        $('#filterByAmount').change(function() {
+            $('#amountFilter').toggle(this.checked);
+        });
+	});
+</script>
+<script>
+$(document).ready(function() {
+    $('#clearFilters').click(function() {
+        // Redirige al servlet para cargar la lista original
+        window.location.href = 'ClienteCuentaServlet?action=listarCuentas';
+    });
+});
+</script>
 <script>
 
 function eliminarCuenta(cuentaId) {

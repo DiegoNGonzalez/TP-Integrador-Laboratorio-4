@@ -16,6 +16,7 @@
 	<jsp:include page="nav.jsp" />
 
 	<%
+    			Cliente cliente = (Cliente) session.getAttribute("Cliente");
 				Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");
 	
 		if (cuenta == null) {
@@ -78,11 +79,11 @@
 		</table>
 		<div style="margin-bottom: 20px;"></div>
 
-		<!-- Modificar cuando esté la lógica de transferencias -->
-		<div>
-			<a href="Transferencia.jsp?cuentaId=11111" class="btn-aprobar">Realizar
-				transferencia</a>
-		</div>
+<div>
+    <a onclick="window.location.href='TransferenciasServlet?idCuenta=<%= cuenta.getIdCuenta() %>&idUsuario=<%= cliente.getUsuario().getId() %>&action=detalleCuenta'" 
+       class="btn-aprobar">Realizar transferencia</a>
+</div>
+
 	</div>
 	<%
 		}

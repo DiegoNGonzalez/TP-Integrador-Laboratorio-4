@@ -20,6 +20,7 @@
 <!-- Menú de Navegación -->
 <jsp:include page="nav.jsp" />
 <% Cliente cliente = (Cliente) request.getAttribute("cliente");
+Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuenta");
 ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
 
     <div class="account-container">
@@ -28,16 +29,33 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
             <!-- Selección de cuenta origen -->
           	<div class="form-group">
 			    <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
-			    <select class="form-control" id="cbuOrigen" name="cbuOrigen" required>
-			        <option value="">Seleccione cuenta...</option>
-			        <% 
-			            for (Cuenta cuenta : listaCuentas) {
-			        %>
-			            <option value="<%= cuenta.getCbu() %>"><%= cuenta.getTipoCuenta().getTipo() %> Saldo: $ <%=cuenta.getSaldo() %>.-</option>
-			        <% 
-			            }
-			        %>
-			    </select>
+<select name="cuenta" id="cuenta" class="form-control">
+    <%
+        if (cuentaSeleccionada != null) {
+            // Si hay una cuenta seleccionada, mostrarla como única opción y deshabilitar el desplegable
+    %>
+            <option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
+                <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
+            </option>
+    <%  
+        } else {
+            // Si no hay cuenta seleccionada, mostrar todas las cuentas disponibles
+            if (listaCuentas != null && !listaCuentas.isEmpty()) {
+                for (Cuenta cuenta : listaCuentas) {
+    %>
+                    <option value="<%= cuenta.getIdCuenta() %>">
+                        <%= cuenta.getNumeroCuenta() %> - <%= cuenta.getTipoCuenta().getTipo() %>
+                    </option>
+    <%  
+                }
+            } else {
+    %>
+                <option value="">No hay cuentas disponibles</option>
+    <%  
+            }
+        }
+    %>
+</select>
 			</div>
             
             <!-- Selección de tipo de cuenta destino -->

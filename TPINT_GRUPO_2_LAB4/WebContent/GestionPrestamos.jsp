@@ -76,7 +76,7 @@
         ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
         for (Prestamo prestamo : prestamosPendientes) { %>
             <tr>
-                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
+                <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>

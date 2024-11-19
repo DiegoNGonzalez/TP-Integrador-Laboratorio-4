@@ -29,12 +29,12 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
             <!-- Selección de cuenta origen -->
           	<div class="form-group">
 			    <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
-<select name="cuenta" id="cuenta" class="form-control">
+<select name="cbuOrigen" id="cbuOrigen" class="form-control">
     <%
         if (cuentaSeleccionada != null) {
             // Si hay una cuenta seleccionada, mostrarla como única opción y deshabilitar el desplegable
     %>
-            <option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
+            <option value="<%= cuentaSeleccionada.getCbu() %>" selected>
                 <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
             </option>
     <%  
@@ -43,7 +43,7 @@ ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); %>
             if (listaCuentas != null && !listaCuentas.isEmpty()) {
                 for (Cuenta cuenta : listaCuentas) {
     %>
-                    <option value="<%= cuenta.getIdCuenta() %>">
+                    <option value="<%= cuenta.getCbu() %>">
                         <%= cuenta.getNumeroCuenta() %> - <%= cuenta.getTipoCuenta().getTipo() %>
                     </option>
     <%  

@@ -338,7 +338,7 @@ public class ClienteDaoImpl implements ClienteDao{
                cliente.setDireccion(resultSet.getString("direccion"));
                // cuentas
                CuentaDaoImpl negocioCuenta = new CuentaDaoImpl();
-               cliente.setCuentas(negocioCuenta.obtenerCuentasPorCliente(Integer.parseInt(resultSet.getString("idCliente"))));
+               //cliente.setCuentas(negocioCuenta.obtenerCuentasPorClientePrestamo(Integer.parseInt(resultSet.getString("idCliente"))));
                
                //descolgables
                NacionalidadDaoImpl nacionalidadDao = new NacionalidadDaoImpl();

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Cliente;
 import entidades.Cuenta;
 import negocio.ClienteNegocio;
+import negocio.CuentaNegocio;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 
@@ -26,7 +27,7 @@ public class TransferenciasServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-		System.out.print(idUsuario);
+    	String action = request.getParameter("action");
 		ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 		Cliente cliente = clienteNegocio.obtenerClientePorIdUsuario(idUsuario);
 		        
@@ -34,10 +35,19 @@ public class TransferenciasServlet extends HttpServlet {
             // Si el cliente no existe redirecciono.
 			System.out.println("El cliente no existe.");
             request.getRequestDispatcher("Error.jsp").forward(request, response);
-        } else {
+        } else if("dashboardCliente".equals(action)) {
             request.setAttribute("cliente", cliente);
             request.getRequestDispatcher("Transferencia.jsp").forward(request, response);
         }
+        else if("detalleCuenta".equals(action)) {
+        	int idCuenta = Integer.parseInt(request.getParameter("idCuenta"));
+        	CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+        	Cuenta cuenta = cuentaNegocio.obtenerCuentaPorId(idCuenta);
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("cuenta", cuenta);
+            request.getRequestDispatcher("Transferencia.jsp").forward(request, response);
+        }
+        
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

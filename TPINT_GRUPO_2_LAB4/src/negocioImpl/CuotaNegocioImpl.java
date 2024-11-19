@@ -57,4 +57,10 @@ public class CuotaNegocioImpl implements CuotaNegocio{
 		return auxCuota.listarCuotasPorPrestamo(idPrestamo);
 	}
 
+	@Override
+	public String pagarCuotaSP(int idCuota, int idCuenta) {
+		
+		return auxCuota.pagarCuotaSP(idCuota, idCuenta);
+	}
+
 }

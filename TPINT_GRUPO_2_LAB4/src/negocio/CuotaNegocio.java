@@ -18,4 +18,5 @@ public interface CuotaNegocio {
     public ArrayList<Cuota> filtrarCuotas(Date fechaInicio, Date fechaFin, BigDecimal montoMinimo, BigDecimal montoMaximo);
     public boolean pagarCuota(int idCuota, int idCuentaDebito);
     */
+    public String pagarCuotaSP(int idCuota, int idCuenta);
 }

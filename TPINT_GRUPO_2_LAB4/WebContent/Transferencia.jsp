@@ -25,21 +25,6 @@
     boolean tieneMasDeUnaCuenta = (listaCuentas != null && listaCuentas.size() > 1);
 %>
 
-<<<<<<< HEAD
-<div class="account-container">
-    <h2 class="edit-title">Nueva transferencia</h2>
-    <form action="confirmarTransferenciaServlet" method="post">
-        <!-- Selección de cuenta origen -->
-        <div class="form-group">
-            <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
-            <select name="cuenta" id="cuentaOrigen" class="form-control" onchange="actualizarDestino()" 
-                <%= cuentaSeleccionada != null ? "disabled" : "" %> >
-                <% 
-                    if (cuentaSeleccionada != null) {
-                %>
-                    <option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
-                        <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
-=======
     <div class="account-container">
         <h2 class="edit-title">Nueva transferencia</h2>
         <form action="confirmarTransferenciaServlet" method="post" >
@@ -62,20 +47,16 @@
     %>
                     <option value="<%= cuenta.getCbu() %>">
                         <%= cuenta.getNumeroCuenta() %> - <%= cuenta.getTipoCuenta().getTipo() %>
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4
-                    </option>
-                <%  
-                    } else if (listaCuentas != null && !listaCuentas.isEmpty()) {
-                        for (Cuenta cuenta : listaCuentas) {
-                %>
-                    <option value="<%= cuenta.getIdCuenta() %>">
-                        <%= cuenta.getTipoCuenta().getTipo() %> <%= cuenta.getNumeroCuenta() %> - Saldo: $<%=cuenta.getSaldo() %>
                     </option>
                 <%  
                         }
                     } else {
                 %>
                     <option value="">No hay cuentas disponibles</option>
+                <%  
+                    }
+                %>
+                
                 <%  
                     }
                 %>

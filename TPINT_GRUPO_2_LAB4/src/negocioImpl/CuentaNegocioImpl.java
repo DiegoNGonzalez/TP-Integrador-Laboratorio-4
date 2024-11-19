@@ -3,6 +3,7 @@ package negocioImpl;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import dao.CuentaDao;
 import daoImpl.CuentaDaoImpl;
@@ -164,5 +165,15 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	public boolean ingresos(int idCuenta, Float montoACargar) {
 
 		return cuentaDao.ingresos(idCuenta, montoACargar);
+	}
+	
+	@Override
+	public ArrayList<Cliente> filtrarCuentas(
+	    Date fechaInicio, 
+	    Date fechaFin, 
+	    Float montoMinimo, 
+	    Float montoMaximo
+	) {
+	    return cuentaDao.filtrarCuentas(fechaInicio, fechaFin, montoMinimo, montoMaximo);
 	}
 }

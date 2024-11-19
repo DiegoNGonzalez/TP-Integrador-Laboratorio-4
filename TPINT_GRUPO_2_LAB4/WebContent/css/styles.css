@@ -68,7 +68,7 @@ body {
     padding: 20px;
 }
 
-/* TARJETAS DE ACCESO RÁPIDO */
+/* TARJETAS DE ACCESO Rï¿½PIDO */
 .dashboard-card {
     background-color: white;
     width: 250px;
@@ -177,7 +177,7 @@ body {
     cursor: not-allowed;
 }
 
-/* Olvidaste tu contraseña Link */
+/* Olvidaste tu contraseï¿½a Link */
 .forgot-password {
     display: block;
     text-align: center;
@@ -229,7 +229,7 @@ body {
     background-color: #5a6268;
 }
 
-/* Contenedor para la Gestión de Cuentas */
+/* Contenedor para la Gestiï¿½n de Cuentas */
 .account-management-container{
     max-width: 1200px;
     margin: 2rem auto;
@@ -298,7 +298,7 @@ body {
     background-color: #f1f3f5;
 }
 
-/* Botón de Editar */
+/* Botï¿½n de Editar */
 .btn-edit, .btn-detalle, .btn-volver{
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
@@ -316,7 +316,7 @@ body {
     background-color: #0056b3;
 }
 
-/* Contenedor para la Edición de Cuenta */
+/* Contenedor para la Ediciï¿½n de Cuenta */
 .account-container, .client-container {
     max-width: 600px;
     margin: 2rem auto;
@@ -326,7 +326,7 @@ body {
     background-color: #f8f9fa;
 }
 
-/* Título */
+/* Tï¿½tulo */
 .account-container .edit-title,
 .client-container .edit-title {
     text-align: center;
@@ -406,9 +406,9 @@ body {
 
     background-color: #c82333;
 }
-/* Estilo para el botón de rechazar en rojo */
+/* Estilo para el botï¿½n de rechazar en rojo */
 .btn-rechazar {
-    display: inline-block; /* Para que el enlace se comporte como un botón */
+    display: inline-block; /* Para que el enlace se comporte como un botï¿½n */
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -424,9 +424,9 @@ body {
     background-color: #c82333;
 }
 
-/* Estilo para el botón de aprobar en verde */
+/* Estilo para el botï¿½n de aprobar en verde */
 .btn-aprobar {
-    display: inline-block; /* Para que el enlace se comporte como un botón */
+    display: inline-block; /* Para que el enlace se comporte como un botï¿½n */
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
@@ -458,15 +458,15 @@ body {
 .filter-container {
     display: flex;
     justify-content: flex-end;
-    gap: 10px; /* Espacio entre el botón y el desplegable */
+    gap: 10px; /* Espacio entre el botï¿½n y el desplegable */
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
-/* Radio buttons de página Transferencia */
+/* Radio buttons de pï¿½gina Transferencia */
 .radio-option input[type="radio"] {
     accent-color: #007bff; /* Color principal para el radio button */
-    transform: scale(1.1); /* Un poco más grande para destacarlo */
+    transform: scale(1.1); /* Un poco mï¿½s grande para destacarlo */
 }
 
 .radio-option label {
@@ -474,7 +474,7 @@ body {
     margin-left: 8px;
 }
 
-/* Estilos para los estados de los préstamos */
+/* Estilos para los estados de los prï¿½stamos */
 .estado {
     font-weight: bold;
     padding: 0.3rem 0.5rem;
@@ -614,6 +614,21 @@ body {
     background-color: #0056b3;
 }
 
+.btn-clean {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-clean:hover {
+    background-color: #c82333;
+}
+
 
 .disabled {
     background-color: #cccccc;
@@ -659,7 +674,7 @@ body {
     text-decoration: none;
     transition: background-color 0.15s ease-in-out;
     margin-left: 15px;
-    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    white-space: nowrap; /* Evitar que el texto se divida en varias lï¿½neas */
     overflow: hidden; /* Ocultar cualquier desbordamiento */
     text-overflow: ellipsis; /* Mostrar "..." si el texto se desborda */
 }

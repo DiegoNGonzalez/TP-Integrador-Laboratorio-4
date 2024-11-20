@@ -10,8 +10,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<!--<link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -19,22 +26,21 @@
 
 <title>Menu de Clientes</title>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <!-- Menú de Navegación -->
 <jsp:include page="nav.jsp" />
+<div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+<div class="text-center mb-4">
+            <h2>Gestión de Clientes</h2>
+            <p class="text-secondary">Listado de clientes con accesos rápidos a acciones principales.</p>
+        <hr class="border-dark my-3">
+        </div>
 
-<div class="dashboard-header">
-    <h2>Gestión de clientes</h2>
-    <p>Listado de clientes y accesos rápidos a las secciones principales.</p>
-</div>
+        
 <!-- Tabla de Clientes -->
-<div class="client-management-container">
-    <a href="DashboardAdmin.jsp" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
-        Volver
-    </a>
-    <h2>Clientes</h2>
-    <table id="clientTable" class="client-table">
-        <thead>
+<div class="table-responsive" >
+    <table id="clientTable" class="table table-striped table-bordered table-sm">
+        <thead class="table-dark">
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
@@ -52,7 +58,7 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="font-size: 0.65rem;">
             <% 
     ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) request.getAttribute("listaClientes"); 
     Iterator<Cliente> iteradorClientes = listaClientes.iterator();
@@ -75,13 +81,11 @@
             <td><%= cliente.getTelefono() %></td>
             <td><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
-                <div class="action-buttons">
 
-				<div class="action-buttons">
-                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn-edit" >Editar</a>
-                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn-add-account">Agregar Cuenta</a>
-                    <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn-eliminar">Eliminar Cliente</a>
-
+				<div class="d-flex gap-1"	>
+                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn btn-warning btn-sm" >Editar</a>
+                    <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn btn-primary btn-sm">Agregar Cuenta</a>
+                    <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn btn-danger btn-sm">Eliminar Cliente</a>
                 </div>
             </td>
         </tr>
@@ -91,9 +95,14 @@
         </tbody>
     </table>
     <br>
-<a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn-primary">Agregar Nuevo Cliente</a>
+<div style="margin: 10px;">
+<a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn btn-primary">Agregar Nuevo Cliente</a>
+<a href="DashboardAdmin.jsp" class="btn btn-primary">Volver</a>
+</div>
 
 </div>
+</div>
+<jsp:include page="Footer.jsp" />
 <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function() {

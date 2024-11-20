@@ -5,7 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--  <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+<!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
 <script
@@ -23,7 +33,10 @@
 <body>
 	<!-- Menú de Navegación -->
 	<jsp:include page="nav.jsp" />
-	<div class="account-management-container">
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8 col-lg-6">
+			<div class="card shadow-lg p-4">
 		<h2 class="edit-title">Generar Reporte</h2>
 
 		<!-- Filtro de fechas y tipo de reporte -->
@@ -46,7 +59,7 @@
 					<option value="prestamos">Préstamos</option>
 				</select>
 			</div>
-			<button type="submit" class="btn-save">Generar Reporte</button>
+			<button type="submit" class="btn btn-primary mt-2">Generar Reporte</button>
 		</form>
 
 		<!-- Tabla de resultados -->
@@ -124,12 +137,15 @@
 		</table>
 
 		<form action="ExportarExcelServlet" method="get">
-			<button type="submit" class="btn-save" <% if (!tieneDatos) { %>disabled<% } %>>Exportar a Excel</button>
+			<button type="submit" class="btn btn-success mt-2" <% if (!tieneDatos) { %>disabled<% } %>>Exportar a Excel</button>
 		</form>
 
 		<div class="back-button-container">
-			<a href="DashboardAdmin.jsp" class="btn-volver">Volver</a>
+			<a href="DashboardAdmin.jsp" class="btn btn-secondary mt-2">Volver</a>
 		</div>
+	</div>
+	</div>
+	</div>
 	</div>
 </body>
 </html>

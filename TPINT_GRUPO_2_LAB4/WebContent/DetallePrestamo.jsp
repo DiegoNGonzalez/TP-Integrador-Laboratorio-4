@@ -13,8 +13,6 @@
 <%
     Prestamo prestamo = (Prestamo) request.getAttribute("prestamo");
     String origen = request.getParameter("origen");
-    float montoAbonado = (float)request.getAttribute("montoAdeudado");
-    montoAbonado = prestamo.getImporteTotal() -  montoAbonado;
 %>
 
 
@@ -27,7 +25,7 @@
         <p><strong>Cuotas Pagas:</strong> <%= request.getAttribute("cuotasPagadas") %></p>
         <p><strong>Cuotas Faltantes:</strong> <%= request.getAttribute("cuotasPendientes") %></p>
         <p><strong>Monto Solicitado:</strong> $<%= prestamo.getImporteTotal() %></p>
-        <p><strong>Monto Abonado:</strong> $<%= montoAbonado %></p>
+        <p><strong>Monto Abonado:</strong> $<%= request.getAttribute("montoAbonado") %></p>
         <p><strong>Monto Adeudado:</strong> $<%= request.getAttribute("montoAdeudado") %></p>
 	<% }%>
         <div class="back-button-container">

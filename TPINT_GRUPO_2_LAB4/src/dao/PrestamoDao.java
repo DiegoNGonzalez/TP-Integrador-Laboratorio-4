@@ -21,6 +21,7 @@ public interface PrestamoDao {
 	public boolean darDeAltaPrestamo(Prestamo prestamo);
 	public void SP_AprobarPrestamo(Prestamo prestamo)throws SQLException;
 	public int ultimoID();
+	public boolean finalizarPrestamo(int idPrestamo);
 	
 	ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo, int idCliente);
 	

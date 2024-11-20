@@ -40,7 +40,7 @@ public class PagarPrestamoServlet extends HttpServlet {
 		String idCuotaStr = request.getParameter("cuota");
 		String idCuentaStr = request.getParameter("cuentaDebito");
 
-		// Convertir los valores a enteros si es necesario
+		
 		int idCuota = Integer.parseInt(idCuotaStr);
 		int idCuenta = Integer.parseInt(idCuentaStr);
 		System.err.println("idcuota");

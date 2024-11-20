@@ -9,15 +9,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!--<link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 <title>Agregar Cuenta</title>
+<!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </head>
 <body>
 	<!-- Menú de Navegación -->
 	<jsp:include page="nav.jsp" />
 
-	<div class="account-container">
-		<h2 class="add-title">Agregar Nueva Cuenta</h2>
+<div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg p-4">
+		<h2 class="text-center mb-4">Agregar Nueva Cuenta</h2>
 <form action="AgregarCuentaServlet" method="post" onsubmit="
     if(document.getElementById('tipoCuenta').value === '') { 
         alert('Por favor, seleccione el tipo de cuenta.'); 
@@ -36,36 +47,36 @@
 				value="<%=cliente.getIdCliente()%>" type="hidden">
 
 			<!-- Cliente Asignado -->
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="nombre" class="form-label">Nombre</label> <input
 					type="text" id="nombre" name="nombre" class="form-control"
-					value="<%=cliente.getNombre()%>" readonly>
+					value="<%=cliente.getNombre()%>" readonly style="background-color: #e9ecef;">
 			</div>
 
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="apellido" class="form-label">Apellido</label> <input
 					type="text" id="apellido" name="apellido" class="form-control"
-					value="<%=cliente.getApellido()%>" readonly>
+					value="<%=cliente.getApellido()%>" readonly style="background-color: #e9ecef;">
 			</div>
 
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="dni" class="form-label">DNI</label> <input type="text"
 					id="dni" name="dni" class="form-control"
-					value="<%=cliente.getDni()%>" readonly>
+					value="<%=cliente.getDni()%>" readonly style="background-color: #e9ecef;">
 			</div>
 
 			<!-- Fecha de Creación -->
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="fechaCreacion" class="form-label">Fecha de
 					Creación</label> <input type="date" id="fechaCreacion" name="fechaCreacion"
 					class="form-control"
-					value="<%=request.getAttribute("fechaHoy")%>" readonly>
+					value="<%=request.getAttribute("fechaHoy")%>" readonly style="background-color: #e9ecef;">
 			</div>
 
 			<!-- Tipo de Cuenta -->
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="tipoCuenta" class="form-label">Tipo de Cuenta</label> <select
-					id="tipoCuenta" name="tipoCuenta" class="form-control">
+					id="tipoCuenta" name="tipoCuenta" class="form-select">
 					<option value="">Seleccione el tipo de cuenta</option>
 					<%
 						ArrayList<TipoCuenta> listaTiposCuenta = (ArrayList<TipoCuenta>) request.getAttribute("listaTiposCuenta");
@@ -79,34 +90,38 @@
 			</div>
 
 			<!-- Número de Cuenta -->
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="numeroCuenta" class="form-label">Número de
 					Cuenta</label> <input type="text" id="numeroCuenta" name="numeroCuenta"
 					class="form-control"
-					value="<%=request.getAttribute("nroCuenta")%>" readonly>
+					value="<%=request.getAttribute("nroCuenta")%>" readonly style="background-color: #e9ecef;">
 			</div>
 
  			<!-- CBU -->
- 			<div class="form-group">
+ 			<div class="col-md-12">
 				<label for="cbu" class="form-label">CBU</label> <input type="text"
 					id="cbu" name="cbu" class="form-control"
-					value="<%=request.getAttribute("cbu")%>" readonly>
+					value="<%=request.getAttribute("cbu")%>" readonly style="background-color: #e9ecef;">
 			</div>  
 
 
 			<!-- Saldo -->
-			<div class="form-group">
+			<div class="col-md-12">
 				<label for="saldo" class="form-label">Saldo</label> <input
 					type="number" step="0.01" id="saldo" name="saldo"
 					class="form-control" value="10000.00">
 			</div>
-
+<div class="col-12 d-flex justify-content-center"> 
 			<!-- Botón para Guardar la Nueva Cuenta -->
-			<input type="submit" class="btn-save" value="Guardar Cuenta">
+			<input type="submit" class="btn btn-success m-3" value="Guardar Cuenta">
 
 			<!-- Botón para Cancelar y Volver -->
-        <input type="button" class="btn-cancel" onclick="window.location.href='ListarClientesServlet'" value="Cancelar">
+        <input type="button" class="btn btn-danger m-3" onclick="window.location.href='ListarClientesServlet'" value="Cancelar">
+        </div>
 		</form>
+		</div>
+		</div>
+	</div>
 	</div>
 </body>
 </html>

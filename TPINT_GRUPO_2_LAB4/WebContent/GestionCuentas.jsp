@@ -15,8 +15,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
 <!--<link rel="stylesheet" type="text/css" href="css/styles.css">  -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
@@ -37,10 +37,11 @@
 
 <div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center">
     <h2>Gestión de Cuentas</h2>
+    <hr class="border-dark my-3">
    <div class="row"> 
     <form id="filterForm" action="FiltrosServlet" method="GET">
         <input type="hidden" name="action" value="filtrarCuentas">
-        <div class="filter-container">
+        <div class="filter-container d-flex align-items-center gap-3">
             <div class="filter-option">
                 <input type="checkbox" id="filterByDateCuentas" name="filterByDate" />
                 <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -67,7 +68,7 @@
     </form>
        </div>
     <table class="table table-striped" id="gestion-cuentas">
-        <thead>
+        <thead class="table-dark">
         <tr>
             <th>Cliente</th>
             <th>Fecha de Creación de la Cuenta</th>
@@ -107,27 +108,29 @@
         %>
     </tbody>
     </table>
-    <br/>
+	<div style="margin:10px;">
     <a href="DashboardAdmin.jsp" class="btn btn-primary">Volver</a>
+	</div>
     <div class="modal" tabindex="-1">
   		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-header">
         			<h5 class="modal-title">¿Está seguro que desea eliminar?</h5>
-        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        			<button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       			</div>
       			<div class="modal-body">
         			<p>¿Está seguro que desea eliminar la cuenta?</p>
       			</div>
       			<div class="modal-footer">
-        			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        			<button type="button" id="cancelaEliminar" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         			<button type="button" id="confirmEliminar" class="btn btn-danger">Eliminar</button>
       			</div>
     		</div>
   		</div>
 	</div>
 </div>
-
+<jsp:include page="Footer.jsp" />
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#prestamosRechazados').DataTable();
@@ -182,6 +185,14 @@ function eliminarCuenta(cuentaId) {
         // Cerrar el modal después de la confirmación
         modal.hide();
     };
+    
+    document.getElementById('cancelaEliminar').onclick = function() {
+    	 modal.hide();	
+    }
+    
+    document.getElementById('close').onclick = function() {
+   	 modal.hide();	
+   }
 }
 </script>
 </body>

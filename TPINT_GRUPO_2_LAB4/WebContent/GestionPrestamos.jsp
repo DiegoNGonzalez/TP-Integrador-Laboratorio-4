@@ -7,10 +7,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<!-- Data Tables -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
@@ -28,17 +36,21 @@
 </script>
 <title>Gestión de Prestamos</title>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
-<div class="management-container">
+<div class="container my-4">
+     <div class="d-flex justify-content-end w-100 mb-3">
     <a href="DashboardAdmin.jsp" class="btn-volver" style="width: auto; margin-top: 10px; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
         Volver
     </a>
-    <h1>Gestion Prestamos</h1>
-    <br>
-    <h2>Prestamos pendientes de aprobación</h2>
-    <div class="filter-container">
+    </div>
+    <div class="text-center mb-4">
+    <h2 class="mb-4">Gestion Prestamos</h2>
+    <hr class="border-dark my-3">
+    </div>
+    <h2 class="mb-3">Prestamos pendientes de aprobación</h2>
+    <div class="filter-container d-flex align-items-center gap-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDatePendientes" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -61,37 +73,41 @@
             </div>
         </div>
         
-        <button id="applyFiltersPendientes" class="btn-apply">Aplicar Filtros</button>
+        <button id="applyFiltersPendientes" class="btn btn-primary">Aplicar Filtros</button>
     </div>
-<table id="prestamosPendientes" class="account-table display">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>Monto</th>
-            <th>Cuotas</th>
-            <th>Fecha de solicitud</th>
-            <th>Aprobar</th>
-            <th>Rechazar</th>               
-        </tr>
-    </thead>
-    <tbody>
-        <% 
-        ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
-        for (Prestamo prestamo : prestamosPendientes) { %>
-            <tr>
-                <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
-                <td><%= prestamo.getImporteTotal() %></td>
-                <td><%= prestamo.getCantCuotas() %></td>
-                <td><%= prestamo.getFechaAltaPrestamo() %></td>
-                <td><a href="AprobarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-aprobar">Aprobar</a></td>
-                <td><a href="RechazarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn-rechazar">Rechazar</a></td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
+<section class="mt-5">
+            <div class="table-responsive">
+                <table id="prestamosPendientes" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Monto</th>
+                            <th>Cuotas</th>
+                            <th>Fecha de Solicitud</th>
+                            <th>Aprobar</th>
+                            <th>Rechazar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                        ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
+                        for (Prestamo prestamo : prestamosPendientes) { %>
+                        <tr>
+                            <td><%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></td>
+                            <td><%= prestamo.getImporteTotal() %></td>
+                            <td><%= prestamo.getCantCuotas() %></td>
+                            <td><%= prestamo.getFechaAltaPrestamo() %></td>
+                            <td><a href="AprobarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn btn-success btn-sm">Aprobar</a></td>
+                            <td><a href="RechazarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>" class="btn btn-danger btn-sm">Rechazar</a></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     <br>
     <h2>Prestamos aprobados</h2>
-    <div class="filter-container">
+    <div class="filter-container d-flex align-items-center gap-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDateAprobados" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -114,36 +130,40 @@
             </div>
         </div>
         
-        <button id="applyFiltersAprobados" class="btn-apply">Aplicar Filtros</button>
+        <button id="applyFiltersAprobados" class="btn btn-primary">Aplicar Filtros</button>
     </div>
-<table id="prestamosAprobados" class="account-table display">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>Monto</th>
-            <th>Cuotas</th>
-            <th>Fecha de solicitud</th>
-            <th>Detalle</th>             
-        </tr>
-    </thead>
-    <tbody>
-        <% 
-        ArrayList<Prestamo> prestamosAprobados = (ArrayList<Prestamo>) request.getAttribute("prestamosAprobados");
-        for (Prestamo prestamo : prestamosAprobados) { %>
-            <tr>
-                 <td><%= prestamo.getCliente().getNombre() + ", "+ prestamo.getCliente().getApellido()%></td>  <!-- Asumiendo que el cliente tiene un método getNombre() -->
-                <td><%= prestamo.getImporteTotal() %></td>
-                <td><%= prestamo.getCantCuotas() %></td>
-                <td><%= prestamo.getFechaAltaPrestamo() %></td>
-                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
+<section class="mt-5">
+            <div class="table-responsive">
+                <table id="prestamosAprobados" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Monto</th>
+                            <th>Cuotas</th>
+                            <th>Fecha de Solicitud</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                        ArrayList<Prestamo> prestamosAprobados = (ArrayList<Prestamo>) request.getAttribute("prestamosAprobados");
+                        for (Prestamo prestamo : prestamosAprobados) { %>
+                        <tr>
+                            <td><%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></td>
+                            <td><%= prestamo.getImporteTotal() %></td>
+                            <td><%= prestamo.getCantCuotas() %></td>
+                            <td><%= prestamo.getFechaAltaPrestamo() %></td>
+                            <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn btn-info btn-sm">Detalle</a></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     <br>
      <h2>Prestamos rechazados</h2>
      
-     <div class="filter-container">
+     <div class="filter-container d-flex align-items-center gap-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDateRechazados" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -166,10 +186,10 @@
             </div>
         </div>
         
-        <button id="applyFiltersRechazados" class="btn-apply">Aplicar Filtros</button>
+        <button id="applyFiltersRechazados" class="btn btn-primary">Aplicar Filtros</button>
     </div>
-    <table id="prestamosRechazados" class="account-table display">
-    <thead>
+    <table id="prestamosRechazados" class="table table-striped">
+    <thead class="table-dark">
         <tr>
             <th>Cliente</th>
             <th>Monto</th>
@@ -187,7 +207,7 @@
                 <td><%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
                 <td><%= prestamo.getFechaAltaPrestamo() %></td>
-                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn-detalle">Detalle</a></td>
+                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=Gestionprestamos" class="btn btn-info">Detalle</a></td>
             </tr>
         <% } %>
     </tbody>
@@ -198,9 +218,10 @@ System.out.println("Prestamos Aprobados: " + prestamosAprobados.size());
 System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
 %>
 </div>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#prestamosRechazados').DataTable();
+		$('#prestamosPendientes').DataTable();
 		 // Mostrar u ocultar filtros
         $('#filterByDatePendientes').change(function() {
             $('#dateFilterPendientes').toggle(this.checked);
@@ -208,12 +229,6 @@ System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
 
         $('#filterByAmountPendientes').change(function() {
             $('#amountFilterPendientes').toggle(this.checked);
-        });
-
-        // Lógica de aplicar filtros (solo front-end, sin interacción con backend)
-        $('#applyFiltersPendientes').click(function() {
-            // Aquí puedes añadir la lógica para filtrar los datos en la tabla
-            alert('Filtros aplicados. Esto es solo el front-end.');
         });
 	});
 </script>
@@ -223,16 +238,6 @@ System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
 		 // Mostrar u ocultar filtros
         $('#filterByDateAprobados').change(function() {
             $('#dateFilterAprobados').toggle(this.checked);
-        });
-
-        $('#filterByAmountAprobados').change(function() {
-            $('#amountFilterAprobados').toggle(this.checked);
-        });
-
-        // Lógica de aplicar filtros (solo front-end, sin interacción con backend)
-        $('#applyFiltersAprobados').click(function() {
-            // Aquí puedes añadir la lógica para filtrar los datos en la tabla
-            alert('Filtros aplicados. Esto es solo el front-end.');
         });
 	});
 </script>
@@ -247,12 +252,6 @@ System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
 
         $('#filterByAmountRechazados').change(function() {
             $('#amountFilterRechazados').toggle(this.checked);
-        });
-
-        // Lógica de aplicar filtros (solo front-end, sin interacción con backend)
-        $('#applyFiltersRechazados').click(function() {
-            // Aquí puedes añadir la lógica para filtrar los datos en la tabla
-            alert('Filtros aplicados. Esto es solo el front-end.');
         });
 	});
 </script>

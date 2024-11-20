@@ -1,10 +1,21 @@
 /* ESTILOS GENERALES */
-body {
+
+html, body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
+    height: 100%;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+
 
 /* NAVBAR */
 .navbar {
@@ -49,36 +60,46 @@ body {
 
 /* DASHBOARD HEADER */
 .dashboard-header {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-bottom: none;
     text-align: center;
-    padding: 20px;
-    background-color: #3a7bd5;
-    color: white;
+    margin-bottom: 0;
+    height: auto; /* Elimina la altura fija */
+    display: block; /* Asegura que el contenido ocupe solo el espacio necesario */
 }
 
 .dashboard-header h2 {
-    margin: 0;
-    font-size: 24px;
+    font-size: 24px; /* Tamaño del título */
+    margin: 10px 0; /* Espaciado más ajustado */
+    color: #343a40; /* Color oscuro para contraste */
+}
+
+.dashboard-header p {
+    font-size: 16px; /* Reducir tamaño del texto descriptivo */
+    margin: 5px 0; /* Reducir espacio adicional */
+    color: #6c757d; /* Color gris suave */
 }
 
 /* DASHBOARD CONTENT */
 .dashboard-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 20px;
+    display: flex; /* Disposición de las tarjetas */
+    flex-wrap: wrap; /* Adaptar al ancho disponible */
+    justify-content: center; /* Centrar las tarjetas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    padding: 20px; /* Espaciado interno del contenido */
 }
 
-/* TARJETAS DE ACCESO R�PIDO */
 .dashboard-card {
-    background-color: white;
-    width: 250px;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
+    width: 250px; /* Ajustar el tamaño de las tarjetas */
+    padding: 15px; /* Espaciado interno de las tarjetas */
+    border: 1px solid #ddd; /* Borde claro */
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center; /* Centrar contenido */
+    cursor: pointer; /* Indicar clickeable */
+    background-color: #fff; /* Fondo blanco */
+    transition: transform 0.2s, box-shadow 0.2s; /* Animación al pasar el mouse */
 }
 
 .dashboard-card h3 {
@@ -91,7 +112,20 @@ body {
 }
 
 .dashboard-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Ampliar ligeramente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    background-color: #007bff; /* Color de fondo similar al nav (bg-primary) */
+    color: #fff; /* Cambiar el color del texto a blanco */
+}
+
+/* Estilo del título cuando el hover está activo */
+.dashboard-card:hover h3 {
+    color: #fff; /* Cambiar el color del título a blanco */
+}
+
+/* Estilo del párrafo cuando el hover está activo */
+.dashboard-card:hover p {
+    color: #f8f9fa; /* Cambiar el color del párrafo a un gris claro */
 }
 
 /* Login Container */
@@ -229,7 +263,7 @@ body {
     background-color: #5a6268;
 }
 
-/* Contenedor para la Gesti�n de Cuentas */
+/* Contenedor para la Gestión de Cuentas */
 .account-management-container{
     max-width: 1200px;
     margin: 2rem auto;
@@ -239,13 +273,52 @@ body {
     background-color: #f8f9fa;
 }
 
-.account-cliente-principal{
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
+.accounts-container {
+    display: flex; /* Activar Flexbox */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten si no caben en una sola línea */
+    gap: 20px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centrar las cuentas */
+}
+
+.account-cliente-principal {
+    width: 250px; /* Ancho de las tarjetas */
+    margin: 0; /* Eliminar márgenes exteriores */
+    padding: 1.5rem; /* Ajuste del padding para una mejor disposición */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #f8f9fa; /* Fondo suave */
+    text-align: left; /* Alinear los textos a la izquierda para mayor claridad */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animación para el hover */
+}
+
+.account-cliente-principal h2 {
+    font-size: 1.5rem; /* Tamaño de fuente ajustado */
+    color: #4a90e2; /* Color suave para el título */
+    margin-bottom: 0.5rem; /* Separación con el siguiente texto */
+    font-weight: 600; /* Peso de fuente moderado */
+}
+
+.account-cliente-principal h3 {
+    font-size: 1rem; /* Fuente más pequeña y ligera */
+    color: #666; /* Gris suave para los subtítulos */
+    margin: 0.25rem 0; /* Espaciado vertical */
+    font-weight: 400; /* Peso de fuente normal */
+}
+
+.account-cliente-principal a.btn-aprobar {
+    display: inline-block;
+    padding: 0.5rem 1rem; /* Padding adecuado para el botón */
+    background-color: #5cb85c; /* Fondo verde suave */
+    color: #fff; /* Texto blanco */
+    text-decoration: none; /* Sin subrayado */
+    border-radius: 4px; /* Esquinas redondeadas */
+    font-size: 0.9rem; /* Tamaño de fuente del botón */
+    font-weight: 500; /* Peso de fuente moderado */
+    transition: background-color 0.3s ease; /* Animación suave en hover */
+}
+
+.account-cliente-principal a.btn-aprobar:hover {
+    background-color: #4cae4c; /* Cambio de color al pasar el mouse */
 }
 
 .client-management-container{
@@ -730,4 +803,6 @@ body {
     border-radius: 5px;
     text-align: center;
 }
+
+
  

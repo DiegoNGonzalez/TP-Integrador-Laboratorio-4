@@ -9,10 +9,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<link rel="stylesheet" type="text/css" href="css/styles2.css">
 <title>Home</title>
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+		crossorigin="anonymous">
+</script>
 </head>
-<body>
+<body class="d-flex flex-column vh-100 overflow-hidden">
 
 <jsp:include page="nav.jsp" />
 <!-- Contenido del Dashboard -->
@@ -21,12 +30,15 @@
     if (cliente != null) {
         String nombreCliente = cliente.getNombre(); // ObtÃ©n el nombre del cliente
 %>
-<div class="dashboard-header">
-    <h2>Bienvenido, <%= nombreCliente %></h2>
+<div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center overflow-hidden">
+    <div class="text-center mb-4">
+        <h2>Bienvenido, <%= nombreCliente %></h2>
+    </div>
 </div>
-
 <% } %>
 
+<!-- Sección de Cuentas del Cliente -->
+<div class="row mt-4">
 <% 
     ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
     Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
@@ -34,38 +46,57 @@
     while (iteradorCuentas.hasNext()) {
         Cuenta cuenta = iteradorCuentas.next();
 %>
-
-<div class="account-cliente-principal">
-		<h2 class="edit-title"><%= cuenta.getTipoCuenta().getTipo() %> - $<%= cuenta.getSaldo() %>.-</h2>
-		<h3>Número de cuenta: <%= cuenta.getNumeroCuenta() %></h3>
-		<h3>CBU: <%= cuenta.getCbu() %></h3>
-		<div>
-			<a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" class="btn-aprobar">Ver detalle</a>
-		</div>
-</div>
-       
+    <!-- Card para cada cuenta -->
+    <div class="col-12 col-md-4 mb-4">
+        <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta'">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <h5 class="card-title text-center"><%= cuenta.getTipoCuenta().getTipo() %> - $<%= cuenta.getSaldo() %>.-</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Número de cuenta: <%= cuenta.getNumeroCuenta() %></h6>
+                <p class="card-text text-center">CBU: <%= cuenta.getCbu() %></p>
+                <a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" 
+                   class="btn btn-primary w-100">Ver detalle</a>
+            </div>
+        </div>
+    </div>
 <% 
     } 
 %>
+</div>
 
-<div class="dashboard-content">
- <!--    <div class="dashboard-card" onclick="window.location.href='MisCuentas.jsp'">
-        <h3>Mis cuentas</h3>
-        <p>Gestiona tus cuentas</p>
-    </div> -->
-    <div class="dashboard-card" onclick="window.location.href='ListarPrestamosServlet'">
-        <h3>Mis prestamos</h3>
-        <p>Gestiona tus prestamos</p>
+<div class="dashboard-content mt-5">
+    <div class="row">
+        <!-- Card 1: Mis Préstamos -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='ListarPrestamosServlet'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title text-center">Mis préstamos</h5>
+                    <p class="card-text text-center">Gestiona tus préstamos</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 2: Mi Perfil -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='PerfilCliente.jsp'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title text-center">Mi perfil</h5>
+                    <p class="card-text text-center">Ver mis datos personales</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card 3: Transferencias -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" 
+                 onclick="window.location.href='TransferenciasServlet?idUsuario=<%= cliente.getUsuario().getId() %>&action=dashboardCliente'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title text-center">Transferencias</h5>
+                    <p class="card-text text-center">Realizar nueva transferencia</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="dashboard-card" onclick="window.location.href='PerfilCliente.jsp'">
-        <h3>Mi perfil</h3>
-        <p>Ver mis datos personales</p>
-    </div>
-<div class="dashboard-card" 
-    onclick="window.location.href='TransferenciasServlet?idUsuario=<%= cliente.getUsuario().getId() %>&action=dashboardCliente'">
-    <h3>Transferencias</h3>
-    <p>Realizar nueva transferencia</p>
 </div>
-</div>
+<jsp:include page="Footer.jsp" />
 </body>
 </html>

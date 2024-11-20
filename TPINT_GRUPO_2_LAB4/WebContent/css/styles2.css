@@ -1,0 +1,15 @@
+ /* Estilo para las cards al pasar el mouse */
+ .dashboard-card:hover {
+ 	background-color: #007bff;  /* Color similar al de la navbar */
+    color: #ffffff;  /* Cambio de color del texto */
+ }
+
+  /* Estilo para los títulos dentro de las cards */
+.dashboard-card:hover .card-title {
+	color: #ffffff;  /* Cambio de color del título cuando se pasa el mouse */
+}
+
+/* Estilo para los textos dentro de las cards */
+.dashboard-card:hover .card-text {
+    color: #e0e0e0;  /* Cambio de color del texto dentro de la card */
+}

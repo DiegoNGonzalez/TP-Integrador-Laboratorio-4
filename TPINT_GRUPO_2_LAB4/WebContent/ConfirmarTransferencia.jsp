@@ -1,3 +1,4 @@
+<%@ page import="entidades.Cuenta" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,11 +9,10 @@
 <title>Nueva transferencia</title>
 </head>
 <body>
-<% Long cbuOrigen = Long.parseLong(request.getAttribute("cbuOrigen").toString());
-Long cbuDestino = Long.parseLong(request.getAttribute("cbuDestino").toString());
-Float monto = Float.parseFloat(request.getAttribute("monto").toString());
+<% Cuenta cuentaOrigen = (Cuenta) request.getAttribute("cuentaOrigen");
+Float monto = Float.parseFloat(request.getParameter("monto").toString());
+Cuenta cuentaDestino = (Cuenta) request.getAttribute("cuentaDestino");
 String concepto = request.getAttribute("concepto").toString();
-
 %>
 
 	<%-- Incluir el menú de navegación desde nav.jsp --%>
@@ -22,13 +22,13 @@ String concepto = request.getAttribute("concepto").toString();
 		<form action="confirmarTransferenciaServlet" method="post">
 		<!-- cuenta origen -->
 			<div class="form-group">
-				<label class="form-label" for="cbuOrigen">CBU cuenta a debitar: <%= cbuOrigen %> </label>
-				<input type="hidden" name="cbuOrigen" value="<%= cbuOrigen %>">
+				<label class="form-label" for="cuenta">Cuenta a debitar: <%= cuentaOrigen.getNumeroCuenta() %> </label>
+				<input type="hidden" name="cuenta" value="<%= cuentaOrigen.getIdCuenta() %>">
 			</div>
 			<!-- cuenta destino -->
 			<div class="form-group">
-				<label class="form-label" for="cbuDestino">CBU cuenta destino: <%= cbuDestino %></label>
-				<input type="hidden" name="cbuDestino" value="<%= cbuDestino%>">
+				<label class="form-label" for="cuentaDestino">Cuenta desitno: <%= cuentaDestino.getNumeroCuenta() %></label>
+				<input type="hidden" name="cuentaDestino" value="<%= cuentaDestino.getIdCuenta() %>">
 			</div>
 			<!-- concepto -->
 			<div class="form-group">

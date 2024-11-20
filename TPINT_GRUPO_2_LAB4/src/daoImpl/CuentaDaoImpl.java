@@ -260,7 +260,7 @@ public class CuentaDaoImpl implements CuentaDao{
     }
 
 	
-	public void ejecutarSPTransferencia(long cbuOrigen, long cbuDestino, float monto, String concepto) throws SQLException
+	public void ejecutarSPTransferencia(long cbuDestino, long cbuOrigen, float monto, String concepto) throws SQLException
 	{
 		  try
 		  {

@@ -36,12 +36,11 @@
 %>
 
 <div class="account-cliente-principal">
-		<h2 class="edit-title"><%= cuenta.getTipoCuenta().getTipo() %> $ <%= cuenta.getSaldo() %> .-</h2>
+		<h2 class="edit-title"><%= cuenta.getTipoCuenta().getTipo() %> - $<%= cuenta.getSaldo() %>.-</h2>
+		<h3>Número de cuenta: <%= cuenta.getNumeroCuenta() %></h3>
 		<h3>CBU: <%= cuenta.getCbu() %></h3>
-		<h3>Saldo: $ <%= cuenta.getSaldo() %></h3>
 		<div>
 			<a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" class="btn-aprobar">Ver detalle</a>
-
 		</div>
 </div>
        

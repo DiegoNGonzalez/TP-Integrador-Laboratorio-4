@@ -13,3 +13,60 @@
 .dashboard-card:hover .card-text {
     color: #e0e0e0;  /* Cambio de color del texto dentro de la card */
 }
+
+ /* Estilo para las cards al pasar el mouse */
+ .dashboard-card:hover {
+ 	background-color: #007bff;  /* Color similar al de la navbar */
+    color: #ffffff;  /* Cambio de color del texto */
+ }
+
+  /* Estilo para los títulos dentro de las cards */
+.dashboard-card:hover .card-title {
+	color: #ffffff;  /* Cambio de color del título cuando se pasa el mouse */
+}
+
+/* Estilo para los textos dentro de las cards */
+.dashboard-card:hover .card-text {
+    color: #e0e0e0;  /* Cambio de color del texto dentro de la card */
+}
+
+#misPrestamos.table {
+    background-color: transparent !important; /* Elimina el fondo de la tabla */
+}
+
+#misPrestamos td.estado {
+    padding: 0 !important;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+#misPrestamos td.estado > span {
+    display: block;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    height: 100%; /* Asegurar altura completa */
+    line-height: normal; /* Mantener alineación vertical */
+}
+
+#misPrestamos .estado-aprobado {
+    background-color: #28a745 !important; /* Verde para aprobado */
+    color: white !important;
+}
+
+#misPrestamos .estado-pendiente {
+    background-color: #ffc107 !important; /* Amarillo para pendiente */
+    color: black !important;
+}
+
+#misPrestamos .estado-finalizado {
+    background-color: #6c757d !important; /* Gris para finalizado */
+    color: white !important;
+}
+
+#misPrestamos .estado-rechazado {
+    background-color: #dc3545 !important; /* Rojo para rechazado */
+    color: white !important;
+}

@@ -7,10 +7,19 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <title>Mis Préstamos</title>
+<link rel="stylesheet" type="text/css" href="css/styles2.css">
 </head>
 <body>
 <jsp:include page="nav.jsp" />
@@ -29,14 +38,13 @@
 %>
 
 
-<div class="client-management-container">
-    <a href="DashboardCliente.jsp" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
-        Volver
-    </a>
+<div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+    
     <h2>Listado de Préstamos</h2>
+    <div class="row"> 
     <form id="filterForm" action="FiltrosServlet" method="GET">
     <input type="hidden" name="action" value="filtrarMisPrestamos">
-    <div class="filter-container">
+    <div class="filter-container d-flex align-items-center gap-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDatePrestamos" name="filterByDate" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -59,12 +67,13 @@
             </div>
         </div>
         
-        <button type="submit" id="applyFilters" class="btn-apply">Aplicar Filtros</button>
-        <button type="button" id="clearFilters" class="btn-clean">Limpiar Filtros</button>
+        <button type="submit" id="applyFilters" class="btn btn-primary m-2">Aplicar Filtros</button>
+        <button type="button" id="clearFilters" class="btn btn-danger m-2" >Limpiar Filtros</button>
     </div>
     </form>
-    <table id="misPrestamos" class="client-table">
-        <thead>
+    </div>
+    <table id="misPrestamos" class="table table-striped">
+        <thead class="table-dark" >
             <tr>
                 <th>Fecha de solicitud</th>
                 <th>Monto solicitado</th>
@@ -99,10 +108,10 @@
         prestamo.getEstado().equals("Pendiente") ? "Pendiente" : prestamo.getEstado().equals("Finalizado") ? "Finalizado" : "Rechazado"
     %>
 </td>
-               <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>
+               <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn btn-info">Detalle</a></td>
                                 <td>
                     <% if (prestamo.getEstado().equals("Activo")) { %>
-                        <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn-pagar">
+                        <a href="BuscarCuotasServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos&action=listarPendientes" class="btn btn-success">
     					Pagar cuota
 						</a>
                     <% } %>
@@ -118,10 +127,12 @@
 
     </table>
   
-    <div class="solicitar-prestamo-container">
-        <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=<%= cliente.getIdCliente() %>" class="btn-solicitar">Solicitar Préstamo</a>
+    <div class="col-12 d-flex justify-content-center">
+        <a href="CargarDesplegablesServlet?action=cargarCuentasCliente&idCliente=<%= cliente.getIdCliente() %>" class="btn btn-success m-2">Solicitar Nuevo Préstamo</a>
+        <a href="DashboardCliente.jsp" class="btn btn-primary m-2"> Volver </a>
     </div>
 </div>
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     // Mostrar u ocultar filtros según los checkboxes
@@ -143,7 +154,7 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#prestamosRechazados').DataTable();
+		$('#misPrestamos').DataTable();
 		 // Mostrar u ocultar filtros
         $('#filterByDateRechazados').change(function() {
             $('#dateFilterRechazados').toggle(this.checked);

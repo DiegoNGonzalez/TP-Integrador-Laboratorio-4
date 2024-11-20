@@ -14,7 +14,7 @@
 <jsp:include page="nav.jsp" />
     <div class="account-container">
         <h2 class="edit-title">Menú de Pago de Préstamos</h2>
-        
+        <form action="PagarPrestamoServlet" method="post">
             <!-- Selección de cuota a pagar -->
             <div class="form-group">
         <label class="form-label" for="cuota">Cuotas Pendientes de Pago:</label>
@@ -48,7 +48,7 @@
             				if (listaCuentas != null && !listaCuentas.isEmpty()) {
                 				for (Cuenta cuenta : listaCuentas) {
         			%>
-        				<option value="<%= cuenta.getTipoCuenta() %>">Cuenta - <%= cuenta.getNumeroCuenta() %></option>
+        				<option value="<%= cuenta.getIdCuenta() %>">Cuenta - <%= cuenta.getNumeroCuenta() %></option>
         			<%      }
             			} else {
         			%>
@@ -59,14 +59,13 @@
             
             <!-- Botones de acción -->
 <div class="back-button-container" style="display: flex; align-items: center; justify-content: center;">
-    <button type="submit" class="btn-save" style="width: auto; padding: 10px 15px; margin-right: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        Pagar Cuota
-    </button>
+    <input type="submit" value="Pagar cuota"class="btn-save" style="width: auto; padding: 10px 15px; margin-right: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        
     <a href="ListarPrestamosServlet" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
         Volver
     </a>
 </div>
-
+</form>
     </div>
 </body>
 </html>

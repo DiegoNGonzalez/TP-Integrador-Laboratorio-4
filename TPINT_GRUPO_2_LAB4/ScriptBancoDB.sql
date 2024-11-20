@@ -693,3 +693,77 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE spPagarCuota(
+    IN p_IdCuota INT,
+    IN p_IdCuenta INT
+)
+BEGIN
+    DECLARE v_MontoCuota DECIMAL(10,2);
+    DECLARE v_IdTipoMovimiento INT;
+    DECLARE v_SaldoCuenta DECIMAL(10,2);
+
+    -- Obtenemos el monto de la cuota
+    SELECT montoPagado
+    INTO v_MontoCuota
+    FROM Cuotas
+    WHERE IdCuota = p_IdCuota;
+
+    -- Validamos que la cuota no esté ya pagada
+    IF EXISTS (
+        SELECT 1
+        FROM Cuotas
+        WHERE idCuota = p_IdCuota AND estadoPago = 1
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'La cuota ya está pagada';
+    END IF;
+
+    -- Obtenemos el saldo actual de la cuenta
+    SELECT Saldo
+    INTO v_SaldoCuenta
+    FROM Cuentas
+    WHERE idCuenta = p_IdCuenta;
+
+    -- Validamos que haya suficiente saldo
+    IF v_SaldoCuenta < v_MontoCuota THEN
+        SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Saldo insuficiente en la cuenta';
+    END IF;
+
+    -- Obtenemos el ID del tipo de movimiento para 'Pago de Préstamo'
+    SELECT idTipoMovimiento
+    INTO v_IdTipoMovimiento
+    FROM tiposMovimientos
+    WHERE tipoMovimiento = 'Pago de Préstamo';
+
+   
+    START TRANSACTION;
+
+    -- Actualizamos el estado de la cuota a pagada
+    UPDATE Cuotas
+    SET estadoPago = 1
+    WHERE idCuota = p_IdCuota;
+
+    -- Descontamos el monto del saldo de la cuenta
+    UPDATE Cuentas
+    SET Saldo = Saldo - v_MontoCuota
+    WHERE idCuenta = p_IdCuenta;
+
+    -- Registramos el movimiento negativo en la cuenta
+    INSERT INTO Movimientos (IdCuenta, idTipoMovimiento, importeMovimiento, Concepto, fechaMovimiento)
+    VALUES (
+        p_IdCuenta, 
+        v_IdTipoMovimiento, 
+        v_MontoCuota, 
+        'Pago cuota préstamo', 
+        NOW()
+    );
+
+    
+    COMMIT;
+END$$
+
+DELIMITER ;

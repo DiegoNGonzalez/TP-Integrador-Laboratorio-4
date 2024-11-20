@@ -24,4 +24,5 @@ public interface CuotaDao {
     public ArrayList<Cuota> obtenerCuotasPendientes(int idPrestamo);
     public boolean actualizarEstadoCuota(int idCuota, boolean estado);
     */
+    public String pagarCuotaSP(int idCuota, int idCuenta);
 }

@@ -448,12 +448,12 @@ public class CuentaDaoImpl implements CuentaDao{
 	            double montoNegativo = rs.getDouble("Saldo Negativo");
 	            double montoTotal = rs.getDouble("Saldo del Mes");
 
-	            // Formatear los valores numéricos a cadenas con 2 decimales y reemplazar coma por punto
+	            
 	            String saldoPositivo = String.format("%.2f", montoPositivo).replace(',', '.');
 	            String saldoNegativo = String.format("%.2f", montoNegativo).replace(',', '.');
 	            String saldoMes = String.format("%.2f", montoTotal).replace(',', '.');
 
-	            // Construir una representación en texto para el ArrayList
+	            
 	            String lineaReporte = String.format(
 	                " %d, %d, %d, $ %s, $ %s, $ %s",
 	                anio, mes, totalMovimientos, saldoPositivo, saldoNegativo, saldoMes

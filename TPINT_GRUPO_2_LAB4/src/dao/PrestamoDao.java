@@ -23,4 +23,6 @@ public interface PrestamoDao {
 	public int ultimoID();
 	
 	ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo, int idCliente);
+	
+	public ArrayList<String> generarReportePrestamos(Date fechaInicio, Date fechaFin);
 }

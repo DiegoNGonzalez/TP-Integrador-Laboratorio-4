@@ -99,4 +99,10 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 		return auxPrestamo.filtrarPrestamos(fechaInicio, fechaFin, montoMinimo, montoMaximo, idCliente);
 	}
 
+	@Override
+	public ArrayList<String> generarReportePrestamos(Date fechaInicio, Date fechaFin) {
+		ArrayList<String> reporte= auxPrestamo.generarReportePrestamos(fechaInicio, fechaFin);
+		return reporte;
+	}
+
 }

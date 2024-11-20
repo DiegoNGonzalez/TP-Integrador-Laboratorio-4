@@ -340,4 +340,64 @@ public class PrestamoDaoImpl implements PrestamoDao{
 
 	    return prestamosFiltrados;
 	}
+
+	@Override
+	public ArrayList<String> generarReportePrestamos(Date fechaInicio, Date fechaFin) {
+		ArrayList<String> reporte = new ArrayList<>();
+        ResultSet rs = null;
+
+        
+        String query = "SELECT " +
+                "    p.idPrestamo AS `ID Prestamo`, " +
+                "    CONCAT(c.nombre, ' ', c.apellido) AS Cliente, " +
+                "    p.importePrestamo AS `Monto Solicitado`, " +
+                "    (p.importePrestamo - COALESCE(SUM(CASE WHEN q.estadoPago = 1 THEN q.montoPagado ELSE 0 END), 0)) AS `Monto Pendiente`, " +
+                "    p.fechaAltaPrestamo AS `Fecha de Solicitud` " +
+                "FROM Prestamos p " +
+                "INNER JOIN Clientes c ON p.idCliente = c.idCliente " +
+                "LEFT JOIN Cuotas q ON p.idPrestamo = q.idPrestamo " +
+                "WHERE p.fechaAltaPrestamo BETWEEN ? AND ? " +
+                "GROUP BY p.idPrestamo, c.nombre, c.apellido, p.importePrestamo, p.fechaAltaPrestamo " +
+                "ORDER BY p.fechaAltaPrestamo DESC;";
+
+        try (Connection conexion = Conexion.getConnection();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+
+            
+            statement.setDate(1, new java.sql.Date(fechaInicio.getTime()));
+            statement.setDate(2, new java.sql.Date(fechaFin.getTime()));
+
+           
+            rs = statement.executeQuery();
+
+            
+            while (rs.next()) {
+                int idPrestamo = rs.getInt("ID Prestamo");
+                String cliente = rs.getString("Cliente");
+                double montoSolicitado = rs.getDouble("Monto Solicitado");
+                double montoPendiente = rs.getDouble("Monto Pendiente");
+                Date fechaSolicitud = rs.getDate("Fecha de Solicitud");
+
+                
+                String montoSolicitadoStr = String.format("%.2f", montoSolicitado).replace(',', '.');
+                String montoPendienteStr = String.format("%.2f", montoPendiente).replace(',', '.');
+
+                
+                String fechaSolicitudStr = new java.text.SimpleDateFormat("yyyy-MM-dd").format(fechaSolicitud);
+
+                
+                String lineaReporte = String.format(
+                        "%d, %s, $%s,  $%s,  %s",
+                        idPrestamo, cliente, montoSolicitadoStr, montoPendienteStr, fechaSolicitudStr
+                );
+
+                
+                reporte.add(lineaReporte);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reporte;
+	}
 }

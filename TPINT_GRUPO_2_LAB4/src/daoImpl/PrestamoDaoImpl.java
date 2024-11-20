@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import dao.PrestamoDao;
 import entidades.Cliente;
@@ -278,6 +279,65 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	    return -1; // Retornar -1 si no se encuentra un ID valido.
 	}
 
+	@Override
+	public ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo, int idCliente){
+		ArrayList<Prestamo> prestamosFiltrados = new ArrayList<>();
+	    String query = "SELECT DISTINCT p.idPrestamo, p.idCliente, p.idCuenta, p.fechaAltaPrestamo, " +
+	                   "p.importePrestamo, p.mesesPlazo, p.importeCuota, p.cantidadCuotas, p.EstadoPrestamo " +
+	                   "FROM prestamos p WHERE 1=1 ";
 
+	    ArrayList<Object> parametros = new ArrayList<>();
+	    
+	    // Filtro por fecha
+	    if (fechaInicio != null && fechaFin != null) {
+	        query += " AND p.fechaAltaPrestamo BETWEEN ? AND ? ";
+	        parametros.add(fechaInicio);
+	        parametros.add(fechaFin);
+	    }
 
+	    // Filtro por importe
+	    if (montoMinimo != null && montoMaximo != null) {
+	        query += " AND p.importePrestamo BETWEEN ? AND ? ";
+	        parametros.add(montoMinimo);
+	        parametros.add(montoMaximo);
+	    }
+	    
+	    if (idCliente > 0) {
+	        query += " AND p.idCliente = ? ";
+	        parametros.add(idCliente);
+	    }
+
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+
+	        // Establecer parámetros
+	        for (int i = 0; i < parametros.size(); i++) {
+	            statement.setObject(i + 1, parametros.get(i));
+	        }
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            while (resultSet.next()) {
+	                Prestamo prestamo = new Prestamo();
+	                prestamo.setIdPrestamo(resultSet.getInt("idPrestamo"));
+	                Cliente cliente = new Cliente();
+	                cliente.setIdCliente(idCliente);
+	                prestamo.setCliente(cliente);
+	                Cuenta cuenta = new CuentaDaoImpl().obtenerCuentaPorId(resultSet.getInt("idCuenta"));
+	                prestamo.setCuenta(cuenta);
+	                prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
+	                prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
+	                prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
+	                prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
+	                prestamo.setCantCuotas(resultSet.getInt("cantidadCuotas"));
+	                prestamo.setEstado(resultSet.getString("EstadoPrestamo"));
+
+	                prestamosFiltrados.add(prestamo);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return prestamosFiltrados;
+	}
 }

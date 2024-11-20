@@ -2,6 +2,7 @@ package negocioImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import daoImpl.PrestamoDaoImpl;
 import entidades.Prestamo;
@@ -91,6 +92,11 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 	@Override
 	public int ultimoID() {
 		return auxPrestamo.ultimoID();
+	}
+
+	@Override
+	public ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo, int idCliente) {
+		return auxPrestamo.filtrarPrestamos(fechaInicio, fechaFin, montoMinimo, montoMaximo, idCliente);
 	}
 
 }

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entidades.Cliente;
+import entidades.Cuota;
 import entidades.Prestamo;
 import negocio.PrestamoNegocio;
+import negocioImpl.CuotaNegocioImpl;
 import negocioImpl.PrestamoNegocioImpl;
 
 /**
@@ -37,10 +39,20 @@ public class ListarPrestamosServlet extends HttpServlet {
 		HttpSession session = request.getSession();
         Cliente cliente = (Cliente) session.getAttribute("Cliente");
         PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
+		CuotaNegocioImpl auxCuotaNegocio = new CuotaNegocioImpl();
 
         if (cliente != null) {
         	try {
 
+            ArrayList<Prestamo> prestamosVer = prestamoNegocio.listarPrestamosXCliente(cliente.getIdCliente());
+            for(Prestamo prestamo : prestamosVer){
+            	if(prestamo.getEstado().equals("Activo")) {
+            	ArrayList<Cuota> cuotasPendientes = auxCuotaNegocio.listarCuotasPendientesPorPrestamo(prestamo.getIdPrestamo());
+            	if(cuotasPendientes.size()==0) {
+            		prestamoNegocio.finalizarPrestamo(prestamo.getIdPrestamo());
+            	}
+            	}
+            }
             ArrayList<Prestamo> prestamos = prestamoNegocio.listarPrestamosXCliente(cliente.getIdCliente());
 
             request.setAttribute("prestamos", prestamos);

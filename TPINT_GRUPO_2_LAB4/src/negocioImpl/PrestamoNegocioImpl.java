@@ -99,4 +99,13 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 		return auxPrestamo.filtrarPrestamos(fechaInicio, fechaFin, montoMinimo, montoMaximo, idCliente);
 	}
 
+	@Override
+	public boolean finalizarPrestamo(int idPrestamo) {
+		if(auxPrestamo.finalizarPrestamo(idPrestamo)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

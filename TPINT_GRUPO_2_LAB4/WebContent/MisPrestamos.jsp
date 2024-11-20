@@ -30,6 +30,9 @@
 
 
 <div class="client-management-container">
+    <a href="DashboardCliente.jsp" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+        Volver
+    </a>
     <h2>Listado de Préstamos</h2>
     <form id="filterForm" action="FiltrosServlet" method="GET">
     <input type="hidden" name="action" value="filtrarMisPrestamos">
@@ -65,7 +68,6 @@
             <tr>
                 <th>Fecha de solicitud</th>
                 <th>Monto solicitado</th>
-                <th>Monto a abonar</th>
                 <th>Cuotas</th>
                 <th>Estado</th>
                 <th></th>
@@ -88,14 +90,13 @@
                     %>
                 </td>
                 <td>$<%= prestamo.getImporteTotal() %></td>
-                <td>$<%= prestamo.getImporteTotal() %></td>
                 <td><%= prestamo.getCantCuotas() %></td>
 <td class="estado 
     <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : "estado-rechazado" %>">
+        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : prestamo.getEstado().equals("Finalizado") ? "estado-aprobado" : "estado-rechazado"%>">
     <%= 
         prestamo.getEstado().equals("Activo") ? "Aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : "Rechazado" 
+        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : prestamo.getEstado().equals("Finalizado") ? "Finalizado" : "Rechazado"
     %>
 </td>
                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>

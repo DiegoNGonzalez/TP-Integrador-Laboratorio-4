@@ -32,6 +32,9 @@
 <%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
 <div class="management-container">
+    <a href="DashboardAdmin.jsp" class="btn-volver" style="width: auto; margin-top: 10px; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+        Volver
+    </a>
     <h1>Gestion Prestamos</h1>
     <br>
     <h2>Prestamos pendientes de aprobación</h2>

@@ -13,8 +13,10 @@ import entidades.Cliente;
 import entidades.Cuenta;
 import entidades.Cuota;
 import entidades.Prestamo;
+import negocio.PrestamoNegocio;
 import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.CuotaNegocioImpl;
+import negocioImpl.PrestamoNegocioImpl;
 
 /**
  * Servlet implementation class BuscarCuotasServlet
@@ -40,10 +42,14 @@ public class BuscarCuotasServlet extends HttpServlet {
 		Integer idCliente = cliente.getIdCliente(); //captura su id
 		String action = request.getParameter("action");
 		CuotaNegocioImpl auxCuotaNegocio = new CuotaNegocioImpl();
+		PrestamoNegocio prestamoNeg = new PrestamoNegocioImpl();
 		
 		if ("listarPendientes".equals(action)) {
 	        // Obtener las cuotas pendientes de un préstamo específico
 	        ArrayList<Cuota> cuotasPendientes = auxCuotaNegocio.listarCuotasPendientesPorPrestamo(prestamoId);
+	        if(cuotasPendientes.size() == 0) {
+	        	prestamoNeg.finalizarPrestamo(prestamoId);
+	        }
 	        request.setAttribute("cuotasPendientes", cuotasPendientes);
 	        //request.getRequestDispatcher("PagoPrestamo.jsp").forward(request, response);
 	    }

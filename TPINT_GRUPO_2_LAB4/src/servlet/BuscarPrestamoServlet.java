@@ -51,7 +51,15 @@ public class BuscarPrestamoServlet extends HttpServlet {
 	            .sum(); //suma todos los montos de cuotas pendientes y lo guarda en montoAdeudado
 	        
 	        float montoFinal = prestamo.getImporteTotal();
-
+	        float montoAbonado = 0;
+	        if("Activo".equals(prestamo.getEstado()) || "Finalizado".equals(prestamo.getEstado()) ) {
+	        	if(cuotasPagadas == 0) {
+	        		montoAbonado = 0;
+	        	}else {	
+	        		montoAbonado = montoFinal - montoAdeudado;
+	        	}
+	        }
+	        request.setAttribute("montoAbonado", montoAbonado);
 	        request.setAttribute("prestamo", prestamo);
 	        request.setAttribute("cuotasPagadas", cuotasPagadas);
 	        request.setAttribute("cuotasPendientes", cuotasPendientes);

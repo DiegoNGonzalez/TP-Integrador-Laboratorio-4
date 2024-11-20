@@ -29,6 +29,9 @@
 </div>
 <!-- Tabla de Clientes -->
 <div class="client-management-container">
+    <a href="DashboardAdmin.jsp" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+        Volver
+    </a>
     <h2>Clientes</h2>
     <table id="clientTable" class="client-table">
         <thead>

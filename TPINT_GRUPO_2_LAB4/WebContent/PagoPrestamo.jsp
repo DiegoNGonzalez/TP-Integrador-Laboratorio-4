@@ -48,7 +48,9 @@
             				if (listaCuentas != null && !listaCuentas.isEmpty()) {
                 				for (Cuenta cuenta : listaCuentas) {
         			%>
-        				<option value="<%= cuenta.getIdCuenta() %>">Cuenta - <%= cuenta.getNumeroCuenta() %></option>
+        				<option value="<%= cuenta.getIdCuenta() %>">
+        				Cuenta - <%= cuenta.getNumeroCuenta() %> - Saldo: $<%= cuenta.getSaldo()%>
+        				</option>
         			<%      }
             			} else {
         			%>

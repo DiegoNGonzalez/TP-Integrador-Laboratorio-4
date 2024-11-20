@@ -51,7 +51,8 @@ public class PagarPrestamoServlet extends HttpServlet {
 		CuotaNegocio cuotaNegocio= new CuotaNegocioImpl();
 		String mensaje=cuotaNegocio.pagarCuotaSP(idCuota, idCuenta);
 		if(mensaje=="La cuota se pagó exitosamente.") {
-			response.sendRedirect("BuscarCuentaServlet?cuentaId="+idCuenta+"&action=detalleCuenta");
+			//response.sendRedirect("BuscarCuentaServlet?cuentaId="+idCuenta+"&action=detalleCuenta");
+			response.sendRedirect("ListarPrestamosServlet");
 		}else {
 			request.setAttribute("errorMsj", mensaje);
             request.getRequestDispatcher("Error.jsp").forward(request, response);

@@ -1,15 +1,26 @@
- /* Estilo para las cards al pasar el mouse */
- .dashboard-card:hover {
- 	background-color: #007bff;  /* Color similar al de la navbar */
-    color: #ffffff;  /* Cambio de color del texto */
- }
-
-  /* Estilo para los títulos dentro de las cards */
-.dashboard-card:hover .card-title {
-	color: #ffffff;  /* Cambio de color del título cuando se pasa el mouse */
+/* Efecto de hover para las cards */
+.dashboard-card {
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-/* Estilo para los textos dentro de las cards */
-.dashboard-card:hover .card-text {
-    color: #e0e0e0;  /* Cambio de color del texto dentro de la card */
+/* Efecto de escala al pasar el mouse */
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+/* Colores de fondo al pasar el mouse */
+.dashboard-card.border-primary:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Azul */
+}
+
+.dashboard-card.border-success:hover {
+    background-color: rgba(40, 167, 69, 0.1); /* Verde */
+}
+
+.dashboard-card.border-warning:hover {
+    background-color: rgba(255, 193, 7, 0.1); /* Amarillo */
+}
+
+.dashboard-card.border-danger:hover {
+    background-color: rgba(220, 53, 69, 0.1); /* Rojo */
 }

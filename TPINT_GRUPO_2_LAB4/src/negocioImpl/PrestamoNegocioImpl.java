@@ -8,24 +8,22 @@ import daoImpl.PrestamoDaoImpl;
 import entidades.Prestamo;
 import negocio.PrestamoNegocio;
 
-public class PrestamoNegocioImpl implements PrestamoNegocio{
+public class PrestamoNegocioImpl implements PrestamoNegocio {
 
-    private PrestamoDaoImpl auxPrestamo;
+	private PrestamoDaoImpl auxPrestamo;
 
-    public PrestamoNegocioImpl() {
-        auxPrestamo = new PrestamoDaoImpl();
-    }
-    
+	public PrestamoNegocioImpl() {
+		auxPrestamo = new PrestamoDaoImpl();
+	}
+
 	@Override
 	public ArrayList<Prestamo> listarPrestamos() {
 		return auxPrestamo.listarPrestamos();
 	}
 
-	
-	
 	@Override
 	public boolean agregarPrestamo(Prestamo prestamo) {
-		if(auxPrestamo.agregarPrestamo(prestamo)) {
+		if (auxPrestamo.agregarPrestamo(prestamo)) {
 			return true;
 		} else {
 			return false;
@@ -34,7 +32,7 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 
 	@Override
 	public boolean bajarPrestamo(int id) {
-		if(auxPrestamo.bajarPrestamo(id)) {
+		if (auxPrestamo.bajarPrestamo(id)) {
 			return true;
 		} else {
 			return false;
@@ -80,28 +78,33 @@ public class PrestamoNegocioImpl implements PrestamoNegocio{
 	public void SP_AprobarPrestamo(Prestamo prestamo) throws SQLException {
 		try {
 			auxPrestamo.SP_AprobarPrestamo(prestamo);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
-		}finally {
-		}		
+		} finally {
+		}
 	}
-	
-	
+
 	@Override
 	public int ultimoID() {
 		return auxPrestamo.ultimoID();
 	}
 
 	@Override
-	public ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo, int idCliente) {
+	public ArrayList<Prestamo> filtrarPrestamos(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo,
+			int idCliente) {
 		return auxPrestamo.filtrarPrestamos(fechaInicio, fechaFin, montoMinimo, montoMaximo, idCliente);
 	}
 
 	@Override
+	public ArrayList<String> generarReportePrestamos(Date fechaInicio, Date fechaFin) {
+		ArrayList<String> reporte = auxPrestamo.generarReportePrestamos(fechaInicio, fechaFin);
+		return reporte;
+	}
+
+	@Override
 	public boolean finalizarPrestamo(int idPrestamo) {
-		if(auxPrestamo.finalizarPrestamo(idPrestamo)) {
+		if (auxPrestamo.finalizarPrestamo(idPrestamo)) {
 			return true;
 		} else {
 			return false;

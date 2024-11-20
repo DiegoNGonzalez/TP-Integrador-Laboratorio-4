@@ -176,4 +176,10 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	) {
 	    return cuentaDao.filtrarCuentas(fechaInicio, fechaFin, montoMinimo, montoMaximo);
 	}
+
+	@Override
+	public ArrayList<String> reporteMovimientosCuentas(Date fechaInicio, Date fechaFin) {
+		ArrayList<String> reporte= cuentaDao.reporteMovimientosCuentas(fechaInicio, fechaFin);
+		return reporte;
+	}
 }

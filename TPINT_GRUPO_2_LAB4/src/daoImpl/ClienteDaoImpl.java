@@ -31,7 +31,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        // Asignación de parámetros
+	        // Asignaciï¿½n de parï¿½metros
 	        statement.setInt(1, cliente.getUsuario().getId());
 	        statement.setString(2, cliente.getDni());
 	        statement.setString(3, cliente.getCuil());
@@ -46,7 +46,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	        statement.setInt(12, cliente.getLocalidad().getId()); 
 	        statement.setInt(13, cliente.getProvincia().getId()); 
 
-	        // Ejecuta la actualización y devuelve si al menos una fila fue afectada
+	        // Ejecuta la actualizaciï¿½n y devuelve si al menos una fila fue afectada
 	        int filas = statement.executeUpdate();
 	        return filas > 0;
 
@@ -103,7 +103,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        
-	        // Asignación de parámetros para actualizar los datos
+	        // Asignaciï¿½n de parï¿½metros para actualizar los datos
 	        statement.setString(1, cliente.getNombre());
 	        statement.setString(2, cliente.getApellido());
 	        statement.setString(3, cliente.getEmail());
@@ -111,7 +111,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	        statement.setString(5, cliente.getDireccion());
 	        statement.setInt(6, cliente.getIdCliente());
 	        
-	        // Ejecuta la actualización y verifica si fue exitosa
+	        // Ejecuta la actualizaciï¿½n y verifica si fue exitosa
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -194,7 +194,7 @@ public class ClienteDaoImpl implements ClienteDao{
 		  try
 		  {
 			 Connection conexion = Conexion.getConnection();
-			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente20"
+			 CallableStatement cst = conexion.prepareCall("CALL spAgregarCliente"
 			 		+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");			 
 		 			 
 			 cst.setString(1, cliente.getDni());
@@ -212,7 +212,7 @@ public class ClienteDaoImpl implements ClienteDao{
 			 cst.setString(13, usuario.getNombreUsuario());
 			 cst.setString(14, usuario.getPassword());
 			 //cst.setInt(15, usuario.getTipoUsuario().getId());
-			 cst.setInt(15, 1);
+			 cst.setInt(15, 2);
 			  			 
 			 cst.execute();
 			 conexion.close();
@@ -359,7 +359,7 @@ public class ClienteDaoImpl implements ClienteDao{
 			
 			int filasAfectadas=statement.executeUpdate();
 			if (filasAfectadas > 0) {
-                actualizada = true;  // Contraseña actualizada correctamente
+                actualizada = true;  // Contraseï¿½a actualizada correctamente
             }
 
 			

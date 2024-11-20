@@ -3,8 +3,11 @@ package daoImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import java.sql.CallableStatement;
 
 import dao.CuotaDao;
 import entidades.Cuota;
@@ -112,7 +115,7 @@ public class CuotaDaoImpl implements CuotaDao {
 		try (Connection conexion = Conexion.getConnection();
 				PreparedStatement statement = conexion.prepareStatement(query)) {
 
-			statement.setInt(2, idCuota);
+			statement.setInt(1, idCuota);
 
 			int filasAfectadas = statement.executeUpdate();
 
@@ -178,5 +181,26 @@ public class CuotaDaoImpl implements CuotaDao {
 
 	    return listaCuotasPendientes;
 	}
+
+	@Override
+	public String pagarCuotaSP(int idCuota, int idCuenta) {
+	    try (Connection conexion = Conexion.getConnection();
+	         CallableStatement cst = conexion.prepareCall("CALL spPagarCuota(?, ?)")) {
+
+	        cst.setInt(1, idCuota);
+	        cst.setInt(2, idCuenta);
+
+	        cst.execute(); // Ejecuta el procedimiento almacenado
+
+	        return "La cuota se pagó exitosamente."; // Mensaje de éxito si no hay excepciones
+	    } catch (SQLException e) {
+	        // Captura el mensaje del procedimiento almacenado
+	        String errorMessage = e.getMessage();
+	        System.err.println("Error al pagar cuota: " + errorMessage);
+	        return errorMessage; // Retorna el mensaje del error
+	    }
+	}
+
+
 
 }

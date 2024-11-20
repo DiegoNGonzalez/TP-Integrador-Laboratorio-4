@@ -15,8 +15,8 @@ public class Conexion {
 	
 	static {
         try {
-        	//Class.forName("com.mysql.jdbc.Driver");
-        	Class.forName("com.mysql.cj.jdbc.Driver"); 
+        	Class.forName("com.mysql.jdbc.Driver");
+        	//Class.forName("com.mysql.cj.jdbc.Driver"); 
         } catch (ClassNotFoundException e) {
             System.err.println("Error al cargar el driver JDBC: " + e.getMessage());
         }

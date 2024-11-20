@@ -1,3 +1,4 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -47,30 +48,43 @@
         <table id="reporte" class="account-table">
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th>Concepto</th>
-                    <th>Débitos</th>
-                    <th>Créditos</th>
-                    <th>Saldo</th>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Cantidad de Movimientos</th>
+                    <th>Saldo Positivo</th>
+                    <th>Saldo Negativo</th>
+                    <th>Saldo del Mes</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                
+    <% 
+        ArrayList<String> reporte = (ArrayList<String>) request.getAttribute("reporte");
+        if (reporte != null) {
+            for (String linea : reporte) {
+                String[] datos = linea.split(","); // Asume que los datos vienen en formato CSV
+    %>
                 <tr>
-                    <td>2024-10-01</td>
-                    <td>Pago de Préstamo</td>
-                    <td>$1,000.00</td>
-                    <td>$0.00</td>
-                    <td>$9,000.00</td>
+                    <td><%= datos[0] %></td>
+                    <td><%= datos[1] %></td>
+                    <td><%= datos[2] %></td>
+                    <td><%= datos[3] %></td>
+                    <td><%= datos[4] %></td>
+                    <td><%= datos[5] %></td>
+                    
                 </tr>
+    <%
+            }
+        } else {
+    %>
                 <tr>
-                    <td>2024-10-15</td>
-                    <td>Ingreso de Nómina</td>
-                    <td>$0.00</td>
-                    <td>$2,500.00</td>
-                    <td>$11,500.00</td>
+                    <td colspan="6">No hay datos para el rango de fechas seleccionado.</td>
                 </tr>
-            </tbody>
+    <%
+        }
+    %>
+</tbody>
+
         </table>
             <div class="back-button-container">
         <a href="DashboardAdmin.jsp" class="btn-volver">Volver</a>

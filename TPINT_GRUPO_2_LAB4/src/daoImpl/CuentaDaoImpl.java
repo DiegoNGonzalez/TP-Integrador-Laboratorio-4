@@ -414,5 +414,60 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	    return cuentasFiltradas;
 	}
+
+	@Override
+	public ArrayList<String> reporteMovimientosCuentas(Date fechaInicio, Date fechaFin) {
+	    ArrayList<String> reporte = new ArrayList<>();
+	    
+	    ResultSet rs = null;
+
+	    String query = "SELECT " +
+	            "YEAR(fechaMovimiento) AS `Año`, " +
+	            "MONTH(fechaMovimiento) AS `Mes`, " +
+	            "COUNT(*) AS `Cantidad de movimientos`, " +
+	            "SUM(CASE WHEN importeMovimiento > 0 THEN importeMovimiento ELSE 0 END) AS `Saldo Positivo`, " +
+	            "SUM(CASE WHEN importeMovimiento < 0 THEN importeMovimiento ELSE 0 END) AS `Saldo Negativo`, " +
+	            "SUM(importeMovimiento) AS `Saldo del Mes` " +
+	        "FROM movimientos " +
+	        "WHERE fechaMovimiento BETWEEN ? AND ? " +
+	        "GROUP BY YEAR(fechaMovimiento), MONTH(fechaMovimiento) " +
+	        "ORDER BY MONTH(fechaMovimiento) ASC;";
+
+	    try (Connection conexion = Conexion.getConnection();
+	             PreparedStatement statement = conexion.prepareStatement(query)){
+
+	        statement.setDate(1, new java.sql.Date(fechaInicio.getTime()));
+	        statement.setDate(2, new java.sql.Date(fechaFin.getTime()));
+	        rs = statement.executeQuery();
+
+	        while (rs.next()) {
+	            int anio = rs.getInt("Año");
+	            int mes = rs.getInt("Mes");
+	            int totalMovimientos = rs.getInt("Cantidad de movimientos");
+	            double montoPositivo = rs.getDouble("Saldo Positivo");
+	            double montoNegativo = rs.getDouble("Saldo Negativo");
+	            double montoTotal = rs.getDouble("Saldo del Mes");
+
+	            // Formatear los valores numéricos a cadenas con 2 decimales y reemplazar coma por punto
+	            String saldoPositivo = String.format("%.2f", montoPositivo).replace(',', '.');
+	            String saldoNegativo = String.format("%.2f", montoNegativo).replace(',', '.');
+	            String saldoMes = String.format("%.2f", montoTotal).replace(',', '.');
+
+	            // Construir una representación en texto para el ArrayList
+	            String lineaReporte = String.format(
+	                " %d, %d, %d, $ %s, $ %s, $ %s",
+	                anio, mes, totalMovimientos, saldoPositivo, saldoNegativo, saldoMes
+	            );
+
+	            reporte.add(lineaReporte);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return reporte;
+	}
+
+
 }
 

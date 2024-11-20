@@ -25,6 +25,7 @@ public interface CuentaNegocio {
 	public void ejecutarSPTransferencia(long cbuDestino, long cbuOrigen, float monto, String concepto) throws SQLException;
 	
 	ArrayList<Cliente> filtrarCuentas(Date fechaInicio, Date fechaFin, Float montoMinimo, Float montoMaximo);
+	public ArrayList<String> reporteMovimientosCuentas(Date fechaInicio, Date fechaFin);
 
 }
 

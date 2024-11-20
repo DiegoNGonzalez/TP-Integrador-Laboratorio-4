@@ -340,4 +340,21 @@ public class PrestamoDaoImpl implements PrestamoDao{
 
 	    return prestamosFiltrados;
 	}
+
+	@Override
+	public boolean finalizarPrestamo(int idPrestamo) {
+	    String query = "UPDATE prestamos SET EstadoPrestamo = 'Finalizado' WHERE idPrestamo = ?";
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        statement.setInt(1, idPrestamo);
+	        
+	        return statement.executeUpdate() > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 }

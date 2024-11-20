@@ -52,8 +52,12 @@ public class BuscarPrestamoServlet extends HttpServlet {
 	        
 	        float montoFinal = prestamo.getImporteTotal();
 	        float montoAbonado = 0;
-	        if("Activo".equals(prestamo.getEstado())) {
-	        	montoAbonado = montoFinal - montoAdeudado;
+	        if("Activo".equals(prestamo.getEstado()) || "Finalizado".equals(prestamo.getEstado()) ) {
+	        	if(cuotasPagadas == 0) {
+	        		montoAbonado = 0;
+	        	}else {	
+	        		montoAbonado = montoFinal - montoAdeudado;
+	        	}
 	        }
 	        request.setAttribute("montoAbonado", montoAbonado);
 	        request.setAttribute("prestamo", prestamo);

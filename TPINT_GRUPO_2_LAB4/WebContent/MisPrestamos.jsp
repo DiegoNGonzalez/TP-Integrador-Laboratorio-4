@@ -92,10 +92,10 @@
                 <td><%= prestamo.getCantCuotas() %></td>
 <td class="estado 
     <%= prestamo.getEstado().equals("Activo") ? "estado-aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : "estado-rechazado" %>">
+        prestamo.getEstado().equals("Pendiente") ? "estado-pendiente" : prestamo.getEstado().equals("Finalizado") ? "estado-aprobado" : "estado-rechazado"%>">
     <%= 
         prestamo.getEstado().equals("Activo") ? "Aprobado" : 
-        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : "Rechazado" 
+        prestamo.getEstado().equals("Pendiente") ? "Pendiente" : prestamo.getEstado().equals("Finalizado") ? "Finalizado" : "Rechazado"
     %>
 </td>
                <td><a href="BuscarPrestamoServlet?prestamoId=<%= prestamo.getIdPrestamo() %>&origen=MisPrestamos" class="btn-detalle">Detalle</a></td>

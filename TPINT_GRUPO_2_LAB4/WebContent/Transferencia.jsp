@@ -87,7 +87,8 @@
             <div class="form-check">
                 <input type="radio" id="cuentaTerceros" name="tipoCuentaDestino" value="terceros" 
                        onclick="mostrarDestino('terceros')" 
-                       <%= tieneUnaCuenta ? "checked" : "" %>>
+                       <%= tieneUnaCuenta ? "checked" : "" %>
+                       <%= "terceros".equals(request.getAttribute("tipoCuentaDestino")) ? "checked" : "" %> >
                 <label for="cuentaTerceros">Cuenta de terceros</label>
             </div>
         </div>

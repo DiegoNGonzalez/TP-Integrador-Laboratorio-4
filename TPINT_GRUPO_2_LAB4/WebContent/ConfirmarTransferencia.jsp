@@ -1,4 +1,5 @@
 <%@ page import="entidades.Cuenta" %>
+<%@ page import="entidades.Cliente" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,6 +14,7 @@
 Float monto = Float.parseFloat(request.getAttribute("monto").toString());
 Cuenta cuentaDestino = (Cuenta) request.getAttribute("cuentaDestino");
 String concepto = request.getAttribute("concepto").toString();
+Cliente clienteDestino = (Cliente) request.getAttribute("clienteDestino");
 %>
 
 	<%-- Incluir el menú de navegación desde nav.jsp --%>
@@ -29,6 +31,10 @@ String concepto = request.getAttribute("concepto").toString();
 			<div class="form-group">
 				<label class="form-label" for="cuentaDestino">Cuenta destino: <%= cuentaDestino.getNumeroCuenta() %></label>
 				<input type="hidden" name="cuentaDestino" value="<%= cuentaDestino.getIdCuenta() %>">
+			</div>
+						<!-- cuenta destino -->
+			<div class="form-group">
+				<label class="form-label" for="titularCuentaDestino">Titular cuenta destino: <%= clienteDestino.getNombre() %> <%= clienteDestino.getApellido() %></label>
 			</div>
 			<!-- concepto -->
 			<div class="form-group">

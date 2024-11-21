@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import entidades.Cliente;
 import entidades.Cuenta;
 import exceptions.ClienteNegocioException;
+import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 
 @WebServlet("/confirmarTransferenciaServlet")
@@ -30,12 +31,20 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 
 		int idCuentaDestino;
 		Cuenta cuentaDestino = new Cuenta();
+		Cliente clienteSesion = new Cliente(); 
 		int idCuentaOrigen = Integer.parseInt(request.getParameter("cuenta"));
 		Float monto = Float.parseFloat(request.getParameter("monto").toString());
 		String concepto = request.getParameter("concepto");
 
 		CuentaNegocioImpl cuentaNegocio = new CuentaNegocioImpl();
 		Cuenta cuentaOrigen = cuentaNegocio.obtenerCuentaPorId(idCuentaOrigen);
+		
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			clienteSesion = (Cliente) session.getAttribute("Cliente");
+		}
+		
+		ArrayList<Cuenta> listaCuentas = clienteSesion.getCuentas();
 
 		if (request.getParameter("confirmarTransferencia") != null) {
 
@@ -44,12 +53,10 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 
 			long cbuOrigen = cuentaOrigen.getCbu();
 			long cbuDestino = cuentaDestino.getCbu();
-
+			
 			try {
 				cuentaNegocio.ejecutarSPTransferencia(cbuDestino, cbuOrigen, monto, concepto);
-				HttpSession session = request.getSession(false);
 				if (session != null) {
-					Cliente clienteSesion = (Cliente) session.getAttribute("Cliente");
 					if (clienteSesion != null) {
 						int idCliente = clienteSesion.getIdCliente();
 						ArrayList<Cuenta> cuentasCliente = cuentaNegocio.obtenerCuentasPorCliente(idCliente);
@@ -73,31 +80,62 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 		}
 
 		long cbuTercero = 0;
-		boolean existeCbu = false;
 		String destino = request.getParameter("tipoCuentaDestino");
 		Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuentaSeleccionada");
 		request.setAttribute("cuentaOrigen", cuentaOrigen);
 		request.setAttribute("concepto", concepto);
 		request.setAttribute("monto", monto);
+		Cliente clienteDestino = new Cliente();
 
 		if (destino != null) {
 			if (destino.equals("propia")) {
 				idCuentaDestino = Integer.parseInt(request.getParameter("cbuDestinoPropio"));
 				cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);
+				clienteDestino = clienteSesion;
 			} else {
 				cbuTercero = Long.parseLong(request.getParameter("cbuTercero"));
 				cuentaDestino = cuentaNegocio.obtenerCuentaPorCbu(cbuTercero);
-				if (cuentaDestino.getIdCuenta() == -1) {
+				request.setAttribute("cbuTercero", cbuTercero);
+				request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
+				request.setAttribute("cuenta", idCuentaOrigen);
+				request.setAttribute("tipoCuentaDestino", "terceros");
+				idCuentaDestino = cuentaDestino.getIdCuenta();
+				System.out.println("idCuentaDestino: " + idCuentaDestino);
+				if (idCuentaDestino == -1) {			
 					request.setAttribute("errorCbu",
 							"El CBU ingresado no existe o no pertenece al banco. Por favor, ingrese otro CBU.");
-					request.setAttribute("cbuTercero", cbuTercero);
-					request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
-					request.setAttribute("cuenta", idCuentaOrigen);
 					request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);
 				}
+				else {
+					if (!cuentaDestino.getEstadoCuenta()) {
+					request.setAttribute("errorCbu",
+							"El CBU pertenece a una cuenta inactiva. Por favor, ingrese otro CBU.");
+					request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);					
+				}
+				else {
+				    boolean cuentaEsPropia = false;
+				    for (Cuenta cuenta : listaCuentas) {
+				        if (cuenta.getIdCuenta() == cuentaDestino.getIdCuenta()) {
+				            cuentaEsPropia = true;
+				            break; // Salimos del bucle al encontrar una coincidencia
+				        }
+				    }				    
+				    if (cuentaEsPropia) {
+						request.setAttribute("errorCbu",
+								"El CBU ingresado corresponde a una cuenta propia. Por favor, ingrese el CBU de un tercero.");
+						request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);				    	
+				    }
+				}
 			}
+				ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
+				int idClienteDestino = clienteNegocio.obtenerIdClientePorIdCuenta(idCuentaDestino);
+				System.out.println("idClienteDestino: " + idClienteDestino);
+				clienteDestino = clienteNegocio.obtenerClientePorId(idClienteDestino);
+			}			
 			request.setAttribute("cuentaDestino", cuentaDestino);
+			request.setAttribute("clienteDestino", clienteDestino);
 		}
+
 
 		if (request.getParameter("realizarTransferencia") != null) {
 			request.getRequestDispatcher("/ConfirmarTransferencia.jsp").forward(request, response);

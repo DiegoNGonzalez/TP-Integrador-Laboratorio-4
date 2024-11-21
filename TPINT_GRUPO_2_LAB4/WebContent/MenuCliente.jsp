@@ -28,9 +28,6 @@
 <jsp:include page="nav.jsp" />
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="DashboardAdmin.jsp" class="btn btn-primary">
-            Volver
-        </a>
         <h2 class="mx-auto mb-0">Gestión Clientes</h2>
     </div>
     <hr class="border-dark my-3">
@@ -39,7 +36,7 @@
 <!-- Tabla de Clientes -->
 <div class="table-responsive" style="overflow-x: auto;" >
 <div class="d-flex justify-content-between align-items-center mb-3">
-<a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn btn-primary">Agregar Nuevo Cliente</a>
+
 </div>
     <table id="clientTable" class="table table-striped " style="width:100%">
 <thead class="table-dark">
@@ -97,6 +94,12 @@
 %>
         </tbody>
     </table>
+    <div class="d-flex justify-content-center align-items-center mb-3">
+        <a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn btn-success m-2">Agregar Nuevo Cliente</a>
+        <a href="DashboardAdmin.jsp" class="btn btn-primary m-2">
+            Volver
+        </a>
+    </div>
     <!-- Modal de confirmación de eliminación -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">

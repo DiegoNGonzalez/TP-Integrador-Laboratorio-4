@@ -123,7 +123,7 @@ public class FiltrosServlet extends HttpServlet {
         ArrayList<Cliente> clientesFiltrados = cuentaNegocio.filtrarCuentas(
             fechaInicio, fechaFin, montoMinimo, montoMaximo
         );
-
+        
         request.setAttribute("clientes", clientesFiltrados);
         request.getRequestDispatcher("GestionCuentas.jsp").forward(request, response);
     }

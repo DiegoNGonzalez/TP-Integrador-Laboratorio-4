@@ -58,16 +58,13 @@
 <jsp:include page="nav.jsp" />
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="DashboardAdmin.jsp" class="btn btn-primary">
-            Volver
-        </a>
-        <h2 class="mx-auto mb-0">Gestión Prestamos</h2> 
+        <h2 class="mx-auto mb-0">Gestión de Préstamos</h2> 
     </div>
     <hr class="border-dark my-3">
     
   <div class="card border-warning shadow-lg" style="border-width: 3px; border-color: #ffc107;">
   <div class="card-header text-center">
-  <h2 class="mt-2">Prestamos Pendientes</h2>
+  <h2 class="mt-2">Préstamos Pendientes</h2>
   </div>
     <div class="filter-container d-flex align-items-center mt-3">
         <div class="filter-option">
@@ -128,7 +125,7 @@
 
   <div class="card mt-5 border-success shadow-lg" style="border-width: 3px; border-color: #ffc107;">
   <div class="card-header text-center">
-  <h2 class="mt-2">Prestamos Aprobados</h2>
+  <h2 class="mt-2">Préstamos Aprobados</h2>
   </div>
     <div class="filter-container d-flex align-items-center mt-3">
         <div class="filter-option">
@@ -186,7 +183,7 @@
 	 </div>
   <div class="card mt-5 mb-5 border-danger shadow-lg" style="border-width: 3px; border-color: #ffc107;">
   <div class="card-header text-center">
-  <h2 class="mt-2">Prestamos Rechazados</h2>
+  <h2 class="mt-2">Préstamos Rechazados</h2>
   </div>
      
      <div class="filter-container d-flex align-items-center mt-3">
@@ -239,8 +236,13 @@
     </tbody>
 </table>
 </div>
+<div class="col-12 d-flex justify-content-center m-2">
+        <a href="DashboardAdmin.jsp" class="btn btn-primary">
+            Volver
+        </a>
+    </div>
 </div>
-
+<jsp:include page="Footer.jsp" />
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#prestamosPendientes').DataTable();

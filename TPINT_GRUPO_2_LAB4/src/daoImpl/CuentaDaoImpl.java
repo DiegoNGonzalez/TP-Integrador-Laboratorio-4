@@ -99,41 +99,6 @@ public class CuentaDaoImpl implements CuentaDao{
 	    }
 	}
 
-	/*@Override
-	public boolean agregarCuenta(Cuenta cuenta, int idCliente) {
-	    String query = "INSERT INTO cuentas(idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) "
-	                 + "VALUES (?, ?, ?, ?, ?, ?, ?);";
-	    
-	    try (Connection conexion = Conexion.getConnection();
-	         PreparedStatement statement = conexion.prepareStatement(query)) {
-
-<<<<<<< HEAD
-	        // Asignaciï¿½n de parï¿½metros
-=======
-	        // AsignaciÃ³n de parÃ¡metros
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
-	        statement.setInt(1, idCliente);
-	        statement.setInt(2, cuenta.getTipoCuenta().getId());
-	        statement.setDate(3, new java.sql.Date(cuenta.getFechaCreacion().getTime())); 
-	        statement.setLong(4, cuenta.getNumeroCuenta()); 
-	        statement.setLong(5, cuenta.getCbu()); 
-	        statement.setFloat(6, cuenta.getSaldo()); 
-	        statement.setBoolean(7, cuenta.getEstadoCuenta());
-
-<<<<<<< HEAD
-	        // Ejecuta la actualizaciï¿½n y devuelve si al menos una fila fue afectada
-=======
-	        // Ejecuta la actualizaciÃ³n y devuelve si al menos una fila fue afectada
->>>>>>> branch 'main' of https://github.com/DiegoNGonzalez/TPINT_GRUPO_2_LAB4.git
-	        int filas = statement.executeUpdate();
-	        return filas > 0;
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
-	}*/
-	
 
 	@Override
 	public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
@@ -167,14 +132,11 @@ public class CuentaDaoImpl implements CuentaDao{
 	@Override
 	public boolean bajaCuenta(int idCuenta) {
 		String query = "UPDATE cuentas SET estadoCuenta = 0 WHERE idCuenta = ?";
-		System.out.println("cccccccccc111111111");
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 	        statement.setInt(1, idCuenta);
-	        System.out.println("ccccccc333333333");
 	        return statement.executeUpdate() > 0;
 	    } catch (Exception e) {
-	    	System.out.println("cccccccc444444444");
 	        e.printStackTrace();
 	        return false;
 	    }
@@ -422,7 +384,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    ResultSet rs = null;
 
 	    String query = "SELECT " +
-	            "YEAR(fechaMovimiento) AS `Año`, " +
+	            "YEAR(fechaMovimiento) AS `Aï¿½o`, " +
 	            "MONTH(fechaMovimiento) AS `Mes`, " +
 	            "COUNT(*) AS `Cantidad de movimientos`, " +
 	            "SUM(CASE WHEN importeMovimiento > 0 THEN importeMovimiento ELSE 0 END) AS `Saldo Positivo`, " +
@@ -441,7 +403,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	        rs = statement.executeQuery();
 
 	        while (rs.next()) {
-	            int anio = rs.getInt("Año");
+	            int anio = rs.getInt("Aï¿½o");
 	            int mes = rs.getInt("Mes");
 	            int totalMovimientos = rs.getInt("Cantidad de movimientos");
 	            double montoPositivo = rs.getDouble("Saldo Positivo");
@@ -466,6 +428,42 @@ public class CuentaDaoImpl implements CuentaDao{
 	    }
 
 	    return reporte;
+	}
+	
+	
+	@Override
+	public Cuenta obtenerCuentaPorCbu(long cbu) {
+	    String query = "SELECT idCuenta, idTipoCuenta, fechaCreacion, numeroCuenta, saldo, estadoCuenta FROM cuentas where cbu = ?";     
+	    Cuenta cuenta = new Cuenta();
+	    
+	    try (Connection conexion = Conexion.getConnection();
+	         PreparedStatement statement = conexion.prepareStatement(query)) {
+	        
+	        statement.setLong(1, cbu);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+
+	            // Si se encuentra la cuenta, se crea el objeto.
+	            if (resultSet.next()) {                
+		        	TipoCuenta tipoCuenta = new TipoCuentaDaoImpl().obtenerTipoCuentaPorId(resultSet.getInt("idTipoCuenta"));		        		        		        	
+		        	cuenta.setIdCuenta(resultSet.getInt("idCuenta"));
+		            cuenta.setTipoCuenta(tipoCuenta);
+		            cuenta.setFechaCreacion(resultSet.getDate("fechaCreacion"));
+		            cuenta.setNumeroCuenta(resultSet.getLong("numeroCuenta"));	            
+		            cuenta.setCbu(cbu);
+		            cuenta.setSaldo(resultSet.getFloat("saldo"));
+		            cuenta.setEstadoCuenta(resultSet.getBoolean("estadoCuenta"));
+		            
+	            }
+	            else {
+	            	cuenta.setIdCuenta(-1);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }	  
+
+	    return cuenta;
 	}
 
 

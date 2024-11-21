@@ -22,25 +22,6 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		this.cuentaDao = new CuentaDaoImpl();
 	}
 	
-	/*@Override
-    public boolean agregarCuenta(Cuenta cuenta, int idCliente) throws CuentaNegocioException {
-        // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
-        if (cuenta == null) {
-            throw new CuentaNegocioException("La cuenta no puede ser nula.");
-        }
-        /*if (cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() <= 0) {
-            throw new CuentaNegocioException("El cliente debe ser válido.");
-        }*/
-	/*if (cuenta.getTipoCuenta() == null || cuenta.getTipoCuenta().getId() <= 0) {
-            throw new CuentaNegocioException("El tipo de cuenta debe ser válido.");
-        }
-        if (cuenta.getSaldo() < 0) {
-            throw new CuentaNegocioException("El saldo no puede ser negativo.");
-        }
-
-        return cuentaDao.agregarCuenta(cuenta, idCliente);
-        }*/
-	
 	@Override
     public void agregarCuenta(Cuenta cuenta, int idCliente) throws SQLException {
         // se verifica que la cuenta no sea nula y tenga datos mínimos válidos
@@ -133,6 +114,19 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		
         return cuenta;
     }
+    
+    @Override
+    public Cuenta obtenerCuentaPorCbu(long cbu) throws CuentaNegocioException {
+		
+        // validar ID de la cuenta
+        if (cbu <= 0) {
+            throw new CuentaNegocioException("El CBU de la cuenta debe ser válido.");
+        }
+        
+        Cuenta cuenta = cuentaDao.obtenerCuentaPorCbu(cbu);
+		
+        return cuenta;
+    }
 
 	@Override
 	public ArrayList<Cuenta> obtenerCuentasPorCliente(int idCliente) {
@@ -182,4 +176,5 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		ArrayList<String> reporte= cuentaDao.reporteMovimientosCuentas(fechaInicio, fechaFin);
 		return reporte;
 	}
+
 }

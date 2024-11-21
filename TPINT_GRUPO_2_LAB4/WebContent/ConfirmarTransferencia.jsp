@@ -10,7 +10,7 @@
 </head>
 <body>
 <% Cuenta cuentaOrigen = (Cuenta) request.getAttribute("cuentaOrigen");
-Float monto = Float.parseFloat(request.getParameter("monto").toString());
+Float monto = Float.parseFloat(request.getAttribute("monto").toString());
 Cuenta cuentaDestino = (Cuenta) request.getAttribute("cuentaDestino");
 String concepto = request.getAttribute("concepto").toString();
 %>
@@ -27,7 +27,7 @@ String concepto = request.getAttribute("concepto").toString();
 			</div>
 			<!-- cuenta destino -->
 			<div class="form-group">
-				<label class="form-label" for="cuentaDestino">Cuenta desitno: <%= cuentaDestino.getNumeroCuenta() %></label>
+				<label class="form-label" for="cuentaDestino">Cuenta destino: <%= cuentaDestino.getNumeroCuenta() %></label>
 				<input type="hidden" name="cuentaDestino" value="<%= cuentaDestino.getIdCuenta() %>">
 			</div>
 			<!-- concepto -->
@@ -44,7 +44,7 @@ String concepto = request.getAttribute("concepto").toString();
 			<!-- Botones de acción -->
 			<input type="submit" class="btn-save" value="Confirmar" name="confirmarTransferencia">
 			</form>
-			<form action="Transferencia.jsp" method="get">
+			<form action="DashboardCliente.jsp" method="get">
 				<input type="submit" class="btn-cancel" value="Cancelar">
 		</form>
 	</div>

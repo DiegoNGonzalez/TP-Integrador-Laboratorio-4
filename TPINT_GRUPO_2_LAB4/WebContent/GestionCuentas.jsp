@@ -17,9 +17,7 @@
 <link href="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js" 
       rel="stylesheet">
 
-<!-- Toastr CSS (si lo estás usando para notificaciones) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" 
-      rel="stylesheet" />
+
 
 <!-- jQuery (solo una vez) -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -38,8 +36,7 @@
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
-<!-- Toastr JS (si lo estás usando para notificaciones) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {

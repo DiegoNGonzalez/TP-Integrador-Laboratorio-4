@@ -15,20 +15,12 @@
 <!-- DataTables CSS -->
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
-<!-- Toastr CSS (si lo estás usando para notificaciones) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" 
-      rel="stylesheet" />
-
 
 <!-- Popper.js (requerido para Bootstrap) -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
         crossorigin="anonymous"></script>
 
-
-
-<!-- Toastr JS (si lo estás usando para notificaciones) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <title>Menu de Clientes</title>
 </head>
@@ -95,7 +87,8 @@
 				<div class="d-flex gap-1"	>
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=editarCliente" class="btn btn-warning btn-sm" >Editar</a>
                     <a href="BuscarClienteServlet?clienteId=<%= cliente.getIdCliente() %>&action=agregarCuenta" class="btn btn-primary btn-sm">Agregar Cuenta</a>
-                    <a href="BajaClienteServlet?clienteId=<%= cliente.getIdCliente() %>" class="btn btn-danger btn-sm">Eliminar Cliente</a>
+					<a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<%= cliente.getIdCliente() %>">Eliminar Cliente</a>
+					
                 </div>
             </td>
         </tr>
@@ -104,6 +97,36 @@
 %>
         </tbody>
     </table>
+    <!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">¿Está seguro que desea eliminar?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar el cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- Contenedor del Toast -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="toastMessage" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="d-flex">
+            <div class="toast-body">
+                <!-- Aquí aparecerá el mensaje -->
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
     <br>
 
 </div>
@@ -122,25 +145,48 @@
         $('#clientTable').DataTable();
     });
 </script>
-
+<%
+    String toastMessage = (String) request.getAttribute("toastMessage");
+    String toastType = (String) request.getAttribute("toastType"); // success, error, info, warning
+%>
 <script>
-    $(document).ready(function() {
-        // Verifica si hay un mensaje de toast
-        var mensaje = "<%= request.getAttribute("toastMessage") %>";
-        var tipo = "<%= request.getAttribute("toastType") %>";
-        
-        toastr.options.timeOut = 3000;
-        toastr.options.positionClass = 'toast-top-right';
-        toastr.options.preventDuplicates = true;
+    document.addEventListener("DOMContentLoaded", function() {
+        <% if (toastMessage != null) { %>
+            const toastEl = document.getElementById('toastMessage');
+            const toastBody = toastEl.querySelector('.toast-body');
+            const toastInstance = new bootstrap.Toast(toastEl);
 
-        if (mensaje) {
-            if (tipo == "success") {
-                toastr.success(mensaje);
-            } else if (tipo == "error") {
-                toastr.error(mensaje);
-            }
+            // Asignar el mensaje y estilo
+            toastBody.textContent = "<%= toastMessage %>";
+            toastEl.classList.remove('text-bg-primary', 'text-bg-danger', 'text-bg-warning', 'text-bg-success');
+            toastEl.classList.add('text-bg-<%= toastType %>'); // Estilo dinámico
+
+            // Mostrar el toast
+            toastInstance.show();
+        <% } %>
+    });
+</script>
+<script>
+    // Capturar el evento de clic en el botón "Eliminar Cliente"
+    var deleteBtn = document.querySelectorAll('a[data-bs-toggle="modal"]');
+    var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    var modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    var clientIdToDelete = null;
+
+    deleteBtn.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            // Guardar el ID del cliente
+            clientIdToDelete = event.target.getAttribute('data-id');
+        });
+    });
+
+    // Confirmar eliminación y redirigir
+    confirmDeleteBtn.addEventListener('click', function() {
+        if (clientIdToDelete !== null) {
+            window.location.href = "BajaClienteServlet?clienteId=" + clientIdToDelete;
         }
     });
 </script>
+
 </body>
 </html>

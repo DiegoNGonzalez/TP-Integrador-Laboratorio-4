@@ -77,7 +77,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public boolean modificarCliente(Cliente cliente) {
+	public boolean modificarCliente(Cliente cliente) throws ClienteNegocioException{
 		if (cliente == null) {
 			System.out.println("El cliente no puede ser nulo.");
 			return false;
@@ -86,13 +86,14 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 		try {
 			verificarCliente(cliente,usuario);
+			boolean resultado = clienteDao.modificarCliente(cliente);
+			return resultado;
 		} catch (ClienteNegocioException e) {
 			System.out.println("Error al verificar el cliente: " + e.getMessage());
 			return false;
 		}
 
-		boolean resultado = clienteDao.modificarCliente(cliente);
-		return resultado;
+		
 	}
 
 	@Override

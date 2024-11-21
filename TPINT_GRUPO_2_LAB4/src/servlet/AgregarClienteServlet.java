@@ -97,7 +97,11 @@ public class AgregarClienteServlet extends HttpServlet {
 
 	        try {
 	            clienteNegocio.ejecutarSPCrearUsuario(nuevoUsuario, nuevoCliente);
-	            response.sendRedirect("ListarClientesServlet");
+	            request.setAttribute("toastMessage", "Cliente agregado correctamente.");
+	            request.setAttribute("toastType", "success");
+
+	            // Usar RequestDispatcher para reenviar a ListarClientesServlet
+	            request.getRequestDispatcher("ListarClientesServlet?action=clienteAgregado").forward(request, response);
 	        } catch (ClienteNegocioException e) {
 	            // Si ocurre un ClienteNegocioException, capturamos el mensaje y lo pasamos al JSP
 	        	request.getSession().setAttribute("errorMsj", e.getMessage());

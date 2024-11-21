@@ -80,7 +80,7 @@
             <div class="form-check">
                 <input type="radio" id="cuentaTerceros" name="tipoCuentaDestino" value="terceros" 
                        onclick="mostrarDestino('terceros')" 
-                       <%= tieneUnaCuenta ? "checked" : "" %> required>
+                       <%= tieneUnaCuenta ? "checked" : "" %>>
                 <label for="cuentaTerceros">Cuenta de terceros</label>
             </div>
         </div>
@@ -105,7 +105,7 @@
         <!-- Ingreso de CBU (solo cuando se seleccione cuenta de terceros) -->
         <div id="destinoCbu" class="form-group <%= tieneUnaCuenta ? "" : "hidden" %> mb-3">
             <label class="form-label" for="cbu">Ingrese CBU cuenta de terceros:</label>
-            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero" required>
+            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero">
         </div>
 
         <div class="form-group mb-3">

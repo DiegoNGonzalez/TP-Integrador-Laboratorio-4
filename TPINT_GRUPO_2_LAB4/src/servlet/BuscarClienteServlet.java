@@ -14,6 +14,7 @@ import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.TipoCuenta;
+import entidades.Usuario;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
@@ -44,6 +45,7 @@ public class BuscarClienteServlet extends HttpServlet {
     	String action = request.getParameter("action");
         ClienteNegocioImpl auxClienteNeg = new ClienteNegocioImpl();
         Cliente cliente = auxClienteNeg.obtenerClientePorId(clienteId);
+        Usuario usuario = cliente.getUsuario();
         
         NacionalidadNegocioImpl nacionalidadNegocioImpl= new NacionalidadNegocioImpl();
         ProvinciaNegocioImpl provinciaNegocioImpl=new ProvinciaNegocioImpl();
@@ -63,6 +65,7 @@ public class BuscarClienteServlet extends HttpServlet {
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         } else {
             request.setAttribute("cliente", cliente);
+            request.setAttribute("usuario", usuario);
             if ("editarCliente".equals(action)) {
                 request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);
             } else if ("agregarCuenta".equals(action)) {
@@ -71,7 +74,7 @@ public class BuscarClienteServlet extends HttpServlet {
             } else if ("editarCuenta".equals(action)) {
                 request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);     
             }else {
-                // Si `action` no coincide con ninguna acción esperada, redirige a una página por defecto.
+                // Si `action` no coincide con ninguna acciï¿½n esperada, redirige a una pï¿½gina por defecto.
                 request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
         }

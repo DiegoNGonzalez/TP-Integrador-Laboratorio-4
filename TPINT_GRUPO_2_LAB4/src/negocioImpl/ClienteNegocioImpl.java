@@ -22,23 +22,23 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		this.clienteDao = new ClienteDaoImpl();
 	}
 
-	@Override
-	public boolean agregarCliente(Cliente cliente) {
-		if (cliente == null) {
-			System.out.println("El cliente no puede ser nulo");
-			return false;
-		}
-
-		try {
-			verificarCliente(cliente);
-		} catch (ClienteNegocioException e) {
-			System.out.println("Error al verificar el cliente: " + e.getMessage());
-			return false;
-		}
-
-		boolean resultado = clienteDao.agregarCliente(cliente);
-		return resultado;
-	}
+//	@Override
+//	public boolean agregarCliente(Cliente cliente) {
+//		if (cliente == null) {
+//			System.out.println("El cliente no puede ser nulo");
+//			return false;
+//		}
+//
+//		try {
+//			verificarCliente(cliente);
+//		} catch (ClienteNegocioException e) {
+//			System.out.println("Error al verificar el cliente: " + e.getMessage());
+//			return false;
+//		}
+//
+//		boolean resultado = clienteDao.agregarCliente(cliente);
+//		return resultado;
+//	}
 
 	@Override
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException { 
@@ -46,7 +46,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			System.out.println("Error en los datos proporcionados.");
 		}
 		try {
-			verificarCliente(cliente);
+			verificarCliente(cliente, usuario);
 		} catch (ClienteNegocioException e) {
 			throw new ClienteNegocioException(e.getMessage());
 
@@ -82,9 +82,10 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			System.out.println("El cliente no puede ser nulo.");
 			return false;
 		}
+		Usuario usuario= cliente.getUsuario();
 
 		try {
-			verificarCliente(cliente);
+			verificarCliente(cliente,usuario);
 		} catch (ClienteNegocioException e) {
 			System.out.println("Error al verificar el cliente: " + e.getMessage());
 			return false;
@@ -144,13 +145,13 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 	}
 
 	@Override
-	public void verificarCliente(Cliente cliente) throws ClienteNegocioException {
+	public void verificarCliente(Cliente cliente, Usuario usuario) throws ClienteNegocioException {
 		// ValidaciÃ³n de campos vacÃ­os y de formato de nombre y apellido
 		if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
 		    throw new ClienteNegocioException("El nombre es obligatorio.");
 		}
 		// ValidaciÃ³n de que el nombre solo contenga letras, incluyendo letras con acentos y la Ã±
-		if (!cliente.getNombre().matches("^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“ÃšÃ±Ã‘\\s]+$")) {
+		if (!cliente.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
 		    throw new ClienteNegocioException("El nombre solo puede contener letras.");
 		}
 
@@ -158,7 +159,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		    throw new ClienteNegocioException("El apellido es obligatorio.");
 		}
 		// ValidaciÃ³n de que el apellido solo contenga letras, incluyendo letras con acentos y la Ã±
-		if (!cliente.getApellido().matches("^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“ÃšÃ±Ã‘\\s]+$")) {
+		if (!cliente.getApellido().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
 		    throw new ClienteNegocioException("El apellido solo puede contener letras.");
 		}
 
@@ -203,13 +204,13 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 
 
-//		if (cliente.getUsuario().getNombreUsuario() == null || cliente.getUsuario().getNombreUsuario().trim().isEmpty()) {
-//			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
-//		}
-//
-//		if (cliente.getUsuario().getPassword() == null || cliente.getUsuario().getPassword().trim().isEmpty()) {
-//			throw new ClienteNegocioException("La contraseï¿½a es obligatoria.");
-//		}
+		if (usuario.getNombreUsuario() == null || usuario.getNombreUsuario().trim().isEmpty()) {
+			throw new ClienteNegocioException("El nombre de usuario es obligatorio.");
+		}
+
+		if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+			throw new ClienteNegocioException("La contraseï¿½a es obligatoria.");
+		}
 	}
 
 

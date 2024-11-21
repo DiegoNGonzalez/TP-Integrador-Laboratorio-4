@@ -15,10 +15,12 @@ import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.TipoUsuario;
 import entidades.Usuario;
+import negocio.UsuarioNegocio;
 import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
 import negocioImpl.ProvinciaNegocioImpl;
+import negocioImpl.UsuarioNegocioImpl;
 
 /**
  * Servlet implementation class EditarClienteServlet
@@ -48,6 +50,7 @@ public class EditarClienteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+		int idUsuario= Integer.parseInt(request.getParameter("idCliente"));
 		String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String dni = request.getParameter("dni");
@@ -61,8 +64,8 @@ public class EditarClienteServlet extends HttpServlet {
         String provinciaId = request.getParameter("provincia");
         String email = request.getParameter("email");
         String telefono = request.getParameter("telefono");
-        
-        
+        UsuarioNegocio usuarioNegocio= new UsuarioNegocioImpl();
+        Usuario usuario=usuarioNegocio.obtenerUnUsuario(idUsuario);
         Cliente cliente = new Cliente();
         cliente.setIdCliente(idCliente);
         cliente.setNombre(nombre);
@@ -74,6 +77,7 @@ public class EditarClienteServlet extends HttpServlet {
         cliente.setDireccion(direccion);
         cliente.setEmail(email);
         cliente.setTelefono(telefono);
+        cliente.setUsuario(usuario);
         
 
         ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();

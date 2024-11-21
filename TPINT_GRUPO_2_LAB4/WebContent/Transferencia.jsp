@@ -26,8 +26,9 @@
 <body>
 <jsp:include page="nav.jsp" />
 <% 
-    Cliente cliente = (Cliente) request.getAttribute("cliente");
-    Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuenta");
+	Cliente cliente = (Cliente) session.getAttribute("Cliente");
+    Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuentaSeleccionada");
+    request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
     ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
     boolean tieneUnaCuenta = (listaCuentas != null && listaCuentas.size() == 1);
     boolean tieneMasDeUnaCuenta = (listaCuentas != null && listaCuentas.size() > 1);
@@ -66,6 +67,12 @@
                     }
                 %>
             </select>
+            
+                <!-- Campo oculto para enviar el valor de la cuenta seleccionada -->
+    <% if (cuentaSeleccionada != null) { %>
+        <input type="hidden" name="cuenta" value="<%= cuentaSeleccionada.getIdCuenta() %>">
+    <% } %>
+</div>
         </div>
         
         <!-- Selección de tipo de cuenta destino -->
@@ -105,17 +112,23 @@
         <!-- Ingreso de CBU (solo cuando se seleccione cuenta de terceros) -->
         <div id="destinoCbu" class="form-group <%= tieneUnaCuenta ? "" : "hidden" %> mb-3">
             <label class="form-label" for="cbu">Ingrese CBU cuenta de terceros:</label>
-            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero">
+            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero" 
+            value="<%= request.getAttribute("cbuTercero") != null ? request.getAttribute("cbuTercero") : "" %>">
+            <% if (request.getAttribute("errorCbu") != null) { %>
+            <div class="text-danger"><%= request.getAttribute("errorCbu") %></div>
+        <% } %>
         </div>
 
         <div class="form-group mb-3">
             <label class="form-label" for="monto">Monto a transferir ($):</label>
-            <input type="number" class="form-control" id="monto" name="monto" min="1" step="0.01" required>
+            <input type="number" class="form-control" id="monto" name="monto" min="1" step="0.01" required
+            value="<%= request.getAttribute("monto") != null ? request.getAttribute("monto") : "" %>">
         </div>
 
         <div class="form-group mb-3">
             <label class="form-label" for="concepto">Concepto:</label>
-            <input type="text" class="form-control" id="concepto" name="concepto" placeholder="Ingrese concepto" required>
+            <input type="text" class="form-control" id="concepto" name="concepto" placeholder="Ingrese concepto" required
+            value="<%= request.getAttribute("concepto") != null ? request.getAttribute("concepto") : "" %>">
         </div>
         <!-- Botones de acción -->
 <div class="col-12 d-flex justify-content-center">

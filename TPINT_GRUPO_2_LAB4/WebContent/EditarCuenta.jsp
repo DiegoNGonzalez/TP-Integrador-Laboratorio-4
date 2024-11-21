@@ -9,8 +9,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 <title>Editar Cuenta</title>
+<!-- Bootstrap  -->
 <link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
 		rel="stylesheet" 
 		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
@@ -51,23 +52,23 @@
                         <!-- Cliente Asignado -->
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" value="<%=cliente.getNombre()%>" readonly>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="<%=cliente.getNombre()%>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" id="apellido" name="apellido" class="form-control" value="<%=cliente.getApellido()%>" readonly>
+                            <input type="text" id="apellido" name="apellido" class="form-control" value="<%=cliente.getApellido()%>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>
-                            <input type="text" id="dni" name="dni" class="form-control" value="<%=cliente.getDni()%>" readonly>
+                            <input type="text" id="dni" name="dni" class="form-control" value="<%=cliente.getDni()%>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <!-- Fecha de Creación -->
                         <div class="mb-3">
                             <label for="fechaCreacion" class="form-label">Fecha de Creación</label>
-                            <input type="date" id="fechaCreacion" name="fechaCreacion" class="form-control" value="<%= cuenta.getFechaCreacion() %>" readonly>
+                            <input type="date" id="fechaCreacion" name="fechaCreacion" class="form-control" value="<%= cuenta.getFechaCreacion() %>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <!-- Tipo de Cuenta -->
@@ -93,13 +94,13 @@
                         <!-- Número de Cuenta -->
                         <div class="mb-3">
                             <label for="numeroCuenta" class="form-label">Número de Cuenta</label>
-                            <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" value="<%= cuenta.getNumeroCuenta() %>" readonly>
+                            <input type="text" id="numeroCuenta" name="numeroCuenta" class="form-control" value="<%= cuenta.getNumeroCuenta() %>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <!-- CBU -->
                         <div class="mb-3">
                             <label for="cbu" class="form-label">CBU</label>
-                            <input type="text" id="cbu" name="cbu" class="form-control" value="<%= cuenta.getCbu() %>" readonly>
+                            <input type="text" id="cbu" name="cbu" class="form-control" value="<%= cuenta.getCbu() %>" readonly style="background-color: #e9ecef;">
                         </div>
 
                         <!-- Saldo -->
@@ -109,9 +110,9 @@
                         </div>
 
                         <!-- Botones -->
-                        <div class="d-flex justify-content-between">
-                            <input type="submit" class="btn btn-primary" value="Guardar Cambios">
-                            <input type="button" class="btn btn-secondary" onclick="window.location.href='ClienteCuentaServlet'" value="Cancelar">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="submit" class="btn btn-success m-2" value="Guardar Cambios">
+                            <input type="button" class="btn btn-secondary m-2" onclick="window.location.href='ClienteCuentaServlet'" value="Cancelar">
                         </div>
 
                     </form>

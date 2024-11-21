@@ -23,7 +23,7 @@
 
 
 <div class="d-flex justify-content-center align-items-center flex-grow-1">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+    <div class="card shadow-lg p-4 mt-4 mb-5" style="width: 100%; max-width: 400px;">
         <h2 class="text-center mb-4">Iniciar Sesión</h2>
         <!-- Formulario de Login -->
         <form action="LoginServlet" method="post">

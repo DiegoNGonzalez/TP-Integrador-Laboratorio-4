@@ -16,18 +16,18 @@
 	</style>
 </head>
 <body>
-	<footer class="bg-dark text-light text-center text-sm-start py-3">
+<footer class="bg-dark text-light text-center text-sm-start py-2">
     <div class="container">
-        <div class="row justify-content-between align-items-center">
+        <div class="row justify-content-center align-items-start">
             <!-- Información principal -->
-            <div class="col-md-4">
-                <h6 class="text-uppercase fw-bold mb-2">Banco XYZ-UTN</h6>
+            <div class="col-md-4 text-md-start">
+                <h6 class="text-uppercase fw-bold mb-0">Banco XYZ-UTN</h6>
                 <p class="small mb-0">Servicios bancarios y financieros de calidad.</p>
             </div>
 
             <!-- Sección Institucional -->
-            <div class="col-md-3">
-                <h6 class="text-uppercase fw-bold mb-2">Institucional</h6>
+            <div class="col-md-3 text-center">
+                <h6 class="text-uppercase fw-bold mb-0">Institucional</h6>
                 <ul class="list-unstyled small mb-0">
                     <li><a href="#!" class="text-light text-decoration-none">Autoridades</a></li>
                     <li><a href="#!" class="text-light text-decoration-none">Prensa y noticias</a></li>
@@ -36,12 +36,12 @@
             </div>
 
             <!-- Sección Contacto -->
-            <div class="col-md-3">
-                <h6 class="text-uppercase fw-bold mb-2">Contacto</h6>
+            <div class="col-md-4 text-md-end">
+                <h6 class="text-uppercase fw-bold mb-0">Contacto</h6>
                 <ul class="list-unstyled small mb-0">
                     <li><a href="mailto:contacto@bancogxyz.com" class="text-light text-decoration-none">contacto@bancogXYZ.com</a></li>
                     <li class="text-light">+54 11 1234-5678</li>
-                    <li class="mt-2">
+                    <li class="mt-1">
                         <a href="#!" class="text-light me-2"><i class="fab fa-instagram"></i></a>
                         <a href="#!" class="text-light me-2"><i class="fab fa-facebook"></i></a>
                         <a href="#!" class="text-light me-2"><i class="fab fa-tiktok"></i></a>
@@ -50,12 +50,14 @@
                 </ul>
             </div>
         </div>
-        <hr class="border-light my-3">
+        <hr class="border-light my-2">
         <div class="text-center small">
             © 2024 Banco XYZ-UTN. Todos los derechos reservados.
         </div>
     </div>
 </footer>
+
+
 
 
 	<!-- jQuery and Bootstrap JS -->

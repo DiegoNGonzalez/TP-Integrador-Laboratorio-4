@@ -49,7 +49,7 @@ public class CargarDesplegablesServlet extends HttpServlet {
         TipoCuentaNegocioImpl tipoCuentaNegocioImpl = new TipoCuentaNegocioImpl();
         CuentaNegocioImpl cuentaNegocioImpl = new CuentaNegocioImpl();
         
-        // Obtener la lista de nacionalidades usando el método de negocio
+        // Obtener la lista de nacionalidades usando el mï¿½todo de negocio
         ArrayList<Nacionalidad> listaNacionalidades = nacionalidadNegocioImpl.listarNacionalidades();
         ArrayList<Provincia> listaProvincias = provinciaNegocioImpl.listarProvincias();
         ArrayList<Localidad> listaLocalidades = localidadNegocioImpl.listarLocalidades();
@@ -77,6 +77,10 @@ public class CargarDesplegablesServlet extends HttpServlet {
         	request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);
         }
         else if ("agregarCliente".equals(action)) {
+        	String errorMsj = (String) request.getSession().getAttribute("errorMsj");
+        	System.out.println(errorMsj+" desde servlet");
+
+        	request.setAttribute("errorMsj", errorMsj);
         	request.getRequestDispatcher("AgregarCliente.jsp").forward(request, response);
         }
         else if ("agregarCuenta".equals(action)) {

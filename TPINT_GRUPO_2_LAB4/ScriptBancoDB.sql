@@ -143,7 +143,7 @@ CREATE TABLE clientes (
     cuil varchar(15) UNIQUE NOT NULL,
     nombre varchar(50) NOT NULL,
     apellido varchar(50) NOT NULL,
-    email varchar(100) NOT NULL,
+    email varchar(100) NOT NULL unique,
     telefono varchar(15) NOT NULL,
     sexo char(1) NOT NULL,
     idNacionalidad int NOT NULL,

@@ -33,6 +33,7 @@
 <div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center overflow-hidden">
     <div class="text-center mb-4">
         <h2>Bienvenido, <%= nombreCliente %></h2>
+        <hr class="border-dark my-3">
     </div>
 </div>
 <% } %>
@@ -47,7 +48,7 @@
         Cuenta cuenta = iteradorCuentas.next();
 %>
     <!-- Card para cada cuenta -->
-    <div class="col-12 col-md-4 mb-4">
+    <div class="col-12 col-md-4 mb-5">
         <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta'">
             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                 <h5 class="card-title text-center"><%= cuenta.getTipoCuenta().getTipo() %> - $<%= cuenta.getSaldo() %>.-</h5>
@@ -66,7 +67,7 @@
 <div class="dashboard-content mt-5">
     <div class="row">
         <!-- Card 1: Mis Préstamos -->
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-4 mb-3">
             <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='ListarPrestamosServlet'">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <h5 class="card-title text-center">Mis préstamos</h5>

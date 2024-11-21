@@ -34,13 +34,37 @@ public class ListarClientesServlet extends HttpServlet {
     private ClienteNegocio clienteNegocio = new ClienteNegocioImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Llamamos al método de negocio para obtener la lista de clientes activos
+        // Llamamos al mï¿½todo de negocio para obtener la lista de clientes activos
         ArrayList<Cliente> listaClientes = clienteNegocio.listarClientesActivos();
+        String action = request.getParameter("action");
+        String mensaje= request.getParameter("mensaje");
+        if("clienteAgregado".equals(action)) {
+        	request.setAttribute("toastMessage", "Cliente agregado correctamente.");
+            request.setAttribute("toastType", "success");
+        }else if ("clienteEditado".equals(action)&& "exitoEdit".equals(mensaje)) {
+        	request.setAttribute("toastMessage", "Cliente editado correctamente.");
+            request.setAttribute("toastType", "success");
+			
+		}else if ("eliminarCliente".equals(action)&& "exito".equals(mensaje)) {
+			request.setAttribute("toastMessage", "Cliente eliminado correctamente.");
+            request.setAttribute("toastType", "success");	
+		}else if ("eliminarCliente".equals(action)&& "error1".equals(mensaje)) {
+			request.setAttribute("toastMessage", "No se pudo eliminar el cliente.");
+            request.setAttribute("toastType", "error");
+		}else if ("eliminarCliente".equals(action)&& "error2".equals(mensaje)) {
+			request.setAttribute("toastMessage", "ID de cliente no valido.");
+            request.setAttribute("toastType", "error");
+		}else if ("eliminarCliente".equals(action)&& "error3".equals(mensaje)) {
+        request.setAttribute("toastMessage", "Error en la base de datos al eliminar el cliente.");
+        request.setAttribute("toastType", "error");
+		}
+        
+        
+        
         
         // Pasamos la lista de clientes al JSP como atributo
         request.setAttribute("listaClientes", listaClientes);
-        
-        // Redirigimos al JSP donde se mostrará la lista
+        // Redirigimos al JSP donde se mostrarï¿½ la lista
         request.getRequestDispatcher("MenuCliente.jsp").forward(request, response);
     }
 

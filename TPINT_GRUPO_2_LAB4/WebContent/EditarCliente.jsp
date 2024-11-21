@@ -3,6 +3,7 @@
 <%@ page import="entidades.Nacionalidad" %>
 <%@ page import="entidades.Provincia" %>
 <%@ page import="entidades.Localidad" %>
+<%@ page import="entidades.Usuario" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -31,9 +32,10 @@
     			<h2 class="text-center mb-4">Editar Cliente</h2>
     <form action="EditarClienteServlet" method="post" class="row g-3">
 
-        <% Cliente cliente = (Cliente) request.getAttribute("cliente"); %>
+        <% Cliente cliente = (Cliente) request.getAttribute("cliente"); Usuario usuario=(Usuario) request.getAttribute("usuario");%>
         
         <input id="idCliente" name="idCliente" value="<%= cliente.getIdCliente() %>" type="hidden">
+        <input id="idUsuario" name="idUsuario" value="<%= usuario.getId() %>" type="hidden">
 
 <div class="col-md-6">
     <label for="nombre" class="form-label">Nombre</label>
@@ -47,12 +49,12 @@
 
 <div class="col-md-6">
     <label for="dni" class="form-label">DNI</label>
-    <input type="text" required id="dni" name="dni" class="form-control" value="<%= cliente.getDni() %>" readonly>
+    <input type="text" required id="dni" name="dni" class="form-control" value="<%= cliente.getDni() %>">
 </div>
 
 <div class="col-md-6">
     <label for="cuil" class="form-label">CUIL</label>
-    <input type="text" required id="cuil" name="cuil" class="form-control" value="<%= cliente.getCuil() %>" readonly>
+    <input type="text" required id="cuil" name="cuil" class="form-control" value="<%= cliente.getCuil() %>">
 </div>
 
 <div class="col-md-6">

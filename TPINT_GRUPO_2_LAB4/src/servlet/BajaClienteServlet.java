@@ -28,38 +28,43 @@ public class BajaClienteServlet extends HttpServlet {
                 int idCliente = Integer.parseInt(clienteIdParam);
                 ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
 
-                // Llamada a la baja lógica del cliente
+                // Llamada a la baja lï¿½gica del cliente
                 boolean resultado = clienteNegocio.bajaCliente(idCliente);
 
                 if (resultado) {
                     request.setAttribute("toastMessage", "Cliente eliminado exitosamente.");
                     request.setAttribute("toastType", "success");
+                    response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=exito");
                 } else {
                     request.setAttribute("toastMessage", "No se pudo eliminar el cliente.");
                     request.setAttribute("toastType", "error");
+                    response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=error1");
                 }
             } catch (NumberFormatException e) {
                 // Error en el formato del ID
-                request.setAttribute("toastMessage", "ID de cliente no válido.");
+                request.setAttribute("toastMessage", "ID de cliente no vï¿½lido.");
                 request.setAttribute("toastType", "error");
+                response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=error2");
             } catch (SQLException e) {
-                // Error específico de SQL
+                // Error especï¿½fico de SQL
                 request.setAttribute("toastMessage", "Error en la base de datos al eliminar el cliente.");
                 request.setAttribute("toastType", "error");
+                response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=error3");
                 e.printStackTrace();
             } catch (Exception e) {
                 // Otros errores inesperados
                 request.setAttribute("toastMessage", "Error al eliminar el cliente: " + e.getMessage());
                 request.setAttribute("toastType", "error");
+                response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=error4");
                 e.printStackTrace();
             }
         } else {
             request.setAttribute("toastMessage", "ID de cliente no proporcionado.");
             request.setAttribute("toastType", "error");
+            response.sendRedirect("ListarClientesServlet?action=eliminarCliente&mensaje=error5");
         }
 
-        // Redireccionamos nuevamente a la lista de clientes para ver el mensaje
-        request.getRequestDispatcher("ListarClientesServlet").forward(request, response);
+        
     }
 
     

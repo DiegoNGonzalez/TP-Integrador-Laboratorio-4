@@ -21,78 +21,69 @@
 		crossorigin="anonymous">
 </script>
 </head>
-<body class="d-flex flex-column vh-100 overflow-hidden">
+<body class="d-flex flex-column vh-100">
 
 <jsp:include page="nav.jsp" />
 <!-- Contenido del Dashboard -->
 <% 
     Cliente cliente = (Cliente) session.getAttribute("Cliente");
-    if (cliente != null) {
-        String nombreCliente = cliente.getNombre(); // ObtÃ©n el nombre del cliente
 %>
-<div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center overflow-hidden">
-    <div class="text-center mb-4">
-        <h2>Bienvenido, <%= nombreCliente %></h2>
-        <hr class="border-dark my-3">
-    </div>
-</div>
-<% } %>
 
-<!-- Sección de Cuentas del Cliente -->
-<div class="row mt-4">
-<% 
-    ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
-    Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
-    
-    while (iteradorCuentas.hasNext()) {
-        Cuenta cuenta = iteradorCuentas.next();
-%>
-    <!-- Card para cada cuenta -->
-    <div class="col-12 col-md-4 mb-5">
-        <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta'">
-            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                <h5 class="card-title text-center"><%= cuenta.getTipoCuenta().getTipo() %> - $<%= cuenta.getSaldo() %>.-</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Número de cuenta: <%= cuenta.getNumeroCuenta() %></h6>
-                <p class="card-text text-center">CBU: <%= cuenta.getCbu() %></p>
-                <a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" 
-                   class="btn btn-primary w-100">Ver detalle</a>
-            </div>
-        </div>
-    </div>
-<% 
-    } 
-%>
-</div>
-
-<div class="dashboard-content mt-5">
-    <div class="row">
-        <!-- Card 1: Mis Préstamos -->
+<div class="container mt-4">
+    <!-- Sección de Cuentas del Cliente -->
+    <div class="row justify-content-center mb-5">
+        <% 
+            ArrayList<Cuenta> listaCuentas = cliente.getCuentas(); 
+            Iterator<Cuenta> iteradorCuentas = listaCuentas.iterator();
+            
+            while (iteradorCuentas.hasNext()) {
+                Cuenta cuenta = iteradorCuentas.next();
+        %>
         <div class="col-12 col-md-4 mb-3">
-            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='ListarPrestamosServlet'">
+            <div class="card shadow-lg border-0 dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta'">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0"><%= cuenta.getTipoCuenta().getTipo() %></h5>
+                </div>
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h5 class="card-title text-center">Mis préstamos</h5>
-                    <p class="card-text text-center">Gestiona tus préstamos</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Número de cuenta: <%= cuenta.getNumeroCuenta() %></h6>
+                    <p class="card-text text-center">CBU: <%= cuenta.getCbu() %></p>
+                    <p class="card-text text-center text-success fw-bold">Saldo: $<%= cuenta.getSaldo() %></p>
+                    <a href="BuscarCuentaServlet?cuentaId=<%= cuenta.getIdCuenta() %>&action=detalleCuenta" class="btn btn-outline-primary w-100 mt-3">Ver detalle</a>
                 </div>
             </div>
         </div>
-        
-        <!-- Card 2: Mi Perfil -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" onclick="window.location.href='PerfilCliente.jsp'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h5 class="card-title text-center">Mi perfil</h5>
-                    <p class="card-text text-center">Ver mis datos personales</p>
+        <% } %>
+    </div>
+
+    <!-- Sección de Mi Perfil, Mis Préstamos y Transferencias -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-3 mb-4">
+            <div class="card h-100 border-primary shadow-sm dashboard-card hover-shadow" style="cursor: pointer;" onclick="window.location.href='PerfilCliente.jsp'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                    <div class="mb-3 text-primary">
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Mi Perfil</h5>
                 </div>
             </div>
         </div>
-        
-        <!-- Card 3: Transferencias -->
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card shadow dashboard-card h-100" style="cursor: pointer;" 
-                 onclick="window.location.href='TransferenciasServlet?idUsuario=<%= cliente.getUsuario().getId() %>&action=dashboardCliente'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h5 class="card-title text-center">Transferencias</h5>
-                    <p class="card-text text-center">Realizar nueva transferencia</p>
+        <div class="col-12 col-md-3 mb-4">
+            <div class="card h-100 border-warning shadow-sm dashboard-card hover-shadow" style="cursor: pointer;" onclick="window.location.href='ListarPrestamosServlet'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                    <div class="mb-3 text-warning">
+                        <i class="fas fa-hand-holding-usd fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Mis Préstamos</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 mb-4">
+            <div class="card h-100 border-success shadow-sm dashboard-card hover-shadow" style="cursor: pointer;" onclick="window.location.href='TransferenciasServlet?idUsuario=<%= cliente.getUsuario().getId() %>&action=dashboardCliente'">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                    <div class="mb-3 text-success">
+                        <i class="fas fa-wallet fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Transferencias</h5>
                 </div>
             </div>
         </div>

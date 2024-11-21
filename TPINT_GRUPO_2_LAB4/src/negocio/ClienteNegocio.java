@@ -14,7 +14,7 @@ public interface ClienteNegocio {
 	public Cliente obtenerClientePorId(int idCliente);
 	public Cliente obtenerClientePorIdUsuario(int idUsuario);
 	public void verificarCliente(Cliente cliente, Usuario usuario);
-	
+	public int obtenerIdClientePorIdCuenta(int idCuenta);
 	public ArrayList<Cliente> obtenerTodosLosClientesConCuentas();
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException;
 	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta);

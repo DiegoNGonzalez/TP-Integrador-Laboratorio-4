@@ -35,7 +35,7 @@
 	<jsp:include page="nav.jsp" />
 <div class="container mt-5">
 	<div class="row justify-content-center">
-		<div class="col-md-8 col-lg-6">
+		<div class="col-md-8 col-lg-6 m-2">
 			<div class="card shadow-lg p-4">
 		<h2 class="edit-title">Generar Reporte</h2>
 
@@ -147,5 +147,6 @@
 	</div>
 	</div>
 	</div>
+<jsp:include page="Footer.jsp" />
 </body>
 </html>

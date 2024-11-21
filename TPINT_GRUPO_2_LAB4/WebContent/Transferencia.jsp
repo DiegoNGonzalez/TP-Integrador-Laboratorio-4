@@ -38,42 +38,42 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8 col-lg-6">
 			<div class="card shadow-lg p-4">
-    <h2 class="text-center mb-4">Nueva transferencia</h2>
-    <form action="confirmarTransferenciaServlet" method="post">
-        <!-- Selección de cuenta origen -->
-        <div class="form-group mb-3">
-            <label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
-            <select name="cuenta" id="cuentaOrigen" class="form-select" onchange="actualizarDestino()" 
-                <%= cuentaSeleccionada != null ? "disabled" : "" %> >
-                <% 
-                    if (cuentaSeleccionada != null) {
-                %>
-                    <option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
-                        <%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
-                    </option>
-                <%  
-                    } else if (listaCuentas != null && !listaCuentas.isEmpty()) {
-                        for (Cuenta cuenta : listaCuentas) {
-                %>
-                    <option value="<%= cuenta.getIdCuenta() %>">
-                        <%= cuenta.getTipoCuenta().getTipo() %> <%= cuenta.getNumeroCuenta() %> - Saldo: $<%=cuenta.getSaldo() %>
-                    </option>
-                <%  
-                        }
-                    } else {
-                %>
-                    <option value="">No hay cuentas disponibles</option>
-                <%  
-                    }
-                %>
-            </select>
+    			<h2 class="text-center mb-4">Nueva transferencia</h2>
+    				<form action="confirmarTransferenciaServlet" method="post">
+        			<!-- Selección de cuenta origen -->
+        				<div class="form-group mb-3">
+            				<label for="cuentaOrigen" class="form-label">Seleccione cuenta de origen:</label>
+            				<select name="cuenta" id="cuentaOrigen" class="form-select" onchange="actualizarDestino()" 
+                			<%= cuentaSeleccionada != null ? "disabled" : "" %> >
+                			<% 
+                    			if (cuentaSeleccionada != null) {
+                			%>
+                    			<option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
+                        			<%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
+                    			</option>
+                			<%  
+                    		} else if (listaCuentas != null && !listaCuentas.isEmpty()) {
+                        		for (Cuenta cuenta : listaCuentas) {
+                			%>
+                    			<option value="<%= cuenta.getIdCuenta() %>">
+                        			<%= cuenta.getTipoCuenta().getTipo() %> <%= cuenta.getNumeroCuenta() %> - Saldo: $<%=cuenta.getSaldo() %>
+                    			</option>
+                			<%  
+                        	}
+                    		} else {
+                			%>
+                    			<option value="">No hay cuentas disponibles</option>
+                			<%  
+                    		}
+                			%>
+            				</select>
             
                 <!-- Campo oculto para enviar el valor de la cuenta seleccionada -->
     <% if (cuentaSeleccionada != null) { %>
         <input type="hidden" name="cuenta" value="<%= cuentaSeleccionada.getIdCuenta() %>">
     <% } %>
 </div>
-        </div>
+        
         
         <!-- Selección de tipo de cuenta destino -->
         <div class="form-group mb-3">
@@ -131,14 +131,15 @@
             value="<%= request.getAttribute("concepto") != null ? request.getAttribute("concepto") : "" %>">
         </div>
         <!-- Botones de acción -->
-<div class="col-12 d-flex justify-content-center">
-        <button type="submit" class="btn btn-success m-2" name="realizarTransferencia">Realizar transferencia</button>
-        <button type="button" class="btn btn-danger m-2" onclick="window.location.href='DashboardCliente.jsp'">Cancelar</button>
+				<div class="col-12 d-flex justify-content-center">
+        			<button type="submit" class="btn btn-success m-2" name="realizarTransferencia">Realizar transferencia</button>
+        			<button type="button" class="btn btn-danger m-2" onclick="window.location.href='DashboardCliente.jsp'">Cancelar</button>
+				</div>
+				
+    		</form>
+    	</div>
+    </div>
 </div>
-    </form>
-    </div>
-    </div>
-    </div>
 </div>
 
 <script>

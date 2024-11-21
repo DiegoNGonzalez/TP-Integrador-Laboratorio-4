@@ -7,21 +7,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- Bootstrap  -->
-<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-		rel="stylesheet" 
-		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
-		crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<!-- Data Tables -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
-<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
-<link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+      crossorigin="anonymous">
+
+<!-- DataTables CSS compatible con Bootstrap 5 -->
+<link href="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js" 
+      rel="stylesheet">
+
+<!-- Toastr CSS (si lo estás usando para notificaciones) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" 
+      rel="stylesheet" />
+
+<!-- jQuery (solo una vez) -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<!-- Popper.js (requerido para Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
+        crossorigin="anonymous"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js" 
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" 
+        crossorigin="anonymous"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+<!-- Toastr JS (si lo estás usando para notificaciones) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 <script type="text/javascript">
@@ -37,20 +55,21 @@
 <title>Gestión de Prestamos</title>
 </head>
 <body class="d-flex flex-column vh-100">
-<%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
 <div class="container my-4">
-     <div class="d-flex justify-content-end w-100 mb-3">
-    <a href="DashboardAdmin.jsp" class="btn-volver" style="width: auto; margin-top: 10px; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
-        Volver
-    </a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="DashboardAdmin.jsp" class="btn btn-primary">
+            Volver
+        </a>
+        <h2 class="mx-auto mb-0">Gestión Prestamos</h2> 
     </div>
-    <div class="text-center mb-4">
-    <h2 class="mb-4">Gestion Prestamos</h2>
     <hr class="border-dark my-3">
-    </div>
-    <h2 class="mb-3">Prestamos pendientes de aprobación</h2>
-    <div class="filter-container d-flex align-items-center gap-3">
+    
+  <div class="card border-warning shadow-lg" style="border-width: 3px; border-color: #ffc107;">
+  <div class="card-header text-center">
+  <h2 class="mt-2">Prestamos Pendientes</h2>
+  </div>
+    <div class="filter-container d-flex align-items-center mt-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDatePendientes" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -75,9 +94,9 @@
         
         <button id="applyFiltersPendientes" class="btn btn-primary">Aplicar Filtros</button>
     </div>
-<section class="mt-5">
+<section class="mt-2">
             <div class="table-responsive">
-                <table id="prestamosPendientes" class="table table-striped table-bordered">
+                <table id="prestamosPendientes" class="table table-striped">
                     <thead class="table-dark">
                         <tr>
                             <th>Cliente</th>
@@ -105,9 +124,13 @@
                 </table>
             </div>
         </section>
-    <br>
-    <h2>Prestamos aprobados</h2>
-    <div class="filter-container d-flex align-items-center gap-3">
+	</div>
+
+  <div class="card mt-5 border-success shadow-lg" style="border-width: 3px; border-color: #ffc107;">
+  <div class="card-header text-center">
+  <h2 class="mt-2">Prestamos Aprobados</h2>
+  </div>
+    <div class="filter-container d-flex align-items-center mt-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDateAprobados" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -132,7 +155,7 @@
         
         <button id="applyFiltersAprobados" class="btn btn-primary">Aplicar Filtros</button>
     </div>
-<section class="mt-5">
+<section class="mt-2">
             <div class="table-responsive">
                 <table id="prestamosAprobados" class="table table-striped table-bordered">
                     <thead class="table-dark">
@@ -160,10 +183,13 @@
                 </table>
             </div>
         </section>
-    <br>
-     <h2>Prestamos rechazados</h2>
+	 </div>
+  <div class="card mt-5 mb-5 border-danger shadow-lg" style="border-width: 3px; border-color: #ffc107;">
+  <div class="card-header text-center">
+  <h2 class="mt-2">Prestamos Rechazados</h2>
+  </div>
      
-     <div class="filter-container d-flex align-items-center gap-3">
+     <div class="filter-container d-flex align-items-center mt-3">
         <div class="filter-option">
             <input type="checkbox" id="filterByDateRechazados" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -212,11 +238,7 @@
         <% } %>
     </tbody>
 </table>
-<%
-System.out.println("Prestamos Pendientes: " + prestamosPendientes.size());
-System.out.println("Prestamos Aprobados: " + prestamosAprobados.size());
-System.out.println("Prestamos Rechazados: " + prestamosRechazados.size());
-%>
+</div>
 </div>
 
 <script type="text/javascript">

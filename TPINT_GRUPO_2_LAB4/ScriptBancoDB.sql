@@ -583,6 +583,12 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'EL SALDO DEBE SER MAYOR A 0';
 	END IF;
     
+        -- Verificamos que el cliente no tenga más de 3 cuentas activas
+    IF (SELECT COUNT(idCuenta) FROM cuentas WHERE idCliente = sp_idcliente AND estadoCuenta = 1) >= 3 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'El cliente ya tiene 3 cuentas activas';
+    END IF;
+
     -- Generamos la cuenta
     INSERT INTO cuentas (idcliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta)
     VALUES (sp_idcliente, sp_idTipoCuenta, sp_fechaCreacion, sp_numeroCuenta, sp_cbu, sp_saldo, 1);

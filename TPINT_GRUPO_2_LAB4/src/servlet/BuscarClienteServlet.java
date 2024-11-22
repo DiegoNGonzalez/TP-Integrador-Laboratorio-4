@@ -10,12 +10,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import entidades.Cliente;
+import entidades.Cuenta;
 import entidades.Localidad;
 import entidades.Nacionalidad;
 import entidades.Provincia;
 import entidades.TipoCuenta;
 import entidades.Usuario;
 import negocioImpl.ClienteNegocioImpl;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.LocalidadNegocioImpl;
 import negocioImpl.NacionalidadNegocioImpl;
 import negocioImpl.ProvinciaNegocioImpl;
@@ -69,12 +71,28 @@ public class BuscarClienteServlet extends HttpServlet {
             if ("editarCliente".equals(action)) {
                 request.getRequestDispatcher("EditarCliente.jsp").forward(request, response);
             } else if ("agregarCuenta".equals(action)) {
-            	request.setAttribute("fechaHoy", LocalDate.now().toString());
-                request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);
+            	CuentaNegocioImpl cuentaNegocio = new CuentaNegocioImpl();
+            	ArrayList<Cuenta> listaCuentas = cuentaNegocio.obtenerCuentasPorCliente(clienteId);
+
+                int cuentasActivas = 0;
+                for (Cuenta cuenta : listaCuentas) {
+                    if (cuenta.getEstadoCuenta()) {
+                        cuentasActivas++;
+                    }
+                }
+
+                if (cuentasActivas >= 3) {
+                    // Mensaje de error
+                    request.setAttribute("toastMessage", "El cliente ya tiene 3 cuentas activas. No se pueden agregar más.");
+                    request.setAttribute("toastType", "warning");
+					request.getRequestDispatcher("/ListarClientesServlet").forward(request, response);	
+                }else {
+                	request.setAttribute("fechaHoy", LocalDate.now().toString());
+                    request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);                	
+                }
             } else if ("editarCuenta".equals(action)) {
                 request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);     
             }else {
-                // Si `action` no coincide con ninguna acci�n esperada, redirige a una p�gina por defecto.
                 request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
         }

@@ -110,5 +110,5 @@ public class PrestamoNegocioImpl implements PrestamoNegocio {
 			return false;
 		}
 	}
-
+	
 }

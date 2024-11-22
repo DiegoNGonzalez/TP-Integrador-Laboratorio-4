@@ -52,6 +52,11 @@
 		$('#prestamosRechazados').DataTable();
 	});
 </script>
+<style>
+    .dataTables_scroll thead:nth-child(1) {
+        display: none;
+    }
+</style>
 <title>Gestión de Prestamos</title>
 </head>
 <body class="d-flex flex-column vh-100">
@@ -62,38 +67,46 @@
     </div>
     <hr class="border-dark my-3">
     
-  <div class="card border-warning shadow-lg" style="border-width: 3px; border-color: #ffc107;">
+  <div class="card shadow-lg" style="border-width: 3px; border-color: #ffc107;">
   <div class="card-header text-center">
   <h2 class="mt-2">Préstamos Pendientes</h2>
   </div>
-    <div class="filter-container d-flex align-items-center mt-3">
-        <div class="filter-option">
-            <input type="checkbox" id="filterByDatePendientes" />
-            <label for="filterByDate">Filtrar por rango de fechas</label>
-            <div id="dateFilterPendientes" class="filter-inputs" style="display: none;">
-                <label for="startDate">Desde:</label>
-                <input type="date" id="startDate" />
-                <label for="endDate">Hasta:</label>
-                <input type="date" id="endDate" />
-            </div>
-        </div>
-
-        <div class="filter-option">
-            <input type="checkbox" id="filterByAmountPendientes" />
-            <label for="filterByAmount">Filtrar por rango de montos</label>
-            <div id="amountFilterPendientes" class="filter-inputs" style="display: none;">
-                <label for="minAmount">Mínimo:</label>
-                <input type="number" id="minAmount" placeholder="$0" />
-                <label for="maxAmount">Máximo:</label>
-                <input type="number" id="maxAmount" placeholder="$1,000,000" />
-            </div>
-        </div>
-        
-        <button id="applyFiltersPendientes" class="btn btn-primary">Aplicar Filtros</button>
-    </div>
+  <div class="row align-items-center">
+  <div class="col">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Monto mínimo</td>
+  				<td><input type="number" id="pendientesMinMonto" name="minMonto"></td>
+  			</tr>
+  			<tr>
+  				<td>Monto máximo</td>
+  				<td><input type="number" id="pendientesMaxMonto" name="maxMonto"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+  <div class="col d-flex justify-content-end">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Fecha desde: </td>
+  				<td><input type="date" id="pendientesMinFecha" name="minFecha"></td>
+  			</tr>
+  			<tr>
+  				<td>Fecha hasta: </td>
+  				<td><input type="date" id="pendientesMaxFecha" name="maxFecha"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+</div>
+<div class="col d-flex justify-content-center">
+<a href="#" id="limpiar-filtros-pendientes" data-table="prestamosPendientes" data-prefix="pendientes" class="btn btn-warning">Limpiar filtros</a>
+</div>
 <section class="mt-2">
-            <div class="table-responsive">
-                <table id="prestamosPendientes" class="table table-striped">
+            <div class="container-fluid table-responsive">
+                <table id="prestamosPendientes" class="table table-striped w-100">
                     <thead class="table-dark">
                         <tr>
                             <th>Cliente</th>
@@ -127,34 +140,42 @@
   <div class="card-header text-center">
   <h2 class="mt-2">Préstamos Aprobados</h2>
   </div>
-    <div class="filter-container d-flex align-items-center mt-3">
-        <div class="filter-option">
-            <input type="checkbox" id="filterByDateAprobados" />
-            <label for="filterByDate">Filtrar por rango de fechas</label>
-            <div id="dateFilterAprobados" class="filter-inputs" style="display: none;">
-                <label for="startDate">Desde:</label>
-                <input type="date" id="startDate" />
-                <label for="endDate">Hasta:</label>
-                <input type="date" id="endDate" />
-            </div>
-        </div>
-
-        <div class="filter-option">
-            <input type="checkbox" id="filterByAmountAprobados" />
-            <label for="filterByAmount">Filtrar por rango de montos</label>
-            <div id="amountFilterAprobados" class="filter-inputs" style="display: none;">
-                <label for="minAmount">Mínimo:</label>
-                <input type="number" id="minAmount" placeholder="$0" />
-                <label for="maxAmount">Máximo:</label>
-                <input type="number" id="maxAmount" placeholder="$1,000,000" />
-            </div>
-        </div>
-        
-        <button id="applyFiltersAprobados" class="btn btn-primary">Aplicar Filtros</button>
-    </div>
+<div class="row align-items-center">
+  <div class="col">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Monto mínimo</td>
+  				<td><input type="number" id="aprobadosMinMonto" name="minMonto"></td>
+  			</tr>
+  			<tr>
+  				<td>Monto máximo</td>
+  				<td><input type="number" id="aprobadosMaxMonto" name="maxMonto"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+  <div class="col d-flex justify-content-end">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Fecha desde: </td>
+  				<td><input type="date" id="aprobadosMinFecha" name="minFecha"></td>
+  			</tr>
+  			<tr>
+  				<td>Fecha hasta: </td>
+  				<td><input type="date" id="aprobadosMaxFecha" name="maxFecha"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+</div>
+<div class="col d-flex justify-content-center">
+<a href="#" id="limpiar-filtros-aprobados" data-table="prestamosAprobados" data-prefix="aprobados" class="btn btn-warning">Limpiar filtros</a>
+</div>   
 <section class="mt-2">
-            <div class="table-responsive">
-                <table id="prestamosAprobados" class="table table-striped table-bordered">
+            <div class="container-fluid table-responsive">
+                <table id="prestamosAprobados" class="table table-striped table-bordered w-100">
                     <thead class="table-dark">
                         <tr>
                             <th>Cliente</th>
@@ -185,33 +206,42 @@
   <div class="card-header text-center">
   <h2 class="mt-2">Préstamos Rechazados</h2>
   </div>
-     
-     <div class="filter-container d-flex align-items-center mt-3">
-        <div class="filter-option">
-            <input type="checkbox" id="filterByDateRechazados" />
-            <label for="filterByDate">Filtrar por rango de fechas</label>
-            <div id="dateFilterRechazados" class="filter-inputs" style="display: none;">
-                <label for="startDate">Desde:</label>
-                <input type="date" id="startDate" />
-                <label for="endDate">Hasta:</label>
-                <input type="date" id="endDate" />
-            </div>
-        </div>
-
-        <div class="filter-option">
-            <input type="checkbox" id="filterByAmountRechazados" />
-            <label for="filterByAmount">Filtrar por rango de montos</label>
-            <div id="amountFilterRechazados" class="filter-inputs" style="display: none;">
-                <label for="minAmount">Mínimo:</label>
-                <input type="number" id="minAmount" placeholder="$0" />
-                <label for="maxAmount">Máximo:</label>
-                <input type="number" id="maxAmount" placeholder="$1,000,000" />
-            </div>
-        </div>
-        
-        <button id="applyFiltersRechazados" class="btn btn-primary">Aplicar Filtros</button>
-    </div>
-    <table id="prestamosRechazados" class="table table-striped">
+ <div class="row align-items-center">
+  <div class="col">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Monto mínimo</td>
+  				<td><input type="number" id="rechazadosMinMonto" name="minMonto"></td>
+  			</tr>
+  			<tr>
+  				<td>Monto máximo</td>
+  				<td><input type="number" id="rechazadosMaxMonto" name="maxMonto"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+  <div class="col d-flex justify-content-end">
+  	<table class="inputs">
+  		<tbody>
+  			<tr>
+  				<td>Fecha desde: </td>
+  				<td><input type="date" id="rechazadosMinFecha" name="minFecha"></td>
+  			</tr>
+  			<tr>
+  				<td>Fecha hasta: </td>
+  				<td><input type="date" id="rechazadosMaxFecha" name="maxFecha"></td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </div>
+</div>
+<div class="col d-flex justify-content-center">
+<a href="#" id="limpiar-filtros-rechazados" data-table="prestamosRechazados" data-prefix="rechazados" class="btn btn-warning">Limpiar filtros</a>
+</div>
+<section class="mt-2">
+<div class="container-fluid table-responsive">
+    <table id="prestamosRechazados" class="table table-striped w-100">
     <thead class="table-dark">
         <tr>
             <th>Cliente</th>
@@ -236,6 +266,9 @@
     </tbody>
 </table>
 </div>
+</section>
+</div>
+
 <div class="col-12 d-flex justify-content-center m-2">
         <a href="DashboardAdmin.jsp" class="btn btn-primary">
             Volver
@@ -244,40 +277,129 @@
 </div>
 <jsp:include page="Footer.jsp" />
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#prestamosPendientes').DataTable();
-		 // Mostrar u ocultar filtros
-        $('#filterByDatePendientes').change(function() {
-            $('#dateFilterPendientes').toggle(this.checked);
+document.addEventListener('DOMContentLoaded', function() {
+    // Función para inicializar una DataTable con sus filtros
+    function initializeDataTable(tableId, filterPrefix) {
+        let table = new DataTable('#' + tableId, {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-AR.json'
+            },
+            paging: true,
+            searching: true,
+            info: true,
+            responsive: false,
+            autoWidth: false,
+            scrollX: false
+            
         });
+        
+        
+        // Obtener referencias a los elementos de filtro
+        const minMontoInput = document.getElementById(filterPrefix + 'MinMonto');
+        const maxMontoInput = document.getElementById(filterPrefix + 'MaxMonto');
+        const minFechaInput = document.getElementById(filterPrefix + 'MinFecha');
+        const maxFechaInput = document.getElementById(filterPrefix + 'MaxFecha');
 
-        $('#filterByAmountPendientes').change(function() {
-            $('#amountFilterPendientes').toggle(this.checked);
+        if (minMontoInput && maxMontoInput) {
+            // Filtros por monto
+            table.search.fixed('monto', function(searchStr, data, index) {
+                var min = parseFloat(minMontoInput.value) || 0;
+                var max = parseFloat(maxMontoInput.value) || Infinity;
+                var monto = parseFloat(data[1].replace('$', '').replace(/\s/g, '')) || 0;
+                
+                if ((isNaN(min) && isNaN(max)) || 
+                    (isNaN(min) && monto <= max) ||
+                    (min <= monto && isNaN(max)) ||
+                    (min <= monto && monto <= max)) {
+                    return true;
+                }
+                return false;
+            });
+
+            // Eventos para monto
+            minMontoInput.addEventListener('input', function() {
+                table.draw();
+            });
+            maxMontoInput.addEventListener('input', function() {
+                table.draw();
+            });
+        }
+
+        if (minFechaInput && maxFechaInput) {
+            // Filtros por fecha
+            table.search.fixed('fecha', function(searchStr, data, index) {
+                var min = minFechaInput.value ? new Date(minFechaInput.value) : false;
+                var max = maxFechaInput.value ? new Date(maxFechaInput.value) : false;
+                var fecha = new Date(data[3]);
+                
+                if ((min <= fecha || !min) && (max >= fecha || !max)) {
+                    return true;
+                }
+                return false;
+            });
+
+            // Eventos para fecha
+            minFechaInput.addEventListener('input', function() {
+                table.draw();
+            });
+            maxFechaInput.addEventListener('input', function() {
+                table.draw();
+            });
+        }
+
+        return table;
+    }
+
+    // Inicializar las tablas
+    const tablaPendientes = initializeDataTable('prestamosPendientes', 'pendientes');
+    const tablaAprobados = initializeDataTable('prestamosAprobados', 'aprobados');
+    const tablaRechazados = initializeDataTable('prestamosRechazados', 'rechazados');
+
+    // Función para limpiar filtros
+    async function limpiarFiltros(tableId, filterPrefix) {
+        const minMontoInput = document.getElementById(filterPrefix + 'MinMonto');
+        const maxMontoInput = document.getElementById(filterPrefix + 'MaxMonto');
+        const minFechaInput = document.getElementById(filterPrefix + 'MinFecha');
+        const maxFechaInput = document.getElementById(filterPrefix + 'MaxFecha');
+
+        if (minMontoInput) minMontoInput.value = '';
+        if (maxMontoInput) maxMontoInput.value = '';
+        if (minFechaInput) minFechaInput.value = '';
+        if (maxFechaInput) maxFechaInput.value = '';
+
+        try {
+            const response = await fetch('GestionPrestamosServlet', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al recargar los datos');
+            }
+
+            window.location.reload();
+            toastr.success('Filtros limpiados correctamente');
+
+        } catch (error) {
+            console.error('Error:', error);
+            toastr.error('Error al recargar los datos');
+        }
+    }
+
+    // Agregar eventos a los botones de limpiar
+    document.querySelectorAll('[id^="limpiar-filtros-"]').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const tableId = this.dataset.table;
+            const filterPrefix = this.dataset.prefix;
+            await limpiarFiltros(tableId, filterPrefix);
         });
-	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#prestamosAprobados').DataTable();
-		 // Mostrar u ocultar filtros
-        $('#filterByDateAprobados').change(function() {
-            $('#dateFilterAprobados').toggle(this.checked);
-        });
-	});
+    });
+});
 </script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#prestamosRechazados').DataTable();
-		 // Mostrar u ocultar filtros
-        $('#filterByDateRechazados').change(function() {
-            $('#dateFilterRechazados').toggle(this.checked);
-        });
 
-        $('#filterByAmountRechazados').change(function() {
-            $('#amountFilterRechazados').toggle(this.checked);
-        });
-	});
-</script>
 </body>
 </html>

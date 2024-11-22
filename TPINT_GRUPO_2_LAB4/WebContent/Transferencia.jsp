@@ -23,7 +23,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <jsp:include page="nav.jsp" />
 <% 
 	Cliente cliente = (Cliente) session.getAttribute("Cliente");
@@ -34,7 +34,7 @@
     boolean tieneMasDeUnaCuenta = (listaCuentas != null && listaCuentas.size() > 1);
 %>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
 	<div class="row justify-content-center">
 		<div class="col-md-8 col-lg-6">
 			<div class="card shadow-lg p-4">
@@ -196,5 +196,6 @@ window.onload = function () {
 
 </script>
 </body>
+<jsp:include page="Footer.jsp" />
 </html>
 

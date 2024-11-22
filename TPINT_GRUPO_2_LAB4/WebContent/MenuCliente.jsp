@@ -26,7 +26,7 @@
 </head>
 <body class="d-flex flex-column vh-100">
 <jsp:include page="nav.jsp" />
-<div class="container my-4">
+<div class="container-fluid my-6">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mx-auto mb-0">Gestión Clientes</h2>
     </div>
@@ -38,7 +38,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
 
 </div>
-    <table id="clientTable" class="table table-striped " style="width:100%">
+    <table id="clientTable" class="table table-striped" style="width:100%">
 <thead class="table-dark">
     <tr>
         <th>Nombre</th>
@@ -66,19 +66,19 @@
         Cliente cliente = iteradorClientes.next();
 %>
         <tr>
-            <td style="font-size: 1rem;"><%= cliente.getNombre() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getApellido() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getDni() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getCuil() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getSexo() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getNacionalidad().getNacionalidad() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getFechaNacimiento() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getDireccion() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getLocalidad().getLocalidad() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getProvincia().getProvincia() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getEmail() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getTelefono() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getUsuario().getNombreUsuario() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getNombre() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getApellido() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getDni() %></td>
+            <td style="font-size: 0.65rem;"><%= cliente.getCuil() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getSexo() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getNacionalidad().getNacionalidad() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getFechaNacimiento() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getDireccion() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getLocalidad().getLocalidad() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getProvincia().getProvincia() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getEmail() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getTelefono() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
 
 				<div class="d-flex gap-1"	>

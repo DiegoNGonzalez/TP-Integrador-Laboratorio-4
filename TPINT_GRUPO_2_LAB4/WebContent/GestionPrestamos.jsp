@@ -122,7 +122,7 @@
                         ArrayList<Prestamo> prestamosPendientes = (ArrayList<Prestamo>) request.getAttribute("prestamosPendientes");
                         for (Prestamo prestamo : prestamosPendientes) { %>
                         <tr>
-                            <td><%= prestamo.getCliente().getNombre() + ", " + prestamo.getCliente().getApellido() %></td>
+                            <td><%= prestamo.getCliente().getNombre() + " " + prestamo.getCliente().getApellido() %></td>
                             <td><%= prestamo.getImporteTotal() %></td>
                             <td><%= prestamo.getCantCuotas() %></td>
                             <td><%= prestamo.getFechaAltaPrestamo() %></td>

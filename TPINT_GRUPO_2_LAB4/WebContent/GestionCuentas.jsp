@@ -111,7 +111,7 @@
                 
                 <tr id="fila-<%= cuenta.getIdCuenta() %>">
        
-                    <td><%= cliente.getNombre().toString() %> <%= cliente.getApellido().toString() %></td>
+                    <td><%= cliente.getNombre().toString() + " " + cliente.getApellido().toString() %></td>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
                     <td><%= cuenta.getTipoCuenta().getTipo() %></td>
                     <td><%= cuenta.getNumeroCuenta() %></td>

@@ -1,13 +1,19 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import entidades.Cliente;
+import entidades.Cuenta;
 import negocio.CuotaNegocio;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.CuotaNegocioImpl;
 
 /**
@@ -39,23 +45,40 @@ public class PagarPrestamoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idCuotaStr = request.getParameter("cuota");
 		String idCuentaStr = request.getParameter("cuentaDebito");
-
+		int prestamoId = Integer.parseInt(request.getParameter("prestamoId"));		
 		
 		int idCuota = Integer.parseInt(idCuotaStr);
 		int idCuenta = Integer.parseInt(idCuentaStr);
-		System.err.println("idcuota");
-		System.out.println(idCuota);
-		System.err.println("idcuenta");
-		System.out.println(idCuenta);
+		
+		Cliente clienteSesion = new Cliente(); 
+		CuentaNegocioImpl cuentaNegocio = new CuentaNegocioImpl();
+		
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			clienteSesion = (Cliente) session.getAttribute("Cliente");
+		}
 
-		CuotaNegocio cuotaNegocio= new CuotaNegocioImpl();
+		CuotaNegocio cuotaNegocio= new CuotaNegocioImpl();	
 		String mensaje=cuotaNegocio.pagarCuotaSP(idCuota, idCuenta);
+		
 		if(mensaje=="La cuota se pagó exitosamente.") {
+				if (clienteSesion != null) {
+					int idCliente = clienteSesion.getIdCliente();
+					ArrayList<Cuenta> cuentasCliente = cuentaNegocio.obtenerCuentasPorCliente(idCliente);
+					for(Cuenta cuenta : cuentasCliente) {
+					}
+					clienteSesion.setCuentas(cuentasCliente);
+					session.setAttribute("Cliente", clienteSesion);
+				}
 			//response.sendRedirect("BuscarCuentaServlet?cuentaId="+idCuenta+"&action=detalleCuenta");
 			response.sendRedirect("ListarPrestamosServlet");
 		}else {
-			request.setAttribute("errorMsj", mensaje);
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+			request.setAttribute("cuotaSeleccionada", idCuotaStr);
+			request.setAttribute("cuentaDebitoSeleccionada", idCuentaStr);	
+			request.setAttribute("prestamoId", prestamoId);				
+			request.setAttribute("toastMessage", mensaje);
+			request.setAttribute("toastType", "warning");
+            request.getRequestDispatcher("BuscarCuotasServlet").forward(request, response);
 		}
 
 	}

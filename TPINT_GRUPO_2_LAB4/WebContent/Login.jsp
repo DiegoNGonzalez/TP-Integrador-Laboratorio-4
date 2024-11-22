@@ -28,7 +28,7 @@
         <!-- Formulario de Login -->
         <form action="LoginServlet" method="post">
             <div class="mb-3">
-                <label for="username" class="form-label">Usuario (logearse con credenciales admin/admin)</label>
+                <label for="username" class="form-label">Usuario</label>
                 <input type="text" id="username" name="username" class="form-control" required>
             </div>
             <div class="mb-3">

@@ -50,6 +50,7 @@ public class BuscarPrestamoServlet extends HttpServlet {
 	            .mapToDouble(Cuota::getMontoAPagar) // muesta el valor de cada cuota
 	            .sum(); //suma todos los montos de cuotas pendientes y lo guarda en montoAdeudado
 	        
+	        float montoSolicitado = prestamo.getImporteSolicitado();
 	        float montoFinal = prestamo.getImporteTotal();
 	        float montoAbonado = 0;
 	        if("Activo".equals(prestamo.getEstado()) || "Finalizado".equals(prestamo.getEstado()) ) {
@@ -59,6 +60,7 @@ public class BuscarPrestamoServlet extends HttpServlet {
 	        		montoAbonado = montoFinal - montoAdeudado;
 	        	}
 	        }
+	        request.setAttribute("montoSolicitado", montoSolicitado);
 	        request.setAttribute("montoAbonado", montoAbonado);
 	        request.setAttribute("prestamo", prestamo);
 	        request.setAttribute("cuotasPagadas", cuotasPagadas);

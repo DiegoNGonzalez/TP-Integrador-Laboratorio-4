@@ -16,10 +16,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <!-- Menú de Navegación -->
 <jsp:include page="nav.jsp" />
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="card shadow-lg p-4">
@@ -33,6 +33,12 @@
         			Podés solicitar desde $10.000 hasta $10.000.000.
     			</small>
             </div>
+            
+            <!-- Monto calculado -->
+			<div class="form-group">
+    			<label class="form-label" for="montoCalculado">Monto Total a Devolver ($):</label>
+    			<input type="text" class="form-control" id="montoCalculado" name="importeCalculado" readonly>
+			</div>
             
             <!-- Selección de cantidad de cuotas -->
             <div class="form-group">
@@ -75,5 +81,12 @@
     </div>
     </div>
 </body>
+<script>
+    document.getElementById('importe').addEventListener('input', function () {
+        const importe = parseFloat(this.value);
+        const montoCalculado = (importe * 1.5).toFixed(2); // Calcula el 1.5x del monto
+        document.getElementById('montoCalculado').value = isNaN(montoCalculado) ? '' : montoCalculado;
+    });
+</script>
 <jsp:include page="Footer.jsp" />
 </html>

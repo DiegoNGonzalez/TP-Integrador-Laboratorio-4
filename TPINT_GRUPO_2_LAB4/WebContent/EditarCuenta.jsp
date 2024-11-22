@@ -120,23 +120,42 @@
             </div>
         </div>
     </div>
-	<div class="modal" tabindex="-1">
-  		<div class="modal-dialog">
-    		<div class="modal-content">
-      			<div class="modal-header">
-        			<h5 class="modal-title">Modificación exitosa</h5>
-        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      			</div>
-      			<div class="modal-body">
-        			<p>La cuenta se modificó con éxito.</p>
-      			</div>
-      			<div class="modal-footer">
-        			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        			<button type="button" id="confirmEditarCuenta" class="btn btn-danger">Eliminar</button>
-      			</div>
-    		</div>
-  		</div>
-	</div>
+	<div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 1055;">
+    <div id="validationToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <!-- Mensaje dinámico del backend -->
+                <% 
+                String errorMessage = (String) request.getSession().getAttribute("errorMsj");
+                if (errorMessage != null) {
+                    out.print(errorMessage);
+                    request.getSession().setAttribute("errorMsj", null); // Limpia el mensaje
+                }
+                %>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
+<script>
+// Mostrar el Toast si hay un mensaje de error del backend
+document.addEventListener("DOMContentLoaded", function () {
+    const toastElement = document.getElementById("validationToast");
+    const toastBody = toastElement.querySelector(".toast-body").textContent.trim();
+    if (toastBody) {
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+});
 
+
+
+function mostrarToast(mensaje) {
+    const toastElement = document.getElementById("validationToast");
+    toastElement.querySelector(".toast-body").innerHTML = mensaje;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+}
+</script>
 </body>
 </html>

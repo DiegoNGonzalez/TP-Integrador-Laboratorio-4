@@ -34,7 +34,12 @@ public class ClienteCuentaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Obtiene la lista de clientes (con sus cuentas)
         ArrayList<Cliente> clientes = clienteService.obtenerTodosLosClientesConCuentas();
-
+        String action = request.getParameter("action");
+        String mensaje= request.getParameter("mensaje");
+        if ("cuentaEditada".equals(action)&& "exitoEdit".equals(mensaje)) {
+        	request.setAttribute("toastMessage", "Cuenta editada correctamente.");
+            request.setAttribute("toastType", "success");
+        }
         // Envia la lista de clientes como atributo al js
         request.setAttribute("clientes", clientes);
         request.getRequestDispatcher("GestionCuentas.jsp").forward(request, response);

@@ -28,9 +28,9 @@
             <!-- Importe del préstamo solicitado -->
             <div class="form-group">
                 <label class="form-label" for="importe">Importe del Préstamo ($):</label>
-                <input type="number" class="form-control" id="importe" name="importe" min="10000" max="10000000" step="0.01" required>
+                <input type="number" class="form-control" id="importe" name="importe" min="10000" max="6500000" step="0.01" required>
                 <small style="font-size: 0.9em; color: gray; display: block;">
-        			Podés solicitar desde $10.000 hasta $10.000.000.
+        			Podés solicitar desde $10.000 hasta $6.500.000
     			</small>
             </div>
             

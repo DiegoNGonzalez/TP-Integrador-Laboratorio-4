@@ -109,7 +109,7 @@
 			<div class="col-md-12">
 				<label for="saldo" class="form-label">Saldo</label> <input
 					type="number" step="0.01" id="saldo" name="saldo"
-					class="form-control" value="10000.00">
+					class="form-control" min="9999" max="9999999" value="10000.00">
 			</div>
 <div class="col-12 d-flex justify-content-center"> 
 			<!-- Botón para Guardar la Nueva Cuenta -->

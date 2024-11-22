@@ -129,7 +129,7 @@
 
         <div class="form-group mb-3">
             <label class="form-label" for="monto">Monto a transferir ($):</label>
-            <input type="number" class="form-control" id="monto" name="monto" min="1" step="0.01" required
+            <input type="number" class="form-control" id="monto" name="monto" min="1" max="9999999" step="0.01" required
             value="<%= request.getAttribute("monto") != null ? request.getAttribute("monto") : "" %>">
             <% if (request.getAttribute("errorSaldo") != null) { %>
             <div class="text-danger"><%= request.getAttribute("errorSaldo") %></div>

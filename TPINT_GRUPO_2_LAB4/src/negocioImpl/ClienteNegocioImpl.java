@@ -22,24 +22,6 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		this.clienteDao = new ClienteDaoImpl();
 	}
 
-//	@Override
-//	public boolean agregarCliente(Cliente cliente) {
-//		if (cliente == null) {
-//			System.out.println("El cliente no puede ser nulo");
-//			return false;
-//		}
-//
-//		try {
-//			verificarCliente(cliente);
-//		} catch (ClienteNegocioException e) {
-//			System.out.println("Error al verificar el cliente: " + e.getMessage());
-//			return false;
-//		}
-//
-//		boolean resultado = clienteDao.agregarCliente(cliente);
-//		return resultado;
-//	}
-
 	@Override
 	public void ejecutarSPCrearUsuario(Usuario usuario, Cliente cliente) throws SQLException { 
 		if (cliente == null || usuario == null) {
@@ -154,7 +136,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		// ValidaciÃ³n de que el nombre solo contenga letras, incluyendo letras con acentos y la Ã±
 		if (!cliente.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-		    throw new ClienteNegocioException("El nombre solo puede contener letras.");
+		    throw new ClienteNegocioException("El nombre sólo puede contener letras.");
 		}
 
 		if (cliente.getApellido() == null || cliente.getApellido().trim().isEmpty()) {
@@ -162,7 +144,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		// ValidaciÃ³n de que el apellido solo contenga letras, incluyendo letras con acentos y la Ã±
 		if (!cliente.getApellido().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
-		    throw new ClienteNegocioException("El apellido solo puede contener letras.");
+		    throw new ClienteNegocioException("El apellido sólo puede contener letras.");
 		}
 
 		if (cliente.getDni() == null || cliente.getDni().trim().isEmpty()) {
@@ -170,7 +152,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		// ValidaciÃ³n de formato de DNI (solo nÃºmeros y 7 u 8 dÃ­gitos)
 		if (!cliente.getDni().matches("^[0-9]{7,8}$")) {
-		    throw new ClienteNegocioException("El DNI debe tener entre 7 y 8 dÃ­gitos.");
+		    throw new ClienteNegocioException("El DNI debe tener entre 7 y 8 dígitos.");
 		}
 
 		if (cliente.getCuil() == null || cliente.getCuil().trim().isEmpty()) {
@@ -178,7 +160,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		// ValidaciÃ³n de formato de CUIL (solo nÃºmeros y formato XX-XXXXXXXX-X)
 		if (!cliente.getCuil().matches("^[0-9]{2}-[0-9]{8}-[0-9]{1}$")) {
-		    throw new ClienteNegocioException("El CUIL debe tener 11 dÃ­gitos en el formato XX-XXXXXXXX-X.");
+		    throw new ClienteNegocioException("El CUIL debe tener 11 dígitos en el formato XX-XXXXXXXX-X.");
 		}
 
 		if (cliente.getFechaNacimiento() == null) {
@@ -186,7 +168,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 
 		if (cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()) {
-		    throw new ClienteNegocioException("La direcciÃ³n es obligatoria.");
+		    throw new ClienteNegocioException("La dirección es obligatoria.");
 		}
 
 		if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
@@ -194,15 +176,15 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 		// ValidaciÃ³n de formato de email
 		if (!cliente.getEmail().matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-		    throw new ClienteNegocioException("El email ingresado no es vÃ¡lido.");
+		    throw new ClienteNegocioException("El email ingresado no es válido.");
 		}
 
 		if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
-		    throw new ClienteNegocioException("El telÃ©fono es obligatorio.");
+		    throw new ClienteNegocioException("El teléfono es obligatorio.");
 		}
 		// ValidaciÃ³n de que el telÃ©fono solo contenga nÃºmeros
 		if (!cliente.getTelefono().matches("^[0-9]+$")) {
-		    throw new ClienteNegocioException("El telÃ©fono solo puede contener nÃºmeros.");
+		    throw new ClienteNegocioException("El teléfono solo puede contener números.");
 		}
 
 
@@ -211,7 +193,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		}
 
 		if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
-			throw new ClienteNegocioException("La contraseï¿½a es obligatoria.");
+			throw new ClienteNegocioException("La contraseña es obligatoria.");
 		}
 	}
 
@@ -237,4 +219,17 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 		return datos;
 	}
+	
+	@Override
+	public int obtenerIdClientePorIdCuenta(int idCuenta) {	
+		int idCliente = -1;
+		if (idCuenta <= 0) {
+			System.out.println("El idCuenta es inválido");
+			return idCliente;
+		}		
+		idCliente = clienteDao.obtenerIdClientePorIdCuenta(idCuenta);
+		return idCliente;
+	}
 }
+
+	

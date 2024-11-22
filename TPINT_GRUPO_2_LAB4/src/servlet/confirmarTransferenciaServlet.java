@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,80 +21,137 @@ import negocioImpl.CuentaNegocioImpl;
 public class confirmarTransferenciaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public confirmarTransferenciaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public confirmarTransferenciaServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("1");
-		int idCuentaOrigen = Integer.parseInt(request.getParameter("cuenta"));
-		System.out.println("idCuentaOrigen: " + idCuentaOrigen);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		int idCuentaDestino;
-		String destino = request.getParameter("tipoCuentaDestino");
-		System.out.println("destino: " + destino);
+		Cuenta cuentaDestino = new Cuenta();
+		Cliente clienteSesion = new Cliente(); 
+		int idCuentaOrigen = Integer.parseInt(request.getParameter("cuenta"));
 		Float monto = Float.parseFloat(request.getParameter("monto").toString());
-		System.out.println("monto: " + monto);
 		String concepto = request.getParameter("concepto");
-		System.out.println("concepto: " + concepto);
 
 		CuentaNegocioImpl cuentaNegocio = new CuentaNegocioImpl();
 		Cuenta cuentaOrigen = cuentaNegocio.obtenerCuentaPorId(idCuentaOrigen);
 		
-		if(destino != null) {
-			if(destino.equals("propia")) {
-				idCuentaDestino = Integer.parseInt(request.getParameter("cbuDestinoPropio"));
-			}else{
-				idCuentaDestino = Integer.parseInt(request.getParameter("cbuTercero"));
-			}
-			Cuenta cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);	
-			request.setAttribute("cuentaDestino", cuentaDestino);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			clienteSesion = (Cliente) session.getAttribute("Cliente");
 		}
+		
+		ArrayList<Cuenta> listaCuentas = clienteSesion.getCuentas();
 
-		request.setAttribute("cuentaOrigen", cuentaOrigen);
-		
-		if(request.getParameter("realizarTransferencia")!=null) {
-			request.setAttribute("concepto", concepto);	
-			request.setAttribute("monto", monto);
-			request.getRequestDispatcher("/ConfirmarTransferencia.jsp").forward(request, response);
-		}
-		
-		if(request.getParameter("confirmarTransferencia")!=null) {	
-			
+		if (request.getParameter("confirmarTransferencia") != null) {
+
 			idCuentaDestino = Integer.parseInt(request.getParameter("cuentaDestino"));
-			Cuenta cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);		
+			cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);
+
 			long cbuOrigen = cuentaOrigen.getCbu();
 			long cbuDestino = cuentaDestino.getCbu();
-
 			
-	        try {
-	        	cuentaNegocio.ejecutarSPTransferencia(cbuDestino, cbuOrigen, monto, concepto);
-	        	HttpSession session = request.getSession(false);
-	        	if (session != null) {
-		            Cliente cliente = (Cliente) session.getAttribute("Cliente");
-		            if (cliente != null) {
-		            	int idCliente = cliente.getIdCliente();
-		            	ArrayList<Cuenta> cuentasCliente = cuentaNegocio.obtenerCuentasPorCliente(idCliente);
-		            	cliente.setCuentas(cuentasCliente);
-		            	session.setAttribute("Cliente", cliente);
-		            }	        		
-	        	}
-	            response.sendRedirect("DashboardCliente.jsp");
-	        } catch (ClienteNegocioException e) {
-	            // Si ocurre un CuentaNegocioException, capturamos el mensaje y lo pasamos al JSP
-	        	request.getSession().setAttribute("errorMsj", e.getMessage());
-	            response.sendRedirect("Error.jsp");  // Redirigir a Error.jsp
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            // En caso de una excepción de SQL, redirigimos a Error.jsp con un mensaje general
-	            request.getSession().setAttribute("errorMsj", "Ocurrió un error en la base de datos.");
-	            response.sendRedirect("Error.jsp");
-	        }
+			try {
+				cuentaNegocio.ejecutarSPTransferencia(cbuDestino, cbuOrigen, monto, concepto);
+				if (session != null) {
+					if (clienteSesion != null) {
+						int idCliente = clienteSesion.getIdCliente();
+						ArrayList<Cuenta> cuentasCliente = cuentaNegocio.obtenerCuentasPorCliente(idCliente);
+						clienteSesion.setCuentas(cuentasCliente);
+						session.setAttribute("Cliente", clienteSesion);
+					}
+				}
+				response.sendRedirect("DashboardCliente.jsp");
+			} catch (ClienteNegocioException e) {
+				// Si ocurre un CuentaNegocioException, capturamos el mensaje y lo pasamos al
+				// JSP
+				request.getSession().setAttribute("errorMsj", e.getMessage());
+				response.sendRedirect("Error.jsp"); // Redirigir a Error.jsp
+			} catch (SQLException e) {
+				e.printStackTrace();
+				// En caso de una excepciï¿½n de SQL, redirigimos a Error.jsp con un mensaje
+				// general
+				request.getSession().setAttribute("errorMsj", "OcurriÃ³ un error en la base de datos.");
+				response.sendRedirect("Error.jsp");
+			}
 		}
+
+		long cbuTercero = 0;
+		String destino = request.getParameter("tipoCuentaDestino");
+		Cuenta cuentaSeleccionada = (Cuenta) request.getAttribute("cuentaSeleccionada");
+		request.setAttribute("cuentaOrigen", cuentaOrigen);
+		request.setAttribute("concepto", concepto);
+		request.setAttribute("monto", monto);
+		Cliente clienteDestino = new Cliente();
+
+		if (destino != null) {
+			if (destino.equals("propia")) {
+				idCuentaDestino = Integer.parseInt(request.getParameter("cbuDestinoPropio"));
+				cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);
+				clienteDestino = clienteSesion;
+				request.setAttribute("tipoCuentaDestino", "propia");
+				request.setAttribute("cbuDestinoPropio", idCuentaDestino);
+			} else {
+				cbuTercero = Long.parseLong(request.getParameter("cbuTercero"));
+				cuentaDestino = cuentaNegocio.obtenerCuentaPorCbu(cbuTercero);
+				request.setAttribute("cbuTercero", cbuTercero);
+				request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
+				request.setAttribute("cuenta", idCuentaOrigen);
+				request.setAttribute("tipoCuentaDestino", "terceros");
+				idCuentaDestino = cuentaDestino.getIdCuenta();
+
+				if (idCuentaDestino == -1) {			
+					request.setAttribute("errorCbu",
+							"El CBU ingresado no existe o no pertenece al banco. Por favor, ingrese otro CBU.");
+					request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);
+				}
+				else {
+					if (!cuentaDestino.getEstadoCuenta()) {
+					request.setAttribute("errorCbu",
+							"El CBU pertenece a una cuenta inactiva. Por favor, ingrese otro CBU.");
+					request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);					
+				}
+				else {
+				    boolean cuentaEsPropia = false;
+				    for (Cuenta cuenta : listaCuentas) {
+				        if (cuenta.getIdCuenta() == cuentaDestino.getIdCuenta()) {
+				            cuentaEsPropia = true;
+				            break; // Salimos del bucle al encontrar una coincidencia
+				        }
+				    }				    
+				    if (cuentaEsPropia) {
+						request.setAttribute("errorCbu",
+								"El CBU ingresado corresponde a una cuenta propia. Por favor, ingrese el CBU de un tercero.");
+						request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);				    	
+				    }
+				}
+			}
+				ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
+				int idClienteDestino = clienteNegocio.obtenerIdClientePorIdCuenta(idCuentaDestino);
+				clienteDestino = clienteNegocio.obtenerClientePorId(idClienteDestino);
+			}			
+			request.setAttribute("cuentaDestino", cuentaDestino);
+			request.setAttribute("clienteDestino", clienteDestino);
+		}		
+		
+		if(cuentaOrigen.getSaldo() < monto) {
+			request.setAttribute("errorSaldo",
+					"No hay saldo suficiente para transferir el monto ingresado");
+			request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);			
+		}
+
+
+		if (request.getParameter("realizarTransferencia") != null) {
+			request.getRequestDispatcher("/ConfirmarTransferencia.jsp").forward(request, response);
+		}
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

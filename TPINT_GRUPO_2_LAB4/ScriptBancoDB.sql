@@ -122,7 +122,6 @@ INSERT INTO tiposUsuarios (tipoUsuario) VALUES
 
 INSERT INTO tiposCuentas (tipoCuenta) VALUES
 ('Caja de Ahorro'),
-('Caja de Ahorro Dólares'),
 ('Cuenta Corriente');
 
 INSERT INTO tiposMovimientos (tipoMovimiento) VALUES
@@ -249,11 +248,11 @@ INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, 
 (3, 1, '2024-11-14', 323456789, 2233445566, 15000.0, true),
 (4, 2, '2024-11-13', 423456789, 3344556677, 18000.0, true),
 (5, 1, '2024-11-12', 523456789, 4455667788, 12000.0, true),
-(6, 3, '2024-11-11', 623456789, 5566778899, 25000.0, true),
+(6, 1, '2024-11-11', 623456789, 5566778899, 25000.0, true),
 (7, 1, '2024-11-10', 723456789, 6677889900, 8000.0, true),
 (8, 2, '2024-11-09', 823456789, 7788990011, 30000.0, true),
 (9, 1, '2024-11-08', 923456789, 8899001122, 17000.0, true),
-(10, 3, '2024-11-07', 1023456789, 9900112233, 22000.0, true),
+(10, 2, '2024-11-07', 1023456789, 9900112233, 22000.0, true),
 (11, 2, '2024-11-06', 1123456789, 1001223344, 14000.0, true);
 
 -- Movimientos para el cliente 3 (Ana Martínez)

@@ -6,19 +6,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/styles.css">  -->
 <title>Gestion de Préstamos</title>
+<!-- Bootstrap  -->
+<link 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+		crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>		
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </head>
 <body>
 <!-- Menú de Navegación -->
 <jsp:include page="nav.jsp" />
-    <div class="account-container">
-        <h2 class="edit-title">Menú de Pago de Préstamos</h2>
+<div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg p-4">
+        <h2 class="card-title text-center mb-4">Menú de Pago de Préstamos</h2>
         <form action="PagarPrestamoServlet" method="post">
             <!-- Selección de cuota a pagar -->
             <div class="form-group">
-        <label class="form-label" for="cuota">Cuotas Pendientes de Pago:</label>
-        <select class="form-control" id="cuota" name="cuota" required>
+        <label class="form-label m-2" for="cuota">Cuotas Pendientes de Pago:</label>
+        <select class="form-select m-2" id="cuota" name="cuota" required>
             <% 
                 // Recuperar la lista de cuotas desde el atributo request
                 ArrayList<Cuota> cuotasPendientes = (ArrayList<Cuota>) request.getAttribute("cuotasPendientes");
@@ -41,8 +52,8 @@
             
             <!-- Selección de cuenta de débito -->
             <div class="form-group">
-                <label class="form-label" for="cuentaDebito">Cuenta para Débito:</label>
-                <select class="form-control" id="cuentaDebito" name="cuentaDebito" required>
+                <label class="form-label m-2" for="cuentaDebito">Cuenta para Débito:</label>
+                <select class="form-select m-2" id="cuentaDebito" name="cuentaDebito" required>
                     <%
             			ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
             				if (listaCuentas != null && !listaCuentas.isEmpty()) {
@@ -60,14 +71,17 @@
             </div>
             
             <!-- Botones de acción -->
-<div class="back-button-container" style="display: flex; align-items: center; justify-content: center;">
-    <input type="submit" value="Pagar cuota"class="btn-save" style="width: auto; padding: 10px 15px; margin-right: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+<div class="col-12 d-flex justify-content-center">
+    <input type="submit" value="Pagar cuota"class="btn btn-success m-2">
         
-    <a href="ListarPrestamosServlet" class="btn-volver" style="width: auto; padding: 10px 15px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px; text-align: center;">
+    <a href="ListarPrestamosServlet" class="btn btn-primary m-2">
         Volver
     </a>
 </div>
 </form>
+    </div>
+    </div>
+    </div>
     </div>
 </body>
 </html>

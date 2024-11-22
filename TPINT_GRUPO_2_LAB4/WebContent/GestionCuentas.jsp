@@ -54,13 +54,9 @@
 <jsp:include page="nav.jsp" />
 
 <div class="container my-4">
-    <div class="d-flex justify-content-between align-items-center mb-4 mt-4 w-100">
-
-        <a href="DashboardAdmin.jsp" class="btn btn-primary">Volver</a>
-
+	<div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mx-auto mb-0">Gestión de Cuentas</h2>
-    </div>
-
+	</div>
     <hr class="border-dark my-3">
    <div class="row"> 
     <form id="filterForm" action="FiltrosServlet" method="GET">
@@ -115,7 +111,7 @@
                 
                 <tr id="fila-<%= cuenta.getIdCuenta() %>">
        
-                    <td><%= cliente.getNombre().toString() %></td>
+                    <td><%= cliente.getNombre().toString() %> <%= cliente.getApellido().toString() %></td>
                     <td><%= cuenta.getFechaCreacion().toString() %></td>
                     <td><%= cuenta.getTipoCuenta().getTipo() %></td>
                     <td><%= cuenta.getNumeroCuenta() %></td>
@@ -132,11 +128,14 @@
         %>
     </tbody>
     </table>
+        <div class="col-12 d-flex justify-content-center">
+       		<a href="DashboardAdmin.jsp" class="btn btn-primary">Volver</a>
+    	</div>
     <div class="modal" tabindex="-1">
   		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-header">
-        			<h5 class="modal-title">¿Está seguro que desea eliminar?</h5>
+        			<h5 class="modal-title">¿Está seguro que desea eliminar la cuenta?</h5>
         			<button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       			</div>
       			<div class="modal-body">

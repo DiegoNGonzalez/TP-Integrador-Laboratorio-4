@@ -15,7 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 
 <%-- Incluir el menú de navegación desde nav.jsp --%>
 <jsp:include page="nav.jsp" />
@@ -30,11 +30,11 @@
 %>
 
 <!-- Contenedor del Perfil del Cliente -->
-<div class="container mt-5">
+<div class="container flex-grow-1 mt-5 mb-5">
 	<div class="row justify-content-center">
 		<div class="col-md-8 col-lg-6">
 			<div class="card shadow-lg p-4">
-    <h2 class="text-center mb-4">Mi perfil</h2>
+    <h2 class="text-center mb-4">Mi Perfil</h2>
     <form action="">
 
         <!-- Nombre -->
@@ -127,4 +127,5 @@
 
 </div>
 </body>
+<jsp:include page="Footer.jsp" />
 </html>

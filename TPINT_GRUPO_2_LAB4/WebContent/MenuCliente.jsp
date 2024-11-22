@@ -26,11 +26,8 @@
 </head>
 <body class="d-flex flex-column vh-100">
 <jsp:include page="nav.jsp" />
-<div class="container my-4">
+<div class="container-fluid my-6">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="DashboardAdmin.jsp" class="btn btn-primary">
-            Volver
-        </a>
         <h2 class="mx-auto mb-0">Gestión Clientes</h2>
     </div>
     <hr class="border-dark my-3">
@@ -39,9 +36,9 @@
 <!-- Tabla de Clientes -->
 <div class="table-responsive" style="overflow-x: auto;" >
 <div class="d-flex justify-content-between align-items-center mb-3">
-<a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn btn-primary">Agregar Nuevo Cliente</a>
+
 </div>
-    <table id="clientTable" class="table table-striped " style="width:100%">
+    <table id="clientTable" class="table table-striped" style="width:100%">
 <thead class="table-dark">
     <tr>
         <th>Nombre</th>
@@ -69,19 +66,19 @@
         Cliente cliente = iteradorClientes.next();
 %>
         <tr>
-            <td style="font-size: 1rem;"><%= cliente.getNombre() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getApellido() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getDni() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getCuil() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getSexo() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getNacionalidad().getNacionalidad() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getFechaNacimiento() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getDireccion() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getLocalidad().getLocalidad() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getProvincia().getProvincia() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getEmail() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getTelefono() %></td>
-            <td style="font-size: 1rem;"><%= cliente.getUsuario().getNombreUsuario() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getNombre() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getApellido() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getDni() %></td>
+            <td style="font-size: 0.65rem;"><%= cliente.getCuil() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getSexo() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getNacionalidad().getNacionalidad() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getFechaNacimiento() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getDireccion() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getLocalidad().getLocalidad() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getProvincia().getProvincia() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getEmail() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getTelefono() %></td>
+            <td style="font-size: 0.75rem;"><%= cliente.getUsuario().getNombreUsuario() %></td>
             <td>
 
 				<div class="d-flex gap-1"	>
@@ -97,6 +94,12 @@
 %>
         </tbody>
     </table>
+    <div class="d-flex justify-content-center align-items-center mb-3">
+        <a href="CargarDesplegablesServlet?action=agregarCliente" class="btnAgregarCliente btn btn-success m-2">Agregar Nuevo Cliente</a>
+        <a href="DashboardAdmin.jsp" class="btn btn-primary m-2">
+            Volver
+        </a>
+    </div>
     <!-- Modal de confirmación de eliminación -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">

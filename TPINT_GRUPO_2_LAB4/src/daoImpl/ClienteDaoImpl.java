@@ -177,8 +177,7 @@ public class ClienteDaoImpl implements ClienteDao {
 					LocalidadDaoImpl localidadDao = new LocalidadDaoImpl();
 					ProvinciaDaoImpl provinciaDao = new ProvinciaDaoImpl();
 
-					Nacionalidad nacionalidad = nacionalidadDao
-							.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
+					Nacionalidad nacionalidad = nacionalidadDao.obtenerNacionalidadPorId(resultSet.getInt("idNacionalidad"));
 					Localidad localidad = localidadDao.obtenerLocalidadPorId(resultSet.getInt("idLocalidad"));
 					Provincia provincia = provinciaDao.obtenerProvinciaPorId(resultSet.getInt("idProvincia"));
 

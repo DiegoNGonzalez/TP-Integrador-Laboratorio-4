@@ -67,7 +67,7 @@ public class FiltrosServlet extends HttpServlet {
     }
 
     private void filtrarCuentas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtener parámetros de filtro
+        // obtiene los parámetros del filtro
         boolean filtrarPorFecha = request.getParameter("filterByDate") != null;
         boolean filtrarPorSaldo = request.getParameter("filterByAmount") != null;
 
@@ -85,10 +85,8 @@ public class FiltrosServlet extends HttpServlet {
             	try {
                     fechaInicio = java.sql.Date.valueOf(startDateStr);
                 } catch (IllegalArgumentException e) {
-                    // Manejar el error de conversión de fecha
-                    System.out.println("Error al convertir fecha de inicio: " + e.getMessage());
-                    // Puedes definir un valor por defecto o manejar el error como prefieras
-                    // fechaInicio = null; // Ya está establecido como null por defecto
+                	request.getSession().setAttribute("errorMsj", e.getMessage());
+    	            response.sendRedirect("Error.jsp"); 
                 }
             }
             
@@ -96,10 +94,8 @@ public class FiltrosServlet extends HttpServlet {
             	try {
                     fechaFin = java.sql.Date.valueOf(endDateStr);
                 } catch (IllegalArgumentException e) {
-                    // Manejar el error de conversión de fecha
-                    System.out.println("Error al convertir fecha de inicio: " + e.getMessage());
-                    // Puedes definir un valor por defecto o manejar el error como prefieras
-                    // fechaInicio = null; // Ya está establecido como null por defecto
+                	request.getSession().setAttribute("errorMsj", e.getMessage());
+    	            response.sendRedirect("Error.jsp");
                 }
             }
         }
@@ -148,10 +144,8 @@ public class FiltrosServlet extends HttpServlet {
             	try {
                     fechaInicio = java.sql.Date.valueOf(startDateStr);
                 } catch (IllegalArgumentException e) {
-                    // Manejar el error de conversión de fecha
-                    System.out.println("Error al convertir fecha de inicio: " + e.getMessage());
-                    // Puedes definir un valor por defecto o manejar el error como prefieras
-                    // fechaInicio = null; // Ya está establecido como null por defecto
+                	request.getSession().setAttribute("errorMsj", e.getMessage());
+    	            response.sendRedirect("Error.jsp");
                 }
             }
             
@@ -159,10 +153,8 @@ public class FiltrosServlet extends HttpServlet {
             	try {
                     fechaFin = java.sql.Date.valueOf(endDateStr);
                 } catch (IllegalArgumentException e) {
-                    // Manejar el error de conversión de fecha
-                    System.out.println("Error al convertir fecha de inicio: " + e.getMessage());
-                    // Puedes definir un valor por defecto o manejar el error como prefieras
-                    // fechaInicio = null; // Ya está establecido como null por defecto
+                	request.getSession().setAttribute("errorMsj", e.getMessage());
+    	            response.sendRedirect("Error.jsp");
                 }
             }
         }

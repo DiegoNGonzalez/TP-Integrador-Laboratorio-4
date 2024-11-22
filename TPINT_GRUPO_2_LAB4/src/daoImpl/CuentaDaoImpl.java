@@ -273,7 +273,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	    Float montoMaximo
 	) {
 	    ArrayList<Cliente> clientesFiltrados = new ArrayList<>();
-	    String query = "SELECT DISTINCT c.idCliente, c.nombre FROM clientes c " +
+	    String query = "SELECT DISTINCT c.idCliente, c.nombre, c.apellido FROM clientes c " +
 	                   "INNER JOIN cuentas cu ON c.idCliente = cu.idcliente " +
 	                   "WHERE 1=1 ";
 
@@ -306,6 +306,7 @@ public class CuentaDaoImpl implements CuentaDao{
 	                Cliente cliente = new Cliente();
 	                cliente.setIdCliente(resultSet.getInt("idCliente"));
 	                cliente.setNombre(resultSet.getString("nombre"));
+	                cliente.setApellido(resultSet.getString("apellido"));
 	                
 	                // Obtener cuentas del cliente con los filtros aplicados
 	                cliente.setCuentas(obtenerCuentasFiltradas(cliente.getIdCliente(), fechaInicio, fechaFin, montoMinimo, montoMaximo));

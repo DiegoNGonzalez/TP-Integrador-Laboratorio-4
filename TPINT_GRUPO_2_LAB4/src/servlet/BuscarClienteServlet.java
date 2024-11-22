@@ -91,6 +91,8 @@ public class BuscarClienteServlet extends HttpServlet {
                     request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);                	
                 }
             } else if ("editarCuenta".equals(action)) {
+            	String error=(String)request.getSession().getAttribute("errorMsj");
+	            request.getSession().setAttribute("errorMsj", error);
                 request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);     
             }else {
                 request.getRequestDispatcher("Error.jsp").forward(request, response);

@@ -96,15 +96,17 @@ public class EditarClienteServlet extends HttpServlet {
         cliente.setProvincia(provincia);
         
         try {
-        	clienteNegocio.verificarCliente(cliente, usuario);
-        	clienteNegocio.modificarCliente(cliente);
-        	request.setAttribute("toastMessage", "Cliente editado correctamente.");
-            request.setAttribute("toastType", "success");
-            response.sendRedirect("ListarClientesServlet?action=clienteEditado&&mensaje=exitoEdit");
+        	boolean resultado =clienteNegocio.modificarCliente(cliente);
+        	if(resultado) {
+        		
+        		request.setAttribute("toastMessage", "Cliente editado correctamente.");
+        		request.setAttribute("toastType", "success");
+        		response.sendRedirect("ListarClientesServlet?action=clienteEditado&&mensaje=exitoEdit");
+        	}
         } catch(ClienteNegocioException e) {
         		e.printStackTrace();
-        		String error= e.getMessage();
-        		System.out.println(error);
+        		request.getSession().setAttribute("errorMsj", e.getMessage());
+	            System.out.println(e.getMessage());
         		
         		response.sendRedirect("BuscarClienteServlet?clienteId="+cliente.getIdCliente()+"&action=editarCliente");
         		

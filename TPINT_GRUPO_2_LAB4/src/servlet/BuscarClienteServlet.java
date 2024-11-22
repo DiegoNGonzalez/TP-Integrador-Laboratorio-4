@@ -72,6 +72,8 @@ public class BuscarClienteServlet extends HttpServlet {
             	request.setAttribute("fechaHoy", LocalDate.now().toString());
                 request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);
             } else if ("editarCuenta".equals(action)) {
+            	String error=(String)request.getSession().getAttribute("errorMsj");
+	            request.getSession().setAttribute("errorMsj", error);
                 request.getRequestDispatcher("/CargarDesplegablesServlet").forward(request, response);     
             }else {
                 // Si `action` no coincide con ninguna acci�n esperada, redirige a una p�gina por defecto.

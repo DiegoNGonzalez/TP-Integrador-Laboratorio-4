@@ -37,23 +37,30 @@ public class BuscarCuotasServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int prestamoId = Integer.parseInt(request.getParameter("prestamoId"));
+
 		Cliente cliente = (Cliente) request.getSession().getAttribute("Cliente"); // Guarda el cliente de la session
 		Integer idCliente = cliente.getIdCliente(); //captura su id
 		String action = request.getParameter("action");
 		CuotaNegocioImpl auxCuotaNegocio = new CuotaNegocioImpl();
 		PrestamoNegocio prestamoNeg = new PrestamoNegocioImpl();
-		
+		int prestamoId;
+
 		if ("listarPendientes".equals(action)) {
 	        // Obtener las cuotas pendientes de un préstamo específico
-	        ArrayList<Cuota> cuotasPendientes = auxCuotaNegocio.listarCuotasPendientesPorPrestamo(prestamoId);
-	        if(cuotasPendientes.size() == 0) {
+			prestamoId = Integer.parseInt(request.getParameter("prestamoId"));
+			request.setAttribute("prestamoId", prestamoId);
+		}
+		else {
+			prestamoId = (Integer) request.getAttribute("prestamoId");			
+		}
+		
+
+	    ArrayList<Cuota> cuotasPendientes = auxCuotaNegocio.listarCuotasPendientesPorPrestamo(prestamoId);
+	    if(cuotasPendientes.size() == 0) {
 	        	prestamoNeg.finalizarPrestamo(prestamoId);
 	        }
 	        request.setAttribute("cuotasPendientes", cuotasPendientes);
-	        //request.getRequestDispatcher("PagoPrestamo.jsp").forward(request, response);
-	    }
-		
+	
 		CuentaNegocioImpl cuentaNegocio = new CuentaNegocioImpl();
         ArrayList<Cuenta> listaCuentas = cuentaNegocio.obtenerCuentasPorCliente(idCliente);
         
@@ -61,7 +68,6 @@ public class BuscarCuotasServlet extends HttpServlet {
             listaCuentas = new ArrayList<>(); //lista vacía si no se encontraron cuentas
         }
         request.setAttribute("listaCuentas", listaCuentas);
-		
 		
         request.getRequestDispatcher("PagoPrestamo.jsp").forward(request, response);
 	}

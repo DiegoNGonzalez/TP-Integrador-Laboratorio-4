@@ -21,7 +21,7 @@
     <title>Mis Préstamos</title>
 <link rel="stylesheet" type="text/css" href="css/styles2.css">
 </head>
-<body>
+<body class="d-flex flex-column vh-100">
 <jsp:include page="nav.jsp" />
 
 <% 
@@ -38,13 +38,16 @@
 %>
 
 
-<div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+<div class="container flex-grow-1 my-4">
     
-    <h2>Listado de Préstamos</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mx-auto mb-0">Mis Prestamos</h2>
+	</div>
+    <hr class="border-dark my-3">
     <div class="row"> 
     <form id="filterForm" action="FiltrosServlet" method="GET">
     <input type="hidden" name="action" value="filtrarMisPrestamos">
-    <div class="filter-container d-flex align-items-center gap-3">
+    <div class="filter-container d-flex align-items-center gap-3 mb-5">
         <div class="filter-option">
             <input type="checkbox" id="filterByDatePrestamos" name="filterByDate" />
             <label for="filterByDate">Filtrar por rango de fechas</label>
@@ -171,6 +174,6 @@ $(document).ready(function() {
         });
 	});
 </script>
-
 </body>
+<jsp:include page="Footer.jsp" />
 </html>

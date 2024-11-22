@@ -54,13 +54,14 @@ public class SolicitarPrestamoServlet extends HttpServlet {
 	        float importe = Float.parseFloat(request.getParameter("importe"));
 	        int cuotas = Integer.parseInt(request.getParameter("cuotas"));
 	        int cuentaDestinoId = Integer.parseInt(request.getParameter("cuentaDestino"));
+	        float importeTotal = Float.parseFloat(request.getParameter("importeCalculado"));
 
 	        Prestamo nuevoPrestamo = new Prestamo();
-	        nuevoPrestamo.setImporteTotal(importe);
+	        nuevoPrestamo.setImporteSolicitado(importe);
+	        nuevoPrestamo.setImporteTotal(importeTotal);
 	        nuevoPrestamo.setCantCuotas(cuotas);
 	        nuevoPrestamo.setPlazo(cuotas);
-	        //float importeCuota = Float.valueOf(importe).divide(Float.valueOf(cuotas), 2, RoundingMode.HALF_UP);
-	        float importeCuota = Math.round((importe / cuotas) * 100.0) / 100.0f;
+	        float importeCuota = Math.round((importeTotal / cuotas) * 100.0) / 100.0f;
 	        nuevoPrestamo.setImporteCuota(importeCuota);
 	        nuevoPrestamo.setCuenta(new CuentaNegocioImpl().obtenerCuentaPorId(cuentaDestinoId));
 	        nuevoPrestamo.setFechaAltaPrestamo(new Date(System.currentTimeMillis()));

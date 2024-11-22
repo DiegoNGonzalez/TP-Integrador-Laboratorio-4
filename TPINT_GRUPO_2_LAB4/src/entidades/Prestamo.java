@@ -11,6 +11,7 @@ public class Prestamo {
 	private Cliente cliente;
 	private Date fechaAltaPrestamo;
 	private float importeTotal;
+	private float importeSolicitado;
 	private int plazo;
 	private float importeCuota;
 	private int cantCuotas;
@@ -107,6 +108,14 @@ public class Prestamo {
 		return "Prestamo [idPrestamo=" + idPrestamo + ", cliente=" + cliente + ", fechaAltaPrestamo="
 				+ fechaAltaPrestamo + ", importeTotal=" + importeTotal + ", plazo=" + plazo + ", importeCuota="
 				+ importeCuota + ", cantCuotas=" + cantCuotas + ", cuotas=" + cuotas + ", estado=" + estado + "]";
+	}
+
+	public float getImporteSolicitado() {
+		return importeSolicitado;
+	}
+
+	public void setImporteSolicitado(float importeSolicitado) {
+		this.importeSolicitado = importeSolicitado;
 	}
 	
 	

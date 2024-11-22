@@ -79,7 +79,7 @@
         <thead class="table-dark" >
             <tr>
                 <th>Fecha de solicitud</th>
-                <th>Monto solicitado</th>
+                <th>Monto a Abonar</th>
                 <th>Cuotas</th>
                 <th>Estado</th>
                 <th></th>

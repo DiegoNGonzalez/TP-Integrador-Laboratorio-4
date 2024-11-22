@@ -192,6 +192,7 @@ CREATE TABLE prestamos (
     idCliente int NOT NULL,
     idCuenta int NOT NULL,
     fechaAltaPrestamo date NOT NULL,
+    importePrestamoSolicitado decimal(14, 2) NOT NULL,
     importePrestamo decimal(14, 2) NOT NULL,
     mesesPlazo int NOT NULL,
     importeCuota decimal(14, 2) NOT NULL,
@@ -335,11 +336,11 @@ INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, 
 (11, 2, '2024-11-16', 'Préstamo otorgado', 20000.00),
 (11, 3, '2024-11-17', 'Pago parcial de préstamo', -8000.00);
 
-INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
+INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado ,importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
 VALUES
-(2, 2, '2024-11-16', 5000.00, 12, 450.00, 12, 'Activo'),
-(3, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Pendiente'),
-(4, 3, '2024-11-10', 3000.00, 6, 500.00, 6, 'Rechazado');
+(2, 2, '2024-11-16', 5000.00 ,5000.00, 12, 450.00, 12, 'Activo'),
+(3, 3, '2024-11-10', 5000.00 ,3000.00, 6, 500.00, 6, 'Pendiente'),
+(4, 3, '2024-11-10', 5000.00, 3000.00, 6, 500.00, 6, 'Rechazado');
 
 DELIMITER //
 

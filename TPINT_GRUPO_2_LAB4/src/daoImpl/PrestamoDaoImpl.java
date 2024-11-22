@@ -50,7 +50,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public ArrayList<Prestamo> listarPrestamosXEstado(String estado) {
-		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo FROM prestamos WHERE EstadoPrestamo = ?";
+		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado , importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo FROM prestamos WHERE EstadoPrestamo = ?";
 		ArrayList<Prestamo> listaPrestamos = new ArrayList<>();
 
 		try (Connection conexion = Conexion.getConnection();
@@ -70,6 +70,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 					prestamo.setCuenta(cuenta);
 					prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo")); // Usar getTimestamp si
 																							// necesitamos la hora
+					prestamo.setImporteSolicitado(resultSet.getFloat("importePrestamoSolicitado"));
 					prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 					prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
 					prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
@@ -101,8 +102,8 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public boolean agregarPrestamo(Prestamo prestamo) {
-		String query = "INSERT INTO prestamos(idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO prestamos(idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado ,importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection conexion = Conexion.getConnection();
 				PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -110,11 +111,12 @@ public class PrestamoDaoImpl implements PrestamoDao {
 			statement.setInt(1, prestamo.getCliente().getIdCliente());
 			statement.setInt(2, prestamo.getCuenta().getIdCuenta());
 			statement.setDate(3, new java.sql.Date(prestamo.getFechaAltaPrestamo().getTime()));
-			statement.setFloat(4, prestamo.getImporteTotal());
-			statement.setInt(5, prestamo.getPlazo());
-			statement.setFloat(6, prestamo.getImporteCuota());
-			statement.setInt(7, prestamo.getCantCuotas());
-			statement.setString(8, prestamo.getEstado());
+			statement.setFloat(4, prestamo.getImporteSolicitado());
+			statement.setFloat(5, prestamo.getImporteTotal());
+			statement.setInt(6, prestamo.getPlazo());
+			statement.setFloat(7, prestamo.getImporteCuota());
+			statement.setInt(8, prestamo.getCantCuotas());
+			statement.setString(9, prestamo.getEstado());
 
 			int filas = statement.executeUpdate();
 			return filas > 0;
@@ -144,7 +146,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public Prestamo prestamoXId(int idPrestamo) {
-		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo "
+		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo "
 				+ "FROM prestamos WHERE idPrestamo = ?";
 
 		Prestamo prestamo = null;
@@ -165,6 +167,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 					prestamo.setCliente(cliente);
 					prestamo.setCuenta(cuenta);
 					prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
+					prestamo.setImporteSolicitado(resultSet.getFloat("importePrestamoSolicitado"));
 					prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 					prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
 					prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));
@@ -181,7 +184,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 	@Override
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) {
-		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo "
+		String query = "SELECT idPrestamo, idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo "
 				+ "FROM prestamos WHERE idCliente = ?";
 		ArrayList<Prestamo> listaPrestamos = new ArrayList<Prestamo>();
 
@@ -200,6 +203,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 					prestamo.setCliente(cliente);
 					prestamo.setCuenta(cuenta);
 					prestamo.setFechaAltaPrestamo(resultSet.getDate("fechaAltaPrestamo"));
+					prestamo.setImporteSolicitado(resultSet.getFloat("importePrestamoSolicitado"));
 					prestamo.setImporteTotal(resultSet.getFloat("importePrestamo"));
 					prestamo.setPlazo(resultSet.getInt("mesesPlazo"));
 					prestamo.setImporteCuota(resultSet.getFloat("importeCuota"));

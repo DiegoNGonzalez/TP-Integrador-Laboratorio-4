@@ -130,6 +130,43 @@
     </div>
     </div>
     </div>
+    <div class="toast-container position-fixed top-50 start-50 translate-middle" style="z-index: 1055;">
+    <div id="validationToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <!-- Mensaje dinámico del backend -->
+                <% 
+                String errorMessage = (String) request.getSession().getAttribute("errorMsj");
+                if (errorMessage != null) {
+                    out.print(errorMessage);
+                    request.getSession().setAttribute("errorMsj", null); // Limpia el mensaje
+                }
+                %>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
 </div>
+</div>
+<script>
+// Mostrar el Toast si hay un mensaje de error del backend
+document.addEventListener("DOMContentLoaded", function () {
+    const toastElement = document.getElementById("validationToast");
+    const toastBody = toastElement.querySelector(".toast-body").textContent.trim();
+    if (toastBody) {
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+});
+
+
+
+function mostrarToast(mensaje) {
+    const toastElement = document.getElementById("validationToast");
+    toastElement.querySelector(".toast-body").innerHTML = mensaje;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+}
+</script>
 </body>
 </html>

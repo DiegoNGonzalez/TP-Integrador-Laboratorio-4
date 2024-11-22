@@ -81,7 +81,7 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 		if (cliente == null) {
 			System.out.println("El cliente no puede ser nulo.");
 			return false;
-		}
+		}	
 		Usuario usuario= cliente.getUsuario();
 
 		try {
@@ -90,7 +90,8 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 			return resultado;
 		} catch (ClienteNegocioException e) {
 			System.out.println("Error al verificar el cliente: " + e.getMessage());
-			return false;
+			throw new ClienteNegocioException(e.getMessage());
+			
 		}
 
 		

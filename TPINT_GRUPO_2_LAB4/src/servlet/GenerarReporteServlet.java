@@ -30,7 +30,7 @@ public class GenerarReporteServlet extends HttpServlet {
 
         
         if (fechaInicioStr == null || fechaFinStr == null || fechaInicioStr.isEmpty() || fechaFinStr.isEmpty()) {
-            request.setAttribute("error", "Debe seleccionar un rango de fechas válido.");
+            request.setAttribute("error", "Debe seleccionar un rango de fechas vï¿½lido.");
             request.getRequestDispatcher("reporte.jsp").forward(request, response);
             return;
         }
@@ -63,10 +63,12 @@ public class GenerarReporteServlet extends HttpServlet {
 
 
         } catch (ParseException e) {
-            request.setAttribute("msjError", "Formato de fecha inválido.");
+            request.setAttribute("msjError", "Formato de fecha invï¿½lido.");
         }
 
         // Redirigir al JSP
+        request.setAttribute("toastMessage", "Reporte generado con Ã©xito");
+        request.setAttribute("toastType", "success");
         request.getRequestDispatcher("Reporte.jsp").forward(request, response);
     }
 }

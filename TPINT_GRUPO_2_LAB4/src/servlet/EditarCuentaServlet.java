@@ -50,13 +50,16 @@ public class EditarCuentaServlet extends HttpServlet {
         
         try {
         	if(cuentaNegocioImpl.modificarCuenta(auxCuenta)) {
-        		response.sendRedirect("ClienteCuentaServlet");         		
+        		request.setAttribute("toastMessage", "Cuenta editada correctamente.");
+        		request.setAttribute("toastType", "success");
+        		response.sendRedirect("ClienteCuentaServlet?action=cuentaEditada&&mensaje=exitoEdit");         		
         	}
         	else {
             	response.sendRedirect("Error.jsp");          		
         	}
         } catch(Exception e) {
         		e.printStackTrace();
+        		request.getSession().setAttribute("errorMsj", e.getMessage());
         		response.sendRedirect("Error.jsp");
         		
         	}

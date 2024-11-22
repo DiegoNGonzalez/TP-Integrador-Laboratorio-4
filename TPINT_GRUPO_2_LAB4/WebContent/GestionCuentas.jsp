@@ -149,6 +149,17 @@
   		</div>
 	</div>
 </div>
+   <!-- Contenedor del Toast -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="toastMessage" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="d-flex">
+            <div class="toast-body">
+                <!-- Aquí aparecerá el mensaje -->
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
 <jsp:include page="Footer.jsp" />
 <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script type="text/javascript">
@@ -214,6 +225,27 @@ function eliminarCuenta(cuentaId) {
    	 modal.hide();	
    }
 }
+</script>
+<%
+    String toastMessage = (String) request.getAttribute("toastMessage");
+    String toastType = (String) request.getAttribute("toastType"); // success, error, info, warning
+%>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        <% if (toastMessage != null) { %>
+            const toastEl = document.getElementById('toastMessage');
+            const toastBody = toastEl.querySelector('.toast-body');
+            const toastInstance = new bootstrap.Toast(toastEl);
+
+            // Asignar el mensaje y estilo
+            toastBody.textContent = "<%= toastMessage %>";
+            toastEl.classList.remove('text-bg-primary', 'text-bg-danger', 'text-bg-warning', 'text-bg-success');
+            toastEl.classList.add('text-bg-<%= toastType %>'); // Estilo dinámico
+
+            // Mostrar el toast
+            toastInstance.show();
+        <% } %>
+    });
 </script>
 </body>
 </html>

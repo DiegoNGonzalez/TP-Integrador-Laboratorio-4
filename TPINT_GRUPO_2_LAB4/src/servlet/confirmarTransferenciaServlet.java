@@ -74,7 +74,7 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 				e.printStackTrace();
 				// En caso de una excepci�n de SQL, redirigimos a Error.jsp con un mensaje
 				// general
-				request.getSession().setAttribute("errorMsj", "Ocurri� un error en la base de datos.");
+				request.getSession().setAttribute("errorMsj", "Ocurrió un error en la base de datos.");
 				response.sendRedirect("Error.jsp");
 			}
 		}
@@ -92,6 +92,8 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 				idCuentaDestino = Integer.parseInt(request.getParameter("cbuDestinoPropio"));
 				cuentaDestino = cuentaNegocio.obtenerCuentaPorId(idCuentaDestino);
 				clienteDestino = clienteSesion;
+				request.setAttribute("tipoCuentaDestino", "propia");
+				request.setAttribute("cbuDestinoPropio", idCuentaDestino);
 			} else {
 				cbuTercero = Long.parseLong(request.getParameter("cbuTercero"));
 				cuentaDestino = cuentaNegocio.obtenerCuentaPorCbu(cbuTercero);
@@ -100,7 +102,7 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 				request.setAttribute("cuenta", idCuentaOrigen);
 				request.setAttribute("tipoCuentaDestino", "terceros");
 				idCuentaDestino = cuentaDestino.getIdCuenta();
-				System.out.println("idCuentaDestino: " + idCuentaDestino);
+
 				if (idCuentaDestino == -1) {			
 					request.setAttribute("errorCbu",
 							"El CBU ingresado no existe o no pertenece al banco. Por favor, ingrese otro CBU.");
@@ -129,11 +131,16 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 			}
 				ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
 				int idClienteDestino = clienteNegocio.obtenerIdClientePorIdCuenta(idCuentaDestino);
-				System.out.println("idClienteDestino: " + idClienteDestino);
 				clienteDestino = clienteNegocio.obtenerClientePorId(idClienteDestino);
 			}			
 			request.setAttribute("cuentaDestino", cuentaDestino);
 			request.setAttribute("clienteDestino", clienteDestino);
+		}		
+		
+		if(cuentaOrigen.getSaldo() < monto) {
+			request.setAttribute("errorSaldo",
+					"No hay saldo suficiente para transferir el monto ingresado");
+			request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);			
 		}
 
 

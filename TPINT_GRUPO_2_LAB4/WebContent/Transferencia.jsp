@@ -49,7 +49,7 @@
                     			if (cuentaSeleccionada != null) {
                 			%>
                     			<option value="<%= cuentaSeleccionada.getIdCuenta() %>" selected>
-                        			<%= cuentaSeleccionada.getNumeroCuenta() %> - <%= cuentaSeleccionada.getTipoCuenta().getTipo() %>
+                        			<%= cuentaSeleccionada.getTipoCuenta().getTipo() %> <%= cuentaSeleccionada.getNumeroCuenta() %> - Saldo: $<%=cuentaSeleccionada.getSaldo() %>
                     			</option>
                 			<%  
                     		} else if (listaCuentas != null && !listaCuentas.isEmpty()) {
@@ -81,7 +81,8 @@
             <div class="form-check">
                 <input type="radio" id="cuentaPropia" name="tipoCuentaDestino" value="propia" 
                        onclick="mostrarDestino('propia')" 
-                       <%= tieneUnaCuenta ? "disabled" : "" %> >
+                       <%= tieneUnaCuenta ? "disabled" : "" %> 
+                       <%= "propia".equals(request.getAttribute("tipoCuentaDestino")) ? "checked" : "" %> >
                 <label for="cuentaPropia">Cuenta propia</label>
             </div>
             <div class="form-check">
@@ -93,22 +94,28 @@
             </div>
         </div>
 
-        <!-- Selección de cuenta destino -->
-        <div id="destinoCuentaPropia" class="form-group <%= tieneUnaCuenta ? "hidden" : "" %> mb-3">
-            <label class="form-label" for="cbuDestinoPropio">Seleccione cuenta destino:</label>
-            <select class="form-select" id="cbuDestinoPropio" name="cbuDestinoPropio">
-                <option value="">Seleccione cuenta...</option>
-                <% 
-                    for (Cuenta cuenta : listaCuentas) {
-                %>
-                    <option value="<%= cuenta.getIdCuenta() %>" data-numero-cuenta="<%= cuenta.getNumeroCuenta() %>">
-                        <%= cuenta.getTipoCuenta().getTipo() %> <%= cuenta.getNumeroCuenta() %>
-                    </option>
-                <% 
-                    }
-                %>
-            </select>
-        </div>
+<!-- Selección de cuenta destino -->
+<div id="destinoCuentaPropia" class="form-group <%= (tieneUnaCuenta || !"propia".equals(request.getAttribute("tipoCuentaDestino"))) ? "hidden" : "" %> mb-3">
+    <label class="form-label" for="cbuDestinoPropio">Seleccione cuenta destino:</label>
+    <select class="form-select" id="cbuDestinoPropio" name="cbuDestinoPropio">
+        <option value="">Seleccione cuenta...</option>
+        <% 
+            // Recuperar el valor del atributo cbuDestinoPropio desde el request
+            Integer cbuDestinoPropio = (Integer) request.getAttribute("cbuDestinoPropio");
+
+            for (Cuenta cuenta : listaCuentas) {
+                // Verificar si el ID de la cuenta coincide con cbuDestinoPropio
+                boolean esSeleccionada = cbuDestinoPropio != null && cbuDestinoPropio.equals(cuenta.getIdCuenta());
+        %>
+            <option value="<%= cuenta.getIdCuenta() %>" <%= esSeleccionada ? "selected" : "" %>>
+                <%= cuenta.getTipoCuenta().getTipo() %> <%= cuenta.getNumeroCuenta() %>
+            </option>
+        <% 
+            }
+        %>
+    </select>
+</div>
+
 
         <!-- Ingreso de CBU (solo cuando se seleccione cuenta de terceros) -->
         <div id="destinoCbu" class="form-group <%= tieneUnaCuenta ? "" : "hidden" %> mb-3">
@@ -124,6 +131,9 @@
             <label class="form-label" for="monto">Monto a transferir ($):</label>
             <input type="number" class="form-control" id="monto" name="monto" min="1" step="0.01" required
             value="<%= request.getAttribute("monto") != null ? request.getAttribute("monto") : "" %>">
+            <% if (request.getAttribute("errorSaldo") != null) { %>
+            <div class="text-danger"><%= request.getAttribute("errorSaldo") %></div>
+                   <% } %>
         </div>
 
         <div class="form-group mb-3">
@@ -171,15 +181,20 @@ function actualizarDestino() {
 }
 
 window.onload = function () {
-    // Si hay más de una cuenta, mantener los campos ocultos por defecto
-    if (<%= tieneMasDeUnaCuenta %>) {
-        document.getElementById('destinoCuentaPropia').classList.add('hidden');
-        document.getElementById('destinoCbu').classList.add('hidden');
-    }
-    if (document.getElementById('cuentaTerceros').checked) {
+    const cuentaPropiaSeleccionada = document.getElementById('cuentaPropia');
+    const cuentaTercerosSeleccionada = document.getElementById('cuentaTerceros');
+    const tipoCuentaDestino = "<%= request.getAttribute("tipoCuentaDestino") != null ? request.getAttribute("tipoCuentaDestino") : "" %>";
+
+    if (tipoCuentaDestino === "propia") {
+        mostrarDestino('propia');
+        cuentaPropiaSeleccionada.checked = true;
+    } else if (tipoCuentaDestino === "terceros") {
         mostrarDestino('terceros');
+        cuentaTercerosSeleccionada.checked = true;
     }
 };
+
 </script>
 </body>
 </html>
+

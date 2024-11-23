@@ -23,11 +23,8 @@
 <script
 	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#reporte').DataTable();
-	});
-</script>
+
+
 <title>Generar Reporte</title>
 </head>
 <body>
@@ -58,6 +55,7 @@
 					<option value="contabilidad">Contabilidad</option>
 					<option value="prestamos">Préstamos</option>
 				</select>
+				<small id="descripcionReporte" class="text-muted"></small>
 			</div>
 			<button type="submit" class="btn btn-primary mt-2">Generar Reporte</button>
 		</form>
@@ -159,6 +157,41 @@
     </div>
 </div>	
 <jsp:include page="Footer.jsp" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#reporte').DataTable();
+    });
+   
+</script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const tipoReporteSelect = document.getElementById("tipoReporte");
+        const descripcionReporte = document.getElementById("descripcionReporte");
+
+        // Función para actualizar la descripción según el tipo de reporte
+        function actualizarDescripcion() {
+            const tipo = tipoReporteSelect.value;
+            let descripcion = "";
+
+            if (tipo === "contabilidad") {
+                descripcion =
+                    "El reporte de contabilidad muestra los movimientos financieros agrupados por mes, con saldos positivos, negativos y totales.";
+            } else if (tipo === "prestamos") {
+                descripcion =
+                    "El reporte de préstamos muestra información sobre los préstamos realizados, incluyendo montos solicitados, pendientes y fechas.";
+            }
+
+            descripcionReporte.textContent = descripcion;
+        }
+
+        // Asignar evento al cambio de selección
+        tipoReporteSelect.addEventListener("change", actualizarDescripcion);
+
+        // Actualizar descripción inicial si ya hay un valor seleccionado
+        actualizarDescripcion();
+    });
+</script>
+
 <%
     String toastMessage = (String) request.getAttribute("toastMessage");
     String toastType = (String) request.getAttribute("toastType");

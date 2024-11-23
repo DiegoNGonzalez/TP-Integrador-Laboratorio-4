@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
 import entidades.Prestamo;
 import negocio.PrestamoNegocio;
 import negocioImpl.PrestamoNegocioImpl;
@@ -38,6 +40,22 @@ public class GestionPrestamosServlet extends HttpServlet {
         ArrayList<Prestamo> prestamosAprobados = prestamoNegocio.listarPrestamosAprobados();
         ArrayList<Prestamo> prestamosRechazados = prestamoNegocio.listarPrestamosRechazados();
 
+        String estado= (String)request.getParameter("action");
+        if("aprobado".equals(estado)) {
+        	request.setAttribute("toastMessage", "Prestamo aprobado correctamente.");
+            request.setAttribute("toastType", "success");
+        }else if("error".equals(estado)) {
+        	String toastMessage=(String)request.getSession().getAttribute("errorMsj");
+        	request.setAttribute("toastMessage", toastMessage);
+            request.setAttribute("toastType", "error");
+        }else if("rechazar".equals(estado)) {
+        	request.setAttribute("toastMessage", "Prestamo rechazado correctamente.");
+            request.setAttribute("toastType", "success");
+        }else if("ERechazar".equals(estado)) {
+        	String toastMessage=(String)request.getSession().getAttribute("errorMsj");
+        	request.setAttribute("toastMessage", toastMessage);
+            request.setAttribute("toastType", "error");
+        }
         request.setAttribute("prestamosPendientes", prestamosPendientes);
         request.setAttribute("prestamosAprobados", prestamosAprobados);
         request.setAttribute("prestamosRechazados", prestamosRechazados);

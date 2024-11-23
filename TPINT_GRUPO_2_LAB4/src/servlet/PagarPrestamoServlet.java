@@ -71,7 +71,7 @@ public class PagarPrestamoServlet extends HttpServlet {
 					session.setAttribute("Cliente", clienteSesion);
 				}
 			//response.sendRedirect("BuscarCuentaServlet?cuentaId="+idCuenta+"&action=detalleCuenta");
-			response.sendRedirect("ListarPrestamosServlet");
+			response.sendRedirect("ListarPrestamosServlet?mensaje=cuota_paga");
 		}else {
 			request.setAttribute("cuotaSeleccionada", idCuotaStr);
 			request.setAttribute("cuentaDebitoSeleccionada", idCuentaStr);	

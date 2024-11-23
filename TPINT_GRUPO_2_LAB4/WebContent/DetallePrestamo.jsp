@@ -58,6 +58,6 @@
 </div>
 </div>
 </div>
-</body>
 <jsp:include page="Footer.jsp" />
+</body>
 </html>

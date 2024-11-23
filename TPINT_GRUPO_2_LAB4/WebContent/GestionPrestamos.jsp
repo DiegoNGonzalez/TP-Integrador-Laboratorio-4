@@ -17,9 +17,7 @@
 <link href="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js" 
       rel="stylesheet">
 
-<!-- Toastr CSS (si lo estás usando para notificaciones) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" 
-      rel="stylesheet" />
+
 
 <!-- jQuery (solo una vez) -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -38,8 +36,7 @@
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
-<!-- Toastr JS (si lo estás usando para notificaciones) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -268,6 +265,18 @@
 </div>
 </section>
 </div>
+ 
+    <!-- Contenedor del Toast -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="toastMessage" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="4000">
+        <div class="d-flex">
+            <div class="toast-body">
+                <!-- Aquí aparecerá el mensaje -->
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
 
 <div class="col-12 d-flex justify-content-center m-2">
         <a href="DashboardAdmin.jsp" class="btn btn-primary">
@@ -276,6 +285,29 @@
     </div>
 </div>
 <jsp:include page="Footer.jsp" />
+
+
+<%
+    String toastMessage = (String) request.getAttribute("toastMessage");
+    String toastType = (String) request.getAttribute("toastType"); // success, error, info, warning
+%>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        <% if (toastMessage != null) { %>
+            const toastEl = document.getElementById('toastMessage');
+            const toastBody = toastEl.querySelector('.toast-body');
+            const toastInstance = new bootstrap.Toast(toastEl);
+
+            // Asignar el mensaje y estilo
+            toastBody.textContent = "<%= toastMessage %>";
+            toastEl.classList.remove('text-bg-primary', 'text-bg-danger', 'text-bg-warning', 'text-bg-success');
+            toastEl.classList.add('text-bg-<%= toastType %>'); // Estilo dinámico
+
+            // Mostrar el toast
+            toastInstance.show();
+        <% } %>
+    });
+</script>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
     // Función para inicializar una DataTable con sus filtros
@@ -399,6 +431,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+
+
 
 
 </body>

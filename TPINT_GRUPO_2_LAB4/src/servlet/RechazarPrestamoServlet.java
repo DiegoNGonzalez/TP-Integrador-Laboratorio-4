@@ -36,9 +36,13 @@ public class RechazarPrestamoServlet extends HttpServlet {
 		PrestamoNegocio prestamoNegocio = new PrestamoNegocioImpl();
 		try {
 			prestamoNegocio.bajarPrestamo(prestamoId);
-			response.sendRedirect("GestionPrestamosServlet");
+			response.sendRedirect("GestionPrestamosServlet?action=rechazar");
 		} catch (Exception e) {
 			e.printStackTrace();
+			String error= e.getMessage();
+			request.getSession().setAttribute("errorMsj", error);
+			response.sendRedirect("GestionPrestamosServlet?action=ERechazar");
+			
 		}
 		
 	}

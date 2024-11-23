@@ -40,7 +40,6 @@
         <div class="form-group">
             <label for="pregunta">Seleccione una pregunta de seguridad:</label>
             <select id="pregunta" name="pregunta" class="form-select" required>
-                <option value="cbu">¿Cuál es su CBU?</option>
                 <option value="numeroCuenta">¿Cuál es su número de cuenta?</option>
             </select>
         </div>

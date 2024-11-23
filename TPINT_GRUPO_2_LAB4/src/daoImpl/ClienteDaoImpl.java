@@ -318,7 +318,7 @@ public class ClienteDaoImpl implements ClienteDao {
 	@Override
 	public ArrayList<String> recuperarContrasenia(String dni, String email, String pregunta, long respuesta) {
 		String query = "select u.idUsuario, u.nombreUsuario from usuarios u inner join clientes c on u.idUsuario= c.idUsuario inner join cuentas cta on c.idCliente=cta.idcliente where dni=? and c.email=? and "
-				+ (pregunta.equals("cbu") ? "cta.cbu=?" : "cta.numeroCuenta=") + ";";
+				+ "cta.cbu=?"  + ";";
 		String nombreUsuario;
 		String contrasenia = "recuperar123";
 		int idUsuario;

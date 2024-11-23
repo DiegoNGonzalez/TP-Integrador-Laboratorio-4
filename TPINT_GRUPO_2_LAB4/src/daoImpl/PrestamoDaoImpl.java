@@ -246,7 +246,7 @@ public class PrestamoDaoImpl implements PrestamoDao {
 
 			cst.setInt(1, prestamo.getCuenta().getIdCuenta());
 			cst.setInt(2, prestamo.getIdPrestamo());
-			cst.setFloat(3, prestamo.getImporteTotal());
+			cst.setFloat(3, prestamo.getImporteSolicitado());
 			cst.setFloat(4, prestamo.getImporteCuota());
 			cst.setInt(5, prestamo.getCantCuotas());
 

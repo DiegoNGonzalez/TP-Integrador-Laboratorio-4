@@ -45,12 +45,15 @@ public class RecuperarContraseniaServlet extends HttpServlet {
         
         if (datos.isEmpty()) {
            
-            request.setAttribute("msjError", "No se pudieron corroborar los datos.");
-            request.getRequestDispatcher("/Error.jsp").forward(request, response);
+        	request.setAttribute("toastMessage", "No se pudieron corroborar los datos o alguno es erroneo.");
+            request.setAttribute("toastType", "error");
+            request.getRequestDispatcher("/RecuperarContrasenia.jsp").forward(request, response);
         } else {
             
             request.setAttribute("nombreUsuario", datos.get(0));
             request.setAttribute("contrasenia", datos.get(1));
+            request.setAttribute("toastMessage", "Contraseña recuperada.");
+            request.setAttribute("toastType", "success");            
             request.getRequestDispatcher("/RecuperarContraseniaExitosa.jsp").forward(request, response);
         }
     }

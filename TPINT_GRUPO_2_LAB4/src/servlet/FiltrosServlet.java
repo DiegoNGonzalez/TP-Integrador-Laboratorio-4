@@ -76,28 +76,38 @@ public class FiltrosServlet extends HttpServlet {
         Float montoMinimo = null;
         Float montoMaximo = null;
 
-        // Procesar filtro de fecha
-        if (filtrarPorFecha) {
-            String startDateStr = request.getParameter("startDate");
+     // Verificar y establecer fecha de inicio
+        if(filtrarPorFecha) {
+        	String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             
-            if (startDateStr != null && !startDateStr.isEmpty()) {
-            	try {
-                    fechaInicio = java.sql.Date.valueOf(startDateStr);
-                } catch (IllegalArgumentException e) {
-                	request.getSession().setAttribute("errorMsj", e.getMessage());
-    	            response.sendRedirect("Error.jsp"); 
-                }
-            }
-            
-            if (endDateStr != null && !endDateStr.isEmpty()) {
-            	try {
-                    fechaFin = java.sql.Date.valueOf(endDateStr);
-                } catch (IllegalArgumentException e) {
-                	request.getSession().setAttribute("errorMsj", e.getMessage());
-    	            response.sendRedirect("Error.jsp");
-                }
-            }
+        	if (startDateStr != null && !startDateStr.isEmpty()) {
+        		try {
+        			fechaInicio = java.sql.Date.valueOf(startDateStr);
+        		} catch (IllegalArgumentException e) {
+        			request.getSession().setAttribute("errorMsj", e.getMessage());
+        			response.sendRedirect("Error.jsp");
+        			return;
+        		}
+        	} else {
+        		// Si no se especifica, establece la fecha de inicio predeterminada (1 de enero de 2000)
+        		fechaInicio = java.sql.Date.valueOf("2000-01-01");
+        	}
+        	
+        	// Verificar y establecer fecha de fin
+        	if (endDateStr != null && !endDateStr.isEmpty()) {
+        		try {
+        			fechaFin = java.sql.Date.valueOf(endDateStr);
+        		} catch (IllegalArgumentException e) {
+        			request.getSession().setAttribute("errorMsj", e.getMessage());
+        			response.sendRedirect("Error.jsp");
+        			return;
+        		}
+        	} else {
+        		// Si no se especifica, establece como fecha de fin el último día del año actual
+        		fechaFin = java.sql.Date.valueOf(java.time.LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfYear()));
+        	}
+        	
         }
 
         // Procesar filtro de saldo
@@ -107,10 +117,14 @@ public class FiltrosServlet extends HttpServlet {
             
             if (minAmountStr != null && !minAmountStr.isEmpty()) {
                 montoMinimo = Float.parseFloat(minAmountStr);
+            } else {
+                montoMinimo = 0f; // Si está vacío o es null, establece montoMinimo en 0
             }
             
             if (maxAmountStr != null && !maxAmountStr.isEmpty()) {
                 montoMaximo = Float.parseFloat(maxAmountStr);
+            }else {
+            	montoMaximo = 10000000f;
             }
         }
 
@@ -135,41 +149,55 @@ public class FiltrosServlet extends HttpServlet {
         Float montoMinimo = null;
         Float montoMaximo = null;
 
-        // Procesar filtro de fecha
-        if (filtrarPorFecha) {
-            String startDateStr = request.getParameter("startDate");
+     // Verificar y establecer fecha de inicio
+        if(filtrarPorFecha) {
+        	String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             
-            if (startDateStr != null && !startDateStr.isEmpty()) {
-            	try {
-                    fechaInicio = java.sql.Date.valueOf(startDateStr);
-                } catch (IllegalArgumentException e) {
-                	request.getSession().setAttribute("errorMsj", e.getMessage());
-    	            response.sendRedirect("Error.jsp");
-                }
-            }
-            
-            if (endDateStr != null && !endDateStr.isEmpty()) {
-            	try {
-                    fechaFin = java.sql.Date.valueOf(endDateStr);
-                } catch (IllegalArgumentException e) {
-                	request.getSession().setAttribute("errorMsj", e.getMessage());
-    	            response.sendRedirect("Error.jsp");
-                }
-            }
+        	if (startDateStr != null && !startDateStr.isEmpty()) {
+        		try {
+        			fechaInicio = java.sql.Date.valueOf(startDateStr);
+        		} catch (IllegalArgumentException e) {
+        			request.getSession().setAttribute("errorMsj", e.getMessage());
+        			response.sendRedirect("Error.jsp");
+        			return;
+        		}
+        	} else {
+        		// Si no se especifica, establece la fecha de inicio predeterminada (1 de enero de 2000)
+        		fechaInicio = java.sql.Date.valueOf("2000-01-01");
+        	}
+        	
+        	// Verificar y establecer fecha de fin
+        	if (endDateStr != null && !endDateStr.isEmpty()) {
+        		try {
+        			fechaFin = java.sql.Date.valueOf(endDateStr);
+        		} catch (IllegalArgumentException e) {
+        			request.getSession().setAttribute("errorMsj", e.getMessage());
+        			response.sendRedirect("Error.jsp");
+        			return;
+        		}
+        	} else {
+        		// Si no se especifica, establece como fecha de fin el último día del año actual
+        		fechaFin = java.sql.Date.valueOf(java.time.LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfYear()));
+        	}
+        	
         }
 
-        // Procesar filtro de saldo
+     // Procesar filtro de saldo
         if (filtrarPorSaldo) {
             String minAmountStr = request.getParameter("minAmount");
             String maxAmountStr = request.getParameter("maxAmount");
             
             if (minAmountStr != null && !minAmountStr.isEmpty()) {
                 montoMinimo = Float.parseFloat(minAmountStr);
+            } else {
+                montoMinimo = 0f; // Si está vacío o es null, establece montoMinimo en 0
             }
             
             if (maxAmountStr != null && !maxAmountStr.isEmpty()) {
                 montoMaximo = Float.parseFloat(maxAmountStr);
+            }else {
+            	montoMaximo = 10000000f;
             }
         }
         

@@ -64,10 +64,12 @@ public class AgregarCuentaServlet extends HttpServlet {
 
         try {
         	cuentaNegocioImpl.agregarCuenta(cuenta,idCliente);
-    		response.sendRedirect("ListarClientesServlet");
+    		response.sendRedirect("ListarClientesServlet?action=cuentaAgregada");
         } catch(Exception e) {
         		e.printStackTrace();
-        		response.sendRedirect("Error.jsp");
+        		String error= e.getMessage();
+        		request.getSession().setAttribute("errorCuenta", error);
+        		response.sendRedirect("ListarClientesServlet?action=cuentaAgregada&&mensaje=errorCuenta");
         		
         	}
         }

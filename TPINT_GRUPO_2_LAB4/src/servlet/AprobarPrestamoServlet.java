@@ -30,16 +30,18 @@ public class AprobarPrestamoServlet extends HttpServlet {
         if (prestamo != null) {      	
 	        try {
 	        	prestamoNegocio.SP_AprobarPrestamo(prestamo);
-	            response.sendRedirect("GestionPrestamosServlet");
+	        	request.setAttribute("toastMessage", "Prestamo aprobado correctamente.");
+	            request.setAttribute("toastType", "success");
+	            response.sendRedirect("GestionPrestamosServlet?action=aprobado");
 	        } catch (PrestamoNegocioException e) {
 	            // Si ocurre un PrestamoNegocioException, capturamos el mensaje y lo pasamos al JSP
 	        	request.getSession().setAttribute("errorMsj", e.getMessage());
-	            response.sendRedirect("Error.jsp");  // Redirigir a Error.jsp
+	        	response.sendRedirect("GestionPrestamosServlet?action=error");
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	            // En caso de una excepción de SQL, redirigimos a Error.jsp con un mensaje general
-	            request.getSession().setAttribute("errorMsj", "Ocurrió un error en la base de datos.");
-	            response.sendRedirect("Error.jsp");
+	            // En caso de una excepciï¿½n de SQL, redirigimos a Error.jsp con un mensaje general
+	            request.getSession().setAttribute("errorMsj", "Ocurrio un error en la base de datos.");
+	            response.sendRedirect("GestionPrestamosServlet?action=error");
 	        }  	
 	     }
     }

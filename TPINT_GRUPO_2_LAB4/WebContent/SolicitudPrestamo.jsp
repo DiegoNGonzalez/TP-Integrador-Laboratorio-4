@@ -80,6 +80,7 @@
     </div>
     </div>
     </div>
+<jsp:include page="Footer.jsp" />
 </body>
 <script>
     document.getElementById('importe').addEventListener('input', function () {
@@ -88,5 +89,4 @@
         document.getElementById('montoCalculado').value = isNaN(montoCalculado) ? '' : montoCalculado;
     });
 </script>
-<jsp:include page="Footer.jsp" />
 </html>

@@ -59,8 +59,12 @@ public class ListarPrestamosServlet extends HttpServlet {
             
             String mensaje = request.getParameter("mensaje");
             if (mensaje != null && mensaje.equals("prestamo_pendiente")) {
-                request.setAttribute("mensaje", "Préstamo solitado correctamente.");
-            }
+                request.setAttribute("toastMessage", "Prestamo solitado correctamente.");
+                request.setAttribute("toastType", "success");
+            }else if (mensaje !=null && mensaje.equals("cuota_paga")) {
+            	request.setAttribute("toastMessage", "Cuota Pagada correctamente.");
+                request.setAttribute("toastType", "success");
+			}
 
             request.getRequestDispatcher("MisPrestamos.jsp").forward(request, response);
         	}

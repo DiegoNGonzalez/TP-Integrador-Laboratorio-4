@@ -94,15 +94,32 @@ public class confirmarTransferenciaServlet extends HttpServlet {
 				clienteDestino = clienteSesion;
 				request.setAttribute("tipoCuentaDestino", "propia");
 				request.setAttribute("cbuDestinoPropio", idCuentaDestino);
-			} else {
-				cbuTercero = Long.parseLong(request.getParameter("cbuTercero"));
-				cuentaDestino = cuentaNegocio.obtenerCuentaPorCbu(cbuTercero);
+			} else {				
+				String cbuTerceroParametro = request.getParameter("cbuTercero");
+
+				if (cbuTerceroParametro == null || cbuTerceroParametro.trim().isEmpty()) {
+					request.setAttribute("cbuTercero", cbuTercero);
+					request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
+					request.setAttribute("cuenta", idCuentaOrigen);
+					request.setAttribute("tipoCuentaDestino", "terceros");
+				    request.setAttribute("errorCbu", "Debe ingresar un CBU válido.");
+					request.getRequestDispatcher("/Transferencia.jsp").forward(request, response);
+				}
+				else {
+					    cbuTercero = Long.parseLong(cbuTerceroParametro);
+						cuentaDestino = cuentaNegocio.obtenerCuentaPorCbu(cbuTercero);
+
+
+				}		
+				idCuentaDestino = cuentaDestino.getIdCuenta();
+
 				request.setAttribute("cbuTercero", cbuTercero);
 				request.setAttribute("cuentaSeleccionada", cuentaSeleccionada);
 				request.setAttribute("cuenta", idCuentaOrigen);
 				request.setAttribute("tipoCuentaDestino", "terceros");
-				idCuentaDestino = cuentaDestino.getIdCuenta();
 
+
+				
 				if (idCuentaDestino == -1) {			
 					request.setAttribute("errorCbu",
 							"El CBU ingresado no existe o no pertenece al banco. Por favor, ingrese otro CBU.");

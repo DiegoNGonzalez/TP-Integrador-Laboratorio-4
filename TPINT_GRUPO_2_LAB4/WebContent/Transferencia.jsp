@@ -120,7 +120,7 @@
         <!-- Ingreso de CBU (solo cuando se seleccione cuenta de terceros) -->
         <div id="destinoCbu" class="form-group <%= tieneUnaCuenta ? "" : "hidden" %> mb-3">
             <label class="form-label" for="cbu">Ingrese CBU cuenta de terceros:</label>
-            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero" 
+            <input type="number" class="form-control" id="cbuTercero" name="cbuTercero" min="1"
             value="<%= request.getAttribute("cbuTercero") != null ? request.getAttribute("cbuTercero") : "" %>">
             <% if (request.getAttribute("errorCbu") != null) { %>
             <div class="text-danger"><%= request.getAttribute("errorCbu") %></div>

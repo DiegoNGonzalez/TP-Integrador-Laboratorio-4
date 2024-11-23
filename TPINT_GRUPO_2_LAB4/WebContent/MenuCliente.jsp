@@ -190,6 +190,26 @@
         }
     });
 </script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa DataTable para la tabla con ID 'clientTable'
+    function initializeDataTable() {
+        let table = new DataTable('#clientTable', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-AR.json'
+            },
+            paging: true,
+            searching: true,
+            info: true,
+            responsive: true,
+            autoWidth: false,
+            scrollX: false
+        });
+    }
 
+    // Llama a la función de inicialización para la tabla 'clientTable'
+    initializeDataTable();
+});
+</script>
 </body>
 </html>

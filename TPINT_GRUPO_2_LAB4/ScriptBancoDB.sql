@@ -227,7 +227,12 @@ INSERT INTO usuarios (nombreUsuario, contrasenia, tipoUsuario, estadoUsuario) VA
 ('maria.fernandez', 'maria1234', 2, 1),
 ('jorge.ruiz', 'jorge1234', 2, 1),
 ('laura.alvarez', 'laura1234', 2, 1),
-('facundo.gimenez', 'facundo1234', 2, 1);
+('facundo.gimenez', 'facundo1234', 2, 1),
+('rodriguez', 'rodriguez1234', 2, 1),
+('benitez', 'benitez', 2, 1),
+('gonzalez', 'gonzalez', 2, 1),
+('gomez', 'gomez', 2, 1),
+('jimenez', 'jimenez', 2, 1);-- id17
 
 INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, sexo, idNacionalidad, fechaNacimiento, direccion, idProvincia, idLocalidad, estado) VALUES
 (2,37719580,'23-37719580-9','Franco','Cataldo','francocataldo7@gmail.com',47555680,'M',1,'1992-10-12','Libres del Sud 523',1,2,true),
@@ -240,107 +245,414 @@ INSERT INTO clientes (idUsuario, dni, cuil, nombre, apellido, email, telefono, s
 (9, 35678912, '20-35678912-4', 'María', 'Fernández', 'maria.fernandez@gmail.com', 1167890123, 'F', 1, '1991-11-09', 'Calle Oeste 123', 3, 4, true),
 (10, 29876543, '20-29876543-6', 'Jorge', 'Ruiz', 'jorge.ruiz@gmail.com', 1143210987, 'M', 2, '1980-03-14', 'Pasaje Norte 456', 4, 5, true),
 (11, 40789012, '27-40789012-5', 'Laura', 'Álvarez', 'laura.alvarez@gmail.com', 1123459087, 'F', 3, '1994-06-28', 'Diagonal Sur 789', 5, 6, true),
-(12, 36985214, '27-36985214-7', 'Facundo', 'Giménez', 'facundo.gimenez@gmail.com', 1134210987, 'M', 1, '1992-02-18', 'Calle Este 345', 1, 2, true);
+(12, 36985214, '27-36985214-7', 'Facundo', 'Giménez', 'facundo.gimenez@gmail.com', 1134210987, 'M', 1, '1992-02-18', 'Calle Este 345', 1, 2, true),
+(13, 51234567, '27-51234567-6', 'Jose', 'Rodriguez', 'rodriguez@gmail.com', 1145102541, 'M', 1, '1997-05-25', 'Av. Cramer 789', 1, 3, true),
+(14, 55678912, '20-55678912-4', 'Cristina', 'Benitez', 'cristina@gmail.com', 1154169852, 'F', 1, '1991-11-09', 'Calle Sur 123', 1, 2, true),
+(15, 59876543, '20-59876543-6', 'Marcela', 'Gonzalez', 'gonzalez@gmail.com', 1198547412, 'F', 1, '1980-03-14', 'Pasaje Oeste 456', 1, 1, true),
+(16, 50789012, '27-50789012-5', 'Vanesa', 'Gomez', 'gomez@gmail.com', 1125635412, 'F', 1, '1994-06-28', 'Diagonal Norte 789', 1, 2, true),
+(17, 56985214, '27-56985214-7', 'Pablo', 'Jiménez', 'jiménez@gmail.com', 1145874521, 'M', 1, '1992-02-18', 'Calle Noroeste 345', 1, 3, true);-- id16
 
 INSERT INTO cuentas (idCliente, idTipoCuenta, fechaCreacion, numeroCuenta, cbu, saldo, estadoCuenta) VALUES
 (1, 1, '2024-11-13', 123456789, 987654321, 10000.0, true),
-(2, 2, '2024-11-15', 223456789, 1122334455, 20000.0, true),
-(2, 1, '2024-11-15', 223456788, 1122334456, 20000.0, true),
-(3, 1, '2024-11-14', 323456789, 2233445566, 15000.0, true),
-(4, 2, '2024-11-13', 423456789, 3344556677, 18000.0, true),
-(5, 1, '2024-11-12', 523456789, 4455667788, 12000.0, true),
-(6, 1, '2024-11-11', 623456789, 5566778899, 25000.0, true),
-(7, 1, '2024-11-10', 723456789, 6677889900, 8000.0, true),
-(8, 2, '2024-11-09', 823456789, 7788990011, 30000.0, true),
-(9, 1, '2024-11-08', 923456789, 8899001122, 17000.0, true),
-(10, 2, '2024-11-07', 1023456789, 9900112233, 22000.0, true),
-(11, 2, '2024-11-06', 1123456789, 1001223344, 14000.0, true);
+(2, 2, '2024-11-15', 223456789, 1122334455, 11700.0, true), -- 2
+(2, 1, '2024-11-15', 223456788, 1122334456, 31900.0, true), -- 3 -- prestamos
+(3, 1, '2024-11-14', 323456789, 2233445566, 12900.0, true), -- 4
+(4, 2, '2024-11-13', 423456789, 3344556677, 16000.0, true), -- 5
+(5, 1, '2024-11-12', 523456789, 4455667788, 31900.0, true), -- 6 -- prestamos
+(6, 1, '2024-11-11', 623456789, 5566778899, 16000.0, true), -- 7
+(7, 1, '2024-11-10', 723456789, 6677889900, 12900.0, true), -- 8
+(8, 2, '2024-11-09', 823456789, 7788990011, 12900.0, true), -- 9
+(9, 1, '2024-11-08', 923456789, 8899001122, 12900.0, true), -- 10
+(10, 2, '2024-11-07', 1023456789, 9900112233, 16000.0, true), -- 11
+(11, 2, '2024-11-06', 1123456789, 1001223344, 16000.0, true), -- 12
+(12, 2, '2024-10-06', 1123456777, 1001223119, 16000.0, true), -- 13
+(12, 2, '2024-10-13', 423456766, 3344556554, 31900.0, true), -- 14 -- prestamos
+(13, 1, '2024-09-12', 523456755, 4455667963, 12900.0, true), -- 15
+(14, 1, '2024-08-11', 623456744, 5566778549, 16000.0, true), -- 16
+(15, 1, '2024-07-10', 723456733, 6677889114, 12900.0, true), -- 17
+(16, 2, '2024-06-09', 823456722, 77889900985, 31900.0, true), -- 18
+(14, 1, '2024-11-08', 923456711, 88990011226, 31900.0, true), -- 19
+(15, 2, '2023-12-07', 1023456715, 9900112222, 16000.0, true); -- 20
 
--- Movimientos para el cliente 3 (Ana Martínez)
+
+-- Movimientos para el cliente 2, cuenta id 2 y 3
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(2, 1, '2024-11-13', 'Apertura de cuenta', 20000.00),
-(2, 4, '2024-11-14', 'Transferencia recibida', 5000.00),
-(2, 5, '2024-11-15', 'Transferencia enviada', -3000.00),
-(2, 2, '2024-11-16', 'Préstamo otorgado', 15000.00),
-(2, 3, '2024-11-17', 'Pago parcial de préstamo', -5000.00);
+(2, 1, '2024-11-01', 'Alta de Cuenta', 10000.00),
+(2, 4, '2024-11-04', 'Transferencia Acreditada', 2000.00),
+(2, 5, '2024-11-05', 'Transferencia Debitada', 1000.00),
+(2, 4, '2024-11-09', 'Transferencia Acreditada', 1500.00),
+(2, 5, '2024-11-10', 'Transferencia Debitada', 800.00),
 
--- Movimientos para el cliente 4 (Carlos Pérez)
+(3, 1, '2023-01-01', 'Alta de Cuenta', 10000.00),
+(3, 2, '2023-01-01', 'Alta de Préstamo', 12000.00),
+(3, 3, '2023-02-01', 'Pago de Préstamo', 3000.00),
+(3, 3, '2023-03-01', 'Pago de Préstamo', 3000.00),
+(3, 3, '2023-04-01', 'Pago de Préstamo', 3000.00),
+(3, 3, '2023-05-01', 'Pago de Préstamo', 3000.00),
+(3, 3, '2023-06-01', 'Pago de Préstamo', 3000.00),
+(3, 3, '2023-07-01', 'Pago de Préstamo', 3000.00),
+
+(3, 2, '2024-11-05', 'Alta de Préstamo', 24000.00),
+(3, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(3, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(3, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(3, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+
+-- Movimientos para el cliente 3 cuenta 4 
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(3, 1, '2024-11-13', 'Apertura de cuenta', 15000.00),
-(3, 4, '2024-11-14', 'Transferencia recibida', 3000.00),
-(3, 5, '2024-11-15', 'Transferencia enviada', -2000.00),
-(3, 2, '2024-11-16', 'Préstamo otorgado', 10000.00),
-(3, 3, '2024-11-17', 'Pago parcial de préstamo', -3000.00);
+(4, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(4, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(4, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(4, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(4, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 5 (Lucía Gómez)
+-- Movimientos para el cliente 4 cuenta 5
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(4, 1, '2024-11-13', 'Apertura de cuenta', 18000.00),
-(4, 4, '2024-11-14', 'Transferencia recibida', 4000.00),
-(4, 5, '2024-11-15', 'Transferencia enviada', -2500.00),
-(4, 2, '2024-11-16', 'Préstamo otorgado', 20000.00),
-(4, 3, '2024-11-17', 'Pago parcial de préstamo', -6000.00);
+(5, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(5, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(5, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(5, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(5, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(5, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(5, 5, '2024-11-22', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 6 (Miguel Rodríguez)
+-- Movimientos para el cliente 5 cuenta 6
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(5, 1, '2024-11-13', 'Apertura de cuenta', 12000.00),
-(5, 4, '2024-11-14', 'Transferencia recibida', 2000.00),
-(5, 5, '2024-11-15', 'Transferencia enviada', -1500.00),
-(5, 2, '2024-11-16', 'Préstamo otorgado', 8000.00),
-(5, 3, '2024-11-17', 'Pago parcial de préstamo', -2000.00);
 
--- Movimientos para el cliente 7 (Sofía Hernández)
+(6, 1, '2023-01-01', 'Alta de Cuenta', 10000.00),
+(6, 2, '2023-01-01', 'Alta de Préstamo', 12000.00),
+(6, 3, '2023-02-01', 'Pago de Préstamo', 3000.00),
+(6, 3, '2023-03-01', 'Pago de Préstamo', 3000.00),
+(6, 3, '2023-04-01', 'Pago de Préstamo', 3000.00),
+(6, 3, '2023-05-01', 'Pago de Préstamo', 3000.00),
+(6, 3, '2023-06-01', 'Pago de Préstamo', 3000.00),
+(6, 3, '2023-07-01', 'Pago de Préstamo', 3000.00),
+
+(6, 2, '2024-11-05', 'Alta de Préstamo', 24000.00),
+(6, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(6, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(6, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(6, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+
+-- Movimientos para el cliente 6 cuenta 7
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(6, 1, '2024-11-13', 'Apertura de cuenta', 25000.00),
-(6, 4, '2024-11-14', 'Transferencia recibida', 6000.00),
-(6, 5, '2024-11-15', 'Transferencia enviada', -4000.00),
-(6, 2, '2024-11-16', 'Préstamo otorgado', 18000.00),
-(6, 3, '2024-11-17', 'Pago parcial de préstamo', -7000.00);
+(7, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(7, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(7, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(7, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(7, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(7, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(7, 5, '2024-11-22', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 8 (Diego López)
+-- Movimientos para el cliente 7 cuenta 8
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(7, 1, '2024-11-13', 'Apertura de cuenta', 8000.00),
-(7, 4, '2024-11-14', 'Transferencia recibida', 3000.00),
-(7, 5, '2024-11-15', 'Transferencia enviada', -2000.00),
-(7, 2, '2024-11-16', 'Préstamo otorgado', 10000.00),
-(7, 3, '2024-11-17', 'Pago parcial de préstamo', -5000.00);
+(8, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(8, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(8, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(8, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(8, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 9 (María Fernández)
+-- Movimientos para el cliente 8 cuenta 9
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(8, 1, '2024-11-13', 'Apertura de cuenta', 30000.00),
-(8, 4, '2024-11-14', 'Transferencia recibida', 8000.00),
-(8, 5, '2024-11-15', 'Transferencia enviada', -5000.00),
-(8, 2, '2024-11-16', 'Préstamo otorgado', 25000.00),
-(8, 3, '2024-11-17', 'Pago parcial de préstamo', -9000.00);
+(9, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(9, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(9, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(9, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(9, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 10 (Jorge Ruiz)
+-- Movimientos para el cliente 9 cuenta 10
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(9, 1, '2024-11-13', 'Apertura de cuenta', 17000.00),
-(9, 4, '2024-11-14', 'Transferencia recibida', 2000.00),
-(9, 5, '2024-11-15', 'Transferencia enviada', -1000.00),
-(9, 2, '2024-11-16', 'Préstamo otorgado', 12000.00),
-(9, 3, '2024-11-17', 'Pago parcial de préstamo', -4000.00);
+(10, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(10, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(10, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(10, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(10, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 11 (Laura Álvarez)
+-- Movimientos para el cliente 10 cuenta 11
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(10, 1, '2024-11-13', 'Apertura de cuenta', 22000.00),
-(10, 4, '2024-11-14', 'Transferencia recibida', 5000.00),
-(10, 5, '2024-11-15', 'Transferencia enviada', -3000.00),
-(10, 2, '2024-11-16', 'Préstamo otorgado', 15000.00),
-(10, 3, '2024-11-17', 'Pago parcial de préstamo', -6000.00);
+(11, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(11, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(11, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(11, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(11, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(11, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(11, 5, '2024-11-22', 'Transferencia Debitada', 900.00);
 
--- Movimientos para el cliente 12 (Facundo Giménez)
+-- Movimientos para el cliente 11 cuenta 12
 INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
-(11, 1, '2024-11-13', 'Apertura de cuenta', 14000.00),
-(11, 4, '2024-11-14', 'Transferencia recibida', 7000.00),
-(11, 5, '2024-11-15', 'Transferencia enviada', -4000.00),
-(11, 2, '2024-11-16', 'Préstamo otorgado', 20000.00),
-(11, 3, '2024-11-17', 'Pago parcial de préstamo', -8000.00);
+(12, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(12, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(12, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(12, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(12, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(12, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(12, 5, '2024-11-22', 'Transferencia Debitada', 900.00);
 
-INSERT INTO prestamos (idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado ,importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo)
-VALUES
-(2, 2, '2024-11-16', 5000.00 ,5000.00, 12, 450.00, 12, 'Activo'),
-(3, 3, '2024-11-10', 5000.00 ,3000.00, 6, 500.00, 6, 'Pendiente'),
-(4, 3, '2024-11-10', 5000.00, 3000.00, 6, 500.00, 6, 'Rechazado');
+-- Movimientos para el cliente 12 cuenta 13 y 14
+INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
+(13, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(13, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(13, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(13, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(13, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(13, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(13, 5, '2024-11-22', 'Transferencia Debitada', 900.00),
+
+
+(14, 1, '2023-01-01', 'Alta de Cuenta', 10000.00),
+(14, 2, '2023-01-01', 'Alta de Préstamo', 12000.00),
+(14, 3, '2023-02-01', 'Pago de Préstamo', 3000.00),
+(14, 3, '2023-03-01', 'Pago de Préstamo', 3000.00),
+(14, 3, '2023-04-01', 'Pago de Préstamo', 3000.00),
+(14, 3, '2023-05-01', 'Pago de Préstamo', 3000.00),
+(14, 3, '2023-06-01', 'Pago de Préstamo', 3000.00),
+(14, 3, '2023-07-01', 'Pago de Préstamo', 3000.00),
+
+(14, 2, '2024-11-05', 'Alta de Préstamo', 24000.00),
+(14, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(14, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(14, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(14, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+-- Movimientos para el cliente 13 cuenta 15
+INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
+(15, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(15, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(15, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(15, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(15, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+-- Movimientos para el cliente 14 cuenta 16 y 19
+INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
+(16, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(16, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(16, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(16, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(16, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(16, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(16, 5, '2024-11-22', 'Transferencia Debitada', 900.00),
+
+(19, 1, '2023-01-01', 'Alta de Cuenta', 10000.00),
+(19, 2, '2023-01-01', 'Alta de Préstamo', 12000.00),
+(19, 3, '2023-02-01', 'Pago de Préstamo', 3000.00),
+(19, 3, '2023-03-01', 'Pago de Préstamo', 3000.00),
+(19, 3, '2023-04-01', 'Pago de Préstamo', 3000.00),
+(19, 3, '2023-05-01', 'Pago de Préstamo', 3000.00),
+(19, 3, '2023-06-01', 'Pago de Préstamo', 3000.00),
+(19, 3, '2023-07-01', 'Pago de Préstamo', 3000.00),
+
+(19, 2, '2024-11-05', 'Alta de Préstamo', 24000.00),
+(19, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(19, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(19, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(19, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+-- Movimientos para el cliente 15 cuenta 17 y 20
+INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
+(17, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(17, 4, '2024-11-14', 'Transferencia Acreditada', 1500.00),
+(17, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(17, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(17, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+
+(20, 1, '2024-11-11', 'Alta de Cuenta', 10000.00),
+(20, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(20, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(20, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(20, 5, '2024-11-20', 'Transferencia Debitada', 900.00),
+(20, 4, '2024-11-22', 'Transferencia Acreditada', 3000.00),
+(20, 5, '2024-11-22', 'Transferencia Debitada', 900.00);
+
+-- Movimientos para el cliente 16 cuenta 18
+INSERT INTO movimientos (idCuenta, idTipoMovimiento, fechaMovimiento, concepto, importeMovimiento) VALUES
+(18, 1, '2023-01-01', 'Alta de Cuenta', 10000.00),
+(18, 2, '2023-01-01', 'Alta de Préstamo', 12000.00),
+(18, 3, '2023-02-01', 'Pago de Préstamo', 3000.00),
+(18, 3, '2023-03-01', 'Pago de Préstamo', 3000.00),
+(18, 3, '2023-04-01', 'Pago de Préstamo', 3000.00),
+(18, 3, '2023-05-01', 'Pago de Préstamo', 3000.00),
+(18, 3, '2023-06-01', 'Pago de Préstamo', 3000.00),
+(18, 3, '2023-07-01', 'Pago de Préstamo', 3000.00),
+
+(18, 2, '2024-11-05', 'Alta de Préstamo', 24000.00),
+(18, 4, '2024-11-14', 'Transferencia Acreditada', 2500.00),
+(18, 5, '2024-11-15', 'Transferencia Debitada', 700.00),
+(18, 4, '2024-11-19', 'Transferencia Acreditada', 3000.00),
+(18, 5, '2024-11-20', 'Transferencia Debitada', 900.00);
+
+-- PRESTAMOS
+INSERT INTO Prestamos ( idCliente, idCuenta, fechaAltaPrestamo, importePrestamoSolicitado, importePrestamo, mesesPlazo, importeCuota, cantidadCuotas, EstadoPrestamo) VALUES
+    -- Préstamo 1: 6 cuotas cliente 2 cuenta 3
+    (2, 3, '2023-01-01', 12000.00, 12000.00 * 1.5, 6, (12000.00 * 1.5) / 6, 6, 'Finalizado'),
+
+    -- Préstamo 2: 12 cuotas cliente 2 cuenta 3
+    (2, 3, '2024-11-05', 24000.00, 24000.00 * 1.5, 12, (24000.00 * 1.5) / 12, 12, 'Activo'),
+
+    -- Préstamo 3: 6 cuotas cliente 2 cuenta 3
+    (2, 3, '2024-11-10', 18000.00, 18000.00 * 1.5, 6, (18000.00 * 1.5) / 6, 6, 'Rechazado'),
+    
+	-- Préstamo 4: 6 cuotas cliente 5 cuenta 6
+    (5, 6, '2023-01-01', 12000.00, 12000.00 * 1.5, 6, (12000.00 * 1.5) / 6, 6, 'Finalizado'),
+
+    -- Préstamo 5: 12 cuotas cliente 5 cuenta 6
+    (5, 6, '2024-11-05', 24000.00, 24000.00 * 1.5, 12, (24000.00 * 1.5) / 12, 12, 'Activo'),
+
+    -- Préstamo 6: 6 cuotas cliente 5 cuenta 6
+    (5, 6, '2024-11-10', 18000.00, 18000.00 * 1.5, 6, (18000.00 * 1.5) / 6, 6, 'Rechazado'),
+
+
+	-- Préstamo 7: 6 cuotas cliente 12 cuenta 14
+    (12, 14, '2023-01-01', 12000.00, 12000.00 * 1.5, 6, (12000.00 * 1.5) / 6, 6, 'Finalizado'),
+
+    -- Préstamo 8: 12 cuotas cliente 12 cuenta 14
+    (12, 14, '2024-11-05', 24000.00, 24000.00 * 1.5, 12, (24000.00 * 1.5) / 12, 12, 'Activo'),
+
+    -- Préstamo 9: 6 cuotas cliente 12 cuenta 14
+    (12, 14, '2024-11-10', 18000.00, 18000.00 * 1.5, 6, (18000.00 * 1.5) / 6, 6, 'Rechazado'),
+    
+    -- Préstamo 10: 6 cuotas cliente 16 cuenta 18
+    (16, 18, '2023-01-01', 12000.00, 12000.00 * 1.5, 6, (12000.00 * 1.5) / 6, 6, 'Finalizado'),
+
+    -- Préstamo 11: 12 cuotas cliente 16 cuenta 18
+    (16, 18, '2024-11-05', 24000.00, 24000.00 * 1.5, 12, (24000.00 * 1.5) / 12, 12, 'Activo'),
+
+    -- Préstamo 12: 6 cuotas cliente 16 cuenta 18
+    (16, 18, '2024-11-10', 18000.00, 18000.00 * 1.5, 6, (18000.00 * 1.5) / 6, 6, 'Rechazado'),
+    
+    
+     -- Préstamo 13: 6 cuotas cliente 14 cuenta 19
+    (14, 19, '2023-01-01', 12000.00, 12000.00 * 1.5, 6, (12000.00 * 1.5) / 6, 6, 'Finalizado'),
+
+    -- Préstamo 14: 12 cuotas cliente 14 cuenta 19
+    (14, 19, '2024-11-05', 24000.00, 24000.00 * 1.5, 12, (24000.00 * 1.5) / 12, 12, 'Activo'),
+
+    -- Préstamo 15: 6 cuotas cliente 14 cuenta 19
+    (14, 19, '2024-11-10', 18000.00, 18000.00 * 1.5, 6, (18000.00 * 1.5) / 6, 6, 'Rechazado');
+    
+-- CUOTAS
+-- Inserción de cuotas para los préstamos
+INSERT INTO Cuotas ( idPrestamo, numeroCuota, montoPagado, fechaPago, estadoPago) VALUES
+    -- Cuotas para el préstamo 1
+    (1, 1, 3000.00, '2023-02-01', 1),
+    (1, 2, 3000.00, '2023-03-01', 1),
+    (1, 3, 3000.00, '2023-04-01', 1),
+    (1, 4, 3000.00, '2023-05-01', 1),
+    (1, 5, 3000.00, '2023-06-01', 1),
+    (1, 6, 3000.00, '2023-07-01', 1),
+
+    -- Cuotas para el préstamo 2 (12 cuotas de 3000.00)
+    (2, 1, 3000.00, '2024-12-05', 0),
+    (2, 2, 3000.00, '2025-01-05', 0),
+    (2, 3, 3000.00, '2025-02-05', 0),
+    (2, 4, 3000.00, '2025-03-05', 0),
+    (2, 5, 3000.00, '2025-04-05', 0),
+    (2, 6, 3000.00, '2025-05-05', 0),
+    (2, 7, 3000.00, '2025-06-05', 0),
+    (2, 8, 3000.00, '2025-07-05', 0),
+    (2, 9, 3000.00, '2025-08-05', 0),
+    (2, 10, 3000.00, '2025-09-05', 0),
+    (2, 11, 3000.00, '2025-10-05', 0),
+    (2, 12, 3000.00, '2025-11-05', 0),
+    
+    -- prestamo 3 rechazado
+    
+        -- Cuotas para el préstamo 4
+    (4, 1, 3000.00, '2023-02-01', 1),
+    (4, 2, 3000.00, '2023-03-01', 1),
+    (4, 3, 3000.00, '2023-04-01', 1),
+    (4, 4, 3000.00, '2023-05-01', 1),
+    (4, 5, 3000.00, '2023-06-01', 1),
+    (4, 6, 3000.00, '2023-07-01', 1),
+
+    -- Cuotas para el préstamo 5 (12 cuotas de 3000.00)
+    (5, 1, 3000.00, '2024-12-05', 0),
+    (5, 2, 3000.00, '2025-01-05', 0),
+    (5, 3, 3000.00, '2025-02-05', 0),
+    (5, 4, 3000.00, '2025-03-05', 0),
+    (5, 5, 3000.00, '2025-04-05', 0),
+    (5, 6, 3000.00, '2025-05-05', 0),
+    (5, 7, 3000.00, '2025-06-05', 0),
+    (5, 8, 3000.00, '2025-07-05', 0),
+    (5, 9, 3000.00, '2025-08-05', 0),
+    (5, 10, 3000.00, '2025-09-05', 0),
+    (5, 11, 3000.00, '2025-10-05', 0),
+    (5, 12, 3000.00, '2025-11-05', 0),
+       
+    -- prestamo 6 reachazado
+
+        -- Cuotas para el préstamo 7
+    (7, 1, 3000.00, '2023-02-01', 1),
+    (7, 2, 3000.00, '2023-03-01', 1),
+    (7, 3, 3000.00, '2023-04-01', 1),
+    (7, 4, 3000.00, '2023-05-01', 1),
+    (7, 5, 3000.00, '2023-06-01', 1),
+    (7, 6, 3000.00, '2023-07-01', 1),
+
+    -- Cuotas para el préstamo 8 (12 cuotas de 3000.00)
+    (8, 1, 3000.00, '2024-12-05', 0),
+    (8, 2, 3000.00, '2025-01-05', 0),
+    (8, 3, 3000.00, '2025-02-05', 0),
+    (8, 4, 3000.00, '2025-03-05', 0),
+    (8, 5, 3000.00, '2025-04-05', 0),
+    (8, 6, 3000.00, '2025-05-05', 0),
+    (8, 7, 3000.00, '2025-06-05', 0),
+    (8, 8, 3000.00, '2025-07-05', 0),
+    (8, 9, 3000.00, '2025-08-05', 0),
+    (8, 10, 3000.00, '2025-09-05', 0),
+    (8, 11, 3000.00, '2025-10-05', 0),
+    (8, 12, 3000.00, '2025-11-05', 0),
+    
+	-- prestamo 9 reachazado
+    
+         -- Cuotas para el préstamo 10
+    (10, 1, 3000.00, '2023-02-01', 1),
+    (10, 2, 3000.00, '2023-03-01', 1),
+    (10, 3, 3000.00, '2023-04-01', 1),
+    (10, 4, 3000.00, '2023-05-01', 1),
+    (10, 5, 3000.00, '2023-06-01', 1),
+    (10, 6, 3000.00, '2023-07-01', 1),
+
+    -- Cuotas para el préstamo 11 (12 cuotas de 3000.00)
+    (11, 1, 3000.00, '2024-12-05', 0),
+    (11, 2, 3000.00, '2025-01-05', 0),
+    (11, 3, 3000.00, '2025-02-05', 0),
+    (11, 4, 3000.00, '2025-03-05', 0),
+    (11, 5, 3000.00, '2025-04-05', 0),
+    (11, 6, 3000.00, '2025-05-05', 0),
+    (11, 7, 3000.00, '2025-06-05', 0),
+    (11, 8, 3000.00, '2025-07-05', 0),
+    (11, 9, 3000.00, '2025-08-05', 0),
+    (11, 10, 3000.00, '2025-09-05', 0),
+    (11, 11, 3000.00, '2025-10-05', 0),
+    (11, 12, 3000.00, '2025-11-05', 0),
+    
+	-- prestamo 12 reachazado
+    
+          -- Cuotas para el préstamo 13
+    (13, 1, 3000.00, '2023-02-01', 1),
+    (13, 2, 3000.00, '2023-03-01', 1),
+    (13, 3, 3000.00, '2023-04-01', 1),
+    (13, 4, 3000.00, '2023-05-01', 1),
+    (13, 5, 3000.00, '2023-06-01', 1),
+    (13, 6, 3000.00, '2023-07-01', 1),
+
+    -- Cuotas para el préstamo 14 (12 cuotas de 3000.00)
+    (14, 1, 3000.00, '2024-12-05', 0),
+    (14, 2, 3000.00, '2025-01-05', 0),
+    (14, 3, 3000.00, '2025-02-05', 0),
+    (14, 4, 3000.00, '2025-03-05', 0),
+    (14, 5, 3000.00, '2025-04-05', 0),
+    (14, 6, 3000.00, '2025-05-05', 0),
+    (14, 7, 3000.00, '2025-06-05', 0),
+    (14, 8, 3000.00, '2025-07-05', 0),
+    (14, 9, 3000.00, '2025-08-05', 0),
+    (14, 10, 3000.00, '2025-09-05', 0),
+    (14, 11, 3000.00, '2025-10-05', 0),
+    (14, 12, 3000.00, '2025-11-05', 0);
+    
+	-- prestamo 15 reachazado
 
 DELIMITER //
 

@@ -101,7 +101,7 @@ public class ClienteDaoImpl implements ClienteDao {
 
 	@Override
 	public boolean modificarCliente(Cliente cliente) {
-		String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? , dni=?, cuil=? WHERE idCliente = ?";
+		String query = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, direccion = ? , dni=?, cuil=?, sexo=?, idNacionalidad=?, idProvincia=?, idLocalidad=? WHERE idCliente = ?";
 
 		try (Connection conexion = Conexion.getConnection();
 				PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -114,7 +114,11 @@ public class ClienteDaoImpl implements ClienteDao {
 			statement.setString(5, cliente.getDireccion());
 			statement.setString(6, cliente.getDni());
 			statement.setString(7, cliente.getCuil());
-			statement.setInt(8, cliente.getIdCliente());
+			statement.setString(8, String.valueOf(cliente.getSexo()));
+			statement.setInt(9, cliente.getNacionalidad().getId());
+			statement.setInt(10, cliente.getProvincia().getId());
+			statement.setInt(11, cliente.getLocalidad().getId());
+			statement.setInt(12, cliente.getIdCliente());
 
 			// Ejecuta la actualizaci�n y verifica si fue exitosa
 			return statement.executeUpdate() > 0;
